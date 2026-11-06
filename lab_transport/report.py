@@ -36,7 +36,7 @@ th,td{text-align:left;border-bottom:1px solid #e8eef4;padding:8px 4px} th{color:
 <button id="play" type="button">播放</button><input id="tick" type="range" min="0" value="0">
 <strong id="time" class="mono"></strong></div><div id="grid" class="grid"></div>
 <p class="foot" id="map-note">蓝色格为站点，橙色格表示当前站点不可用，深色格为障碍；机器人按离散时间步移动。</p>
-</section><section class="panel"><h2>任务状态</h2><p id="metrics"></p><table><thead><tr><th>样本</th><th>状态</th><th>机器人</th><th>时限</th></tr></thead>
+</section><section class="panel"><h2>任务状态</h2><p id="metrics"></p><table><thead><tr><th>样本</th><th>状态</th><th>机器人</th><th>时限</th><th>类型</th></tr></thead>
 <tbody id="tasks"></tbody></table><h2>最近调度决策</h2><p id="decision"></p>
 <ul id="forecasts"></ul><p class="foot">预测基于当时已知状态；详细事件见同目录 JSON 文件。时间单位为仿真步。</p></section></div>
 <script>
@@ -50,6 +50,10 @@ document.getElementById('metrics').textContent = '最终完成：' + data.summar
 if(data.scenario.graph){
   document.getElementById('banner').textContent='公开医院路网的拓扑仿真；任务、双机器人与计时为功能测试设置，不代表医院实测或安全认证。';
   document.getElementById('map-note').textContent='箭头为原始路网允许的方向；连线只表示节点连接，每条边按一个抽象步计算，并非真实行驶时间。';
+}
+if(data.scenario.metadata&&data.scenario.metadata.workload_kind==='mimic_single_stay'){
+  document.getElementById('banner').textContent='跨机构仿真：MIMIC 单次 ICU 住院的相对采样时序映射到塔尔图路网；采样不等于转运请求，步长是测试假设。';
+  document.getElementById('map-note').textContent+=' '+data.scenario.metadata.timing_assumption;
 }
 const statusNames = {unreleased:'未到达',waiting:'待分配',assigned:'前往取样',in_transit:'运输中',completed:'已送达'};
 function renderGraph(frame){
@@ -92,7 +96,7 @@ function render(index) {
   }
   const body=document.getElementById('tasks');body.replaceChildren();
   for(const sample of frame.samples){const row=document.createElement('tr');
-    for(const value of [sample.id,statusNames[sample.status]||sample.status,sample.robot_id||'—',sample.deadline_tick===null?'未设置':sample.deadline_tick]){
+    for(const value of [sample.id,statusNames[sample.status]||sample.status,sample.robot_id||'—',sample.deadline_tick===null?'未设置':sample.deadline_tick,sample.specimen_type||'未指定']){
       const td=document.createElement('td');td.textContent=String(value);row.appendChild(td)}body.appendChild(row)}
   const decisions=data.events.filter(e=>e.type==='assigned'&&e.tick<frame.tick), latest=decisions[decisions.length-1];
   const decision=document.getElementById('decision'), forecasts=document.getElementById('forecasts');forecasts.replaceChildren();

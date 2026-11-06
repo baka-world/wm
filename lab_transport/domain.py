@@ -118,6 +118,11 @@ class Sample:
     dropoff: str
     release_tick: int
     deadline_tick: int | None
+    specimen_type: str | None = None
+    collected_at: str | None = None
+    packaging: str | None = None
+    temperature_condition: str | None = None
+    rule_profile: str | None = None
 
 
 @dataclass(frozen=True)
@@ -129,6 +134,7 @@ class Scenario:
     samples: tuple[Sample, ...]
     duration_jitter: int
     max_ticks: int
+    metadata: dict[str, Any] | None = None
 
 
 def _integer(value: Any, label: str, minimum: int = 0) -> int:
@@ -213,7 +219,11 @@ def load_scenario(path: str | Path) -> Scenario:
             raise ValueError(f"sample {sid} must name two distinct existing stations")
         if deadline is not None and deadline < release:
             raise ValueError(f"sample {sid} deadline precedes release")
-        samples.append(Sample(sid, pickup, dropoff, release, deadline))
+        attributes = {}
+        for key in ("specimen_type", "collected_at", "packaging", "temperature_condition", "rule_profile"):
+            value = item.get(key)
+            attributes[key] = None if value is None else _identifier(value, f"sample {sid} {key}")
+        samples.append(Sample(sid, pickup, dropoff, release, deadline, **attributes))
     if not samples or len({s.id for s in samples}) != len(samples):
         raise ValueError("sample ids must be non-empty and unique")
     important = [r.position for r in robots] + [r.home for r in robots] + [s.position for s in stations.values()]

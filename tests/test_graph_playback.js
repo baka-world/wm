@@ -26,7 +26,13 @@ assert.equal(svg.children.filter(c=>c.tag==='circle').length,32);
 assert.equal(svg.children.filter(c=>c.tag==='line').length,63);
 assert.equal(elements.tasks.children.length,4);
 assert(elements.metrics.textContent.includes('未设置时限'));
-assert(elements.banner.textContent.includes('功能测试设置'));
+if(process.argv[3]==='mimic'){
+  assert(elements.banner.textContent.includes('跨机构仿真'));
+  assert(elements['map-note'].textContent.includes('不是实际'));
+  assert(elements.tasks.children.every(row=>row.children[4].textContent==='blood_unspecified'));
+}else{
+  assert(elements.banner.textContent.includes('功能测试设置'));
+}
 assert(elements.decision.textContent.includes('预测第'));
 elements.tick.value=elements.tick.max;elements.tick.listeners.input();
 assert(elements.tasks.children.every(row=>row.children[1].textContent==='已送达'));

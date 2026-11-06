@@ -273,7 +273,8 @@ class Simulator:
                         "phase": r.phase, "service_remaining": r.service_remaining}
                        for r in sorted(self.robots.values(), key=lambda item: item.id)],
             "samples": [{"id": s.spec.id, "status": s.status, "robot_id": s.robot_id,
-                         "release_tick": s.spec.release_tick, "deadline_tick": s.spec.deadline_tick}
+                         "release_tick": s.spec.release_tick, "deadline_tick": s.spec.deadline_tick,
+                         "specimen_type": s.spec.specimen_type}
                         for s in sorted(self.samples.values(), key=lambda item: item.spec.id)],
             "stations": [{"id": station.id, "available": station.available(tick)}
                          for station in self.scenario.stations.values()],
@@ -327,11 +328,16 @@ class Simulator:
                           for pos, xy in self.scenario.grid.coordinates.items()],
                 "edges": [[list(a), list(b)] for a, b in self.scenario.grid.edges],
             }
+        if self.scenario.metadata:
+            scenario_info["metadata"] = dict(self.scenario.metadata)
         return {
             "scenario": scenario_info,
             "policy": self.policy, "seed": self.seed, "summary": summary,
             "samples": [{"id": s.spec.id, "pickup": s.spec.pickup, "dropoff": s.spec.dropoff,
                          "release_tick": s.spec.release_tick, "deadline_tick": s.spec.deadline_tick,
+                         "specimen_type": s.spec.specimen_type, "collected_at": s.spec.collected_at,
+                         "packaging": s.spec.packaging, "temperature_condition": s.spec.temperature_condition,
+                         "rule_profile": s.spec.rule_profile,
                          "status": s.status, "robot_id": s.robot_id, "assigned_tick": s.assigned_tick,
                          "picked_tick": s.picked_tick, "completed_tick": s.completed_tick,
                          "predicted_completion_tick": s.predicted_completion_tick}

@@ -19,6 +19,20 @@ DEMO = ROOT / "scenarios/laboratory_demo.json"
 
 
 class ScenarioTests(unittest.TestCase):
+    def test_optional_specimen_metadata_is_preserved(self):
+        source = json.loads(DEMO.read_text(encoding="utf-8"))
+        source["samples"][0].update({"specimen_type": "pediatric_blood_gas", "collected_at": "2026-01-01T12:00:00Z",
+                                     "packaging": "sealed_biohazard_bag", "temperature_condition": "room_temperature",
+                                     "rule_profile": "michigan_pediatric_blood_gas"})
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "scenario.json"
+            path.write_text(json.dumps(source), encoding="utf-8")
+            result = Simulator(load_scenario(path), "world").run()
+        sample = next(s for s in result["samples"] if s["id"] == source["samples"][0]["id"])
+        self.assertEqual(sample["specimen_type"], "pediatric_blood_gas")
+        self.assertEqual(sample["collected_at"], "2026-01-01T12:00:00Z")
+        self.assertEqual(sample["rule_profile"], "michigan_pediatric_blood_gas")
+
     def test_invalid_and_disconnected_inputs_are_rejected(self):
         source = json.loads(DEMO.read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as temp:

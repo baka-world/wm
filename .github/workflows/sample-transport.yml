@@ -6,12 +6,14 @@ on:
     paths:
       - 'lab_transport/**'
       - 'scenarios/**'
+      - 'examples/specimen-rules-synthetic.json'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   pull_request:
     paths:
       - 'lab_transport/**'
       - 'scenarios/**'
+      - 'examples/specimen-rules-synthetic.json'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:
@@ -36,6 +38,8 @@ jobs:
         run: python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
       - name: Test playback controls
         run: node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+      - name: Exercise cited specimen rules with synthetic records
+        run: python -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"
       - name: Run the pinned published hospital navigation graph
         shell: bash
         run: |
@@ -74,6 +78,51 @@ jobs:
           assert '未设置时限' in check.visible_text
           assert '功能测试设置' in check.visible_text
           print('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')
+          PY
+      - name: Replay public MIMIC demo timeline on the hospital graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://physionet.org/files/mimic-iv-demo/2.2'
+          curl --fail --location --silent --show-error --retry 3 "$base/hosp/d_labitems.csv.gz" -o "$RUNNER_TEMP/d_labitems.csv.gz"
+          curl --fail --location --silent --show-error --retry 3 "$base/hosp/labevents.csv.gz" -o "$RUNNER_TEMP/labevents.csv.gz"
+          curl --fail --location --silent --show-error --retry 3 "$base/icu/icustays.csv.gz" -o "$RUNNER_TEMP/icustays.csv.gz"
+          python -m lab_transport.mimic_workload --labitems "$RUNNER_TEMP/d_labitems.csv.gz" \
+            --labevents "$RUNNER_TEMP/labevents.csv.gz" --icustays "$RUNNER_TEMP/icustays.csv.gz" \
+            --output "$RUNNER_TEMP/mimic-timeline.json"
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --workload "$RUNNER_TEMP/mimic-timeline.json" --seconds-per-tick 60 --output "$RUNNER_TEMP/mimic-hospital"
+          python tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-hospital" 60
+          node tests/test_graph_playback.js "$RUNNER_TEMP/mimic-hospital/world/report.html" mimic
+      - name: Check cross-institution replay in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/mimic-hospital/world/report.html?step=1" \
+            > "$RUNNER_TEMP/mimic-dom.html" 2> "$RUNNER_TEMP/mimic-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'mimic-dom.html').read_text())
+          assert '跨机构仿真' in check.visible and 'blood_unspecified' in check.visible
+          assert '不是实际路段耗时' in check.visible and '未设置时限' in check.visible
+          print('Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline')
           PY
       - name: Check the standalone playback in headless Chrome
         shell: bash

@@ -1,0 +1,95 @@
+name: MAPD public-framework cloud preflight
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mapd-cloud-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rgta-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Clone upstream RGTA and record commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          git clone --depth 1 https://github.com/YiBangWon/rgta-mtmapd.git rgta-src
+          git -C rgta-src rev-parse HEAD | tee reports/rgta-commit.txt
+      - name: Run RGTA unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd rgta-src
+          python -m unittest discover -s tests -t . -v 2>&1 | tee ../reports/rgta-tests.log
+      - name: Run small event-based assignment benchmark
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd rgta-src
+          python experiments/run_rgta_benchmark.py \
+            --maps kiva --settings 6x6 --methods tp rgta_eff \
+            --seeds 0 1 --total-tasks 60 --initial-tasks 12 \
+            --release-batch 6 --release-interval 5 \
+            --output ../reports/rgta-small.csv \
+            2>&1 | tee ../reports/rgta-benchmark.log
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+
+          path = Path('../reports/rgta-small.csv')
+          assert path.is_file(), f'benchmark output missing: {path}'
+          with path.open(newline='') as handle:
+              rows = list(csv.DictReader(handle))
+          assert len(rows) == 4, f'unexpected number of benchmark rows: {len(rows)}'
+          assert all(int(row['completed_tasks']) == 60 for row in rows), 'some tasks are incomplete'
+          print(f'RGTA small benchmark validated: {len(rows)} runs, 60 tasks each')
+          PY
+      - name: Upload RGTA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rgta-preflight
+          path: reports/
+          if-no-files-found: warn
+
+  lay2graph-static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Clone upstream Lay2Graph and record commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          git clone --depth 1 https://github.com/juknierim/Lay2Graph-MAPD-Framework.git lay2graph-src
+          git -C lay2graph-src rev-parse HEAD | tee reports/lay2graph-commit.txt
+      - name: Validate Docker Compose configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd lay2graph-src/DockerComposeFiles
+          docker compose version | tee ../../reports/docker-compose-version.txt
+          docker compose config -q
+          docker compose config --services | tee ../../reports/lay2graph-services.txt
+          grep -qx 'taskassignment' ../../reports/lay2graph-services.txt
+          grep -qx 'pathplanning' ../../reports/lay2graph-services.txt
+          grep -qx 'amrsimulation' ../../reports/lay2graph-services.txt
+          echo 'Compose syntax and required services validated. NOT a functional simulation test.' | tee ../../reports/scope.txt
+      - name: Upload Lay2Graph reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lay2graph-preflight
+          path: reports/
+          if-no-files-found: warn

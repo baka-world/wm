@@ -1,0 +1,87 @@
+name: Sample transport prototype
+
+on:
+  push:
+    branches: [main, 'feature/**']
+    paths:
+      - 'lab_transport/**'
+      - 'scenarios/**'
+      - 'tests/**'
+      - '.github/workflows/sample-transport.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'scenarios/**'
+      - 'tests/**'
+      - '.github/workflows/sample-transport.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prototype:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test sample lifecycle, prediction and grid invariants
+        run: python -m unittest discover -s tests -v
+      - name: Run the example with both policies
+        run: python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+      - name: Check the standalone playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome
+          if ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html" \
+            > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then
+            tail -n 100 "$RUNNER_TEMP/chrome.log" >&2
+            exit 1
+          fi
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.cells = self.robots = self.rows = 0
+                  self.in_metrics = False
+                  self.metrics = ''
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  classes = attrs.get('class', '').split()
+                  self.cells += 'cell' in classes
+                  self.robots += 'robot' in classes
+                  self.rows += tag == 'tr'
+                  if attrs.get('id') == 'metrics':
+                      self.in_metrics = True
+              def handle_endtag(self, tag):
+                  if tag == 'p':
+                      self.in_metrics = False
+              def handle_data(self, data):
+                  if self.in_metrics:
+                      self.metrics += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())
+          assert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)
+          assert '6/6' in check.metrics, check.metrics
+          print('Browser DOM verified: 63 cells, 2 robots, 6 task rows and 6/6 completed')
+          PY
+      - name: Upload example results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-transport-demo
+          path: ${{ runner.temp }}/sample-transport-demo/
+          if-no-files-found: warn
+          retention-days: 7

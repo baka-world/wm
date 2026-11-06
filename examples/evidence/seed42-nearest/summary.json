@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "sample_count": 6,
+  "completed_count": 6,
+  "late_count": 0,
+  "late_completed_count": 0,
+  "overdue_unfinished_count": 0,
+  "ticks": 51,
+  "mean_completion_ticks": 27.833,
+  "forecast_mae_ticks": null,
+  "blocked_move_attempts": 6
+}

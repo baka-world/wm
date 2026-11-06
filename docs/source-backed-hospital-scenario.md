@@ -33,7 +33,7 @@ Valner 等于 2022 年发表的 [《Scalable and heterogenous mobile robot fleet
 
 ## 运行与验收
 
-只需要 Python 3 和 `curl`，不需要 GPU、ROS 或付费服务：
+运行场景需要 Python 3 和 `curl`；附加的回放脚本测试需要 Node.js。不需要 GPU、ROS 或付费服务：
 
 ```bash
 mkdir -p /tmp/wm-hospital
@@ -46,5 +46,7 @@ node tests/test_graph_playback.js /tmp/wm-hospital/run/world/report.html
 固定输入 SHA-256 为 `8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058`；输入变化时适配器拒绝继续。适配器是针对该固定文件格式的窄范围读取器，不声称支持任意 RMF YAML。`report.html` 的箭头来自原路网方向；页面的坐标仅用于显示。输出目录不可覆盖，可更换目录重跑。
 
 初次按上述路网执行时，原型在两个任务交会后卡住，两种策略在 150 个仿真步内均只完成 1/4 个任务。检查事件后，为该两机器人路网仿真增加了有限的联合节点搜索：完全停顿时优先为已装载机器人找到一段可走路径。重新执行后，两种策略均完成 4/4，均为 87 个抽象步；核对各 113 次节点移动均遵循上游单/双向连接、无节点重合和对向交换，均出现一次 13 步恢复计划。详见 [本地验收日志](../validation/logs/tartu-hospital-smoke-20261106.txt)。
+
+[GitHub Actions 验收运行](https://github.com/lieuyimo/wm/actions/runs/42255557949)验证了 16 项 Python 测试、固定来源路网、两种策略、方向及节点检查，并通过无 GPU 的 Chrome 页面检查；[完整 job 日志](../validation/logs/sample-transport-hospital-action-42255557949.log)已归档，对应提交 `def7c5032909c5081e6831b4b7b02d77faecf4e8`。该运行的自动化检查是功能测试，不能替代真实场地测试。
 
 上述只是一组人工设置任务的闭环功能测试，不是世界模型效果的统计比较，也不证明恢复算法对任意图、任意机器人数量或所有停滞都有效。原型的 `world` 仍是基于已观测服务时间和静态路径的轻量预测基线，尚未训练神经世界模型，尚未接入 Lay2Graph。下一步应以导师确认的具体样本类别和真实 SOP 为准引入时限、温度等业务条件；在取得有许可的任务记录或公开数据后再构造有依据的工作负载，并进一步校验门控制与通行约束。

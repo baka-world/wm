@@ -9,7 +9,6 @@ from lab_transport.domain import DirectedGraph, RobotSpec, Sample, Scenario, Sta
 from lab_transport.hospital_case import parse_pinned_building
 from lab_transport.report import write_run
 from lab_transport.simulation import Simulator
-from lab_transport.world_model import PublicStation, WorldModel
 
 
 class HospitalGraphTests(unittest.TestCase):

@@ -1,0 +1,362 @@
+﻿2026-11-06T16:47:02.0406413Z Current runner version: '2.338.2'
+2026-11-06T16:47:02.0432002Z ##[group]Runner Image Provisioner
+2026-11-06T16:47:02.0432954Z Hosted Compute Agent
+2026-11-06T16:47:02.0433634Z Version: 20261028.624
+2026-11-06T16:47:02.0434303Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-06T16:47:02.0435035Z Build Date: 2026-10-28T21:51:42Z
+2026-11-06T16:47:02.0435794Z Worker ID: {9723a67c-d5c2-4aa8-a2b9-3ba8f738ba1d}
+2026-11-06T16:47:02.0436551Z Region: westus2
+2026-11-06T16:47:02.0437653Z Cloud: Azure
+2026-11-06T16:47:02.0438326Z ##[endgroup]
+2026-11-06T16:47:02.0439916Z ##[group]Operating System
+2026-11-06T16:47:02.0440655Z Ubuntu
+2026-11-06T16:47:02.0441234Z 24.04.5
+2026-11-06T16:47:02.0441740Z LTS
+2026-11-06T16:47:02.0442322Z ##[endgroup]
+2026-11-06T16:47:02.0442875Z ##[group]Runner Image
+2026-11-06T16:47:02.0443500Z Image: ubuntu-24.04
+2026-11-06T16:47:02.0444124Z Version: 20261101.360.1
+2026-11-06T16:47:02.0445435Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-06T16:47:02.0447409Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-06T16:47:02.0448516Z ##[endgroup]
+2026-11-06T16:47:02.0449719Z ##[group]GITHUB_TOKEN Permissions
+2026-11-06T16:47:02.0451702Z Contents: read
+2026-11-06T16:47:02.0452352Z Metadata: read
+2026-11-06T16:47:02.0452941Z ##[endgroup]
+2026-11-06T16:47:02.0455177Z Secret source: Actions
+2026-11-06T16:47:02.0456131Z Cache mode: write
+2026-11-06T16:47:02.0457405Z Prepare workflow directory
+2026-11-06T16:47:02.0815490Z Prepare all required actions
+2026-11-06T16:47:02.0865407Z Getting action download info
+2026-11-06T16:47:02.4538870Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-06T16:47:02.8772990Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-06T16:47:03.0628853Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-06T16:47:03.3103896Z Complete job name: prototype
+2026-11-06T16:47:03.4020341Z ##[group]Run actions/checkout@v4
+2026-11-06T16:47:03.4021314Z with:
+2026-11-06T16:47:03.4021757Z   repository: lieuyimo/wm
+2026-11-06T16:47:03.4025394Z   token: ***
+2026-11-06T16:47:03.4025824Z   ssh-strict: true
+2026-11-06T16:47:03.4026254Z   ssh-user: git
+2026-11-06T16:47:03.4026990Z   persist-credentials: true
+2026-11-06T16:47:03.4027561Z   clean: true
+2026-11-06T16:47:03.4028009Z   sparse-checkout-cone-mode: true
+2026-11-06T16:47:03.4028518Z   fetch-depth: 1
+2026-11-06T16:47:03.4028947Z   fetch-tags: false
+2026-11-06T16:47:03.4029391Z   show-progress: true
+2026-11-06T16:47:03.4029845Z   lfs: false
+2026-11-06T16:47:03.4030248Z   submodules: false
+2026-11-06T16:47:03.4030689Z   set-safe-directory: true
+2026-11-06T16:47:03.4031181Z   allow-unsafe-pr-checkout: false
+2026-11-06T16:47:03.4032377Z ##[endgroup]
+2026-11-06T16:47:05.7978008Z Syncing repository: lieuyimo/wm
+2026-11-06T16:47:05.7980169Z ##[group]Getting Git version info
+2026-11-06T16:47:05.7981033Z Working directory is '/home/runner/work/wm/wm'
+2026-11-06T16:47:05.7991620Z [command]/usr/bin/git version
+2026-11-06T16:47:05.9165054Z git version 2.56.0
+2026-11-06T16:47:05.9189464Z ##[endgroup]
+2026-11-06T16:47:05.9204364Z Temporarily overriding HOME='/home/runner/work/_temp/41c9cdd6-0d4a-47b2-8ec9-19771e53f785' before making global git config changes
+2026-11-06T16:47:05.9205493Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-06T16:47:05.9210853Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-06T16:47:05.9433363Z Deleting the contents of '/home/runner/work/wm/wm'
+2026-11-06T16:47:05.9438873Z ##[group]Initializing the repository
+2026-11-06T16:47:05.9443802Z [command]/usr/bin/git init /home/runner/work/wm/wm
+2026-11-06T16:47:05.9973126Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-06T16:47:05.9975299Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-06T16:47:05.9977377Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-06T16:47:05.9978213Z hint: call:
+2026-11-06T16:47:05.9978550Z hint:
+2026-11-06T16:47:05.9979009Z hint: 	git config --global init.defaultBranch <name>
+2026-11-06T16:47:05.9979529Z hint:
+2026-11-06T16:47:05.9980015Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-06T16:47:05.9980826Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-06T16:47:05.9981449Z hint:
+2026-11-06T16:47:05.9981726Z hint: 	git branch -m <name>
+2026-11-06T16:47:05.9982041Z hint:
+2026-11-06T16:47:05.9982460Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-06T16:47:06.0083819Z Initialized empty Git repository in /home/runner/work/wm/wm/.git/
+2026-11-06T16:47:06.0097973Z [command]/usr/bin/git remote add origin https://github.com/lieuyimo/wm
+2026-11-06T16:47:06.0318446Z ##[endgroup]
+2026-11-06T16:47:06.0319026Z ##[group]Disabling automatic garbage collection
+2026-11-06T16:47:06.0322761Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-06T16:47:06.0362776Z ##[endgroup]
+2026-11-06T16:47:06.0363243Z ##[group]Setting up auth
+2026-11-06T16:47:06.0371853Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-06T16:47:06.0420468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-06T16:47:06.2381139Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-06T16:47:06.2426213Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-06T16:47:06.2671226Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-06T16:47:06.2724417Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-06T16:47:06.2994744Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-06T16:47:06.3045910Z ##[endgroup]
+2026-11-06T16:47:06.3047114Z ##[group]Fetching the repository
+2026-11-06T16:47:06.3060524Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cfe2e86ddd5a3bc30eee59382672e860f8b0444d:refs/remotes/pull/2/merge
+2026-11-06T16:47:06.8179626Z From https://github.com/lieuyimo/wm
+2026-11-06T16:47:06.8180554Z  * [new ref]         cfe2e86ddd5a3bc30eee59382672e860f8b0444d -> pull/2/merge
+2026-11-06T16:47:06.8186465Z ##[endgroup]
+2026-11-06T16:47:06.8187810Z ##[group]Determining the checkout info
+2026-11-06T16:47:06.8189090Z ##[endgroup]
+2026-11-06T16:47:06.8207777Z [command]/usr/bin/git sparse-checkout disable
+2026-11-06T16:47:06.8358286Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-06T16:47:06.8385907Z ##[group]Checking out the ref
+2026-11-06T16:47:06.8390861Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2/merge
+2026-11-06T16:47:06.8515214Z Note: switching to 'refs/remotes/pull/2/merge'.
+2026-11-06T16:47:06.8515664Z 
+2026-11-06T16:47:06.8517040Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-06T16:47:06.8592403Z changes and commit them, and you can discard any commits you make in this
+2026-11-06T16:47:06.8593304Z state without impacting any branches by switching back to a branch.
+2026-11-06T16:47:06.8593857Z 
+2026-11-06T16:47:06.8594238Z If you want to create a new branch to retain commits you create, you may
+2026-11-06T16:47:06.8595036Z do so (now or later) by using -c with the switch command. Example:
+2026-11-06T16:47:06.8595517Z 
+2026-11-06T16:47:06.8595717Z   git switch -c <new-branch-name>
+2026-11-06T16:47:06.8596460Z 
+2026-11-06T16:47:06.8596919Z Or undo this operation with:
+2026-11-06T16:47:06.8597246Z 
+2026-11-06T16:47:06.8597431Z   git switch -
+2026-11-06T16:47:06.8597672Z 
+2026-11-06T16:47:06.8598115Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-06T16:47:06.8598708Z 
+2026-11-06T16:47:06.8599410Z HEAD is now at cfe2e86 Merge def7c5032909c5081e6831b4b7b02d77faecf4e8 into ce8c218162225271d255c9357c57859883f382e3
+2026-11-06T16:47:06.8601451Z ##[endgroup]
+2026-11-06T16:47:06.8697428Z [command]/usr/bin/git log -1 --format=%H
+2026-11-06T16:47:06.8731262Z cfe2e86ddd5a3bc30eee59382672e860f8b0444d
+2026-11-06T16:47:06.9102333Z ##[group]Run actions/setup-python@v5
+2026-11-06T16:47:06.9102661Z with:
+2026-11-06T16:47:06.9102889Z   python-version: 3.11
+2026-11-06T16:47:06.9103125Z   check-latest: false
+2026-11-06T16:47:06.9105468Z   token: ***
+2026-11-06T16:47:06.9105688Z   update-environment: true
+2026-11-06T16:47:06.9105937Z   allow-prereleases: false
+2026-11-06T16:47:06.9106209Z   freethreaded: false
+2026-11-06T16:47:06.9106420Z ##[endgroup]
+2026-11-06T16:47:07.0700193Z ##[group]Installed versions
+2026-11-06T16:47:07.1226528Z (node:2521) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T16:47:07.1228062Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T16:47:07.1228839Z Successfully set up CPython (3.11.18)
+2026-11-06T16:47:07.1229629Z ##[endgroup]
+2026-11-06T16:47:07.1409128Z ##[group]Run python -m unittest discover -s tests -v
+2026-11-06T16:47:07.1409611Z [36;1mpython -m unittest discover -s tests -v[0m
+2026-11-06T16:47:07.1528501Z shell: /usr/bin/bash -e {0}
+2026-11-06T16:47:07.1528929Z env:
+2026-11-06T16:47:07.1529387Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:07.1530006Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:07.1530785Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:07.1531331Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:07.1531706Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:07.1532095Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:07.1532421Z ##[endgroup]
+2026-11-06T16:47:08.2392961Z test_direction_and_source_integrity (test_hospital_graph.HospitalGraphTests.test_direction_and_source_integrity) ... ok
+2026-11-06T16:47:08.2589437Z test_missing_deadline_is_not_reported_as_a_clinical_success (test_hospital_graph.HospitalGraphTests.test_missing_deadline_is_not_reported_as_a_clinical_success) ... ok
+2026-11-06T16:47:08.2591184Z test_two_robot_fallback_can_clear_a_blocked_bottleneck (test_hospital_graph.HospitalGraphTests.test_two_robot_fallback_can_clear_a_blocked_bottleneck) ... ok
+2026-11-06T16:47:08.4030578Z test_cli_compare_creates_results_and_will_not_overwrite (test_lab_transport.ReportTests.test_cli_compare_creates_results_and_will_not_overwrite) ... ok
+2026-11-06T16:47:08.4168058Z test_report_escapes_scenario_text (test_lab_transport.ReportTests.test_report_escapes_scenario_text) ... ok
+2026-11-06T16:47:08.4182676Z test_invalid_and_disconnected_inputs_are_rejected (test_lab_transport.ScenarioTests.test_invalid_and_disconnected_inputs_are_rejected) ... ok
+2026-11-06T16:47:08.5963764Z test_demo_completes_across_service_time_seeds (test_lab_transport.SimulationTests.test_demo_completes_across_service_time_seeds) ... ok
+2026-11-06T16:47:08.5975091Z test_outage_delays_service_and_becomes_an_observation (test_lab_transport.SimulationTests.test_outage_delays_service_and_becomes_an_observation) ... ok
+2026-11-06T16:47:08.6165569Z test_reproducible_and_duration_draws_match_across_policies (test_lab_transport.SimulationTests.test_reproducible_and_duration_draws_match_across_policies) ... ok
+2026-11-06T16:47:08.6177871Z test_robots_can_leave_each_others_occupied_destinations (test_lab_transport.SimulationTests.test_robots_can_leave_each_others_occupied_destinations) ... ok
+2026-11-06T16:47:08.6239823Z test_simulator_cannot_be_reused_with_stale_state (test_lab_transport.SimulationTests.test_simulator_cannot_be_reused_with_stale_state) ... ok
+2026-11-06T16:47:08.6336274Z test_six_samples_finish_with_valid_lifecycles_and_grid_safety (test_lab_transport.SimulationTests.test_six_samples_finish_with_valid_lifecycles_and_grid_safety) ... ok
+2026-11-06T16:47:08.6346077Z test_timeout_is_not_reported_as_success (test_lab_transport.SimulationTests.test_timeout_is_not_reported_as_success) ... ok
+2026-11-06T16:47:08.6353169Z test_dispatch_does_not_observe_hidden_service_countdown (test_lab_transport.WorldModelTests.test_dispatch_does_not_observe_hidden_service_countdown) ... ok
+2026-11-06T16:47:08.6355107Z test_forecast_depends_on_action_and_updates_from_observed_service (test_lab_transport.WorldModelTests.test_forecast_depends_on_action_and_updates_from_observed_service) ... ok
+2026-11-06T16:47:08.6370292Z test_forecast_does_not_access_future_outage_or_actual_duration (test_lab_transport.WorldModelTests.test_forecast_does_not_access_future_outage_or_actual_duration) ... ok
+2026-11-06T16:47:08.6371428Z 
+2026-11-06T16:47:08.6371667Z ----------------------------------------------------------------------
+2026-11-06T16:47:08.6372149Z Ran 16 tests in 0.398s
+2026-11-06T16:47:08.6372331Z 
+2026-11-06T16:47:08.6372422Z OK
+2026-11-06T16:47:08.6529418Z ##[group]Run python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+2026-11-06T16:47:08.6530191Z [36;1mpython -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"[0m
+2026-11-06T16:47:08.6551520Z shell: /usr/bin/bash -e {0}
+2026-11-06T16:47:08.6551770Z env:
+2026-11-06T16:47:08.6552028Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.6552465Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:08.6552888Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.6553258Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.6553651Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.6554038Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:08.6554357Z ##[endgroup]
+2026-11-06T16:47:08.7329991Z {"scenario": "示例实验室样本转运（合成数据）", "seed": 42, "note": "单场景单种子示例，不能据此推断普遍性能。", "policies": {"nearest": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": null, "blocked_move_attempts": 6}, "world": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 55, "mean_completion_ticks": 31.167, "forecast_mae_ticks": 3.428, "blocked_move_attempts": 11}}}
+2026-11-06T16:47:08.7434246Z ##[group]Run node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+2026-11-06T16:47:08.7434946Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"[0m
+2026-11-06T16:47:08.7455816Z shell: /usr/bin/bash -e {0}
+2026-11-06T16:47:08.7456060Z env:
+2026-11-06T16:47:08.7456323Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.7456994Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:08.7457452Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.7457831Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.7458232Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:08.7458621Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:08.7458941Z ##[endgroup]
+2026-11-06T16:47:10.6300906Z Playback controls verified: candidate predictions, slider and play
+2026-11-06T16:47:10.6483476Z ##[group]Run set -euo pipefail
+2026-11-06T16:47:10.6483978Z [36;1mset -euo pipefail[0m
+2026-11-06T16:47:10.6484870Z [36;1msource_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'[0m
+2026-11-06T16:47:10.6486063Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"[0m
+2026-11-06T16:47:10.6487241Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"[0m
+2026-11-06T16:47:10.6488142Z [36;1mpython tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"[0m
+2026-11-06T16:47:10.6488800Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"[0m
+2026-11-06T16:47:10.6512098Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T16:47:10.6512443Z env:
+2026-11-06T16:47:10.6512704Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:10.6513142Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:10.6513567Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:10.6513935Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:10.6514308Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:10.6514690Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:10.6515019Z ##[endgroup]
+2026-11-06T16:47:10.9578437Z {"scenario": "Tartu 医院公开路网适配（功能测试任务）", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "公开路网与人工设置的功能测试任务；图边为抽象步，不是实际时间或临床证据。", "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": null, "blocked_move_attempts": 32}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": 10.5, "blocked_move_attempts": 32}}}
+2026-11-06T16:47:11.0193417Z nearest: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-06T16:47:11.0194250Z world: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-06T16:47:11.1136462Z Graph playback verified: 32 waypoints, 63 directed lanes, tasks and missing deadlines
+2026-11-06T16:47:11.4022593Z ##[group]Run set -euo pipefail
+2026-11-06T16:47:11.4022938Z [36;1mset -euo pipefail[0m
+2026-11-06T16:47:11.4023388Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-06T16:47:11.4024073Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/hospital-run/world/report.html?step=1" \[0m
+2026-11-06T16:47:11.4024709Z [36;1m  > "$RUNNER_TEMP/hospital-dom.html" 2> "$RUNNER_TEMP/hospital-chrome.log"[0m
+2026-11-06T16:47:11.4025119Z [36;1mpython - <<'PY'[0m
+2026-11-06T16:47:11.4025373Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-06T16:47:11.4025667Z [36;1mfrom pathlib import Path[0m
+2026-11-06T16:47:11.4025910Z [36;1mimport os[0m
+2026-11-06T16:47:11.4026112Z [36;1m[0m
+2026-11-06T16:47:11.4026306Z [36;1mclass Check(HTMLParser):[0m
+2026-11-06T16:47:11.4026550Z [36;1m    def __init__(self):[0m
+2026-11-06T16:47:11.4027353Z [36;1m        super().__init__()[0m
+2026-11-06T16:47:11.4027684Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-06T16:47:11.4027976Z [36;1m        self.visible_text = ''[0m
+2026-11-06T16:47:11.4028285Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-06T16:47:11.4028617Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-06T16:47:11.4029100Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-06T16:47:11.4029377Z [36;1m    def handle_data(self, data):[0m
+2026-11-06T16:47:11.4029653Z [36;1m        self.visible_text += data[0m
+2026-11-06T16:47:11.4029914Z [36;1m[0m
+2026-11-06T16:47:11.4030097Z [36;1mcheck = Check()[0m
+2026-11-06T16:47:11.4030473Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'hospital-dom.html').read_text())[0m
+2026-11-06T16:47:11.4031043Z [36;1massert (check.circles, check.lines) == (32, 63), (check.circles, check.lines)[0m
+2026-11-06T16:47:11.4031478Z [36;1massert '未设置时限' in check.visible_text[0m
+2026-11-06T16:47:11.4031785Z [36;1massert '功能测试设置' in check.visible_text[0m
+2026-11-06T16:47:11.4032280Z [36;1mprint('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')[0m
+2026-11-06T16:47:11.4032748Z [36;1mPY[0m
+2026-11-06T16:47:11.4053947Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T16:47:11.4054304Z env:
+2026-11-06T16:47:11.4054578Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:11.4055013Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:11.4055452Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:11.4055940Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:11.4056362Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:11.4057244Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:11.4076138Z ##[endgroup]
+2026-11-06T16:47:23.5198066Z Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline
+2026-11-06T16:47:23.5270067Z ##[group]Run set -euo pipefail
+2026-11-06T16:47:23.5270420Z [36;1mset -euo pipefail[0m
+2026-11-06T16:47:23.5270670Z [36;1mcommand -v google-chrome[0m
+2026-11-06T16:47:23.5271138Z [36;1mif ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-06T16:47:23.5271876Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html?step=1" \[0m
+2026-11-06T16:47:23.5272488Z [36;1m  > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then[0m
+2026-11-06T16:47:23.5272913Z [36;1m  tail -n 100 "$RUNNER_TEMP/chrome.log" >&2[0m
+2026-11-06T16:47:23.5273201Z [36;1m  exit 1[0m
+2026-11-06T16:47:23.5273391Z [36;1mfi[0m
+2026-11-06T16:47:23.5273580Z [36;1mpython - <<'PY'[0m
+2026-11-06T16:47:23.5273831Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-06T16:47:23.5274124Z [36;1mfrom pathlib import Path[0m
+2026-11-06T16:47:23.5274377Z [36;1mimport os[0m
+2026-11-06T16:47:23.5274599Z [36;1m[0m
+2026-11-06T16:47:23.5274786Z [36;1mclass Check(HTMLParser):[0m
+2026-11-06T16:47:23.5275033Z [36;1m    def __init__(self):[0m
+2026-11-06T16:47:23.5275280Z [36;1m        super().__init__()[0m
+2026-11-06T16:47:23.5275618Z [36;1m        self.cells = self.robots = self.rows = self.candidates = 0[0m
+2026-11-06T16:47:23.5275987Z [36;1m        self.in_metrics = False[0m
+2026-11-06T16:47:23.5276262Z [36;1m        self.in_decision = False[0m
+2026-11-06T16:47:23.5276524Z [36;1m        self.metrics = ''[0m
+2026-11-06T16:47:23.5277090Z [36;1m        self.decision = ''[0m
+2026-11-06T16:47:23.5277380Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-06T16:47:23.5277670Z [36;1m        attrs = dict(attrs)[0m
+2026-11-06T16:47:23.5277954Z [36;1m        classes = attrs.get('class', '').split()[0m
+2026-11-06T16:47:23.5278272Z [36;1m        self.cells += 'cell' in classes[0m
+2026-11-06T16:47:23.5278581Z [36;1m        self.robots += 'robot' in classes[0m
+2026-11-06T16:47:23.5278871Z [36;1m        self.rows += tag == 'tr'[0m
+2026-11-06T16:47:23.5279150Z [36;1m        self.candidates += tag == 'li'[0m
+2026-11-06T16:47:23.5279441Z [36;1m        if attrs.get('id') == 'metrics':[0m
+2026-11-06T16:47:23.5279734Z [36;1m            self.in_metrics = True[0m
+2026-11-06T16:47:23.5280022Z [36;1m        if attrs.get('id') == 'decision':[0m
+2026-11-06T16:47:23.5280495Z [36;1m            self.in_decision = True[0m
+2026-11-06T16:47:23.5280776Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-06T16:47:23.5281042Z [36;1m        if tag == 'p':[0m
+2026-11-06T16:47:23.5281291Z [36;1m            self.in_metrics = False[0m
+2026-11-06T16:47:23.5281566Z [36;1m            self.in_decision = False[0m
+2026-11-06T16:47:23.5281851Z [36;1m    def handle_data(self, data):[0m
+2026-11-06T16:47:23.5282112Z [36;1m        if self.in_metrics:[0m
+2026-11-06T16:47:23.5282364Z [36;1m            self.metrics += data[0m
+2026-11-06T16:47:23.5282621Z [36;1m        if self.in_decision:[0m
+2026-11-06T16:47:23.5282884Z [36;1m            self.decision += data[0m
+2026-11-06T16:47:23.5283130Z [36;1m[0m
+2026-11-06T16:47:23.5283305Z [36;1mcheck = Check()[0m
+2026-11-06T16:47:23.5283662Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())[0m
+2026-11-06T16:47:23.5284271Z [36;1massert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)[0m
+2026-11-06T16:47:23.5284781Z [36;1massert '6/6' in check.metrics, check.metrics[0m
+2026-11-06T16:47:23.5285271Z [36;1massert '预测第' in check.decision and check.candidates > 0, (check.decision, check.candidates)[0m
+2026-11-06T16:47:23.5285869Z [36;1mprint('Browser DOM verified: map, robots, tasks and candidate predictions')[0m
+2026-11-06T16:47:23.5286259Z [36;1mPY[0m
+2026-11-06T16:47:23.5306358Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T16:47:23.5306955Z env:
+2026-11-06T16:47:23.5307229Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:23.5307896Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:23.5308335Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:23.5308711Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:23.5309085Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:23.5309468Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:23.5309786Z ##[endgroup]
+2026-11-06T16:47:23.5351300Z /usr/bin/google-chrome
+2026-11-06T16:47:24.4137437Z Browser DOM verified: map, robots, tasks and candidate predictions
+2026-11-06T16:47:24.4256228Z ##[group]Run actions/upload-artifact@v4
+2026-11-06T16:47:24.4256538Z with:
+2026-11-06T16:47:24.4257032Z   name: sample-transport-demo
+2026-11-06T16:47:24.4257350Z   path: /home/runner/work/_temp/sample-transport-demo/
+2026-11-06T16:47:24.4257678Z   if-no-files-found: warn
+2026-11-06T16:47:24.4257902Z   retention-days: 7
+2026-11-06T16:47:24.4258108Z   compression-level: 6
+2026-11-06T16:47:24.4258317Z   overwrite: false
+2026-11-06T16:47:24.4258526Z   include-hidden-files: false
+2026-11-06T16:47:24.4258750Z env:
+2026-11-06T16:47:24.4258992Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:24.4259418Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T16:47:24.4259859Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:24.4260231Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:24.4260605Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T16:47:24.4261024Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T16:47:24.4261348Z ##[endgroup]
+2026-11-06T16:47:24.6017059Z (node:2995) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T16:47:24.6017924Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T16:47:24.6102579Z With the provided path, there will be 11 files uploaded
+2026-11-06T16:47:24.6111299Z Artifact name is valid!
+2026-11-06T16:47:24.6112142Z Root directory input is valid!
+2026-11-06T16:47:25.1374929Z Beginning upload of artifact content to blob storage
+2026-11-06T16:47:25.2353098Z (node:2995) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-06T16:47:25.5866348Z Uploaded bytes 24704
+2026-11-06T16:47:25.6667476Z Finished uploading artifact content to blob storage!
+2026-11-06T16:47:25.6668574Z SHA256 digest of uploaded artifact zip is 9a90092dfd2f4093aba8c9bd064f9624a7e9504809487fdcd16b8efa2d190d06
+2026-11-06T16:47:25.6670061Z Finalizing artifact upload
+2026-11-06T16:47:26.1769198Z Artifact sample-transport-demo.zip successfully finalized. Artifact ID 13522726532
+2026-11-06T16:47:26.1770890Z Artifact sample-transport-demo has been successfully uploaded! Final size is 24704 bytes. Artifact ID is 13522726532
+2026-11-06T16:47:26.1777754Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42255557949/artifacts/13522726532
+2026-11-06T16:47:26.2021430Z Post job cleanup.
+2026-11-06T16:47:26.3227929Z (node:3007) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T16:47:26.3229536Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T16:47:26.3415053Z Post job cleanup.
+2026-11-06T16:47:26.4378802Z [command]/usr/bin/git version
+2026-11-06T16:47:26.4439036Z git version 2.56.0
+2026-11-06T16:47:26.4487348Z Temporarily overriding HOME='/home/runner/work/_temp/ee8f9fec-ada6-47d2-a84d-367420b03c09' before making global git config changes
+2026-11-06T16:47:26.4489103Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-06T16:47:26.4494195Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-06T16:47:26.4553552Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-06T16:47:26.4606319Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-06T16:47:26.4970352Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-06T16:47:26.5031111Z http.https://github.com/.extraheader
+2026-11-06T16:47:26.5046452Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-06T16:47:26.5094487Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-06T16:47:26.5398277Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-06T16:47:26.5430949Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-06T16:47:26.5821541Z Cleaning up orphan processes
+2026-11-06T16:47:26.6226962Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 45
     env:
       LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
-      SIMULATION_DATA_PATH: ${{ runner.temp }}/lay2graph-simulation
+      SIMULATION_DATA_PATH: ${{ github.workspace }}/.lay2graph-simulation
       COMPOSE_PARALLEL_LIMIT: 2
     steps:
       - name: Checkout acceptance harness

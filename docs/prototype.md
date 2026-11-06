@@ -29,6 +29,10 @@ python -m lab_transport run --scenario scenarios/laboratory_demo.json --policy w
 
 所有任务完成时命令返回 0；参数错误、输出文件已存在或在 `max_ticks` 内未完成时返回 2。超时也会保留实际运行结果，不会当作成功。
 
+播放控件还可使用 Node.js 进行独立检查：`node tests/test_playback.js`。它是开发验证工具，不是运行 Python 原型的必需依赖。GitHub Actions 还会在标准 CPU runner 上用无头浏览器检查页面。
+
+一次[云端验收运行](https://github.com/lieuyimo/wm/actions/runs/42249916699)通过了 13 项 Python 测试、两种策略的示例运行及浏览器中的地图、任务和候选预测显示检查；对应 job 日志保存在 `validation/logs/`。它只验证该版本和示例范围，不代表真实环境验收。
+
 ## 示例结果与解释
 
 仓库中的 `examples/evidence/seed42-comparison.json` 记录了示例场景的一次运行：两种策略均完成 6 个样本任务；`nearest` 为 51 个仿真步，`world` 为 55 个仿真步。它们共用同一场景和随机种子，服务时间波动按“种子、样本、取放阶段和站点”确定，使同一任务的随机抽样不因调度顺序变化。不同策略在不同时间到达站点时仍可能遇到不同的中断影响。

@@ -34,6 +34,8 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Run the example with both policies
         run: python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+      - name: Test playback controls
+        run: node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
       - name: Check the standalone playback in headless Chrome
         shell: bash
         run: |

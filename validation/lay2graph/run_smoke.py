@@ -110,7 +110,9 @@ def main() -> None:
     api.set_dispatching_strategy_in_amr_simulation(assignment)
     api.set_collision_detection_api(CollisionDetection(collisionDetection=True))
     api.set_path_planning_strategy_api(PathPlanningStrategy(pathPlanningStrategy=Planning.cbs, boundary=1.0))
-    api.set_focal_heuristic(FocalHeuristicRequest(heuristic=None))
+    # The upstream client's exclude_none serialization omits a None field,
+    # while the upstream API requires the field to be present even for CBS.
+    api.set_focal_heuristic(FocalHeuristicRequest(heuristic=config.FOCAL_HEURISTIC))
     api.set_heuristic_for_a_star(HeuristicRequest(heuristic=PathPlanningHeuristic.euclidean))
     api.set_cbs_improvement_cost_function(CBSImprovementRequest(useAdvancedCostFunction=False))
     api.set_waiting_time_in_simulation(WaitingTimeRequest(waitingTime=1))

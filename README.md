@@ -9,6 +9,7 @@
 - [交接背景和边界](docs/handoff.md)
 - [毕设系统与论文实施主线](docs/thesis-project-plan.md)
 - [样本转运原型与运行说明](docs/prototype.md)
+- [有论文与公开导航图来源的医院转运场景](docs/source-backed-hospital-scenario.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
 - [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)
@@ -27,6 +28,8 @@ python -m lab_transport compare --seed 42 --output runs/demo-42
 ```
 
 运行后打开 `runs/demo-42/world/report.html` 查看示例回放。示例使用合成数据，原型目前不连接 Lay2Graph 或真实机器人。
+
+另可按[场景来源说明](docs/source-backed-hospital-scenario.md)运行基于公开医院 ICU—实验室路网的适配。路网来自医院项目，双机器人、到达时刻和执行步长是明确标注的功能测试设置；不填没有依据的临床时限或温度。
 
 ## 约束
 

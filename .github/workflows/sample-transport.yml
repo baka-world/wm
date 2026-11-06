@@ -36,6 +36,45 @@ jobs:
         run: python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
       - name: Test playback controls
         run: node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+      - name: Run the pinned published hospital navigation graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'
+          curl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"
+          python tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"
+      - name: Check hospital graph in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/hospital-run/world/report.html?step=1" \
+            > "$RUNNER_TEMP/hospital-dom.html" 2> "$RUNNER_TEMP/hospital-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.circles = self.lines = 0
+                  self.visible_text = ''
+              def handle_starttag(self, tag, attrs):
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_data(self, data):
+                  self.visible_text += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'hospital-dom.html').read_text())
+          assert (check.circles, check.lines) == (32, 63), (check.circles, check.lines)
+          assert '未设置时限' in check.visible_text
+          assert '功能测试设置' in check.visible_text
+          print('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')
+          PY
       - name: Check the standalone playback in headless Chrome
         shell: bash
         run: |

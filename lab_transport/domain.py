@@ -46,6 +46,53 @@ class Grid:
 
 
 @dataclass(frozen=True)
+class DirectedGraph:
+    """Navigation lanes at source waypoint resolution, not a geometric safety model."""
+
+    # Internal positions identify the upstream waypoint (index, 0); coordinates
+    # are retained separately for visualization and do not imply travel time.
+    coordinates: dict[Position, tuple[float, float]]
+    edges: tuple[tuple[Position, Position], ...]
+
+    @property
+    def width(self) -> int:
+        return 0
+
+    @property
+    def height(self) -> int:
+        return 0
+
+    @property
+    def blocked(self) -> frozenset[Position]:
+        return frozenset()
+
+    def contains(self, position: Position) -> bool:
+        return position in self.coordinates
+
+    def shortest_path(self, start: Position, goal: Position,
+                      occupied: frozenset[Position] = frozenset()) -> list[Position] | None:
+        if not self.contains(start) or not self.contains(goal) or goal in occupied:
+            return None
+        previous: dict[Position, Position | None] = {start: None}
+        queue = deque([start])
+        while queue:
+            current = queue.popleft()
+            if current == goal:
+                path: list[Position] = []
+                while current != start:
+                    path.append(current)
+                    parent = previous[current]
+                    assert parent is not None
+                    current = parent
+                return list(reversed(path))
+            for source, destination in self.edges:
+                if source == current and destination not in occupied and destination not in previous:
+                    previous[destination] = current
+                    queue.append(destination)
+        return None
+
+
+@dataclass(frozen=True)
 class Station:
     id: str
     position: Position
@@ -70,13 +117,13 @@ class Sample:
     pickup: str
     dropoff: str
     release_tick: int
-    deadline_tick: int
+    deadline_tick: int | None
 
 
 @dataclass(frozen=True)
 class Scenario:
     name: str
-    grid: Grid
+    grid: Grid | DirectedGraph
     stations: dict[str, Station]
     robots: tuple[RobotSpec, ...]
     samples: tuple[Sample, ...]
@@ -160,10 +207,11 @@ def load_scenario(path: str | Path) -> Scenario:
         pickup = _identifier(item["pickup"], f"sample {sid} pickup")
         dropoff = _identifier(item["dropoff"], f"sample {sid} dropoff")
         release = _integer(item["release_tick"], f"sample {sid} release_tick")
-        deadline = _integer(item["deadline_tick"], f"sample {sid} deadline_tick")
+        deadline_value = item.get("deadline_tick")
+        deadline = None if deadline_value is None else _integer(deadline_value, f"sample {sid} deadline_tick")
         if pickup not in stations or dropoff not in stations or pickup == dropoff:
             raise ValueError(f"sample {sid} must name two distinct existing stations")
-        if deadline < release:
+        if deadline is not None and deadline < release:
             raise ValueError(f"sample {sid} deadline precedes release")
         samples.append(Sample(sid, pickup, dropoff, release, deadline))
     if not samples or len({s.id for s in samples}) != len(samples):

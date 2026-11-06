@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from collections import deque
 import hashlib
+from itertools import product
 import math
 from typing import Any
 
-from .domain import Position, Sample, Scenario
+from .domain import DirectedGraph, Position, Sample, Scenario
 from .world_model import PublicStation, WorldModel
 
 
@@ -50,6 +52,8 @@ class Simulator:
         self.events: list[dict[str, Any]] = []
         self.history: list[dict[str, Any]] = []
         self.prevented_moves = 0
+        self._recovery: list[tuple[tuple[Position, ...], tuple[Position, ...]]] = []
+        self._recovery_goal: tuple[str, str | None, str] | None = None
         self._has_run = False
 
     def _event(self, tick: int, kind: str, **fields: Any) -> None:
@@ -158,6 +162,8 @@ class Simulator:
 
     def _move(self, tick: int, serviced: set[str]) -> None:
         before = {rid: robot.position for rid, robot in self.robots.items()}
+        if self._follow_recovery(tick, before, serviced):
+            return
         occupied = frozenset(before.values())
         reserved: set[Position] = set()
         ids = sorted(self.robots)
@@ -178,12 +184,87 @@ class Simulator:
             robot.position = path[0]
             reserved.add(robot.position)
         after = {rid: robot.position for rid, robot in self.robots.items()}
+        if before == after and isinstance(self.scenario.grid, DirectedGraph):
+            self._plan_recovery(tick, before, serviced)
+            if self._follow_recovery(tick, before, serviced):
+                return
         if len(set(after.values())) != len(after):
             raise RuntimeError("grid safety invariant failed: two robots share a cell")
         for index, first in enumerate(ids):
             for second in ids[index + 1:]:
                 if before[first] == after[second] and before[second] == after[first]:
                     raise RuntimeError("grid safety invariant failed: robots swapped an edge")
+
+    def _plan_recovery(self, tick: int, before: dict[str, Position], serviced: set[str]) -> None:
+        """Search joint waypoint states for a local way out of a complete standstill.
+
+        This limited two-robot fallback is not a continuous-space safety or
+        completeness guarantee. It gives already-loaded jobs preference.
+        """
+        if len(self.robots) != 2:
+            return
+        ids = tuple(sorted(self.robots))
+        candidates = [r for r in self.robots.values()
+                      if r.task_id is not None and r.id not in serviced and r.position != self._target(r)]
+        if not candidates:
+            return
+        chosen = min(candidates, key=lambda r: (r.phase != "to_dropoff", r.id))
+        target, target_index = self._target(chosen), ids.index(chosen.id)
+        graph = self.scenario.grid
+        assert isinstance(graph, DirectedGraph)
+        start = tuple(before[rid] for rid in ids)
+        queue = deque([start])
+        previous: dict[tuple[Position, ...], tuple[Position, ...] | None] = {start: None}
+        found = None
+        while queue and len(previous) <= 10000:
+            state = queue.popleft()
+            if state[target_index] == target:
+                found = state
+                break
+            options = []
+            for index, rid in enumerate(ids):
+                current = state[index]
+                choices = [current]
+                if rid not in serviced:
+                    choices.extend(b for a, b in graph.edges if a == current)
+                options.append(choices)
+            for nxt in product(*options):
+                if nxt == state or nxt[0] == nxt[1] or nxt[0] == state[1] or nxt[1] == state[0]:
+                    continue
+                if nxt not in previous:
+                    previous[nxt] = state
+                    queue.append(nxt)
+        if found is None:
+            return
+        states = [found]
+        while states[-1] != start:
+            parent = previous[states[-1]]
+            assert parent is not None
+            states.append(parent)
+        states.reverse()
+        self._recovery = list(zip(states, states[1:]))
+        self._recovery_goal = (chosen.id, chosen.task_id, chosen.phase)
+        self._event(tick, "recovery_planned", robot_id=chosen.id, sample_id=chosen.task_id,
+                    steps=len(self._recovery), explored_states=len(previous))
+
+    def _follow_recovery(self, tick: int, before: dict[str, Position], serviced: set[str]) -> bool:
+        if not self._recovery or self._recovery_goal is None:
+            return False
+        ids = tuple(sorted(self.robots))
+        rid, task, phase = self._recovery_goal
+        robot = self.robots[rid]
+        expected, nxt = self._recovery[0]
+        if ((robot.task_id, robot.phase) != (task, phase) or tuple(before[x] for x in ids) != expected
+                or any(name in serviced and before[name] != nxt[i] for i, name in enumerate(ids))):
+            self._recovery, self._recovery_goal = [], None
+            self._event(tick, "recovery_cancelled", robot_id=rid)
+            return False
+        for i, name in enumerate(ids):
+            self.robots[name].position = nxt[i]
+        self._recovery.pop(0)
+        if not self._recovery:
+            self._recovery_goal = None
+        return True
 
     def _snapshot(self, tick: int) -> None:
         self.history.append({
@@ -217,26 +298,37 @@ class Simulator:
         complete = [s for s in self.samples.values() if s.completed_tick is not None]
         errors = [abs(s.completed_tick - s.predicted_completion_tick) for s in complete
                   if s.predicted_completion_tick is not None and s.completed_tick is not None]
-        late_completed = sum(s.completed_tick > s.spec.deadline_tick for s in complete)
+        deadlines = [s for s in self.samples.values() if s.spec.deadline_tick is not None]
+        late_completed = sum(s.completed_tick is not None and s.completed_tick > s.spec.deadline_tick
+                             for s in deadlines)
         overdue_unfinished = sum(s.completed_tick is None and self.history[-1]["tick"] > s.spec.deadline_tick
-                                 for s in self.samples.values())
+                                 for s in deadlines)
         summary = {
             "status": "completed" if len(complete) == len(self.samples) else "timed_out",
             "sample_count": len(self.samples), "completed_count": len(complete),
-            "late_count": late_completed + overdue_unfinished,
-            "late_completed_count": late_completed, "overdue_unfinished_count": overdue_unfinished,
+            "deadline_sample_count": len(deadlines),
+            "late_count": late_completed + overdue_unfinished if deadlines else None,
+            "late_completed_count": late_completed if deadlines else None,
+            "overdue_unfinished_count": overdue_unfinished if deadlines else None,
             "ticks": self.history[-1]["tick"],
             "mean_completion_ticks": round(sum(s.completed_tick - s.spec.release_tick for s in complete)
                                            / len(complete), 3) if complete else None,
             "forecast_mae_ticks": round(sum(errors) / len(errors), 3) if errors else None,
             "blocked_move_attempts": self.prevented_moves,
         }
-        return {
-            "scenario": {"name": self.scenario.name, "width": self.scenario.grid.width,
+        scenario_info: dict[str, Any] = {"name": self.scenario.name, "width": self.scenario.grid.width,
                          "height": self.scenario.grid.height,
                          "blocked": [list(p) for p in sorted(self.scenario.grid.blocked)],
                          "stations": [{"id": s.id, "position": list(s.position)}
-                                      for s in self.scenario.stations.values()]},
+                                      for s in self.scenario.stations.values()]}
+        if isinstance(self.scenario.grid, DirectedGraph):
+            scenario_info["graph"] = {
+                "nodes": [{"position": list(pos), "x": xy[0], "y": xy[1]}
+                          for pos, xy in self.scenario.grid.coordinates.items()],
+                "edges": [[list(a), list(b)] for a, b in self.scenario.grid.edges],
+            }
+        return {
+            "scenario": scenario_info,
             "policy": self.policy, "seed": self.seed, "summary": summary,
             "samples": [{"id": s.spec.id, "pickup": s.spec.pickup, "dropoff": s.spec.dropoff,
                          "release_tick": s.spec.release_tick, "deadline_tick": s.spec.deadline_tick,

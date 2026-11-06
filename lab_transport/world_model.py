@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Mapping
 
-from .domain import Grid, Position, Sample
+from .domain import DirectedGraph, Grid, Position, Sample
 
 
 @dataclass(frozen=True)
@@ -22,7 +22,7 @@ class WorldModel:
     not simulate future traffic or know future disruptions.
     """
 
-    def __init__(self, grid: Grid, stations: Mapping[str, PublicStation]):
+    def __init__(self, grid: Grid | DirectedGraph, stations: Mapping[str, PublicStation]):
         self.grid = grid
         self.stations = dict(stations)
         self._observed: dict[str, list[int]] = {station_id: [] for station_id in stations}
@@ -53,7 +53,7 @@ class WorldModel:
         pickup_at = tick + len(to_pickup) + pickup_wait + self.expected_service(sample.pickup)
         drop_wait = max(0.0, occupied.get(sample.dropoff, 0) - (pickup_at - tick + len(to_dropoff)))
         completion = pickup_at + len(to_dropoff) + drop_wait + self.expected_service(sample.dropoff)
-        late = max(0.0, completion - sample.deadline_tick)
+        late = None if sample.deadline_tick is None else max(0.0, completion - sample.deadline_tick)
         return {
             "robot_id": robot_id, "sample_id": sample.id,
             "expected_pickup_tick": round(pickup_at, 3),
@@ -62,6 +62,6 @@ class WorldModel:
             "expected_dropoff_wait": round(drop_wait, 3),
             "predicted_final_robot_position": list(dropoff.position),
             "predicted_final_sample_status": "completed",
-            "predicted_lateness": round(late, 3),
-            "score": round(completion + 4 * late, 3),
+            "predicted_lateness": round(late, 3) if late is not None else None,
+            "score": round(completion + 4 * (late or 0), 3),
         }

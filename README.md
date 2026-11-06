@@ -10,6 +10,7 @@
 - [毕设系统与论文实施主线](docs/thesis-project-plan.md)
 - [样本转运原型与运行说明](docs/prototype.md)
 - [有论文与公开导航图来源的医院转运场景](docs/source-backed-hospital-scenario.md)
+- [样本规则与公开数据复用说明](docs/specimen-rules-and-public-data.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
 - [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)

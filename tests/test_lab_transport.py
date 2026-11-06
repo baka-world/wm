@@ -190,6 +190,8 @@ class ReportTests(unittest.TestCase):
             page = (output / "report.html").read_text(encoding="utf-8")
             self.assertNotIn(malicious, page)
             self.assertIn(r'\u003c/script\u003e', page)
+            self.assertIn('id="decision"', page)
+            self.assertIn('id="forecasts"', page)
 
     def test_cli_compare_creates_results_and_will_not_overwrite(self):
         with tempfile.TemporaryDirectory() as temp:

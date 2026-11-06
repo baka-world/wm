@@ -21,7 +21,7 @@ python -m unittest discover -s tests -v
 python -m lab_transport compare --scenario scenarios/laboratory_demo.json --seed 42 --output runs/demo-42
 ```
 
-在浏览器打开 `runs/demo-42/world/report.html` 可以拖动时间轴，查看机器人、站点状态和样本任务。`runs/demo-42/nearest/` 是基线结果，`comparison.json` 是汇总。也可只运行一个方案：
+在浏览器打开 `runs/demo-42/world/report.html` 可以拖动时间轴，查看机器人、站点状态、样本任务以及最近一次调度的候选预测。`runs/demo-42/nearest/` 是基线结果，`comparison.json` 是汇总。也可只运行一个方案：
 
 ```bash
 python -m lab_transport run --scenario scenarios/laboratory_demo.json --policy world --seed 42 --output runs/world-42

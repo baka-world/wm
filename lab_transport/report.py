@@ -36,7 +36,8 @@ th,td{text-align:left;border-bottom:1px solid #e8eef4;padding:8px 4px} th{color:
 <strong id="time" class="mono"></strong></div><div id="grid" class="grid"></div>
 <p class="foot">蓝色格为站点，橙色格表示当前站点不可用，深色格为障碍；机器人按离散时间步移动。</p>
 </section><section class="panel"><h2>任务状态</h2><p id="metrics"></p><table><thead><tr><th>样本</th><th>状态</th><th>机器人</th><th>时限</th></tr></thead>
-<tbody id="tasks"></tbody></table><p class="foot">时间单位为仿真步；详细事件与预测见同目录 JSON 文件。</p></section></div>
+<tbody id="tasks"></tbody></table><h2>最近调度决策</h2><p id="decision"></p>
+<ul id="forecasts"></ul><p class="foot">预测基于当时已知状态；详细事件见同目录 JSON 文件。时间单位为仿真步。</p></section></div>
 <script>
 const data = __RESULT_JSON__;
 const slider = document.getElementById('tick'), grid = document.getElementById('grid');
@@ -66,12 +67,25 @@ function render(index) {
   for(const sample of frame.samples){const row=document.createElement('tr');
     for(const value of [sample.id,statusNames[sample.status]||sample.status,sample.robot_id||'—',sample.deadline_tick]){
       const td=document.createElement('td');td.textContent=String(value);row.appendChild(td)}body.appendChild(row)}
+  const decisions=data.events.filter(e=>e.type==='assigned'&&e.tick<frame.tick), latest=decisions[decisions.length-1];
+  const decision=document.getElementById('decision'), forecasts=document.getElementById('forecasts');forecasts.replaceChildren();
+  if(!latest){decision.textContent='该时刻尚无已执行的任务分配。';return}
+  const selected=latest.selected, sample=data.samples.find(s=>s.id===latest.sample_id);
+  let message='第 '+latest.tick+' 步：将 '+latest.sample_id+' 分配给 '+latest.robot_id+'。';
+  if(latest.policy==='world') message+=' 预测第 '+selected.expected_completion_tick+' 步完成，预计逾期 '+selected.predicted_lateness+' 步。';
+  if(sample&&sample.completed_tick!==null&&sample.completed_tick<=frame.tick) message+=' 实际第 '+sample.completed_tick+' 步完成。';
+  decision.textContent=message;
+  for(const candidate of latest.candidates){const item=document.createElement('li');
+    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(latest.policy==='world'
+      ? '：预测完成 '+candidate.expected_completion_tick+' 步，评分 '+candidate.score
+      : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }
 slider.addEventListener('input',()=>render(Number(slider.value)));
 play.addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;play.textContent='播放';return}
   play.textContent='暂停';timer=setInterval(()=>{let next=Number(slider.value)+1;
     if(next>=data.history.length){clearInterval(timer);timer=null;play.textContent='播放';return}render(next)},250)});
-render(0);
+const requested=Number(new URLSearchParams(window.location.search).get('step')||0);
+render(Number.isFinite(requested)?Math.max(0,Math.min(data.history.length-1,Math.floor(requested))):0);
 </script></body></html>'''
 
 

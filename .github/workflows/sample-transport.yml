@@ -40,7 +40,7 @@ jobs:
           set -euo pipefail
           command -v google-chrome
           if ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html" \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html?step=1" \
             > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then
             tail -n 100 "$RUNNER_TEMP/chrome.log" >&2
             exit 1
@@ -53,29 +53,38 @@ jobs:
           class Check(HTMLParser):
               def __init__(self):
                   super().__init__()
-                  self.cells = self.robots = self.rows = 0
+                  self.cells = self.robots = self.rows = self.candidates = 0
                   self.in_metrics = False
+                  self.in_decision = False
                   self.metrics = ''
+                  self.decision = ''
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
                   classes = attrs.get('class', '').split()
                   self.cells += 'cell' in classes
                   self.robots += 'robot' in classes
                   self.rows += tag == 'tr'
+                  self.candidates += tag == 'li'
                   if attrs.get('id') == 'metrics':
                       self.in_metrics = True
+                  if attrs.get('id') == 'decision':
+                      self.in_decision = True
               def handle_endtag(self, tag):
                   if tag == 'p':
                       self.in_metrics = False
+                      self.in_decision = False
               def handle_data(self, data):
                   if self.in_metrics:
                       self.metrics += data
+                  if self.in_decision:
+                      self.decision += data
 
           check = Check()
           check.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())
           assert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)
           assert '6/6' in check.metrics, check.metrics
-          print('Browser DOM verified: 63 cells, 2 robots, 6 task rows and 6/6 completed')
+          assert '预测第' in check.decision and check.candidates > 0, (check.decision, check.candidates)
+          print('Browser DOM verified: map, robots, tasks and candidate predictions')
           PY
       - name: Upload example results
         if: always()

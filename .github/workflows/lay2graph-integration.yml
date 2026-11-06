@@ -46,7 +46,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          docker compose -f lay2graph-src/DockerComposeFiles/docker-compose.yml up -d --build \
+          # The upstream FastAPI lifespan connects to MQTT even when message
+          # transport is disabled. Its broker image needs writable bind mounts.
+          mkdir -p lay2graph-src/DockerComposeFiles/mqtt_log lay2graph-src/DockerComposeFiles/mqtt_data
+          chmod 0777 lay2graph-src/DockerComposeFiles/mqtt_log lay2graph-src/DockerComposeFiles/mqtt_data
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env \
+            -f lay2graph-src/DockerComposeFiles/docker-compose.yml up -d mqttbroker
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env \
+            -f lay2graph-src/DockerComposeFiles/docker-compose.yml up -d --build \
             taskassignment systemstatemanagement ordermanagement amrcommunication \
             basedatamanagement pathplanning amrsimulation
       - name: Wait for service APIs
@@ -55,7 +62,7 @@ jobs:
           set -euo pipefail
           for port in 3000 3001 3002 3003 3005 3006 3011; do
             ready=false
-            for attempt in $(seq 1 90); do
+            for attempt in $(seq 1 45); do
               if curl --fail --silent --show-error --max-time 3 "http://127.0.0.1:${port}/openapi.json" >/dev/null 2>&1; then
                 echo "service on port ${port} ready"
                 ready=true
@@ -80,11 +87,17 @@ jobs:
         shell: bash
         run: |
           mkdir -p reports
-          docker compose -f lay2graph-src/DockerComposeFiles/docker-compose.yml ps -a > reports/compose-ps.txt 2>&1 || true
-          docker compose -f lay2graph-src/DockerComposeFiles/docker-compose.yml logs --no-color --timestamps > reports/compose.log 2>&1 || true
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml ps -a > reports/compose-ps.txt 2>&1 || true
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml logs --no-color --timestamps > reports/compose.log 2>&1 || true
           if [ -d "$SIMULATION_DATA_PATH" ]; then
             cp -a "$SIMULATION_DATA_PATH" reports/simulation-data
           fi
+          if [ "${{ job.status }}" != success ]; then
+            echo 'Last 200 lines of service logs:'
+            tail -n 200 reports/compose.log || true
+          fi
+          if [ -f reports/lay2graph/orders-result.json ]; then cat reports/lay2graph/orders-result.json; fi
+          if [ -f reports/lay2graph/steps.jsonl ]; then cat reports/lay2graph/steps.jsonl; fi
       - name: Upload integration evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,4 +109,4 @@ jobs:
       - name: Stop isolated runner services
         if: always()
         shell: bash
-        run: docker compose -f lay2graph-src/DockerComposeFiles/docker-compose.yml down --remove-orphans || true
+        run: docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml down --remove-orphans || true

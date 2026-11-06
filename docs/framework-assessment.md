@@ -9,15 +9,17 @@
 - 功能分支 [运行 #3](https://github.com/lieuyimo/wm/actions/runs/42207296079) 对固定提交再次通过：3 个单元测试，Kiva `6x6`、两种方法、两个种子共 4 组，每组完成 60 个任务。工作流额外要求至少执行 1 个测试，避免零测试时误报通过。原始失败和成功日志位于 `validation/logs/`。
 - 这只证明相应测试和小实验在指定版本上完成；并未证明碰撞安全、实验室工作站容量处理、异常恢复、论文主要规模结果或世界模型效果。
 
-## Lay2Graph：静态预检通过，真实闭环以集成运行结果为准
+## Lay2Graph：小规模真实多机器人闭环通过
 
 - 上游：<https://github.com/juknierim/Lay2Graph-MAPD-Framework>，固定提交 `f04d860374ab636ddd6199c5643e3b78b5f5505b`，MIT 许可。其 [README](https://github.com/juknierim/Lay2Graph-MAPD-Framework/blob/f04d860374ab636ddd6199c5643e3b78b5f5505b/README.md) 描述任务分配、路径规划、订单管理、机器人通信、状态管理、事件式机器人仿真与场景评估服务。
 - [预检 #3](https://github.com/lieuyimo/wm/actions/runs/42207296079) 验证 Compose 配置与所需服务名；未启动服务，不是功能仿真。
 - `validation/lay2graph/run_smoke.py` 和 `.github/workflows/lay2graph-integration.yml` 是本仓库新增的验收驱动：在临时目录从上游现成仓库场景截取 2 台机器人及 6 个订单，启动上游 CPU 服务，加载地图与机器人状态，启用碰撞检查，并执行有限步数/时间的仿真。脚本要求全部订单完成、订单管理器报告 `FINISHED`，且至少 2 台机器人承担已完成订单；它保存步骤、订单结果、服务日志和 fixture。
-- 上述脚本的存在不等于验收通过。即使该仓储场景通过，也仅说明小规模上游功能闭环，不是针对实验室任务、独立碰撞验证或异常恢复的完整验收。
+- [运行 #4](https://github.com/lieuyimo/wm/actions/runs/42209255973) 的真实集成 job 成功：固定上游版本，7 个应用服务及 broker 启动，使用上游 `Warehouse_35x21` 的 grid 场景、两台机器人与 6 个订单；第 98 次仿真 step 返回完成率 100%。订单管理服务对全部 6 个订单返回 `FINISHED`：机器人 1 完成订单 1、3；机器人 2 完成订单 2、4、5、6。
+- 此次启用了上游碰撞检查；没有独立复核逐时位置或证明零碰撞。该仓储小场景通过仅说明上游服务与仿真中的订单闭环可执行，不代表实验室任务、异常恢复或安全性质已完成验收。
+- [运行 #4 的产物](https://github.com/lieuyimo/wm/actions/runs/42209255973/artifacts/13497737682)包含服务日志、fixture 和统计文件，配置保留 7 天，预计 2026-11-13 到期。完整 GitHub job 日志已压缩存入 `validation/logs/`；从 job 日志提取的 98 个步骤、最终订单状态及摘要保存在 `validation/results/lay2graph-run-42209255973/`。上游服务的完整 `compose.log` 在该临时产物中，不包含在成功 job 日志内。
 - 第一次集成 [运行 #1](https://github.com/lieuyimo/wm/actions/runs/42207840908) 在进入 runner 前失败：工作流 job 级环境变量错误引用 `runner.temp`；GitHub 注释指出 `Unrecognized named-value: 'runner'`。后续已改用 `github.workspace` 并重新运行。
 - [运行 #2](https://github.com/lieuyimo/wm/actions/runs/42207941051) 成功构建服务，但 AMR 通信服务的 3003 端口未就绪。上游 AMR 通信及仿真服务的 FastAPI 生命周期即使关闭 MQTT 传输也尝试连接 broker；验收工作流最初未启动该服务。对应完整 job 日志压缩保存于 `validation/logs/`。
-- [运行 #3](https://github.com/lieuyimo/wm/actions/runs/42208615769) 补上 broker 后 7 个服务端口均就绪，验收进入初始化；路径规划接口对缺失的 focal heuristic 字段返回 422。验收驱动已改为使用上游示例的非空配置；修正后的 [运行 #4](https://github.com/lieuyimo/wm/actions/runs/42209255973) 正在执行，不能预先宣称通过。
+- [运行 #3](https://github.com/lieuyimo/wm/actions/runs/42208615769) 补上 broker 后 7 个服务端口均就绪，验收进入初始化；路径规划接口对缺失的 focal heuristic 字段返回 422。验收驱动改用上游示例的非空配置后，运行 #4 通过。
 
 ## 适用性和下一步
 

@@ -47,4 +47,4 @@
 
 ## 项目状态
 
-现有 GitHub 运行只验证了 RGTA 核心单测及小场景、Lay2Graph Compose 配置；不能证明实验室异常恢复可行。Lay2Graph 的真实多机器人集成验收正作为单独的有界 CPU 工作流运行，必须以运行日志及订单状态为准，不能根据脚本存在或服务健康检查宣称通过。
+RGTA 核心单测和小场景已通过。Lay2Graph 的[有界 CPU 集成运行](https://github.com/lieuyimo/wm/actions/runs/42209255973)也已在上游仓储场景中完成两台机器人、6 个订单的闭环，订单管理服务报告全部完成；详见 `docs/framework-assessment.md`。这不能证明实验室异常恢复、世界模型收益或独立碰撞安全，阶段零研究仍需另行设计和执行。

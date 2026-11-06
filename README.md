@@ -11,7 +11,7 @@
 - [Lay2Graph 多机器人闭环工作流](.github/workflows/lay2graph-integration.yml)及其[验收驱动](validation/lay2graph/run_smoke.py)
 - `validation/logs/` 保存已核实的运行日志，较大的完整日志使用 gzip 压缩。
 
-RGTA 小规模单测和分配实验已通过。Lay2Graph 的静态配置检查已通过；真实仿真必须以集成工作流的实际运行和订单完成状态为准，不能根据配置或服务启动推断通过。均不等于完成了实验室异常恢复研究。
+RGTA 小规模单测和分配实验已通过。Lay2Graph 在上游仓储场景中完成了两台机器人、6 个订单的真实仿真闭环；证据、限制和原始日志见框架验收记录。两者均不等于完成了实验室异常恢复研究。
 
 ## 约束
 

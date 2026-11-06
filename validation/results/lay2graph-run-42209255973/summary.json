@@ -1,0 +1,21 @@
+{
+  "robots": [
+    "1",
+    "2"
+  ],
+  "order_count": 6,
+  "completed_robots": [
+    "1",
+    "2"
+  ],
+  "last_step": {
+    "simulationFinish": true,
+    "percentageFinish": 100
+  },
+  "driving_times": {
+    "drivingTimeLoaded": 96,
+    "drivingTimeUnloaded": 94
+  },
+  "collision_detection_enabled": true,
+  "scope": "small upstream warehouse scenario; no independent collision proof or laboratory validation"
+}

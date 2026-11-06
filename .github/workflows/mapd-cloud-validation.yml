@@ -67,6 +67,11 @@ jobs:
           with path.open(newline='') as handle:
               rows = list(csv.DictReader(handle))
           assert len(rows) == 4, f'unexpected number of benchmark rows: {len(rows)}'
+          expected = {(method, seed) for method in ('tp', 'rgta_eff') for seed in (0, 1)}
+          actual = {(row['method'], int(row['seed'])) for row in rows}
+          assert actual == expected, f'unexpected method/seed combinations: {actual}'
+          assert all(row['map_name'] == 'kiva' and int(row['num_agents']) == 6
+                     and int(row['capacity']) == 6 for row in rows), 'unexpected scenario settings'
           assert all(int(row['completed_tasks']) == 60 for row in rows), 'some tasks are incomplete'
           print(f'RGTA small benchmark validated: {len(rows)} runs, 60 tasks each')
           PY

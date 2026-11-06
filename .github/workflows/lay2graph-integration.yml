@@ -96,6 +96,13 @@ jobs:
             echo 'Last 200 lines of service logs:'
             tail -n 200 reports/compose.log || true
           fi
+          # Artifacts expire. Emit a lossless compressed copy into the job log
+          # so the evidence can also be archived in the repository.
+          if [ -s reports/compose.log ]; then
+            echo '__LAY2GRAPH_COMPOSE_LOG_GZIP_BASE64_BEGIN__'
+            gzip -n -c reports/compose.log | base64
+            echo '__LAY2GRAPH_COMPOSE_LOG_GZIP_BASE64_END__'
+          fi
           if [ -f reports/lay2graph/orders-result.json ]; then cat reports/lay2graph/orders-result.json; fi
           if [ -f reports/lay2graph/steps.jsonl ]; then cat reports/lay2graph/steps.jsonl; fi
       - name: Upload integration evidence

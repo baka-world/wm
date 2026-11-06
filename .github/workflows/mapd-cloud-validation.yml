@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           cd rgta-src
-          python -m unittest discover -s tests -t . -v 2>&1 | tee ../reports/rgta-tests.log
+          python -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee ../reports/rgta-tests.log
       - name: Run small event-based assignment benchmark
         shell: bash
         run: |

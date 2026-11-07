@@ -17,6 +17,7 @@
 - [多步世界模型与毕设准备情况检查](docs/world-model-readiness.md)
 - [CPU 状态转移模型和留出场景实验](docs/state-transition-experiment.md)
 - [状态转移模型第二轮验证方案](docs/state-transition-revision.md)
+- [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
 - [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)

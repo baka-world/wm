@@ -303,6 +303,13 @@ jobs:
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-world/report.html" clinic
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-learned/report.html" clinic_learned
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-rollout/report.html" clinic_rollout
+      - name: Check model-independent local-training dataset export
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.training_data export --download-sources --profile smoke \
+            --output "$RUNNER_TEMP/training-data-smoke"
+          python -m lab_transport.training_data validate --dataset "$RUNNER_TEMP/training-data-smoke"
       - name: Reproduce CPU state-transition model and held-out tests
         shell: bash
         run: |

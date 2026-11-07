@@ -43,6 +43,8 @@ python -m lab_transport.transition_data --scenario scenarios/laboratory_demo.jso
 
 输出 `transitions.jsonl` 与 `manifest.json`，不会覆盖非空输出目录。此命令只采集数据，不训练模型。[测试](../tests/test_transition_data.py)检查开启记录前后仿真结果一致、记录的分配与执行事件一致、隐藏服务剩余和未来任务不进入当前观测，以及任务释放和截止边界。
 
+[GitHub Actions 42325596977](https://github.com/lieuyimo/wm/actions/runs/42325596977)对提交 `3005c3fced0fbf4743656c674340c572ea185376` 通过 48 项测试、状态转移导出、自定义分配闭环和浏览器检查，并复算既有模型与多地点实验。[完整运行日志](../validation/logs/readiness-action-42325596977.log)已归档。
+
 ## 自定义分配策略接入点
 
 `Simulator.run(dispatch_policy=...)` 可在有空闲机器人和等待任务时，向回调传递当前 `Observation` 以及候选 `Assignment` 组合。回调可选择零个或多个分配；仿真器在应用整批分配前检查对象类型、任务与机器人当前可用性、以及同一机器人或任务是否被重复选中。空分配表示等待，可能导致仿真超时，不会被自动改写为成功。

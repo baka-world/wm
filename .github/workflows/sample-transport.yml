@@ -11,6 +11,7 @@ on:
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
       - 'validation/logs/multisite-*.log'
+      - 'validation/logs/readiness-*.log'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   pull_request:
@@ -22,6 +23,7 @@ on:
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
       - 'validation/logs/multisite-*.log'
+      - 'validation/logs/readiness-*.log'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:

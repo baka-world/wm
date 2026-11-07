@@ -1,0 +1,878 @@
+﻿2026-11-07T01:43:41.4187347Z Current runner version: '2.338.2'
+2026-11-07T01:43:41.4208090Z ##[group]Runner Image Provisioner
+2026-11-07T01:43:41.4208809Z Hosted Compute Agent
+2026-11-07T01:43:41.4209427Z Version: 20261028.624
+2026-11-07T01:43:41.4209994Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-07T01:43:41.4210637Z Build Date: 2026-10-28T21:51:42Z
+2026-11-07T01:43:41.4211222Z Worker ID: {885f92d4-15d7-4042-8493-7ea3049e2f94}
+2026-11-07T01:43:41.4211981Z Region: westus2
+2026-11-07T01:43:41.4212490Z Cloud: Azure
+2026-11-07T01:43:41.4212948Z ##[endgroup]
+2026-11-07T01:43:41.4214073Z ##[group]Operating System
+2026-11-07T01:43:41.4214667Z Ubuntu
+2026-11-07T01:43:41.4215116Z 24.04.5
+2026-11-07T01:43:41.4215629Z LTS
+2026-11-07T01:43:41.4216096Z ##[endgroup]
+2026-11-07T01:43:41.4216546Z ##[group]Runner Image
+2026-11-07T01:43:41.4217094Z Image: ubuntu-24.04
+2026-11-07T01:43:41.4217581Z Version: 20261101.360.1
+2026-11-07T01:43:41.4218686Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-07T01:43:41.4219961Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-07T01:43:41.4220831Z ##[endgroup]
+2026-11-07T01:43:41.4221929Z ##[group]GITHUB_TOKEN Permissions
+2026-11-07T01:43:41.4223550Z Contents: read
+2026-11-07T01:43:41.4224085Z Metadata: read
+2026-11-07T01:43:41.4224611Z ##[endgroup]
+2026-11-07T01:43:41.4226241Z Secret source: Actions
+2026-11-07T01:43:41.4227102Z Cache mode: write
+2026-11-07T01:43:41.4227714Z Prepare workflow directory
+2026-11-07T01:43:41.4483498Z Prepare all required actions
+2026-11-07T01:43:41.4522611Z Getting action download info
+2026-11-07T01:43:41.7678731Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-07T01:43:41.8774191Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-07T01:43:42.0450214Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-07T01:43:42.2768922Z Complete job name: prototype
+2026-11-07T01:43:42.3567201Z ##[group]Run actions/checkout@v4
+2026-11-07T01:43:42.3567894Z with:
+2026-11-07T01:43:42.3568252Z   repository: lieuyimo/wm
+2026-11-07T01:43:42.3571290Z   token: ***
+2026-11-07T01:43:42.3571853Z   ssh-strict: true
+2026-11-07T01:43:42.3572228Z   ssh-user: git
+2026-11-07T01:43:42.3572597Z   persist-credentials: true
+2026-11-07T01:43:42.3572995Z   clean: true
+2026-11-07T01:43:42.3573360Z   sparse-checkout-cone-mode: true
+2026-11-07T01:43:42.3573784Z   fetch-depth: 1
+2026-11-07T01:43:42.3574141Z   fetch-tags: false
+2026-11-07T01:43:42.3574507Z   show-progress: true
+2026-11-07T01:43:42.3574877Z   lfs: false
+2026-11-07T01:43:42.3575238Z   submodules: false
+2026-11-07T01:43:42.3575605Z   set-safe-directory: true
+2026-11-07T01:43:42.3576009Z   allow-unsafe-pr-checkout: false
+2026-11-07T01:43:42.3576651Z ##[endgroup]
+2026-11-07T01:43:42.6693365Z Syncing repository: lieuyimo/wm
+2026-11-07T01:43:42.6694925Z ##[group]Getting Git version info
+2026-11-07T01:43:42.6695792Z Working directory is '/home/runner/work/wm/wm'
+2026-11-07T01:43:42.6696879Z [command]/usr/bin/git version
+2026-11-07T01:43:42.6768291Z git version 2.56.0
+2026-11-07T01:43:42.6789764Z ##[endgroup]
+2026-11-07T01:43:42.6795420Z Temporarily overriding HOME='/home/runner/work/_temp/e49c03ff-5488-4931-afa4-ed132c940852' before making global git config changes
+2026-11-07T01:43:42.6797177Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T01:43:42.6800083Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-07T01:43:42.6845496Z Deleting the contents of '/home/runner/work/wm/wm'
+2026-11-07T01:43:42.6853434Z ##[group]Initializing the repository
+2026-11-07T01:43:42.6872728Z [command]/usr/bin/git init /home/runner/work/wm/wm
+2026-11-07T01:43:42.6966378Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-07T01:43:42.6967515Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-07T01:43:42.6968579Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-07T01:43:42.6969164Z hint: call:
+2026-11-07T01:43:42.6969496Z hint:
+2026-11-07T01:43:42.6969923Z hint: 	git config --global init.defaultBranch <name>
+2026-11-07T01:43:42.6970416Z hint:
+2026-11-07T01:43:42.6970880Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-07T01:43:42.6971782Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-07T01:43:42.6972462Z hint:
+2026-11-07T01:43:42.6972801Z hint: 	git branch -m <name>
+2026-11-07T01:43:42.6973181Z hint:
+2026-11-07T01:43:42.6973704Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-07T01:43:42.6978859Z Initialized empty Git repository in /home/runner/work/wm/wm/.git/
+2026-11-07T01:43:42.6993809Z [command]/usr/bin/git remote add origin https://github.com/lieuyimo/wm
+2026-11-07T01:43:42.7043890Z ##[endgroup]
+2026-11-07T01:43:42.7044852Z ##[group]Disabling automatic garbage collection
+2026-11-07T01:43:42.7046016Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-07T01:43:42.7084370Z ##[endgroup]
+2026-11-07T01:43:42.7085292Z ##[group]Setting up auth
+2026-11-07T01:43:42.7090605Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T01:43:42.7126016Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T01:43:42.7537547Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T01:43:42.7575609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T01:43:42.7776590Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T01:43:42.7821811Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T01:43:42.8025375Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-07T01:43:42.8066005Z ##[endgroup]
+2026-11-07T01:43:42.8066645Z ##[group]Fetching the repository
+2026-11-07T01:43:42.8077066Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b687416a0975f8979a49de47843dcf16ef3db6f9:refs/remotes/pull/2/merge
+2026-11-07T01:43:43.2769983Z From https://github.com/lieuyimo/wm
+2026-11-07T01:43:43.2771409Z  * [new ref]         b687416a0975f8979a49de47843dcf16ef3db6f9 -> pull/2/merge
+2026-11-07T01:43:43.2775009Z ##[endgroup]
+2026-11-07T01:43:43.2776414Z ##[group]Determining the checkout info
+2026-11-07T01:43:43.2778465Z ##[endgroup]
+2026-11-07T01:43:43.2782633Z [command]/usr/bin/git sparse-checkout disable
+2026-11-07T01:43:43.2836785Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-07T01:43:43.2870085Z ##[group]Checking out the ref
+2026-11-07T01:43:43.2875102Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2/merge
+2026-11-07T01:43:43.3042549Z Note: switching to 'refs/remotes/pull/2/merge'.
+2026-11-07T01:43:43.3043448Z 
+2026-11-07T01:43:43.3044127Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-07T01:43:43.3045400Z changes and commit them, and you can discard any commits you make in this
+2026-11-07T01:43:43.3046397Z state without impacting any branches by switching back to a branch.
+2026-11-07T01:43:43.3046975Z 
+2026-11-07T01:43:43.3047424Z If you want to create a new branch to retain commits you create, you may
+2026-11-07T01:43:43.3048342Z do so (now or later) by using -c with the switch command. Example:
+2026-11-07T01:43:43.3048913Z 
+2026-11-07T01:43:43.3049183Z   git switch -c <new-branch-name>
+2026-11-07T01:43:43.3049868Z 
+2026-11-07T01:43:43.3050140Z Or undo this operation with:
+2026-11-07T01:43:43.3050548Z 
+2026-11-07T01:43:43.3050779Z   git switch -
+2026-11-07T01:43:43.3051117Z 
+2026-11-07T01:43:43.3052231Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-07T01:43:43.3053357Z 
+2026-11-07T01:43:43.3054295Z HEAD is now at b687416 Merge 3005c3fced0fbf4743656c674340c572ea185376 into ce8c218162225271d255c9357c57859883f382e3
+2026-11-07T01:43:43.3056948Z ##[endgroup]
+2026-11-07T01:43:43.3094096Z [command]/usr/bin/git log -1 --format=%H
+2026-11-07T01:43:43.3122221Z b687416a0975f8979a49de47843dcf16ef3db6f9
+2026-11-07T01:43:43.4425492Z ##[group]Run actions/setup-python@v5
+2026-11-07T01:43:43.4426495Z with:
+2026-11-07T01:43:43.4427218Z   python-version: 3.11
+2026-11-07T01:43:43.4428037Z   check-latest: false
+2026-11-07T01:43:43.4435889Z   token: ***
+2026-11-07T01:43:43.4436658Z   update-environment: true
+2026-11-07T01:43:43.4437545Z   allow-prereleases: false
+2026-11-07T01:43:43.4438529Z   freethreaded: false
+2026-11-07T01:43:43.4439319Z ##[endgroup]
+2026-11-07T01:43:43.5527761Z ##[group]Installed versions
+2026-11-07T01:43:43.5611568Z (node:2128) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T01:43:43.5614843Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T01:43:43.5616481Z Successfully set up CPython (3.11.18)
+2026-11-07T01:43:43.5618032Z ##[endgroup]
+2026-11-07T01:43:43.5764503Z ##[group]Run python -m unittest discover -s tests -v
+2026-11-07T01:43:43.5765873Z [36;1mpython -m unittest discover -s tests -v[0m
+2026-11-07T01:43:43.5797987Z shell: /usr/bin/bash -e {0}
+2026-11-07T01:43:43.5798852Z env:
+2026-11-07T01:43:43.5799735Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:43.5801235Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:43.5802917Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:43.5804273Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:43.5805705Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:43.5807140Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:43.5808291Z ##[endgroup]
+2026-11-07T01:43:43.9674078Z test_direction_and_source_integrity (test_hospital_graph.HospitalGraphTests.test_direction_and_source_integrity) ... ok
+2026-11-07T01:43:43.9801132Z test_missing_deadline_is_not_reported_as_a_clinical_success (test_hospital_graph.HospitalGraphTests.test_missing_deadline_is_not_reported_as_a_clinical_success) ... ok
+2026-11-07T01:43:43.9803657Z test_two_robot_fallback_can_clear_a_blocked_bottleneck (test_hospital_graph.HospitalGraphTests.test_two_robot_fallback_can_clear_a_blocked_bottleneck) ... ok
+2026-11-07T01:43:44.1013680Z test_cli_compare_creates_results_and_will_not_overwrite (test_lab_transport.ReportTests.test_cli_compare_creates_results_and_will_not_overwrite) ... ok
+2026-11-07T01:43:44.1125148Z test_report_escapes_scenario_text (test_lab_transport.ReportTests.test_report_escapes_scenario_text) ... ok
+2026-11-07T01:43:44.1135313Z test_invalid_and_disconnected_inputs_are_rejected (test_lab_transport.ScenarioTests.test_invalid_and_disconnected_inputs_are_rejected) ... ok
+2026-11-07T01:43:44.1184418Z test_optional_specimen_metadata_is_preserved (test_lab_transport.ScenarioTests.test_optional_specimen_metadata_is_preserved) ... ok
+2026-11-07T01:43:44.2540318Z test_demo_completes_across_service_time_seeds (test_lab_transport.SimulationTests.test_demo_completes_across_service_time_seeds) ... ok
+2026-11-07T01:43:44.2549218Z test_outage_delays_service_and_becomes_an_observation (test_lab_transport.SimulationTests.test_outage_delays_service_and_becomes_an_observation) ... ok
+2026-11-07T01:43:44.2687877Z test_reproducible_and_duration_draws_match_across_policies (test_lab_transport.SimulationTests.test_reproducible_and_duration_draws_match_across_policies) ... ok
+2026-11-07T01:43:44.2696719Z test_robots_can_leave_each_others_occupied_destinations (test_lab_transport.SimulationTests.test_robots_can_leave_each_others_occupied_destinations) ... ok
+2026-11-07T01:43:44.2742187Z test_simulator_cannot_be_reused_with_stale_state (test_lab_transport.SimulationTests.test_simulator_cannot_be_reused_with_stale_state) ... ok
+2026-11-07T01:43:44.2813152Z test_six_samples_finish_with_valid_lifecycles_and_grid_safety (test_lab_transport.SimulationTests.test_six_samples_finish_with_valid_lifecycles_and_grid_safety) ... ok
+2026-11-07T01:43:44.2820799Z test_timeout_is_not_reported_as_success (test_lab_transport.SimulationTests.test_timeout_is_not_reported_as_success) ... ok
+2026-11-07T01:43:44.2826308Z test_dispatch_does_not_observe_hidden_service_countdown (test_lab_transport.WorldModelTests.test_dispatch_does_not_observe_hidden_service_countdown) ... ok
+2026-11-07T01:43:44.2827703Z test_forecast_depends_on_action_and_updates_from_observed_service (test_lab_transport.WorldModelTests.test_forecast_depends_on_action_and_updates_from_observed_service) ... ok
+2026-11-07T01:43:44.2838637Z test_forecast_does_not_access_future_outage_or_actual_duration (test_lab_transport.WorldModelTests.test_forecast_does_not_access_future_outage_or_actual_duration) ... ok
+2026-11-07T01:43:44.2845887Z test_features_ignore_future_outages_and_future_task_arrivals (test_learned_model.LearnedModelTests.test_features_ignore_future_outages_and_future_task_arrivals) ... ok
+2026-11-07T01:43:44.2895171Z test_learned_policy_runs_closed_loop_with_valid_forecasts (test_learned_model.LearnedModelTests.test_learned_policy_runs_closed_loop_with_valid_forecasts) ... ok
+2026-11-07T01:43:44.2917126Z test_learned_rule_combines_deadline_order_and_learned_prediction (test_learned_model.LearnedModelTests.test_learned_rule_combines_deadline_order_and_learned_prediction) ... ok
+2026-11-07T01:43:44.2921044Z test_train_and_test_seeds_are_disjoint_and_reproducible (test_learned_model.LearnedModelTests.test_train_and_test_seeds_are_disjoint_and_reproducible) ... ok
+2026-11-07T01:43:44.2929461Z test_training_generalizes_simple_synthetic_relation_and_preserves_order (test_learned_model.LearnedModelTests.test_training_generalizes_simple_synthetic_relation_and_preserves_order) ... ok
+2026-11-07T01:43:44.2937498Z test_unfinished_assignments_are_not_treated_as_completed_labels (test_learned_model.LearnedModelTests.test_unfinished_assignments_are_not_treated_as_completed_labels) ... ok
+2026-11-07T01:43:44.2938889Z test_deduplicates_measurements_and_never_combines_patients (test_mimic_workload.MimicWorkloadTests.test_deduplicates_measurements_and_never_combines_patients) ... ok
+2026-11-07T01:43:44.2940168Z test_rejects_insufficient_single_patient_data (test_mimic_workload.MimicWorkloadTests.test_rejects_insufficient_single_patient_data) ... ok
+2026-11-07T01:43:44.2946746Z test_replay_requires_explicit_time_assumption_and_preserves_order (test_mimic_workload.MimicWorkloadTests.test_replay_requires_explicit_time_assumption_and_preserves_order) ... ok
+2026-11-07T01:43:44.2952395Z test_fixed_case_is_paired_and_training_seeds_are_disjoint (test_multisite_rollout.MultiSiteRolloutTests.test_fixed_case_is_paired_and_training_seeds_are_disjoint) ... ok
+2026-11-07T01:43:44.2956598Z test_horizon_is_unknown_not_a_completion_or_infeasibility (test_multisite_rollout.MultiSiteRolloutTests.test_horizon_is_unknown_not_a_completion_or_infeasibility) ... ok
+2026-11-07T01:43:44.2959841Z test_rejects_unpinned_clinic_sources (test_multisite_rollout.MultiSiteRolloutTests.test_rejects_unpinned_clinic_sources) ... ok
+2026-11-07T01:43:44.2980882Z test_rollout_cannot_observe_future_or_hidden_service_countdown (test_multisite_rollout.MultiSiteRolloutTests.test_rollout_cannot_observe_future_or_hidden_service_countdown) ... ok
+2026-11-07T01:43:44.3152747Z test_rollout_runs_closed_loop_and_preserves_discrete_safety (test_multisite_rollout.MultiSiteRolloutTests.test_rollout_runs_closed_loop_and_preserves_discrete_safety) ... ok
+2026-11-07T01:43:44.3283735Z test_attested_packaging_and_temperature_are_not_assumed (test_specimen_rules.SpecimenRuleTests.test_attested_packaging_and_temperature_are_not_assumed) ... ok
+2026-11-07T01:43:44.3288703Z test_invalid_times_and_missing_sources_are_rejected (test_specimen_rules.SpecimenRuleTests.test_invalid_times_and_missing_sources_are_rejected) ... ok
+2026-11-07T01:43:44.3290150Z test_receipt_and_analysis_are_distinct_and_missing_is_unknown (test_specimen_rules.SpecimenRuleTests.test_receipt_and_analysis_are_distinct_and_missing_is_unknown) ... ok
+2026-11-07T01:43:44.3291603Z test_specific_type_required_and_other_profiles_do_not_apply (test_specimen_rules.SpecimenRuleTests.test_specific_type_required_and_other_profiles_do_not_apply) ... ok
+2026-11-07T01:43:44.3298686Z test_explicit_rule_produces_proxy_and_prioritizes_earlier_deadline (test_time_and_rule_dispatch.RuleDispatchTests.test_explicit_rule_produces_proxy_and_prioritizes_earlier_deadline) ... ok
+2026-11-07T01:43:44.3305536Z test_overdue_task_is_not_deprioritized_due_to_its_own_lateness_penalty (test_time_and_rule_dispatch.RuleDispatchTests.test_overdue_task_is_not_deprioritized_due_to_its_own_lateness_penalty) ... ok
+2026-11-07T01:43:44.3308152Z test_rule_requires_matching_type_and_missing_collection_stays_unknown (test_time_and_rule_dispatch.RuleDispatchTests.test_rule_requires_matching_type_and_missing_collection_stays_unknown) ... ok
+2026-11-07T01:43:44.3310026Z test_station_specific_jitter_does_not_change_other_station (test_time_and_rule_dispatch.TimeModelTests.test_station_specific_jitter_does_not_change_other_station) ... ok
+2026-11-07T01:43:44.3311404Z test_subdivision_preserves_direction_and_uses_shared_reverse_lane (test_time_and_rule_dispatch.TimeModelTests.test_subdivision_preserves_direction_and_uses_shared_reverse_lane) ... ok
+2026-11-07T01:43:44.4514227Z test_cli_exports_factual_rows_without_overwriting (test_transition_data.TransitionDataTests.test_cli_exports_factual_rows_without_overwriting) ... ok
+2026-11-07T01:43:44.4525137Z test_future_arrivals_and_private_service_countdowns_are_not_inputs (test_transition_data.TransitionDataTests.test_future_arrivals_and_private_service_countdowns_are_not_inputs) ... ok
+2026-11-07T01:43:44.4530440Z test_injected_policy_may_choose_to_wait_and_timeout_is_recorded (test_transition_data.TransitionDataTests.test_injected_policy_may_choose_to_wait_and_timeout_is_recorded) ... ok
+2026-11-07T01:43:44.4583212Z test_injected_policy_receives_current_candidates_and_runs_closed_loop (test_transition_data.TransitionDataTests.test_injected_policy_receives_current_candidates_and_runs_closed_loop) ... ok
+2026-11-07T01:43:44.4588039Z test_invalid_injected_batch_is_rejected_before_any_assignment (test_transition_data.TransitionDataTests.test_invalid_injected_batch_is_rejected_before_any_assignment) ... ok
+2026-11-07T01:43:44.4596110Z test_recorded_metadata_is_declared_only_and_excludes_absolute_collection_time (test_transition_data.TransitionDataTests.test_recorded_metadata_is_declared_only_and_excludes_absolute_collection_time) ... ok
+2026-11-07T01:43:44.4685527Z test_recording_does_not_change_results_and_actions_match_events (test_transition_data.TransitionDataTests.test_recording_does_not_change_results_and_actions_match_events) ... ok
+2026-11-07T01:43:44.4696325Z test_release_boundary_and_time_limit_are_explicit (test_transition_data.TransitionDataTests.test_release_boundary_and_time_limit_are_explicit) ... ok
+2026-11-07T01:43:44.4697195Z 
+2026-11-07T01:43:44.4697450Z ----------------------------------------------------------------------
+2026-11-07T01:43:44.4697927Z Ran 48 tests in 0.503s
+2026-11-07T01:43:44.4698124Z 
+2026-11-07T01:43:44.4698233Z OK
+2026-11-07T01:43:44.4886877Z ##[group]Run set -euo pipefail
+2026-11-07T01:43:44.4887235Z [36;1mset -euo pipefail[0m
+2026-11-07T01:43:44.4887636Z [36;1mpython -m lab_transport.transition_data --scenario scenarios/laboratory_demo.json \[0m
+2026-11-07T01:43:44.4888157Z [36;1m  --policy world --seed 42 --output "$RUNNER_TEMP/observable-transitions"[0m
+2026-11-07T01:43:44.4888521Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:43:44.4888914Z [36;1mimport json, os[0m
+2026-11-07T01:43:44.4889155Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:43:44.4889399Z [36;1m[0m
+2026-11-07T01:43:44.4889681Z [36;1mroot = Path(os.environ['RUNNER_TEMP']) / 'observable-transitions'[0m
+2026-11-07T01:43:44.4890097Z [36;1mmanifest = json.loads((root / 'manifest.json').read_text())[0m
+2026-11-07T01:43:44.4890558Z [36;1mrows = [json.loads(line) for line in (root / 'transitions.jsonl').read_text().splitlines()][0m
+2026-11-07T01:43:44.4891132Z [36;1massert rows and len(rows) == manifest['bookkeeping_only_not_model_input']['transition_count'][0m
+2026-11-07T01:43:44.4891868Z [36;1massert rows[-1]['termination'] == 'completed' and rows[-1]['next_boundary'] == 'end_of_run'[0m
+2026-11-07T01:43:44.4892323Z [36;1massert 'service_remaining' not in json.dumps(rows)[0m
+2026-11-07T01:43:44.4892711Z [36;1massert 'S03' not in [s['id'] for s in rows[0]['observation']['samples']][0m
+2026-11-07T01:43:44.4893220Z [36;1mprint('Observable transitions verified: synthetic inputs, factual actions and explicit boundaries')[0m
+2026-11-07T01:43:44.4893654Z [36;1mPY[0m
+2026-11-07T01:43:44.4893863Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:43:44.4894096Z [36;1mimport os[0m
+2026-11-07T01:43:44.4894318Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:43:44.4894610Z [36;1mfrom lab_transport.domain import load_scenario[0m
+2026-11-07T01:43:44.4894932Z [36;1mfrom lab_transport.report import write_run[0m
+2026-11-07T01:43:44.4895248Z [36;1mfrom lab_transport.simulation import Simulator[0m
+2026-11-07T01:43:44.4895518Z [36;1m[0m
+2026-11-07T01:43:44.4895742Z [36;1mdef choose(observation, candidates):[0m
+2026-11-07T01:43:44.4896042Z [36;1m    robots, samples, chosen = set(), set(), [][0m
+2026-11-07T01:43:44.4896328Z [36;1m    for candidate in candidates:[0m
+2026-11-07T01:43:44.4896703Z [36;1m        if candidate.robot_id not in robots and candidate.sample_id not in samples:[0m
+2026-11-07T01:43:44.4897079Z [36;1m            chosen.append(candidate)[0m
+2026-11-07T01:43:44.4897373Z [36;1m            robots.add(candidate.robot_id)[0m
+2026-11-07T01:43:44.4897665Z [36;1m            samples.add(candidate.sample_id)[0m
+2026-11-07T01:43:44.4897943Z [36;1m    return chosen[0m
+2026-11-07T01:43:44.4898160Z [36;1m[0m
+2026-11-07T01:43:44.4898548Z [36;1mresult = Simulator(load_scenario('scenarios/laboratory_demo.json'), 'world', 42).run(dispatch_policy=choose)[0m
+2026-11-07T01:43:44.4899103Z [36;1massert result['policy'] == 'external' and result['summary']['completed_count'] == 6[0m
+2026-11-07T01:43:44.4899593Z [36;1mwrite_run(result, Path(os.environ['RUNNER_TEMP']) / 'external-policy-demo')[0m
+2026-11-07T01:43:44.4900040Z [36;1mprint('Injected policy verified: synthetic two-robot closed loop')[0m
+2026-11-07T01:43:44.4900369Z [36;1mPY[0m
+2026-11-07T01:43:44.4900705Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/external-policy-demo/report.html" external[0m
+2026-11-07T01:43:44.4901231Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:43:44.4902092Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/external-policy-demo/report.html?step=1" \[0m
+2026-11-07T01:43:44.4902681Z [36;1m  > "$RUNNER_TEMP/external-policy-dom.html" 2> "$RUNNER_TEMP/external-policy-chrome.log"[0m
+2026-11-07T01:43:44.4903083Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:43:44.4903340Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:43:44.4903620Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:43:44.4903866Z [36;1mimport os[0m
+2026-11-07T01:43:44.4904071Z [36;1m[0m
+2026-11-07T01:43:44.4904433Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:43:44.4904693Z [36;1m    def __init__(self):[0m
+2026-11-07T01:43:44.4904941Z [36;1m        super().__init__()[0m
+2026-11-07T01:43:44.4905201Z [36;1m        self.in_script = False[0m
+2026-11-07T01:43:44.4905462Z [36;1m        self.visible = ''[0m
+2026-11-07T01:43:44.4905736Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:43:44.4906042Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T01:43:44.4906435Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:43:44.4906723Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T01:43:44.4907011Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:43:44.4907302Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T01:43:44.4907574Z [36;1m[0m
+2026-11-07T01:43:44.4907775Z [36;1mcheck = Check()[0m
+2026-11-07T01:43:44.4908147Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'external-policy-dom.html').read_text())[0m
+2026-11-07T01:43:44.4908653Z [36;1massert '调度策略：external' in check.visible and '可选择' in check.visible[0m
+2026-11-07T01:43:44.4909098Z [36;1massert '最终完成：6/6' in check.visible and 'undefined' not in check.visible[0m
+2026-11-07T01:43:44.4909553Z [36;1mprint('Browser DOM verified: injected-policy playback and candidate labels')[0m
+2026-11-07T01:43:44.4909916Z [36;1mPY[0m
+2026-11-07T01:43:44.4930404Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:43:44.4930788Z env:
+2026-11-07T01:43:44.4931055Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:44.4931443Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:44.4931960Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:44.4932308Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:44.4932654Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:44.4933017Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:44.4933330Z ##[endgroup]
+2026-11-07T01:43:44.5594854Z {"transitions": 55, "termination": "completed", "schema_version": 1}
+2026-11-07T01:43:44.5878005Z Observable transitions verified: synthetic inputs, factual actions and explicit boundaries
+2026-11-07T01:43:44.6411827Z Injected policy verified: synthetic two-robot closed loop
+2026-11-07T01:43:44.8597318Z Playback controls verified: injected policy candidates , slider and play
+2026-11-07T01:43:55.0898127Z Browser DOM verified: injected-policy playback and candidate labels
+2026-11-07T01:43:55.0959300Z ##[group]Run python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+2026-11-07T01:43:55.0959862Z [36;1mpython -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"[0m
+2026-11-07T01:43:55.0978178Z shell: /usr/bin/bash -e {0}
+2026-11-07T01:43:55.0978387Z env:
+2026-11-07T01:43:55.0978610Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.0978959Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:55.0979285Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.0979582Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.0979875Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.0980160Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:55.0980429Z ##[endgroup]
+2026-11-07T01:43:55.1641089Z {"scenario": "示例实验室样本转运（合成数据）", "seed": 42, "note": "单场景单种子示例，不能据此推断普遍性能。", "policies": {"nearest": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": null, "blocked_move_attempts": 6}, "world": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 55, "mean_completion_ticks": 31.167, "forecast_mae_ticks": 3.428, "blocked_move_attempts": 11}}}
+2026-11-07T01:43:55.1734576Z ##[group]Run node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+2026-11-07T01:43:55.1735094Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"[0m
+2026-11-07T01:43:55.1753381Z shell: /usr/bin/bash -e {0}
+2026-11-07T01:43:55.1753590Z env:
+2026-11-07T01:43:55.1753802Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.1754144Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:55.1754487Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.1754784Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.1755077Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.1755379Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:55.1755635Z ##[endgroup]
+2026-11-07T01:43:55.2044432Z Playback controls verified: candidate predictions , slider and play
+2026-11-07T01:43:55.2102145Z ##[group]Run python -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"
+2026-11-07T01:43:55.2103208Z [36;1mpython -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"[0m
+2026-11-07T01:43:55.2120707Z shell: /usr/bin/bash -e {0}
+2026-11-07T01:43:55.2120928Z env:
+2026-11-07T01:43:55.2121149Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2121502Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:55.2122140Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2122440Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2122730Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2123062Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:55.2123320Z ##[endgroup]
+2026-11-07T01:43:55.2499888Z ##[group]Run set -euo pipefail
+2026-11-07T01:43:55.2500147Z [36;1mset -euo pipefail[0m
+2026-11-07T01:43:55.2500818Z [36;1msource_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'[0m
+2026-11-07T01:43:55.2501916Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"[0m
+2026-11-07T01:43:55.2502744Z [36;1mconfig_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_fleet_server/launch/fleet_adapters/tiago_fleet_adapter.launch.xml'[0m
+2026-11-07T01:43:55.2503533Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$config_url" --output "$RUNNER_TEMP/tiago.launch.xml"[0m
+2026-11-07T01:43:55.2504275Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"[0m
+2026-11-07T01:43:55.2504883Z [36;1mpython tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"[0m
+2026-11-07T01:43:55.2505375Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"[0m
+2026-11-07T01:43:55.2522591Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:43:55.2522859Z env:
+2026-11-07T01:43:55.2523080Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2523427Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:55.2523772Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2524071Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2524367Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.2524662Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:55.2524919Z ##[endgroup]
+2026-11-07T01:43:55.6035442Z {"scenario": "Tartu 医院公开路网适配（功能测试任务）", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "公开路网与人工设置的功能测试任务；图边为抽象步，不是实际时间或临床证据。", "metadata": null, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": null, "blocked_move_attempts": 32}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": 10.5, "blocked_move_attempts": 32}}}
+2026-11-07T01:43:55.6580118Z nearest: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-07T01:43:55.6581071Z world: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-07T01:43:55.6989980Z Graph playback verified: original source scope, tasks and timing labels
+2026-11-07T01:43:55.8378152Z ##[group]Run set -euo pipefail
+2026-11-07T01:43:55.8378450Z [36;1mset -euo pipefail[0m
+2026-11-07T01:43:55.8378798Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:43:55.8379305Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/hospital-run/world/report.html?step=1" \[0m
+2026-11-07T01:43:55.8379756Z [36;1m  > "$RUNNER_TEMP/hospital-dom.html" 2> "$RUNNER_TEMP/hospital-chrome.log"[0m
+2026-11-07T01:43:55.8380067Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:43:55.8380275Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:43:55.8380515Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:43:55.8380727Z [36;1mimport os[0m
+2026-11-07T01:43:55.8380902Z [36;1m[0m
+2026-11-07T01:43:55.8381066Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:43:55.8381269Z [36;1m    def __init__(self):[0m
+2026-11-07T01:43:55.8381474Z [36;1m        super().__init__()[0m
+2026-11-07T01:43:55.8381942Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-07T01:43:55.8382311Z [36;1m        self.visible_text = ''[0m
+2026-11-07T01:43:55.8382614Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:43:55.8382881Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-07T01:43:55.8383119Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-07T01:43:55.8383347Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:43:55.8383573Z [36;1m        self.visible_text += data[0m
+2026-11-07T01:43:55.8383788Z [36;1m[0m
+2026-11-07T01:43:55.8383945Z [36;1mcheck = Check()[0m
+2026-11-07T01:43:55.8384239Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'hospital-dom.html').read_text())[0m
+2026-11-07T01:43:55.8384649Z [36;1massert (check.circles, check.lines) == (32, 63), (check.circles, check.lines)[0m
+2026-11-07T01:43:55.8384981Z [36;1massert '未设置时限' in check.visible_text[0m
+2026-11-07T01:43:55.8385221Z [36;1massert '功能测试设置' in check.visible_text[0m
+2026-11-07T01:43:55.8385612Z [36;1mprint('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')[0m
+2026-11-07T01:43:55.8385966Z [36;1mPY[0m
+2026-11-07T01:43:55.8403813Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:43:55.8404086Z env:
+2026-11-07T01:43:55.8404310Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.8404652Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:55.8404985Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.8405276Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.8405563Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:55.8405860Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:55.8406115Z ##[endgroup]
+2026-11-07T01:43:56.7507014Z Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline
+2026-11-07T01:43:56.7566033Z ##[group]Run set -euo pipefail
+2026-11-07T01:43:56.7566446Z [36;1mset -euo pipefail[0m
+2026-11-07T01:43:56.7566707Z [36;1mbase='https://physionet.org/files/mimic-iv-demo/2.2'[0m
+2026-11-07T01:43:56.7567198Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/hosp/d_labitems.csv.gz" -o "$RUNNER_TEMP/d_labitems.csv.gz"[0m
+2026-11-07T01:43:56.7567825Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/hosp/labevents.csv.gz" -o "$RUNNER_TEMP/labevents.csv.gz"[0m
+2026-11-07T01:43:56.7568414Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/icu/icustays.csv.gz" -o "$RUNNER_TEMP/icustays.csv.gz"[0m
+2026-11-07T01:43:56.7568939Z [36;1mpython -m lab_transport.mimic_workload --labitems "$RUNNER_TEMP/d_labitems.csv.gz" \[0m
+2026-11-07T01:43:56.7569413Z [36;1m  --labevents "$RUNNER_TEMP/labevents.csv.gz" --icustays "$RUNNER_TEMP/icustays.csv.gz" \[0m
+2026-11-07T01:43:56.7569812Z [36;1m  --output "$RUNNER_TEMP/mimic-timeline.json"[0m
+2026-11-07T01:43:56.7570198Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:43:56.7570733Z [36;1m  --workload "$RUNNER_TEMP/mimic-timeline.json" --seconds-per-tick 60 --output "$RUNNER_TEMP/mimic-hospital"[0m
+2026-11-07T01:43:56.7571282Z [36;1mpython tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-hospital" 60[0m
+2026-11-07T01:43:56.7571981Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/mimic-hospital/world/report.html" mimic[0m
+2026-11-07T01:43:56.7589357Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:43:56.7589627Z env:
+2026-11-07T01:43:56.7589845Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:56.7590187Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:43:56.7590510Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:56.7590810Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:56.7591119Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:43:56.7591431Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:43:56.7591895Z ##[endgroup]
+2026-11-07T01:44:03.7328861Z {"source": "https://doi.org/10.13026/dp1f-ex47", "sample_count": 4, "relative_timeline": "single ICU stay", "transport_requests": "not observed"}
+2026-11-07T01:44:03.8817435Z {"scenario": "Tartu 路网与 MIMIC 单次 ICU 采样时序（跨机构仿真）", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "跨机构采样时序仅作测试输入；路线映射及步长为假设，不是实测运输或临床证据。", "metadata": {"workload_kind": "mimic_single_stay", "dataset_doi": "https://doi.org/10.13026/dp1f-ex47", "timing_assumption": "每步对应 60 秒仅为测试设定，不是实际路段耗时。", "mapping_assumption": "采样记录假设为 ICU 到实验室的任务；原始数据未记录机器人运输路线。"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 555, "mean_completion_ticks": 33.25, "forecast_mae_ticks": null, "blocked_move_attempts": 26}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 555, "mean_completion_ticks": 33.25, "forecast_mae_ticks": 5.75, "blocked_move_attempts": 26}}}
+2026-11-07T01:44:03.9289881Z nearest: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T01:44:03.9291062Z world: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T01:44:03.9693995Z Graph playback verified: mimic source scope, tasks and timing labels
+2026-11-07T01:44:03.9775440Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:03.9775707Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:03.9776070Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:44:03.9776691Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T01:44:03.9777124Z [36;1m  --workload "$RUNNER_TEMP/mimic-timeline.json" --output "$RUNNER_TEMP/mimic-nominal"[0m
+2026-11-07T01:44:03.9777623Z [36;1mpython tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-nominal" 10[0m
+2026-11-07T01:44:03.9778132Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/mimic-nominal/world/report.html" nominal[0m
+2026-11-07T01:44:03.9795837Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:03.9796101Z env:
+2026-11-07T01:44:03.9796323Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:03.9796676Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:03.9797010Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:03.9797297Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:03.9797588Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:03.9797881Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:03.9798136Z ##[endgroup]
+2026-11-07T01:44:04.6076994Z {"scenario": "Tartu 路网与 MIMIC 单次 ICU 采样时序（跨机构仿真） · 标称时间估计", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "跨机构采样时序及运输映射为测试输入，时间为模型估计，不是实测运输或临床证据。", "metadata": {"workload_kind": "mimic_single_stay", "dataset_doi": "https://doi.org/10.13026/dp1f-ex47", "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。", "mapping_assumption": "采样记录假设为 ICU 到实验室的任务；原始数据未记录机器人运输路线。", "time_model": "nominal_source_based", "seconds_per_tick": 10, "reference_metres": 67.2, "metres_per_pixel": 0.032140407, "nominal_speed_m_per_s": 0.5, "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 3263, "mean_completion_ticks": 70.5, "forecast_mae_ticks": null, "blocked_move_attempts": 41}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 3263, "mean_completion_ticks": 70.5, "forecast_mae_ticks": 10.167, "blocked_move_attempts": 41}}}
+2026-11-07T01:44:04.7560428Z nearest: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T01:44:04.7562474Z world: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T01:44:04.8659687Z Graph playback verified: nominal source scope, tasks and timing labels
+2026-11-07T01:44:04.8767554Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:04.8767867Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:04.8768220Z [36;1mpython -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:44:04.8768715Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T01:44:04.8769205Z [36;1m  --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \[0m
+2026-11-07T01:44:04.8769621Z [36;1m  --output "$RUNNER_TEMP/rule-aware"[0m
+2026-11-07T01:44:04.8769923Z [36;1mpython tests/check_rule_run.py "$RUNNER_TEMP/rule-aware"[0m
+2026-11-07T01:44:04.8770326Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/rule-aware/rule/report.html" rule[0m
+2026-11-07T01:44:04.8789439Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:04.8789716Z env:
+2026-11-07T01:44:04.8789930Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:04.8790295Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:04.8790759Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:04.8791051Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:04.8791338Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:04.8791823Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:04.8792110Z ##[endgroup]
+2026-11-07T01:44:04.9969127Z {"scenario": "公开路网与跨机构样本规则（人工测试）", "note": "跨机构人工样本，仅对比模拟调度；代理上限不是实验室实际接收或临床合规。", "policies": {"nearest": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": null, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "world": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "rule": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 85.5, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S02"}}}
+2026-11-07T01:44:05.0271815Z nearest: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T01:44:05.0272239Z world: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T01:44:05.0272594Z rule: 2/2 synthetic tasks; first=S02; delivery-proxy tardiness=0
+2026-11-07T01:44:05.0567455Z Graph playback verified: rule source scope, tasks and timing labels
+2026-11-07T01:44:05.0626913Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:05.0627186Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:05.0627532Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:44:05.0628064Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/rule-aware/rule/report.html?step=1" \[0m
+2026-11-07T01:44:05.0628490Z [36;1m  > "$RUNNER_TEMP/rule-dom.html" 2> "$RUNNER_TEMP/rule-chrome.log"[0m
+2026-11-07T01:44:05.0628784Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:44:05.0628997Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:44:05.0629232Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:44:05.0629445Z [36;1mimport os[0m
+2026-11-07T01:44:05.0629612Z [36;1m[0m
+2026-11-07T01:44:05.0629777Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:44:05.0629979Z [36;1m    def __init__(self):[0m
+2026-11-07T01:44:05.0630187Z [36;1m        super().__init__()[0m
+2026-11-07T01:44:05.0630446Z [36;1m        self.in_script = False[0m
+2026-11-07T01:44:05.0630658Z [36;1m        self.visible = ''[0m
+2026-11-07T01:44:05.0630923Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-07T01:44:05.0631175Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:44:05.0631441Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T01:44:05.0631927Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-07T01:44:05.0632183Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-07T01:44:05.0632421Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:44:05.0632668Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T01:44:05.0632932Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:44:05.0633185Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T01:44:05.0633429Z [36;1m[0m
+2026-11-07T01:44:05.0633586Z [36;1mcheck = Check()[0m
+2026-11-07T01:44:05.0633877Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'rule-dom.html').read_text())[0m
+2026-11-07T01:44:05.0634292Z [36;1massert (check.circles, check.lines) == (76, 112), (check.circles, check.lines)[0m
+2026-11-07T01:44:05.0634700Z [36;1massert '按时交付不等于' in check.visible and '交付代理上限' in check.visible[0m
+2026-11-07T01:44:05.0635205Z [36;1massert '仿真时间' in check.visible and '预测第' in check.visible[0m
+2026-11-07T01:44:05.0635628Z [36;1mprint('Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice')[0m
+2026-11-07T01:44:05.0636107Z [36;1mPY[0m
+2026-11-07T01:44:05.0653734Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:05.0653999Z env:
+2026-11-07T01:44:05.0654217Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.0654557Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:05.0654890Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.0655189Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.0655487Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.0655781Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:05.0656033Z ##[endgroup]
+2026-11-07T01:44:05.8633190Z Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice
+2026-11-07T01:44:05.8698828Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:05.8699248Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:05.8699801Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:44:05.8700664Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/mimic-hospital/world/report.html?step=1" \[0m
+2026-11-07T01:44:05.8701409Z [36;1m  > "$RUNNER_TEMP/mimic-dom.html" 2> "$RUNNER_TEMP/mimic-chrome.log"[0m
+2026-11-07T01:44:05.8702054Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:44:05.8702377Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:44:05.8702751Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:44:05.8703074Z [36;1mimport os[0m
+2026-11-07T01:44:05.8703332Z [36;1m[0m
+2026-11-07T01:44:05.8703582Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:44:05.8703914Z [36;1m    def __init__(self):[0m
+2026-11-07T01:44:05.8704259Z [36;1m        super().__init__()[0m
+2026-11-07T01:44:05.8704611Z [36;1m        self.in_script = False[0m
+2026-11-07T01:44:05.8704950Z [36;1m        self.visible = ''[0m
+2026-11-07T01:44:05.8705316Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:44:05.8705716Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T01:44:05.8706123Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:44:05.8706508Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T01:44:05.8706907Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:44:05.8707306Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T01:44:05.8707659Z [36;1m[0m
+2026-11-07T01:44:05.8707896Z [36;1mcheck = Check()[0m
+2026-11-07T01:44:05.8708357Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'mimic-dom.html').read_text())[0m
+2026-11-07T01:44:05.8709030Z [36;1massert '跨机构仿真' in check.visible and 'blood_unspecified' in check.visible[0m
+2026-11-07T01:44:05.8709644Z [36;1massert '不是实际路段耗时' in check.visible and '未设置时限' in check.visible[0m
+2026-11-07T01:44:05.8710345Z [36;1mprint('Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline')[0m
+2026-11-07T01:44:05.8710924Z [36;1mPY[0m
+2026-11-07T01:44:05.8735357Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:05.8735651Z env:
+2026-11-07T01:44:05.8735882Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.8736245Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:05.8736572Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.8736870Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.8737158Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:05.8737445Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:05.8737710Z ##[endgroup]
+2026-11-07T01:44:06.7004522Z Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline
+2026-11-07T01:44:06.7064277Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:06.7064549Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:06.7064891Z [36;1mpython -m lab_transport.experiment --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:44:06.7065392Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --output "$RUNNER_TEMP/world-experiment"[0m
+2026-11-07T01:44:06.7065949Z [36;1mpython tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment" examples/evidence/world-model[0m
+2026-11-07T01:44:06.7066468Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:44:06.7066915Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T01:44:06.7067407Z [36;1m  --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-hospital"[0m
+2026-11-07T01:44:06.7068016Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/learned-hospital/learned/report.html" learned_nominal[0m
+2026-11-07T01:44:06.7068575Z [36;1mpython -m lab_transport compare --seed 42 --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" \[0m
+2026-11-07T01:44:06.7068980Z [36;1m  --output "$RUNNER_TEMP/learned-grid"[0m
+2026-11-07T01:44:06.7069314Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/learned-grid/learned/report.html"[0m
+2026-11-07T01:44:06.7069755Z [36;1mpython -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T01:44:06.7070214Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T01:44:06.7070714Z [36;1m  --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \[0m
+2026-11-07T01:44:06.7071300Z [36;1m  --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-rule"[0m
+2026-11-07T01:44:06.7071959Z [36;1mpython tests/check_rule_run.py "$RUNNER_TEMP/learned-rule"[0m
+2026-11-07T01:44:06.7072392Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/learned-rule/learned_rule/report.html" rule[0m
+2026-11-07T01:44:06.7089558Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:06.7089830Z env:
+2026-11-07T01:44:06.7090052Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:06.7090475Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:06.7090801Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:06.7091094Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:06.7091384Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:06.7091773Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:06.7092038Z ##[endgroup]
+2026-11-07T01:44:14.5924016Z {"description": "模拟训练与测试；不是临床运输记录或通用性能结论。", "training_episodes": 40, "training_records": 240, "training_censored_excluded": 0, "offline_censored_excluded": {"normal": 0, "short_outage": 0, "shifted": 0}, "test_episodes": 30, "aggregates": {"normal": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.0568, "candidate_evaluations": 117}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.0593, "candidate_evaluations": 117}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.0609, "candidate_evaluations": 117}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.071, "completion_mae_ticks": 11.838}, "learned": {"pickup_mae_ticks": 2.409, "completion_mae_ticks": 2.472}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}, "short_outage": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.0556, "candidate_evaluations": 117}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.0581, "candidate_evaluations": 117}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.0583, "candidate_evaluations": 117}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.004, "completion_mae_ticks": 11.699}, "learned": {"pickup_mae_ticks": 2.389, "completion_mae_ticks": 2.493}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}, "shifted": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0607, "candidate_evaluations": 127}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0636, "candidate_evaluations": 127}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0639, "candidate_evaluations": 127}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.435, "completion_mae_ticks": 14.544}, "learned": {"pickup_mae_ticks": 5.763, "completion_mae_ticks": 9.878}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}}}
+2026-11-07T01:44:14.6506337Z Experiment verified: disjoint seeds, simulation-only model, completion accounting and held-out prediction metrics
+2026-11-07T01:44:14.6506983Z Saved results reproduced: parameters, assignments and metrics match; CPU timings intentionally excluded
+2026-11-07T01:44:14.8589446Z {"scenario": "Tartu 医院公开路网适配（功能测试任务） · 标称时间估计", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "根据公开比例尺与标称速度估计，未包含完整实际延迟。", "metadata": {"time_model": "nominal_source_based", "seconds_per_tick": 10, "reference_metres": 67.2, "metres_per_pixel": 0.032140407, "nominal_speed_m_per_s": 0.5, "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530", "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": null, "blocked_move_attempts": 51}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": 10.125, "blocked_move_attempts": 51}, "learned": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": 2.154, "blocked_move_attempts": 51}}}
+2026-11-07T01:44:14.8950357Z Graph playback verified: learned_nominal source scope, tasks and timing labels
+2026-11-07T01:44:14.9760439Z {"scenario": "示例实验室样本转运（合成数据）", "seed": 42, "note": "单场景单种子示例，不能据此推断普遍性能。", "policies": {"nearest": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": null, "blocked_move_attempts": 6}, "world": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 55, "mean_completion_ticks": 31.167, "forecast_mae_ticks": 3.428, "blocked_move_attempts": 11}, "learned": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": 6.556, "blocked_move_attempts": 6}}}
+2026-11-07T01:44:15.0070076Z Playback controls verified: candidate predictions , slider and play
+2026-11-07T01:44:15.1444941Z {"scenario": "公开路网与跨机构样本规则（人工测试）", "note": "跨机构人工样本，仅对比模拟调度；代理上限不是实验室实际接收或临床合规。", "policies": {"nearest": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": null, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "world": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "rule": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 85.5, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S02"}, "learned_rule": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 85.5, "forecast_mae_ticks": 9.466, "blocked_move_attempts": 0, "first_assigned_sample": "S02"}}}
+2026-11-07T01:44:15.1766376Z nearest: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T01:44:15.1766947Z world: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T01:44:15.1767294Z rule: 2/2 synthetic tasks; first=S02; delivery-proxy tardiness=0
+2026-11-07T01:44:15.1767648Z learned_rule: 2/2 synthetic tasks; first=S02; delivery-proxy tardiness=0
+2026-11-07T01:44:15.2069177Z Graph playback verified: rule source scope, tasks and timing labels
+2026-11-07T01:44:15.2140303Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:15.2140723Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:15.2141537Z [36;1mmap_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos_maps/maps/clinic/clinic.building.yaml'[0m
+2026-11-07T01:44:15.2143225Z [36;1mconfig_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos/config/clinic/deliveryRobot_config.yaml'[0m
+2026-11-07T01:44:15.2144561Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$map_url" -o "$RUNNER_TEMP/clinic.building.yaml"[0m
+2026-11-07T01:44:15.2145433Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$config_url" -o "$RUNNER_TEMP/clinic.delivery.yaml"[0m
+2026-11-07T01:44:15.2146115Z [36;1mpython -m lab_transport.multisite_experiment \[0m
+2026-11-07T01:44:15.2146846Z [36;1m  --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \[0m
+2026-11-07T01:44:15.2147718Z [36;1m  --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \[0m
+2026-11-07T01:44:15.2148641Z [36;1m  --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/multisite-experiment"[0m
+2026-11-07T01:44:15.2149596Z [36;1mpython tests/check_multisite_experiment.py "$RUNNER_TEMP/multisite-experiment" examples/evidence/multisite[0m
+2026-11-07T01:44:15.2150260Z [36;1mfor policy in world learned rollout; do[0m
+2026-11-07T01:44:15.2150856Z [36;1m  python -m lab_transport.clinic_demo --clinic-map "$RUNNER_TEMP/clinic.building.yaml" \[0m
+2026-11-07T01:44:15.2151586Z [36;1m    --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" --policy "$policy" \[0m
+2026-11-07T01:44:15.2152616Z [36;1m    --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/clinic-$policy"[0m
+2026-11-07T01:44:15.2153248Z [36;1mdone[0m
+2026-11-07T01:44:15.2153713Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/clinic-world/report.html" clinic[0m
+2026-11-07T01:44:15.2154467Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/clinic-learned/report.html" clinic_learned[0m
+2026-11-07T01:44:15.2155269Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/clinic-rollout/report.html" clinic_rollout[0m
+2026-11-07T01:44:15.2179628Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:15.2180241Z env:
+2026-11-07T01:44:15.2180764Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:15.2195323Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:15.2195884Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:15.2196331Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:15.2196784Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:15.2197224Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:15.2197629Z ##[endgroup]
+2026-11-07T01:44:16.0202633Z tartu normal seed=1000 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:16.4210524Z tartu normal seed=1001 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:16.8684153Z tartu normal seed=1002 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:17.2742593Z tartu normal seed=1003 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:17.6856590Z tartu normal seed=1004 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:18.0923557Z tartu short_outage seed=1000 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:18.5225437Z tartu short_outage seed=1001 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:18.9969265Z tartu short_outage seed=1002 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:19.4341109Z tartu short_outage seed=1003 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:19.8522513Z tartu short_outage seed=1004 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:19.9558781Z clinic normal seed=2000 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.0814232Z clinic normal seed=2001 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.2015101Z clinic normal seed=2002 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.2742971Z clinic normal seed=2003 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.3734282Z clinic normal seed=2004 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.4663145Z clinic short_outage seed=2000 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.6033223Z clinic short_outage seed=2001 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.7291504Z clinic short_outage seed=2002 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.8087347Z clinic short_outage seed=2003 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.9062081Z clinic short_outage seed=2004 nearest:6/6 world:6/6 learned:6/6 rollout:6/6
+2026-11-07T01:44:20.9121008Z {"tartu": {"normal": {"episodes": 5, "policies": {"nearest": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 119.633, "mean_episode_cpu_seconds": 0.0541, "candidate_evaluations": 62, "discrete_safety_violations": 0}, "world": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 120.7, "mean_episode_cpu_seconds": 0.0556, "candidate_evaluations": 62, "discrete_safety_violations": 0}, "learned": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 119.633, "mean_episode_cpu_seconds": 0.0555, "candidate_evaluations": 62, "discrete_safety_violations": 0}, "rollout": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 119.433, "mean_episode_cpu_seconds": 0.2467, "candidate_evaluations": 62, "discrete_safety_violations": 0}}, "offline_same_world_decisions": {"completed_records": 30, "censored_excluded": 0, "errors": {"world": {"pickup_mae_ticks": 6.833, "completion_mae_ticks": 10.967}, "learned": {"pickup_mae_ticks": 5.959, "completion_mae_ticks": 7.834}}}, "same_assignment_trace_world_and_learned": 3, "paired_restricted_flow_difference_vs_world_ticks": {"learned": {"mean": -1.067, "min": -4.167, "max": 0.0}, "rollout": {"mean": -1.267, "min": -2.833, "max": 0.5}}}, "short_outage": {"episodes": 5, "policies": {"nearest": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 120.933, "mean_episode_cpu_seconds": 0.0552, "candidate_evaluations": 63, "discrete_safety_violations": 0}, "world": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 122.133, "mean_episode_cpu_seconds": 0.0576, "candidate_evaluations": 63, "discrete_safety_violations": 0}, "learned": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 120.933, "mean_episode_cpu_seconds": 0.0571, "candidate_evaluations": 63, "discrete_safety_violations": 0}, "rollout": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 121.367, "mean_episode_cpu_seconds": 0.2613, "candidate_evaluations": 63, "discrete_safety_violations": 0}}, "offline_same_world_decisions": {"completed_records": 30, "censored_excluded": 0, "errors": {"world": {"pickup_mae_ticks": 6.867, "completion_mae_ticks": 11.103}, "learned": {"pickup_mae_ticks": 6.164, "completion_mae_ticks": 8.298}}}, "same_assignment_trace_world_and_learned": 3, "paired_restricted_flow_difference_vs_world_ticks": {"learned": {"mean": -1.2, "min": -4.167, "max": 0.0}, "rollout": {"mean": -0.767, "min": -2.5, "max": 0.5}}}}, "clinic": {"normal": {"episodes": 5, "policies": {"nearest": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 33.8, "mean_episode_cpu_seconds": 0.0159, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "world": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 33.8, "mean_episode_cpu_seconds": 0.0163, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "learned": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 33.8, "mean_episode_cpu_seconds": 0.0165, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "rollout": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 36.1, "mean_episode_cpu_seconds": 0.0547, "candidate_evaluations": 43, "discrete_safety_violations": 0}}, "offline_same_world_decisions": {"completed_records": 30, "censored_excluded": 0, "errors": {"world": {"pickup_mae_ticks": 1.267, "completion_mae_ticks": 4.833}, "learned": {"pickup_mae_ticks": 3.206, "completion_mae_ticks": 6.006}}}, "same_assignment_trace_world_and_learned": 5, "paired_restricted_flow_difference_vs_world_ticks": {"learned": {"mean": 0.0, "min": 0.0, "max": 0.0}, "rollout": {"mean": 2.3, "min": 0.0, "max": 11.5}}}, "short_outage": {"episodes": 5, "policies": {"nearest": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 34.4, "mean_episode_cpu_seconds": 0.0159, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "world": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 34.4, "mean_episode_cpu_seconds": 0.0167, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "learned": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 34.4, "mean_episode_cpu_seconds": 0.0169, "candidate_evaluations": 42, "discrete_safety_violations": 0}, "rollout": {"completed": 30, "total": 30, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 36.767, "mean_episode_cpu_seconds": 0.0561, "candidate_evaluations": 43, "discrete_safety_violations": 0}}, "offline_same_world_decisions": {"completed_records": 30, "censored_excluded": 0, "errors": {"world": {"pickup_mae_ticks": 1.867, "completion_mae_ticks": 5.433}, "learned": {"pickup_mae_ticks": 3.438, "completion_mae_ticks": 6.554}}}, "same_assignment_trace_world_and_learned": 5, "paired_restricted_flow_difference_vs_world_ticks": {"learned": {"mean": 0.0, "min": 0.0, "max": 0.0}, "rollout": {"mean": 2.367, "min": -1.333, "max": 13.167}}}}}
+2026-11-07T01:44:20.9717301Z Verified 20 paired scenarios, no rollout future leak via unit tests, discrete safety and saved non-timing results
+2026-11-07T01:44:21.0629322Z {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 93, "mean_completion_ticks": 33.667, "forecast_mae_ticks": 5.75, "blocked_move_attempts": 13}
+2026-11-07T01:44:21.1558563Z {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 93, "mean_completion_ticks": 33.667, "forecast_mae_ticks": 6.132, "blocked_move_attempts": 13}
+2026-11-07T01:44:21.2846875Z {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 93, "mean_completion_ticks": 33.667, "forecast_mae_ticks": 4.167, "blocked_move_attempts": 13}
+2026-11-07T01:44:21.3219109Z Graph playback verified: clinic source scope, tasks and timing labels
+2026-11-07T01:44:21.3546890Z Graph playback verified: clinic_learned source scope, tasks and timing labels
+2026-11-07T01:44:21.3861022Z Graph playback verified: clinic_rollout source scope, tasks and timing labels
+2026-11-07T01:44:21.3931844Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:21.3932164Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:21.3932521Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:44:21.3933021Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/clinic-learned/report.html?step=1" \[0m
+2026-11-07T01:44:21.3933465Z [36;1m  > "$RUNNER_TEMP/clinic-dom.html" 2> "$RUNNER_TEMP/clinic-chrome.log"[0m
+2026-11-07T01:44:21.3933766Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:44:21.3933992Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:44:21.3934230Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:44:21.3934453Z [36;1mimport os[0m
+2026-11-07T01:44:21.3934625Z [36;1m[0m
+2026-11-07T01:44:21.3934796Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:44:21.3935028Z [36;1m    def __init__(self):[0m
+2026-11-07T01:44:21.3935235Z [36;1m        super().__init__()[0m
+2026-11-07T01:44:21.3935484Z [36;1m        self.in_script = False[0m
+2026-11-07T01:44:21.3935706Z [36;1m        self.visible = ''[0m
+2026-11-07T01:44:21.3936115Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-07T01:44:21.3936369Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:44:21.3936642Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T01:44:21.3936907Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-07T01:44:21.3937146Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-07T01:44:21.3937382Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:44:21.3937627Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T01:44:21.3937875Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:44:21.3938120Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T01:44:21.3938352Z [36;1m[0m
+2026-11-07T01:44:21.3938505Z [36;1mcheck = Check()[0m
+2026-11-07T01:44:21.3938797Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'clinic-dom.html').read_text())[0m
+2026-11-07T01:44:21.3939215Z [36;1massert (check.circles, check.lines) == (62, 126), (check.circles, check.lines)[0m
+2026-11-07T01:44:21.3939616Z [36;1massert '公开诊所演示地图' in check.visible and '样本取送点是仿真假设' in check.visible[0m
+2026-11-07T01:44:21.3939985Z [36;1massert '学习预测器在仿真数据上训练' in check.visible and '最终完成：6/6' in check.visible[0m
+2026-11-07T01:44:21.3940403Z [36;1mprint('Browser DOM verified: clinic map, synthetic station roles and learned predictor')[0m
+2026-11-07T01:44:21.3940742Z [36;1mPY[0m
+2026-11-07T01:44:21.3958574Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:21.3958847Z env:
+2026-11-07T01:44:21.3959065Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:21.3959400Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:21.3959731Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:21.3960034Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:21.3960343Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:21.3960645Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:21.3960897Z ##[endgroup]
+2026-11-07T01:44:22.0952518Z Browser DOM verified: clinic map, synthetic station roles and learned predictor
+2026-11-07T01:44:22.1009978Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:22.1010256Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:22.1010599Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:44:22.1011132Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/learned-hospital/learned/report.html?step=1" \[0m
+2026-11-07T01:44:22.1011601Z [36;1m  > "$RUNNER_TEMP/learned-dom.html" 2> "$RUNNER_TEMP/learned-chrome.log"[0m
+2026-11-07T01:44:22.1012116Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:44:22.1012328Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:44:22.1012569Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:44:22.1012774Z [36;1mimport os[0m
+2026-11-07T01:44:22.1012969Z [36;1m[0m
+2026-11-07T01:44:22.1013132Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:44:22.1013334Z [36;1m    def __init__(self):[0m
+2026-11-07T01:44:22.1013538Z [36;1m        super().__init__()[0m
+2026-11-07T01:44:22.1013777Z [36;1m        self.in_script = False[0m
+2026-11-07T01:44:22.1013991Z [36;1m        self.visible = ''[0m
+2026-11-07T01:44:22.1014219Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:44:22.1014473Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T01:44:22.1014730Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:44:22.1014977Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T01:44:22.1015226Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:44:22.1015480Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T01:44:22.1015715Z [36;1m[0m
+2026-11-07T01:44:22.1015868Z [36;1mcheck = Check()[0m
+2026-11-07T01:44:22.1016160Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'learned-dom.html').read_text())[0m
+2026-11-07T01:44:22.1016664Z [36;1massert '学习预测器在仿真数据上训练' in check.visible[0m
+2026-11-07T01:44:22.1016967Z [36;1massert '预测第' in check.visible and '最终完成：4/4' in check.visible[0m
+2026-11-07T01:44:22.1017402Z [36;1mprint('Browser DOM verified: learned forecast, simulated-data notice and completed tasks')[0m
+2026-11-07T01:44:22.1017749Z [36;1mPY[0m
+2026-11-07T01:44:22.1034823Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:22.1035090Z env:
+2026-11-07T01:44:22.1035305Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.1035642Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:22.1035971Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.1036269Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.1036559Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.1036850Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:22.1037109Z ##[endgroup]
+2026-11-07T01:44:22.8168833Z Browser DOM verified: learned forecast, simulated-data notice and completed tasks
+2026-11-07T01:44:22.8226829Z ##[group]Run set -euo pipefail
+2026-11-07T01:44:22.8227117Z [36;1mset -euo pipefail[0m
+2026-11-07T01:44:22.8227326Z [36;1mcommand -v google-chrome[0m
+2026-11-07T01:44:22.8227694Z [36;1mif ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T01:44:22.8228236Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html?step=1" \[0m
+2026-11-07T01:44:22.8228705Z [36;1m  > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then[0m
+2026-11-07T01:44:22.8229055Z [36;1m  tail -n 100 "$RUNNER_TEMP/chrome.log" >&2[0m
+2026-11-07T01:44:22.8229292Z [36;1m  exit 1[0m
+2026-11-07T01:44:22.8229459Z [36;1mfi[0m
+2026-11-07T01:44:22.8229631Z [36;1mpython - <<'PY'[0m
+2026-11-07T01:44:22.8229855Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T01:44:22.8230095Z [36;1mfrom pathlib import Path[0m
+2026-11-07T01:44:22.8230303Z [36;1mimport os[0m
+2026-11-07T01:44:22.8230496Z [36;1m[0m
+2026-11-07T01:44:22.8230666Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T01:44:22.8230872Z [36;1m    def __init__(self):[0m
+2026-11-07T01:44:22.8231083Z [36;1m        super().__init__()[0m
+2026-11-07T01:44:22.8231360Z [36;1m        self.cells = self.robots = self.rows = self.candidates = 0[0m
+2026-11-07T01:44:22.8231824Z [36;1m        self.in_metrics = False[0m
+2026-11-07T01:44:22.8232051Z [36;1m        self.in_decision = False[0m
+2026-11-07T01:44:22.8232276Z [36;1m        self.metrics = ''[0m
+2026-11-07T01:44:22.8232483Z [36;1m        self.decision = ''[0m
+2026-11-07T01:44:22.8232709Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T01:44:22.8232947Z [36;1m        attrs = dict(attrs)[0m
+2026-11-07T01:44:22.8233182Z [36;1m        classes = attrs.get('class', '').split()[0m
+2026-11-07T01:44:22.8233444Z [36;1m        self.cells += 'cell' in classes[0m
+2026-11-07T01:44:22.8233684Z [36;1m        self.robots += 'robot' in classes[0m
+2026-11-07T01:44:22.8233913Z [36;1m        self.rows += tag == 'tr'[0m
+2026-11-07T01:44:22.8234136Z [36;1m        self.candidates += tag == 'li'[0m
+2026-11-07T01:44:22.8234379Z [36;1m        if attrs.get('id') == 'metrics':[0m
+2026-11-07T01:44:22.8234614Z [36;1m            self.in_metrics = True[0m
+2026-11-07T01:44:22.8234843Z [36;1m        if attrs.get('id') == 'decision':[0m
+2026-11-07T01:44:22.8235070Z [36;1m            self.in_decision = True[0m
+2026-11-07T01:44:22.8235296Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T01:44:22.8235516Z [36;1m        if tag == 'p':[0m
+2026-11-07T01:44:22.8235720Z [36;1m            self.in_metrics = False[0m
+2026-11-07T01:44:22.8235946Z [36;1m            self.in_decision = False[0m
+2026-11-07T01:44:22.8236173Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T01:44:22.8236554Z [36;1m        if self.in_metrics:[0m
+2026-11-07T01:44:22.8236770Z [36;1m            self.metrics += data[0m
+2026-11-07T01:44:22.8236981Z [36;1m        if self.in_decision:[0m
+2026-11-07T01:44:22.8237197Z [36;1m            self.decision += data[0m
+2026-11-07T01:44:22.8237406Z [36;1m[0m
+2026-11-07T01:44:22.8237561Z [36;1mcheck = Check()[0m
+2026-11-07T01:44:22.8237851Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())[0m
+2026-11-07T01:44:22.8238321Z [36;1massert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)[0m
+2026-11-07T01:44:22.8238723Z [36;1massert '6/6' in check.metrics, check.metrics[0m
+2026-11-07T01:44:22.8239112Z [36;1massert '预测第' in check.decision and check.candidates > 0, (check.decision, check.candidates)[0m
+2026-11-07T01:44:22.8239587Z [36;1mprint('Browser DOM verified: map, robots, tasks and candidate predictions')[0m
+2026-11-07T01:44:22.8239904Z [36;1mPY[0m
+2026-11-07T01:44:22.8257088Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T01:44:22.8257363Z env:
+2026-11-07T01:44:22.8257580Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.8258067Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:22.8258411Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.8258705Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.8258997Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:22.8259296Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:22.8259552Z ##[endgroup]
+2026-11-07T01:44:22.8295454Z /usr/bin/google-chrome
+2026-11-07T01:44:23.5185264Z Browser DOM verified: map, robots, tasks and candidate predictions
+2026-11-07T01:44:23.5288107Z ##[group]Run actions/upload-artifact@v4
+2026-11-07T01:44:23.5288341Z with:
+2026-11-07T01:44:23.5288511Z   name: sample-transport-demo
+2026-11-07T01:44:23.5288762Z   path: /home/runner/work/_temp/sample-transport-demo/
+2026-11-07T01:44:23.5289029Z   if-no-files-found: warn
+2026-11-07T01:44:23.5289213Z   retention-days: 7
+2026-11-07T01:44:23.5289384Z   compression-level: 6
+2026-11-07T01:44:23.5289557Z   overwrite: false
+2026-11-07T01:44:23.5289728Z   include-hidden-files: false
+2026-11-07T01:44:23.5289912Z env:
+2026-11-07T01:44:23.5290111Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:23.5290449Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:23.5290796Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:23.5291102Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:23.5291388Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:23.5291911Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:23.5292172Z ##[endgroup]
+2026-11-07T01:44:23.6632852Z (node:3816) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T01:44:23.6633573Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T01:44:23.6693111Z With the provided path, there will be 11 files uploaded
+2026-11-07T01:44:23.6702193Z Artifact name is valid!
+2026-11-07T01:44:23.6702723Z Root directory input is valid!
+2026-11-07T01:44:24.0558916Z Beginning upload of artifact content to blob storage
+2026-11-07T01:44:24.1098000Z (node:3816) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T01:44:24.4515513Z Uploaded bytes 28066
+2026-11-07T01:44:24.5236266Z Finished uploading artifact content to blob storage!
+2026-11-07T01:44:24.5237017Z SHA256 digest of uploaded artifact zip is a6c79a904366bbbf6d023187113e820209bd1b7da9940c16a1f11e3a7270ad1b
+2026-11-07T01:44:24.5238036Z Finalizing artifact upload
+2026-11-07T01:44:24.9816943Z Artifact sample-transport-demo.zip successfully finalized. Artifact ID 13555151703
+2026-11-07T01:44:24.9817611Z Artifact sample-transport-demo has been successfully uploaded! Final size is 28066 bytes. Artifact ID is 13555151703
+2026-11-07T01:44:24.9822855Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42325596977/artifacts/13555151703
+2026-11-07T01:44:24.9994425Z ##[group]Run actions/upload-artifact@v4
+2026-11-07T01:44:24.9994662Z with:
+2026-11-07T01:44:24.9994844Z   name: multi-location-experiment
+2026-11-07T01:44:24.9995100Z   path: /home/runner/work/_temp/multisite-experiment/
+2026-11-07T01:44:24.9995369Z   if-no-files-found: warn
+2026-11-07T01:44:24.9995557Z   retention-days: 7
+2026-11-07T01:44:24.9995739Z   compression-level: 6
+2026-11-07T01:44:24.9995922Z   overwrite: false
+2026-11-07T01:44:24.9996109Z   include-hidden-files: false
+2026-11-07T01:44:24.9996306Z env:
+2026-11-07T01:44:24.9996511Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:24.9996857Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:24.9997195Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:24.9997494Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:24.9997792Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:24.9998127Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:24.9998391Z ##[endgroup]
+2026-11-07T01:44:25.1340045Z (node:3828) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T01:44:25.1340723Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T01:44:25.1398816Z With the provided path, there will be 1 file uploaded
+2026-11-07T01:44:25.1399612Z Artifact name is valid!
+2026-11-07T01:44:25.1399915Z Root directory input is valid!
+2026-11-07T01:44:25.4974030Z Beginning upload of artifact content to blob storage
+2026-11-07T01:44:25.5124924Z (node:3828) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T01:44:25.7688859Z Uploaded bytes 4583
+2026-11-07T01:44:25.8408450Z Finished uploading artifact content to blob storage!
+2026-11-07T01:44:25.8409227Z SHA256 digest of uploaded artifact zip is b72f714f370028cbbc50e871c209588a7da93e94c7aabf85964a0296c619f4fd
+2026-11-07T01:44:25.8410501Z Finalizing artifact upload
+2026-11-07T01:44:26.2488012Z Artifact multi-location-experiment.zip successfully finalized. Artifact ID 13555106797
+2026-11-07T01:44:26.2488710Z Artifact multi-location-experiment has been successfully uploaded! Final size is 4583 bytes. Artifact ID is 13555106797
+2026-11-07T01:44:26.2494349Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42325596977/artifacts/13555106797
+2026-11-07T01:44:26.2640777Z ##[group]Run actions/upload-artifact@v4
+2026-11-07T01:44:26.2641033Z with:
+2026-11-07T01:44:26.2641210Z   name: clinic-playback
+2026-11-07T01:44:26.2641840Z   path: /home/runner/work/_temp/clinic-world/
+/home/runner/work/_temp/clinic-learned/
+/home/runner/work/_temp/clinic-rollout/
+
+2026-11-07T01:44:26.2642293Z   if-no-files-found: warn
+2026-11-07T01:44:26.2642506Z   retention-days: 7
+2026-11-07T01:44:26.2642691Z   compression-level: 6
+2026-11-07T01:44:26.2642881Z   overwrite: false
+2026-11-07T01:44:26.2643067Z   include-hidden-files: false
+2026-11-07T01:44:26.2643267Z env:
+2026-11-07T01:44:26.2643486Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:26.2643826Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T01:44:26.2644160Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:26.2644474Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:26.2644805Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T01:44:26.2645262Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T01:44:26.2645532Z ##[endgroup]
+2026-11-07T01:44:26.3989579Z (node:3840) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T01:44:26.3990485Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T01:44:26.4094259Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-07T01:44:26.4095578Z The least common ancestor is /home/runner/work/_temp. This will be the root directory of the artifact
+2026-11-07T01:44:26.4096235Z With the provided path, there will be 15 files uploaded
+2026-11-07T01:44:26.4100189Z Artifact name is valid!
+2026-11-07T01:44:26.4100981Z Root directory input is valid!
+2026-11-07T01:44:26.7558157Z Beginning upload of artifact content to blob storage
+2026-11-07T01:44:26.7934298Z (node:3840) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T01:44:27.1655772Z Uploaded bytes 62159
+2026-11-07T01:44:27.2370770Z Finished uploading artifact content to blob storage!
+2026-11-07T01:44:27.2371561Z SHA256 digest of uploaded artifact zip is 408dd268a81948c47aa20fb48c4c9e87c2b4af24134e54bbe29dd09ef08c893c
+2026-11-07T01:44:27.2372750Z Finalizing artifact upload
+2026-11-07T01:44:27.6920426Z Artifact clinic-playback.zip successfully finalized. Artifact ID 13554972349
+2026-11-07T01:44:27.6921363Z Artifact clinic-playback has been successfully uploaded! Final size is 62159 bytes. Artifact ID is 13554972349
+2026-11-07T01:44:27.6927271Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42325596977/artifacts/13554972349
+2026-11-07T01:44:27.7100894Z Post job cleanup.
+2026-11-07T01:44:27.8047238Z (node:3854) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T01:44:27.8047914Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T01:44:27.8223172Z Post job cleanup.
+2026-11-07T01:44:27.8916302Z [command]/usr/bin/git version
+2026-11-07T01:44:27.8983270Z git version 2.56.0
+2026-11-07T01:44:27.9011879Z Temporarily overriding HOME='/home/runner/work/_temp/4adcccc6-3080-4062-98ca-29809764899f' before making global git config changes
+2026-11-07T01:44:27.9012898Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T01:44:27.9015856Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-07T01:44:27.9049577Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T01:44:27.9104871Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T01:44:27.9384610Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T01:44:27.9410291Z http.https://github.com/.extraheader
+2026-11-07T01:44:27.9421967Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-07T01:44:27.9493083Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T01:44:27.9727941Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T01:44:27.9765181Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T01:44:28.0106268Z Cleaning up orphan processes
+2026-11-07T01:44:28.0407534Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

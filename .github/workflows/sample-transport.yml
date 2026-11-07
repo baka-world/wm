@@ -12,9 +12,11 @@ on:
       - 'examples/evidence/multisite/**'
       - 'examples/evidence/dynamics-pilot/**'
       - 'examples/evidence/dynamics-revision/**'
+      - 'examples/evidence/pytorch-full/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'validation/logs/state-transition-*.log'
+      - 'validation/logs/pytorch-*.log'
       - 'tests/**'
       - 'requirements-torch-cpu.txt'
       - '.github/workflows/sample-transport.yml'
@@ -28,9 +30,11 @@ on:
       - 'examples/evidence/multisite/**'
       - 'examples/evidence/dynamics-pilot/**'
       - 'examples/evidence/dynamics-revision/**'
+      - 'examples/evidence/pytorch-full/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'validation/logs/state-transition-*.log'
+      - 'validation/logs/pytorch-*.log'
       - 'tests/**'
       - 'requirements-torch-cpu.txt'
       - '.github/workflows/sample-transport.yml'
@@ -342,6 +346,22 @@ jobs:
           evaluation = json.loads((Path(os.environ['RUNNER_TEMP']) / 'torch-evaluation-smoke/evaluation.json').read_text())
           assert evaluation['transitions_per_split'] == {'test_tartu': 100, 'test_clinic': 100}
           print('Neural adapter verified: factual CPU training, bounded rollout and two-robot completion')
+          PY
+      - name: Verify archived full-data evaluation integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import gzip, json
+          from pathlib import Path
+          root = Path('examples/evidence/pytorch-full')
+          with gzip.open(root / 'evaluation.json.gz', 'rt', encoding='utf-8') as handle:
+              detail = json.load(handle)
+          summary = json.loads((root / 'summary.json').read_text(encoding='utf-8'))
+          assert {key: value for key, value in detail.items() if key != 'cases'} == summary
+          assert summary['transitions_per_split'] == {'test_tartu': 3904, 'test_clinic': 1529}
+          assert len(detail['cases']) == 32 and summary['limit_per_split'] is None
+          print('Archived full-data metrics agree with the 32 per-episode records')
           PY
       - name: Reproduce CPU state-transition model and held-out tests
         shell: bash

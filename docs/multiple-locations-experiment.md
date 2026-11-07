@@ -64,7 +64,7 @@ python -m lab_transport.multisite_experiment \
 python tests/check_multisite_experiment.py /tmp/multisite-result examples/evidence/multisite
 ```
 
-检查器核对配对任务、站点分布、训练与测试种子、扰动范围、完成情况和离散安全记录；并将结果与仓库记录对比，CPU 时间除外。CI 具体下载地址与执行命令见 [sample-transport 工作流](../.github/workflows/sample-transport.yml)。
+检查器核对配对任务、站点分布、训练与测试种子、扰动范围、完成情况和离散安全记录；并将结果与仓库记录对比，CPU 时间除外。CI 具体下载地址与执行命令见 [sample-transport 工作流](../.github/workflows/sample-transport.yml)。[GitHub Actions 运行 42323467519](https://github.com/lieuyimo/wm/actions/runs/42323467519)验证了提交 `920f574ea6d374071a346666b3dda4a0ddde4700` 的 40 项单元测试、20 场复算和无 GPU 的诊所回放浏览器检查；[完整运行日志](../validation/logs/multisite-action-42323467519.log)已归档。
 
 也可生成可播放的双机器人路线和任务状态页面（诊所地图、默认种子 2000）：
 

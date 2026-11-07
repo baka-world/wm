@@ -5,7 +5,7 @@ import unittest
 from lab_transport.domain import Grid, RobotSpec, Sample, Scenario, Station
 from lab_transport.dynamics_model import (MOTION_FEATURES, SERVICE_FEATURES, Geometry, HybridDynamicsModel,
                                           train, training_examples, validate)
-from lab_transport.dynamics_experiment import SPLITS, check_predicted_step, compare, eligible_windows
+from lab_transport.dynamics_experiment import SPLITS, audit_task_schedules, check_predicted_step, compare, eligible_windows
 from lab_transport.experiment import SHIFT_SEEDS, TEST_SEEDS, TRAIN_SEEDS
 from lab_transport.multisite_experiment import SEEDS
 from lab_transport.simulation import Simulator
@@ -92,6 +92,10 @@ class DynamicsModelTests(unittest.TestCase):
         validate(parameters)
         with self.assertRaisesRegex(ValueError, "schema"):
             validate(dict(parameters, motion_features=["wrong"]))
+        with self.assertRaisesRegex(ValueError, "motion training"):
+            train([([[0.0]], 0)], services)
+        with self.assertRaisesRegex(ValueError, "service training"):
+            train(moves, [(service_a, 3)])
 
     def test_extracted_factual_examples_have_valid_labels(self):
         geometry = Geometry(self.scenario.grid)
@@ -123,6 +127,21 @@ class DynamicsModelTests(unittest.TestCase):
         for index, group in enumerate(groups):
             self.assertFalse(group & previous)
             self.assertTrue(all(not group & other for other in groups[index + 1:]))
+
+    def test_different_seeds_can_still_repeat_a_task_schedule(self):
+        source, sink = self.scenario.stations["A"], self.scenario.stations["B"]
+        proxy = replace(self.scenario, stations={
+            "ICU取样点": replace(source, id="ICU取样点"),
+            "ICU2_假设取样": replace(source, id="ICU2_假设取样"),
+            "实验室交付点": replace(sink, id="实验室交付点"),
+        })
+        audit = audit_task_schedules({"tartu": proxy}, {"train": ("tartu", (3001,)),
+                                                        "test_tartu": ("tartu", (5001,))})
+        self.assertEqual(audit["cross_split_duplicate_groups"], 1)
+        self.assertEqual(audit["cross_split_task_duplicate_groups"], 1)
+        duplicate = audit["cross_split_duplicates"][0]
+        self.assertEqual({(x["split"], x["seed"], x["regime"]) for x in duplicate},
+                         {("train", 3001, "normal"), ("test_tartu", 5001, "normal")})
 
     def test_multi_step_window_filter_reports_exclusions_and_no_future_actions(self):
         rows = [r for r in self.rows if r.next_boundary == "before_dispatch"]

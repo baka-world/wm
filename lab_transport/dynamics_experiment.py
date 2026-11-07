@@ -38,9 +38,39 @@ class Episode:
     rows: list[Transition]
 
 
-def collect_episodes(bases: dict[str, Any]) -> list[Episode]:
+def audit_task_schedules(bases: dict[str, Any], splits=SPLITS) -> dict[str, Any]:
+    """Detect identical nominal task/outage schedules across split names.
+
+    Different seeds may still produce different hidden service-time draws;
+    this audit intentionally checks the observable workload pattern itself.
+    Policies share one schedule by design and are not counted twice.
+    """
+    groups: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+    task_groups: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+    count = 0
+    for split, (layout, seeds) in splits.items():
+        for seed in seeds:
+            for regime in REGIMES:
+                scenario = make_case(bases[layout], layout, seed, regime)
+                tasks = (layout, tuple((s.pickup, s.dropoff, s.release_tick) for s in scenario.samples))
+                signature = (tasks,
+                             tuple((sid, station.outages) for sid, station in sorted(scenario.stations.items())
+                                   if station.outages))
+                case = {"split": split, "seed": seed, "regime": regime}
+                groups.setdefault(signature, []).append(case)
+                task_groups.setdefault(tasks, []).append(case)
+                count += 1
+    overlaps = [cases for cases in groups.values() if len({case["split"] for case in cases}) > 1]
+    task_overlaps = [cases for cases in task_groups.values() if len({case["split"] for case in cases}) > 1]
+    return {"scenario_patterns": count, "unique_patterns": len(groups),
+            "cross_split_duplicate_groups": len(overlaps), "cross_split_duplicates": overlaps,
+            "unique_task_patterns": len(task_groups), "cross_split_task_duplicate_groups": len(task_overlaps),
+            "cross_split_task_duplicates": task_overlaps}
+
+
+def collect_episodes(bases: dict[str, Any], splits=SPLITS) -> list[Episode]:
     episodes = []
-    for split, (layout, seeds) in SPLITS.items():
+    for split, (layout, seeds) in splits.items():
         for seed in seeds:
             for regime in REGIMES:
                 scenario = make_case(bases[layout], layout, seed, regime)
@@ -172,9 +202,11 @@ def eligible_windows(rows: list[Transition], horizon: int) -> tuple[list[list[Tr
     return windows, counts
 
 
-def evaluate_episode(episode: Episode, geometry: Geometry, parameters: dict[str, Any]) -> dict[str, Any]:
-    models = {name: HybridDynamicsModel(geometry, parameters if name == "learned" else None, name)
-              for name in PREDICTORS}
+def evaluate_episode(episode: Episode, geometry: Geometry, parameters: dict[str, Any],
+                     learned_factory=HybridDynamicsModel) -> dict[str, Any]:
+    models = {"persistence": HybridDynamicsModel(geometry, mode="persistence"),
+              "heuristic": HybridDynamicsModel(geometry, mode="heuristic"),
+              "learned": learned_factory(geometry, parameters, "learned")}
     one_step = {name: zero_counts() for name in PREDICTORS}
     for row in episode.rows:
         for name, model in models.items():

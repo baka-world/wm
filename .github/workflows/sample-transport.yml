@@ -11,6 +11,7 @@ on:
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
       - 'examples/evidence/dynamics-pilot/**'
+      - 'examples/evidence/dynamics-revision/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'tests/**'
@@ -24,6 +25,7 @@ on:
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
       - 'examples/evidence/dynamics-pilot/**'
+      - 'examples/evidence/dynamics-revision/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'tests/**'
@@ -308,6 +310,56 @@ jobs:
             --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
             --output "$RUNNER_TEMP/dynamics-pilot"
           python tests/check_dynamics_experiment.py "$RUNNER_TEMP/dynamics-pilot" examples/evidence/dynamics-pilot
+      - name: Train validation-selected CPU dynamics and reproduce held-out tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.dynamics_revision \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --output "$RUNNER_TEMP/dynamics-revision"
+          python tests/check_dynamics_schedules.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/tiago.launch.xml" \
+            "$RUNNER_TEMP/clinic.building.yaml" "$RUNNER_TEMP/clinic.delivery.yaml"
+          python tests/check_dynamics_revision.py "$RUNNER_TEMP/dynamics-revision" examples/evidence/dynamics-revision
+          python -m lab_transport.dynamics_demo --clinic-map "$RUNNER_TEMP/clinic.building.yaml" \
+            --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" --model "$RUNNER_TEMP/dynamics-revision/dynamics-parameters.json" \
+            --output "$RUNNER_TEMP/dynamics-demo"
+          node tests/test_dynamics_playback.js "$RUNNER_TEMP/dynamics-demo/report.html"
+      - name: Check state-prediction playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/dynamics-demo/report.html?step=1" \
+            > "$RUNNER_TEMP/dynamics-dom.html" 2> "$RUNNER_TEMP/dynamics-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = self.robots = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+                  self.robots += tag == 'circle' and 'robot' in dict(attrs).get('class', '').split()
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'dynamics-dom.html').read_text())
+          assert (check.circles, check.lines, check.robots) == (248, 504, 8), (check.circles, check.lines, check.robots)
+          assert '取送点和任务是仿真假设' in check.visible and '不预知新任务或故障' in check.visible
+          assert '学习模型预测的下一步' in check.visible and '下一步实际状态' in check.visible
+          print('Browser DOM verified: four-panel state prediction and simulation scope')
+          PY
       - name: Check clinic playback in headless Chrome
         shell: bash
         run: |
@@ -457,5 +509,15 @@ jobs:
         with:
           name: dynamics-pilot
           path: ${{ runner.temp }}/dynamics-pilot/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload revised state-transition results and playback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamics-revision
+          path: |
+            ${{ runner.temp }}/dynamics-revision/
+            ${{ runner.temp }}/dynamics-demo/
           if-no-files-found: warn
           retention-days: 7

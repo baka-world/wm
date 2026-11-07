@@ -85,6 +85,24 @@ def _dot(weights: list[float], values: list[float]) -> float:
     return sum(w * value for w, value in zip(weights, values))
 
 
+def validate_training_examples(moves, services, motion_width: int) -> None:
+    if not moves or not services:
+        raise ValueError("training needs both motion and service examples")
+
+    def valid_vector(values, length):
+        return (isinstance(values, (list, tuple)) and len(values) == length and all(
+            isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x) for x in values))
+
+    for options, label in moves:
+        if (not isinstance(options, (list, tuple)) or not options or not isinstance(label, int)
+                or isinstance(label, bool) or not 0 <= label < len(options)
+                or any(not valid_vector(vector, motion_width) for vector in options)):
+            raise ValueError("invalid motion training example")
+    for values, label in services:
+        if not valid_vector(values, len(SERVICE_FEATURES)) or label not in (0, 1) or isinstance(label, bool):
+            raise ValueError("invalid service training example")
+
+
 def _intent(observation: Observation, assignments: tuple[Assignment, ...]) -> dict[str, tuple[str, str | None]]:
     robots = {r.id: r for r in observation.robots}
     samples = {s.id: s for s in observation.samples}
@@ -144,7 +162,8 @@ def _motion_options(geometry: Geometry, robot: ObservedRobot, phase: str, goal: 
 
 
 def training_examples(geometry: Geometry, observation: Observation, assignments: tuple[Assignment, ...],
-                      actual: Observation) -> tuple[list[tuple[list[list[float]], int]], list[tuple[list[float], int]], int]:
+                      actual: Observation, motion_features_fn=None
+                      ) -> tuple[list[tuple[list[list[float]], int]], list[tuple[list[float], int]], int]:
     """Extract supervised examples only from a factual, executed transition."""
     intents = _intent(observation, assignments)
     samples, actual_samples = {s.id: s for s in observation.samples}, {s.id: s for s in actual.samples}
@@ -159,6 +178,7 @@ def training_examples(geometry: Geometry, observation: Observation, assignments:
     occupied = {r.position for r in observation.robots}
     moves, services, excluded = [], [], 0
     assigned_ids = {a.sample_id for a in assignments}
+    features_fn = motion_features_fn or _motion_features
     for rid in ids[offset:] + ids[:offset]:
         robot, (phase, sample_id) = robots[rid], intents[rid]
         goal = _target(robot, (phase, sample_id), samples, station_positions)
@@ -168,7 +188,7 @@ def training_examples(geometry: Geometry, observation: Observation, assignments:
         if actual_position not in options:
             excluded += 1
         elif len(options) > 1:
-            moves.append(([_motion_features(geometry, robot, phase, goal, p, others) for p in options],
+            moves.append(([features_fn(geometry, robot, phase, goal, p, others) for p in options],
                           options.index(actual_position)))
         if actual_position != robot.position:
             reserved.add(actual_position)
@@ -184,8 +204,7 @@ def training_examples(geometry: Geometry, observation: Observation, assignments:
 
 
 def train(moves: list[tuple[list[list[float]], int]], services: list[tuple[list[float], int]]) -> dict[str, Any]:
-    if not moves or not services:
-        raise ValueError("training needs both motion and service examples")
+    validate_training_examples(moves, services, len(MOTION_FEATURES))
     positive = sum(label for _, label in services)
     negative = len(services) - positive
     if not positive or not negative:
@@ -243,6 +262,10 @@ class HybridDynamicsModel:
         if mode == "learned":
             validate(parameters)
         self.geometry, self.parameters, self.mode = geometry, parameters, mode
+
+    def motion_features(self, robot: ObservedRobot, phase: str, goal: Position,
+                        candidate: Position, others: tuple[Position, ...]) -> list[float]:
+        return _motion_features(self.geometry, robot, phase, goal, candidate, others)
 
     def predict_next(self, observation: Observation, assignments: tuple[Assignment, ...]) -> Observation:
         if self.mode == "persistence":
@@ -305,7 +328,7 @@ class HybridDynamicsModel:
             else:
                 assert self.parameters is not None
                 next_pos = max(options, key=lambda p: _dot(self.parameters["motion_weights"],
-                               _motion_features(self.geometry, robot, phase, goal, p, others)))
+                               self.motion_features(robot, phase, goal, p, others)))
             positions[rid] = next_pos
             if next_pos != robot.position:
                 reserved.add(next_pos)

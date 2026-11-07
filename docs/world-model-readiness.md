@@ -9,7 +9,7 @@
 | 事项 | 当前证据 | 仍缺什么 |
 | --- | --- | --- |
 | 系统闭环 | [原型](prototype.md)能读取任务、执行机器人调度、记录并回放；[框架验收](framework-assessment.md)另有 Lay2Graph 的上游多机器人仓储闭环 | 样本转运原型尚未接入 Lay2Graph 或真实机器人；需要按毕设要求决定是否建设交互式业务界面、数据库或外部接口 |
-| 预测模块 | [学习型预测器](world-model-experiment.md)学习时间残差；另有[CPU 混合状态转移模型](state-transition-experiment.md)，可重复预测已知机器人与任务状态 | 新模型在首轮测试中落后于规则参考，不预测未来任务或中断，也尚未接入闭环调度 |
+| 预测模块 | [学习型预测器](world-model-experiment.md)学习时间残差；另有[CPU 混合状态转移模型](state-transition-revision.md)，可重复预测已知机器人与任务状态 | 新模型在首轮和第二轮总体测试中落后于规则参考，不预测未来任务或中断，也尚未接入闭环调度 |
 | 扩展接口 | [转移类型](../lab_transport/transition_schema.py)、可观察记录链及自定义分配策略回调已建立；[Simulator](../lab_transport/simulation.py)会检查输入分配与当前空闲机器人、等待任务相符 | 原模型仍由仿真器内部创建；多步模型尚未自动接入回调，仍需设计预测结果与单步交互接口。Lay2Graph 需要单独适配和验收 |
 | 实验场景 | 使用[公开医院路网与来源说明](source-backed-hospital-scenario.md)，以及 [Open-RMF 诊所演示图](multiple-locations-experiment.md) | 增加的医院第二取点、诊所取送用途、部分时间和扰动是仿真假设；缺少目标实验室现场任务、操作时长、站点容量与故障记录。任务按预设释放时刻进入仿真，尚无运行时接收新任务的外部接口 |
 | 样本规则 | [来源与适用范围](specimen-rules-and-public-data.md)保留具体机构及类型；缺失值不视为满足 | 需要目标实验室的样本类别和现行 SOP 才能决定真实截止时间、温控与交接规则；采样时刻、交付、实验室接收和分析不能混为一谈 |

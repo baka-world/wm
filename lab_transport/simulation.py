@@ -10,6 +10,7 @@ from typing import Any
 
 from .domain import DirectedGraph, Position, Sample, Scenario
 from .world_model import PublicStation, WorldModel
+from .learned_model import LearnedWorldModel
 
 
 @dataclass
@@ -37,18 +38,23 @@ class SampleState:
 class Simulator:
     """Owns real simulation state; forecasts never receive future outage data."""
 
-    def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0):
-        if policy not in {"world", "nearest", "rule"}:
-            raise ValueError("policy must be 'world', 'nearest' or 'rule'")
+    def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0,
+                 learned_parameters: dict | None = None):
+        if policy not in {"world", "nearest", "rule", "learned"}:
+            raise ValueError("policy must be 'world', 'nearest', 'rule' or 'learned'")
+        if policy == "learned" and learned_parameters is None:
+            raise ValueError("learned policy requires trained parameters")
         self.scenario = scenario
         self.policy = policy
         self.seed = seed
         self.robots = {r.id: RobotState(r.id, r.position, r.home) for r in scenario.robots}
         self.samples = {s.id: SampleState(s) for s in scenario.samples}
-        self.model = WorldModel(scenario.grid, {
+        stations = {
             sid: PublicStation(station.position, station.prior_ticks)
             for sid, station in scenario.stations.items()
-        })
+        }
+        self.model = (LearnedWorldModel(scenario.grid, stations, learned_parameters)
+                      if policy == "learned" else WorldModel(scenario.grid, stations))
         self.events: list[dict[str, Any]] = []
         self.history: list[dict[str, Any]] = []
         self.prevented_moves = 0
@@ -100,9 +106,18 @@ class Simulator:
             forecasts: list[dict[str, Any]] = []
             for robot in idle:
                 for sample in waiting:
-                    if self.policy in {"world", "rule"}:
+                    if self.policy in {"world", "rule", "learned"}:
+                        # Only the current observed status and positions are
+                        # shared. Future releases, outages and RNG are hidden.
+                        context = {
+                            "other_positions": tuple(r.position for r in self.robots.values() if r.id != robot.id),
+                            "other_active": sum(r.task_id is not None for r in self.robots.values() if r.id != robot.id),
+                            "waiting_count": len(waiting),
+                            "pickup_unavailable_now": int(not self.scenario.stations[sample.spec.pickup].available(tick)),
+                            "dropoff_unavailable_now": int(not self.scenario.stations[sample.spec.dropoff].available(tick)),
+                        }
                         forecast = self.model.predict(tick, robot.id, robot.position,
-                                                      sample.spec, self._current_station_busy(tick))
+                                                      sample.spec, self._current_station_busy(tick), context)
                         if self.policy == "rule":
                             # Earliest known deadline first, including already
                             # infeasible tasks; use prediction to choose a robot.
@@ -338,6 +353,13 @@ class Simulator:
             }
         if self.scenario.metadata:
             scenario_info["metadata"] = dict(self.scenario.metadata)
+        if self.policy == "learned":
+            scenario_info["prediction_model"] = {
+                "kind": "ridge_residual",
+                "training_scope": self.model.parameters.get("training_scope", "unspecified"),
+                "training_records": self.model.parameters.get("training_records"),
+                "note": "学习参数来自仿真；跨地图及真实环境的有效性尚未验证。",
+            }
         return {
             "scenario": scenario_info,
             "policy": self.policy, "seed": self.seed, "summary": summary,

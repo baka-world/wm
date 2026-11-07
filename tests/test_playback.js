@@ -23,7 +23,7 @@ class Element {
   addEventListener(name, callback) { this.listeners[name] = callback; }
 }
 
-const ids = ['tick', 'grid', 'play', 'subtitle', 'metrics', 'time', 'tasks', 'decision', 'forecasts'];
+const ids = ['tick', 'grid', 'play', 'subtitle', 'metrics', 'time', 'tasks', 'decision', 'forecasts', 'banner', 'map-note'];
 const elements = Object.fromEntries(ids.map(id => [id, new Element()]));
 let interval;
 vm.runInNewContext(match[1], {

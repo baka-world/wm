@@ -19,24 +19,30 @@ def main() -> int:
         command.add_argument("--scenario", default="scenarios/laboratory_demo.json")
         command.add_argument("--seed", type=int, default=42)
         command.add_argument("--output", required=True, help="输出目录；不覆盖已有结果")
+        command.add_argument("--model", help="学习型预测器参数 JSON；compare 时额外比较 learned 策略")
         if name == "run":
-            command.add_argument("--policy", choices=("nearest", "world"), default="world")
+            command.add_argument("--policy", choices=("nearest", "world", "learned"), default="world")
     args = parser.parse_args()
     try:
         scenario = load_scenario(args.scenario)
+        parameters = json.loads(Path(args.model).read_text(encoding="utf-8")) if args.model else None
         output = Path(args.output)
         if args.command == "run":
+            if args.policy != "learned" and parameters is not None:
+                raise ValueError("--model is used only with the learned policy")
             check_output_directory(output)
-            result = Simulator(scenario, args.policy, args.seed).run()
+            result = Simulator(scenario, args.policy, args.seed, parameters).run()
             write_run(result, output)
             print(json.dumps({"policy": args.policy, **result["summary"]}, ensure_ascii=False))
             return 0 if result["summary"]["status"] == "completed" else 2
 
         if (output / "comparison.json").exists():
             raise FileExistsError(f"refusing to overwrite existing output: {output / 'comparison.json'}")
-        for policy in ("nearest", "world"):
+        policies = ("nearest", "world", "learned") if parameters is not None else ("nearest", "world")
+        for policy in policies:
             check_output_directory(output / policy)
-        results = {policy: Simulator(scenario, policy, args.seed).run() for policy in ("nearest", "world")}
+        results = {policy: Simulator(scenario, policy, args.seed, parameters if policy == "learned" else None).run()
+                   for policy in policies}
         for policy, result in results.items():
             write_run(result, output / policy)
         comparison = {"scenario": scenario.name, "seed": args.seed,

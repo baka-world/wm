@@ -23,8 +23,8 @@ vm.runInNewContext(script[1], {
 const svg=elements.grid.children[0];
 assert.equal(svg.tag,'svg');
 const mode=process.argv[3]||'original';
-assert.equal(svg.children.filter(c=>c.tag==='circle').length,mode==='nominal'||mode==='rule'?76:32);
-assert.equal(svg.children.filter(c=>c.tag==='line').length,mode==='nominal'||mode==='rule'?112:63);
+assert.equal(svg.children.filter(c=>c.tag==='circle').length,['nominal','learned_nominal','rule'].includes(mode)?76:32);
+assert.equal(svg.children.filter(c=>c.tag==='line').length,['nominal','learned_nominal','rule'].includes(mode)?112:63);
 assert.equal(elements.tasks.children.length,mode==='rule'?2:4);
 if(mode==='rule'){
   assert(elements.banner.textContent.includes('按时交付不等于'));
@@ -37,6 +37,9 @@ if(mode==='mimic'||mode==='nominal'){
   assert(elements.banner.textContent.includes('跨机构仿真'));
   assert(elements['map-note'].textContent.includes('不是实际'));
   assert(elements.tasks.children.every(row=>row.children[4].textContent==='blood_unspecified'));
+}else if(mode==='learned_nominal'){
+  assert(elements.banner.textContent.includes('学习预测器在仿真数据上训练'));
+  assert(elements['map-note'].textContent.includes('不是实际'));
 }else if(mode==='original'){
   assert(elements.banner.textContent.includes('功能测试设置'));
 }

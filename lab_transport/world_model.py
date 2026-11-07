@@ -40,7 +40,8 @@ class WorldModel:
         return {station_id: list(values) for station_id, values in self._observed.items()}
 
     def predict(self, tick: int, robot_id: str, position: Position, sample: Sample,
-                station_busy: Mapping[str, int] | None = None) -> dict:
+                station_busy: Mapping[str, int] | None = None,
+                context: Mapping | None = None) -> dict:
         """Forecast consequences of assigning one available robot to one sample."""
         pickup, dropoff = self.stations[sample.pickup], self.stations[sample.dropoff]
         to_pickup = self.grid.shortest_path(position, pickup.position)
@@ -50,10 +51,23 @@ class WorldModel:
         occupied = station_busy or {}
         # Occupancy is a current observation, not knowledge of future arrivals.
         pickup_wait = max(0.0, occupied.get(sample.pickup, 0) - len(to_pickup))
-        pickup_at = tick + len(to_pickup) + pickup_wait + self.expected_service(sample.pickup)
+        pickup_service = self.expected_service(sample.pickup)
+        dropoff_service = self.expected_service(sample.dropoff)
+        pickup_at = tick + len(to_pickup) + pickup_wait + pickup_service
         drop_wait = max(0.0, occupied.get(sample.dropoff, 0) - (pickup_at - tick + len(to_dropoff)))
-        completion = pickup_at + len(to_dropoff) + drop_wait + self.expected_service(sample.dropoff)
+        completion = pickup_at + len(to_dropoff) + drop_wait + dropoff_service
         late = None if sample.deadline_tick is None else max(0.0, completion - sample.deadline_tick)
+        public = context or {}
+        route = set(to_pickup + to_dropoff)
+        features = {
+            "distance_to_pickup": len(to_pickup), "distance_to_dropoff": len(to_dropoff),
+            "pickup_service_est": pickup_service, "dropoff_service_est": dropoff_service,
+            "pickup_busy_est": occupied.get(sample.pickup, 0), "dropoff_busy_est": occupied.get(sample.dropoff, 0),
+            "other_on_route": sum(pos in route for pos in public.get("other_positions", ())),
+            "other_active": public.get("other_active", 0), "waiting_count": public.get("waiting_count", 0),
+            "pickup_unavailable_now": public.get("pickup_unavailable_now", 0),
+            "dropoff_unavailable_now": public.get("dropoff_unavailable_now", 0),
+        }
         return {
             "robot_id": robot_id, "sample_id": sample.id,
             "expected_pickup_tick": round(pickup_at, 3),
@@ -64,4 +78,5 @@ class WorldModel:
             "predicted_final_sample_status": "completed",
             "predicted_lateness": round(late, 3) if late is not None else None,
             "score": round(completion + 4 * (late or 0), 3),
+            "training_features": features,
         }

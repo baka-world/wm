@@ -162,17 +162,21 @@ def main() -> int:
     parser.add_argument("--workload", help="mimic_workload 生成的相对时序 JSON")
     parser.add_argument("--seconds-per-tick", type=int, help="相对时序到仿真步的显式假设；不是实测值")
     parser.add_argument("--tiago-config", help="固定版本 TIAGo 适配器，启用基于公开参数的时间估计")
+    parser.add_argument("--model", help="可选的仿真训练预测器 JSON；额外运行 learned 策略")
     args = parser.parse_args()
     try:
         workload = json.loads(Path(args.workload).read_text(encoding="utf-8")) if args.workload else None
         config = Path(args.tiago_config).read_bytes() if args.tiago_config else None
+        parameters = json.loads(Path(args.model).read_text(encoding="utf-8")) if args.model else None
         scenario = make_scenario(Path(args.map_file).read_bytes(), workload, args.seconds_per_tick, config)
         output = Path(args.output)
         if (output / "comparison.json").exists():
             raise FileExistsError(f"refusing to overwrite existing output: {output / 'comparison.json'}")
-        for policy in ("nearest", "world"):
+        policies = ("nearest", "world", "learned") if parameters is not None else ("nearest", "world")
+        for policy in policies:
             check_output_directory(output / policy)
-        results = {policy: Simulator(scenario, policy, 0).run() for policy in ("nearest", "world")}
+        results = {policy: Simulator(scenario, policy, 0, parameters if policy == "learned" else None).run()
+                   for policy in policies}
         for policy, result in results.items():
             write_run(result, output / policy)
         comparison = {

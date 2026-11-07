@@ -65,6 +65,9 @@ if(data.scenario.metadata&&data.scenario.metadata.rule_mode==='receipt_due_as_de
   document.getElementById('metrics').textContent='最终完成：'+data.summary.completed_count+'/'+data.summary.sample_count+
     '；仿真交付超过代理上限：'+(data.summary.late_count===null?'未设置':data.summary.late_count)+'；结束步数：'+data.summary.ticks;
 }
+if(data.scenario.prediction_model){
+  document.getElementById('banner').textContent+=' 学习预测器在仿真数据上训练，跨场景有效性尚未验证。';
+}
 const statusNames = {unreleased:'未到达',waiting:'待分配',assigned:'前往取样',in_transit:'运输中',completed:'已送达'};
 function renderGraph(frame){
   const ns='http://www.w3.org/2000/svg', source=data.scenario.graph;
@@ -114,12 +117,12 @@ function render(index) {
   if(!latest){decision.textContent='该时刻尚无已执行的任务分配。';return}
   const selected=latest.selected, sample=data.samples.find(s=>s.id===latest.sample_id);
   let message='第 '+latest.tick+' 步：将 '+latest.sample_id+' 分配给 '+latest.robot_id+'。';
-  if(latest.policy==='world'||latest.policy==='rule') {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
+  if(['world','rule','learned'].includes(latest.policy)) {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
     if(selected.predicted_lateness!==null)message+=' 预计逾期 '+selected.predicted_lateness+' 步。';}
   if(sample&&sample.completed_tick!==null&&sample.completed_tick<=frame.tick) message+=' 实际第 '+sample.completed_tick+' 步完成。';
   decision.textContent=message;
   for(const candidate of latest.candidates){const item=document.createElement('li');
-    item.textContent=candidate.robot_id+' / '+candidate.sample_id+((latest.policy==='world'||latest.policy==='rule')
+    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(['world','rule','learned'].includes(latest.policy)
       ? '：预测完成 '+candidate.expected_completion_tick+' 步，评分 '+candidate.score
       : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }

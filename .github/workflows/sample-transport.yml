@@ -8,6 +8,7 @@ on:
       - 'scenarios/**'
       - 'examples/specimen-rules-synthetic.json'
       - 'examples/rule-dispatch-synthetic.json'
+      - 'examples/evidence/world-model/**'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   pull_request:
@@ -16,6 +17,7 @@ on:
       - 'scenarios/**'
       - 'examples/specimen-rules-synthetic.json'
       - 'examples/rule-dispatch-synthetic.json'
+      - 'examples/evidence/world-model/**'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:
@@ -180,6 +182,50 @@ jobs:
           assert '跨机构仿真' in check.visible and 'blood_unspecified' in check.visible
           assert '不是实际路段耗时' in check.visible and '未设置时限' in check.visible
           print('Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline')
+          PY
+      - name: Train and evaluate the CPU learned predictor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.experiment --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --output "$RUNNER_TEMP/world-experiment"
+          python tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment"
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-hospital"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/learned-hospital/learned/report.html" learned_nominal
+          python -m lab_transport compare --seed 42 --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" \
+            --output "$RUNNER_TEMP/learned-grid"
+          node tests/test_playback.js "$RUNNER_TEMP/learned-grid/learned/report.html"
+      - name: Check learned predictor playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/learned-hospital/learned/report.html?step=1" \
+            > "$RUNNER_TEMP/learned-dom.html" 2> "$RUNNER_TEMP/learned-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'learned-dom.html').read_text())
+          assert '学习预测器在仿真数据上训练' in check.visible
+          assert '预测第' in check.visible and '最终完成：4/4' in check.visible
+          print('Browser DOM verified: learned forecast, simulated-data notice and completed tasks')
           PY
       - name: Check the standalone playback in headless Chrome
         shell: bash

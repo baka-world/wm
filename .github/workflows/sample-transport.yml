@@ -10,6 +10,7 @@ on:
       - 'examples/rule-dispatch-synthetic.json'
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
+      - 'examples/evidence/dynamics-pilot/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'tests/**'
@@ -22,6 +23,7 @@ on:
       - 'examples/rule-dispatch-synthetic.json'
       - 'examples/evidence/world-model/**'
       - 'examples/evidence/multisite/**'
+      - 'examples/evidence/dynamics-pilot/**'
       - 'validation/logs/multisite-*.log'
       - 'validation/logs/readiness-*.log'
       - 'tests/**'
@@ -297,6 +299,15 @@ jobs:
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-world/report.html" clinic
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-learned/report.html" clinic_learned
           node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-rollout/report.html" clinic_rollout
+      - name: Reproduce CPU state-transition model and held-out tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.dynamics_experiment \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --output "$RUNNER_TEMP/dynamics-pilot"
+          python tests/check_dynamics_experiment.py "$RUNNER_TEMP/dynamics-pilot" examples/evidence/dynamics-pilot
       - name: Check clinic playback in headless Chrome
         shell: bash
         run: |
@@ -438,5 +449,13 @@ jobs:
             ${{ runner.temp }}/clinic-world/
             ${{ runner.temp }}/clinic-learned/
             ${{ runner.temp }}/clinic-rollout/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload state-transition results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamics-pilot
+          path: ${{ runner.temp }}/dynamics-pilot/
           if-no-files-found: warn
           retention-days: 7

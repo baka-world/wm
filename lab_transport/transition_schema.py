@@ -75,7 +75,7 @@ class Transition:
 
 
 class DynamicsModel(Protocol):
-    """Proposed one-step contract; no learned implementation is provided yet.
+    """One-step contract for a partially observable dynamics predictor.
 
     A model can be initialized separately with known static map information.
     Observations are partial and future arrivals/outages are unobserved.

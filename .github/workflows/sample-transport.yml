@@ -189,7 +189,7 @@ jobs:
           set -euo pipefail
           python -m lab_transport.experiment --map-file "$RUNNER_TEMP/hospital.building.yaml" \
             --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --output "$RUNNER_TEMP/world-experiment"
-          python tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment"
+          python tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment" examples/evidence/world-model
           python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
             --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
             --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-hospital"
@@ -197,6 +197,12 @@ jobs:
           python -m lab_transport compare --seed 42 --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" \
             --output "$RUNNER_TEMP/learned-grid"
           node tests/test_playback.js "$RUNNER_TEMP/learned-grid/learned/report.html"
+          python -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \
+            --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-rule"
+          python tests/check_rule_run.py "$RUNNER_TEMP/learned-rule"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/learned-rule/learned_rule/report.html" rule
       - name: Check learned predictor playback in headless Chrome
         shell: bash
         run: |

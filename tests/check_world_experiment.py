@@ -30,3 +30,29 @@ for regime, summary in result["aggregates"].items():
     for values in summary["offline_same_decisions"]["errors"].values():
         assert all(value is None or math.isfinite(value) and value >= 0 for value in values.values())
 print('Experiment verified: disjoint seeds, simulation-only model, completion accounting and held-out prediction metrics')
+
+if len(sys.argv) > 2:
+    reference_root = Path(sys.argv[2])
+    reference_model = json.loads((reference_root / "learned-parameters.json").read_text(encoding="utf-8"))
+    reference = json.loads((reference_root / "experiment-results.json").read_text(encoding="utf-8"))
+    validate(reference_model)
+    for field in ("means", "scales", "pickup_weights", "completion_weights"):
+        assert all(math.isclose(a, b, rel_tol=1e-8, abs_tol=1e-8)
+                   for a, b in zip(model[field], reference_model[field])), field
+    current_cases = {(x["regime"], x["seed"]): x for x in result["cases"]}
+    reference_cases = {(x["regime"], x["seed"]): x for x in reference["cases"]}
+    assert current_cases.keys() == reference_cases.keys()
+    for key in current_cases:
+        for policy in ("nearest", "world", "learned"):
+            current = current_cases[key]["policies"][policy]
+            expected = reference_cases[key]["policies"][policy]
+            for field in ("completed", "total", "timed_out", "candidate_evaluations", "assignments"):
+                assert current[field] == expected[field], (key, policy, field)
+            assert math.isclose(current["restricted_mean_flow_ticks"], expected["restricted_mean_flow_ticks"], abs_tol=1e-8)
+    for regime in ("normal", "short_outage", "shifted"):
+        current = result["aggregates"][regime]["offline_same_decisions"]["errors"]
+        expected = reference["aggregates"][regime]["offline_same_decisions"]["errors"]
+        for policy in ("world", "learned"):
+            for metric in ("pickup_mae_ticks", "completion_mae_ticks"):
+                assert math.isclose(current[policy][metric], expected[policy][metric], abs_tol=1e-3)
+    print('Saved results reproduced: parameters, assignments and metrics match; CPU timings intentionally excluded')

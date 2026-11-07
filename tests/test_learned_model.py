@@ -63,6 +63,20 @@ class LearnedModelTests(unittest.TestCase):
                 self.assertGreater(selected["expected_completion_tick"], selected["expected_pickup_tick"])
                 self.assertEqual(selected["predictor"], "learned_ridge")
 
+    def test_learned_rule_combines_deadline_order_and_learned_prediction(self):
+        records = [{"features": features(i), "pickup_residual": float(i), "completion_residual": float(2 * i)}
+                   for i in range(8)]
+        model = train(records)
+        scenario = load_scenario(ROOT / "scenarios/laboratory_demo.json")
+        samples = (replace(scenario.samples[0], deadline_tick=80),
+                   replace(scenario.samples[1], release_tick=0, deadline_tick=2))
+        scenario = replace(scenario, robots=scenario.robots[:1], samples=samples)
+        result = Simulator(scenario, "learned_rule", 42, model).run()
+        first = next(e for e in result["events"] if e["type"] == "assigned")
+        self.assertEqual(first["sample_id"], samples[1].id)
+        self.assertEqual(first["selected"]["predictor"], "learned_ridge")
+        self.assertEqual(result["summary"]["completed_count"], 2)
+
     def test_train_and_test_seeds_are_disjoint_and_reproducible(self):
         self.assertFalse(set(TRAIN_SEEDS) & set(TEST_SEEDS))
         self.assertFalse(set(TRAIN_SEEDS) & set(SHIFT_SEEDS))

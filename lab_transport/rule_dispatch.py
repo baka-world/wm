@@ -93,10 +93,12 @@ def main() -> int:
     parser.add_argument("--seconds-per-tick", required=True, type=int)
     parser.add_argument("--profiles", required=True)
     parser.add_argument("--samples", required=True)
+    parser.add_argument("--model", help="可选的仿真训练预测器 JSON；额外运行 learned_rule")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     try:
         profiles = load_profiles(args.profiles)
+        parameters = json.loads(Path(args.model).read_text(encoding="utf-8")) if args.model else None
         doc = json.loads(Path(args.samples).read_text(encoding="utf-8"))
         base = make_scenario(Path(args.map_file).read_bytes(), seconds_per_tick=args.seconds_per_tick,
                              tiago_config=Path(args.tiago_config).read_bytes())
@@ -104,9 +106,11 @@ def main() -> int:
         output = Path(args.output)
         if (output / "comparison.json").exists():
             raise FileExistsError(f"refusing to overwrite existing output: {output / 'comparison.json'}")
-        for policy in ("nearest", "world", "rule"):
+        policies = ("nearest", "world", "rule", "learned_rule") if parameters is not None else ("nearest", "world", "rule")
+        for policy in policies:
             check_output_directory(output / policy)
-        results = {policy: Simulator(scenario, policy, 0).run() for policy in ("nearest", "world", "rule")}
+        results = {policy: Simulator(scenario, policy, 0, parameters if policy == "learned_rule" else None).run()
+                   for policy in policies}
         for policy, result in results.items():
             write_run(result, output / policy)
         comparison = {"scenario": scenario.name,

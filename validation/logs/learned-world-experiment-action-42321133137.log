@@ -1,0 +1,607 @@
+﻿2026-11-07T00:55:30.8575381Z Current runner version: '2.338.2'
+2026-11-07T00:55:30.8600233Z ##[group]Runner Image Provisioner
+2026-11-07T00:55:30.8601036Z Hosted Compute Agent
+2026-11-07T00:55:30.8601632Z Version: 20261028.624
+2026-11-07T00:55:30.8602201Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-07T00:55:30.8602929Z Build Date: 2026-10-28T21:51:42Z
+2026-11-07T00:55:30.8603911Z Worker ID: {a3917913-28fa-4b9d-b274-c8a988986727}
+2026-11-07T00:55:30.8604563Z Region: westus3
+2026-11-07T00:55:30.8605098Z Cloud: Azure
+2026-11-07T00:55:30.8605593Z ##[endgroup]
+2026-11-07T00:55:30.8606841Z ##[group]Operating System
+2026-11-07T00:55:30.8607446Z Ubuntu
+2026-11-07T00:55:30.8607918Z 24.04.5
+2026-11-07T00:55:30.8608406Z LTS
+2026-11-07T00:55:30.8608890Z ##[endgroup]
+2026-11-07T00:55:30.8609427Z ##[group]Runner Image
+2026-11-07T00:55:30.8609979Z Image: ubuntu-24.04
+2026-11-07T00:55:30.8610558Z Version: 20261101.360.1
+2026-11-07T00:55:30.8611739Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-07T00:55:30.8613407Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-07T00:55:30.8614338Z ##[endgroup]
+2026-11-07T00:55:30.8615318Z ##[group]GITHUB_TOKEN Permissions
+2026-11-07T00:55:30.8617348Z Contents: read
+2026-11-07T00:55:30.8617908Z Metadata: read
+2026-11-07T00:55:30.8618418Z ##[endgroup]
+2026-11-07T00:55:30.8620671Z Secret source: Actions
+2026-11-07T00:55:30.8621566Z Cache mode: write
+2026-11-07T00:55:30.8622213Z Prepare workflow directory
+2026-11-07T00:55:30.8910514Z Prepare all required actions
+2026-11-07T00:55:30.8956278Z Getting action download info
+2026-11-07T00:55:31.2469804Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-07T00:55:31.3636643Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-07T00:55:31.4760115Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-07T00:55:31.7282875Z Complete job name: prototype
+2026-11-07T00:55:31.8076642Z ##[group]Run actions/checkout@v4
+2026-11-07T00:55:31.8077451Z with:
+2026-11-07T00:55:31.8077916Z   repository: lieuyimo/wm
+2026-11-07T00:55:31.8081482Z   token: ***
+2026-11-07T00:55:31.8082038Z   ssh-strict: true
+2026-11-07T00:55:31.8082548Z   ssh-user: git
+2026-11-07T00:55:31.8083040Z   persist-credentials: true
+2026-11-07T00:55:31.8083771Z   clean: true
+2026-11-07T00:55:31.8084246Z   sparse-checkout-cone-mode: true
+2026-11-07T00:55:31.8084843Z   fetch-depth: 1
+2026-11-07T00:55:31.8085310Z   fetch-tags: false
+2026-11-07T00:55:31.8085785Z   show-progress: true
+2026-11-07T00:55:31.8086277Z   lfs: false
+2026-11-07T00:55:31.8086721Z   submodules: false
+2026-11-07T00:55:31.8087240Z   set-safe-directory: true
+2026-11-07T00:55:31.8087807Z   allow-unsafe-pr-checkout: false
+2026-11-07T00:55:31.8088522Z ##[endgroup]
+2026-11-07T00:55:32.1063858Z Syncing repository: lieuyimo/wm
+2026-11-07T00:55:32.1067234Z ##[group]Getting Git version info
+2026-11-07T00:55:32.1068494Z Working directory is '/home/runner/work/wm/wm'
+2026-11-07T00:55:32.1069823Z [command]/usr/bin/git version
+2026-11-07T00:55:32.1213402Z git version 2.56.0
+2026-11-07T00:55:32.1230693Z ##[endgroup]
+2026-11-07T00:55:32.1245785Z Temporarily overriding HOME='/home/runner/work/_temp/f681a390-e22c-47f4-8125-dec460562656' before making global git config changes
+2026-11-07T00:55:32.1248002Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T00:55:32.1252546Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-07T00:55:32.1303983Z Deleting the contents of '/home/runner/work/wm/wm'
+2026-11-07T00:55:32.1308985Z ##[group]Initializing the repository
+2026-11-07T00:55:32.1313281Z [command]/usr/bin/git init /home/runner/work/wm/wm
+2026-11-07T00:55:32.1424561Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-07T00:55:32.1426114Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-07T00:55:32.1427994Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-07T00:55:32.1429115Z hint: call:
+2026-11-07T00:55:32.1429740Z hint:
+2026-11-07T00:55:32.1430635Z hint: 	git config --global init.defaultBranch <name>
+2026-11-07T00:55:32.1431568Z hint:
+2026-11-07T00:55:32.1432488Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-07T00:55:32.1434110Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-07T00:55:32.1435207Z hint:
+2026-11-07T00:55:32.1435977Z hint: 	git branch -m <name>
+2026-11-07T00:55:32.1436781Z hint:
+2026-11-07T00:55:32.1437761Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-07T00:55:32.1439402Z Initialized empty Git repository in /home/runner/work/wm/wm/.git/
+2026-11-07T00:55:32.1448268Z [command]/usr/bin/git remote add origin https://github.com/lieuyimo/wm
+2026-11-07T00:55:32.1493266Z ##[endgroup]
+2026-11-07T00:55:32.1494589Z ##[group]Disabling automatic garbage collection
+2026-11-07T00:55:32.1495797Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-07T00:55:32.1525482Z ##[endgroup]
+2026-11-07T00:55:32.1526949Z ##[group]Setting up auth
+2026-11-07T00:55:32.1531728Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T00:55:32.1569339Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T00:55:32.1931047Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T00:55:32.1967448Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T00:55:32.2153815Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T00:55:32.2184580Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T00:55:32.2363838Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-07T00:55:32.2399033Z ##[endgroup]
+2026-11-07T00:55:32.2400136Z ##[group]Fetching the repository
+2026-11-07T00:55:32.2411166Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d389bff2ba12e3b81f8116043195d59d0a3f4f59:refs/remotes/pull/2/merge
+2026-11-07T00:55:33.0111201Z From https://github.com/lieuyimo/wm
+2026-11-07T00:55:33.0112777Z  * [new ref]         d389bff2ba12e3b81f8116043195d59d0a3f4f59 -> pull/2/merge
+2026-11-07T00:55:33.0115856Z ##[endgroup]
+2026-11-07T00:55:33.0117912Z ##[group]Determining the checkout info
+2026-11-07T00:55:33.0119157Z ##[endgroup]
+2026-11-07T00:55:33.0125154Z [command]/usr/bin/git sparse-checkout disable
+2026-11-07T00:55:33.0182679Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-07T00:55:33.0264268Z ##[group]Checking out the ref
+2026-11-07T00:55:33.0267135Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2/merge
+2026-11-07T00:55:33.0398513Z Note: switching to 'refs/remotes/pull/2/merge'.
+2026-11-07T00:55:33.0400287Z 
+2026-11-07T00:55:33.0401940Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-07T00:55:33.0404235Z changes and commit them, and you can discard any commits you make in this
+2026-11-07T00:55:33.0406628Z state without impacting any branches by switching back to a branch.
+2026-11-07T00:55:33.0408020Z 
+2026-11-07T00:55:33.0408842Z If you want to create a new branch to retain commits you create, you may
+2026-11-07T00:55:33.0410708Z do so (now or later) by using -c with the switch command. Example:
+2026-11-07T00:55:33.0411752Z 
+2026-11-07T00:55:33.0412118Z   git switch -c <new-branch-name>
+2026-11-07T00:55:33.0413021Z 
+2026-11-07T00:55:33.0413824Z Or undo this operation with:
+2026-11-07T00:55:33.0414453Z 
+2026-11-07T00:55:33.0414798Z   git switch -
+2026-11-07T00:55:33.0415335Z 
+2026-11-07T00:55:33.0416203Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-07T00:55:33.0417660Z 
+2026-11-07T00:55:33.0418987Z HEAD is now at d389bff Merge 20b30a97429a2baee2d1dcd4425e7bec69381a26 into ce8c218162225271d255c9357c57859883f382e3
+2026-11-07T00:55:33.0422959Z ##[endgroup]
+2026-11-07T00:55:33.0454823Z [command]/usr/bin/git log -1 --format=%H
+2026-11-07T00:55:33.0477071Z d389bff2ba12e3b81f8116043195d59d0a3f4f59
+2026-11-07T00:55:33.0906187Z ##[group]Run actions/setup-python@v5
+2026-11-07T00:55:33.0907598Z with:
+2026-11-07T00:55:33.0908673Z   python-version: 3.11
+2026-11-07T00:55:33.0910003Z   check-latest: false
+2026-11-07T00:55:33.0920426Z   token: ***
+2026-11-07T00:55:33.0921606Z   update-environment: true
+2026-11-07T00:55:33.0923061Z   allow-prereleases: false
+2026-11-07T00:55:33.0924624Z   freethreaded: false
+2026-11-07T00:55:33.0925751Z ##[endgroup]
+2026-11-07T00:55:33.2214691Z ##[group]Installed versions
+2026-11-07T00:55:33.2301272Z (node:2115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T00:55:33.2304792Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T00:55:33.2306996Z Successfully set up CPython (3.11.18)
+2026-11-07T00:55:33.2309452Z ##[endgroup]
+2026-11-07T00:55:33.2558686Z ##[group]Run python -m unittest discover -s tests -v
+2026-11-07T00:55:33.2560275Z [36;1mpython -m unittest discover -s tests -v[0m
+2026-11-07T00:55:33.2591765Z shell: /usr/bin/bash -e {0}
+2026-11-07T00:55:33.2592743Z env:
+2026-11-07T00:55:33.2594152Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:33.2595892Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:33.2597626Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:33.2599343Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:33.2601897Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:33.2604346Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:33.2606113Z ##[endgroup]
+2026-11-07T00:55:33.6355372Z test_direction_and_source_integrity (test_hospital_graph.HospitalGraphTests.test_direction_and_source_integrity) ... ok
+2026-11-07T00:55:33.6494637Z test_missing_deadline_is_not_reported_as_a_clinical_success (test_hospital_graph.HospitalGraphTests.test_missing_deadline_is_not_reported_as_a_clinical_success) ... ok
+2026-11-07T00:55:33.6499009Z test_two_robot_fallback_can_clear_a_blocked_bottleneck (test_hospital_graph.HospitalGraphTests.test_two_robot_fallback_can_clear_a_blocked_bottleneck) ... ok
+2026-11-07T00:55:33.7725876Z test_cli_compare_creates_results_and_will_not_overwrite (test_lab_transport.ReportTests.test_cli_compare_creates_results_and_will_not_overwrite) ... ok
+2026-11-07T00:55:33.7849229Z test_report_escapes_scenario_text (test_lab_transport.ReportTests.test_report_escapes_scenario_text) ... ok
+2026-11-07T00:55:33.7927710Z test_invalid_and_disconnected_inputs_are_rejected (test_lab_transport.ScenarioTests.test_invalid_and_disconnected_inputs_are_rejected) ... ok
+2026-11-07T00:55:33.7980165Z test_optional_specimen_metadata_is_preserved (test_lab_transport.ScenarioTests.test_optional_specimen_metadata_is_preserved) ... ok
+2026-11-07T00:55:33.9471295Z test_demo_completes_across_service_time_seeds (test_lab_transport.SimulationTests.test_demo_completes_across_service_time_seeds) ... ok
+2026-11-07T00:55:33.9481213Z test_outage_delays_service_and_becomes_an_observation (test_lab_transport.SimulationTests.test_outage_delays_service_and_becomes_an_observation) ... ok
+2026-11-07T00:55:33.9635173Z test_reproducible_and_duration_draws_match_across_policies (test_lab_transport.SimulationTests.test_reproducible_and_duration_draws_match_across_policies) ... ok
+2026-11-07T00:55:33.9646098Z test_robots_can_leave_each_others_occupied_destinations (test_lab_transport.SimulationTests.test_robots_can_leave_each_others_occupied_destinations) ... ok
+2026-11-07T00:55:33.9697524Z test_simulator_cannot_be_reused_with_stale_state (test_lab_transport.SimulationTests.test_simulator_cannot_be_reused_with_stale_state) ... ok
+2026-11-07T00:55:33.9775024Z test_six_samples_finish_with_valid_lifecycles_and_grid_safety (test_lab_transport.SimulationTests.test_six_samples_finish_with_valid_lifecycles_and_grid_safety) ... ok
+2026-11-07T00:55:33.9783291Z test_timeout_is_not_reported_as_success (test_lab_transport.SimulationTests.test_timeout_is_not_reported_as_success) ... ok
+2026-11-07T00:55:33.9789044Z test_dispatch_does_not_observe_hidden_service_countdown (test_lab_transport.WorldModelTests.test_dispatch_does_not_observe_hidden_service_countdown) ... ok
+2026-11-07T00:55:33.9790686Z test_forecast_depends_on_action_and_updates_from_observed_service (test_lab_transport.WorldModelTests.test_forecast_depends_on_action_and_updates_from_observed_service) ... ok
+2026-11-07T00:55:33.9802937Z test_forecast_does_not_access_future_outage_or_actual_duration (test_lab_transport.WorldModelTests.test_forecast_does_not_access_future_outage_or_actual_duration) ... ok
+2026-11-07T00:55:33.9811495Z test_features_ignore_future_outages_and_future_task_arrivals (test_learned_model.LearnedModelTests.test_features_ignore_future_outages_and_future_task_arrivals) ... ok
+2026-11-07T00:55:33.9868838Z test_learned_policy_runs_closed_loop_with_valid_forecasts (test_learned_model.LearnedModelTests.test_learned_policy_runs_closed_loop_with_valid_forecasts) ... ok
+2026-11-07T00:55:33.9873555Z test_train_and_test_seeds_are_disjoint_and_reproducible (test_learned_model.LearnedModelTests.test_train_and_test_seeds_are_disjoint_and_reproducible) ... ok
+2026-11-07T00:55:33.9882917Z test_training_generalizes_simple_synthetic_relation_and_preserves_order (test_learned_model.LearnedModelTests.test_training_generalizes_simple_synthetic_relation_and_preserves_order) ... ok
+2026-11-07T00:55:33.9892274Z test_unfinished_assignments_are_not_treated_as_completed_labels (test_learned_model.LearnedModelTests.test_unfinished_assignments_are_not_treated_as_completed_labels) ... ok
+2026-11-07T00:55:33.9894211Z test_deduplicates_measurements_and_never_combines_patients (test_mimic_workload.MimicWorkloadTests.test_deduplicates_measurements_and_never_combines_patients) ... ok
+2026-11-07T00:55:33.9895908Z test_rejects_insufficient_single_patient_data (test_mimic_workload.MimicWorkloadTests.test_rejects_insufficient_single_patient_data) ... ok
+2026-11-07T00:55:33.9903882Z test_replay_requires_explicit_time_assumption_and_preserves_order (test_mimic_workload.MimicWorkloadTests.test_replay_requires_explicit_time_assumption_and_preserves_order) ... ok
+2026-11-07T00:55:33.9961922Z test_attested_packaging_and_temperature_are_not_assumed (test_specimen_rules.SpecimenRuleTests.test_attested_packaging_and_temperature_are_not_assumed) ... ok
+2026-11-07T00:55:33.9967600Z test_invalid_times_and_missing_sources_are_rejected (test_specimen_rules.SpecimenRuleTests.test_invalid_times_and_missing_sources_are_rejected) ... ok
+2026-11-07T00:55:33.9969397Z test_receipt_and_analysis_are_distinct_and_missing_is_unknown (test_specimen_rules.SpecimenRuleTests.test_receipt_and_analysis_are_distinct_and_missing_is_unknown) ... ok
+2026-11-07T00:55:33.9971166Z test_specific_type_required_and_other_profiles_do_not_apply (test_specimen_rules.SpecimenRuleTests.test_specific_type_required_and_other_profiles_do_not_apply) ... ok
+2026-11-07T00:55:33.9980786Z test_explicit_rule_produces_proxy_and_prioritizes_earlier_deadline (test_time_and_rule_dispatch.RuleDispatchTests.test_explicit_rule_produces_proxy_and_prioritizes_earlier_deadline) ... ok
+2026-11-07T00:55:33.9989278Z test_overdue_task_is_not_deprioritized_due_to_its_own_lateness_penalty (test_time_and_rule_dispatch.RuleDispatchTests.test_overdue_task_is_not_deprioritized_due_to_its_own_lateness_penalty) ... ok
+2026-11-07T00:55:33.9992552Z test_rule_requires_matching_type_and_missing_collection_stays_unknown (test_time_and_rule_dispatch.RuleDispatchTests.test_rule_requires_matching_type_and_missing_collection_stays_unknown) ... ok
+2026-11-07T00:55:33.9995164Z test_station_specific_jitter_does_not_change_other_station (test_time_and_rule_dispatch.TimeModelTests.test_station_specific_jitter_does_not_change_other_station) ... ok
+2026-11-07T00:55:33.9997159Z test_subdivision_preserves_direction_and_uses_shared_reverse_lane (test_time_and_rule_dispatch.TimeModelTests.test_subdivision_preserves_direction_and_uses_shared_reverse_lane) ... ok
+2026-11-07T00:55:33.9998200Z 
+2026-11-07T00:55:33.9998619Z ----------------------------------------------------------------------
+2026-11-07T00:55:33.9999898Z Ran 34 tests in 0.365s
+2026-11-07T00:55:34.0000296Z 
+2026-11-07T00:55:34.0000628Z OK
+2026-11-07T00:55:34.0220130Z ##[group]Run python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+2026-11-07T00:55:34.0221145Z [36;1mpython -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"[0m
+2026-11-07T00:55:34.0236679Z shell: /usr/bin/bash -e {0}
+2026-11-07T00:55:34.0237265Z env:
+2026-11-07T00:55:34.0237855Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.0238590Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:34.0239374Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.0240060Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.0240696Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.0241382Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:34.0242000Z ##[endgroup]
+2026-11-07T00:55:34.0923871Z {"scenario": "示例实验室样本转运（合成数据）", "seed": 42, "note": "单场景单种子示例，不能据此推断普遍性能。", "policies": {"nearest": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": null, "blocked_move_attempts": 6}, "world": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 55, "mean_completion_ticks": 31.167, "forecast_mae_ticks": 3.428, "blocked_move_attempts": 11}}}
+2026-11-07T00:55:34.1045973Z ##[group]Run node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+2026-11-07T00:55:34.1046883Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"[0m
+2026-11-07T00:55:34.1061431Z shell: /usr/bin/bash -e {0}
+2026-11-07T00:55:34.1061907Z env:
+2026-11-07T00:55:34.1062472Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.1063354Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:34.1064048Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.1064711Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.1065338Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.1065977Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:34.1066544Z ##[endgroup]
+2026-11-07T00:55:34.3091540Z Playback controls verified: candidate predictions, slider and play
+2026-11-07T00:55:34.3190847Z ##[group]Run python -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"
+2026-11-07T00:55:34.3192368Z [36;1mpython -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"[0m
+2026-11-07T00:55:34.3209141Z shell: /usr/bin/bash -e {0}
+2026-11-07T00:55:34.3209679Z env:
+2026-11-07T00:55:34.3210210Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3211020Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:34.3211681Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3212335Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3212946Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3214000Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:34.3214576Z ##[endgroup]
+2026-11-07T00:55:34.3663379Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:34.3664031Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:34.3665109Z [36;1msource_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'[0m
+2026-11-07T00:55:34.3666509Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"[0m
+2026-11-07T00:55:34.3667827Z [36;1mconfig_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_fleet_server/launch/fleet_adapters/tiago_fleet_adapter.launch.xml'[0m
+2026-11-07T00:55:34.3669086Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$config_url" --output "$RUNNER_TEMP/tiago.launch.xml"[0m
+2026-11-07T00:55:34.3670208Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"[0m
+2026-11-07T00:55:34.3671292Z [36;1mpython tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"[0m
+2026-11-07T00:55:34.3672142Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"[0m
+2026-11-07T00:55:34.3690790Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:34.3691439Z env:
+2026-11-07T00:55:34.3692005Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3692702Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:34.3693615Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3694254Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3694905Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.3695542Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:34.3696092Z ##[endgroup]
+2026-11-07T00:55:34.7921290Z {"scenario": "Tartu 医院公开路网适配（功能测试任务）", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "公开路网与人工设置的功能测试任务；图边为抽象步，不是实际时间或临床证据。", "metadata": null, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": null, "blocked_move_attempts": 32}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 87, "mean_completion_ticks": 35.0, "forecast_mae_ticks": 10.5, "blocked_move_attempts": 32}}}
+2026-11-07T00:55:34.8480088Z nearest: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-07T00:55:34.9194141Z world: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+2026-11-07T00:55:34.9195202Z Graph playback verified: original source scope, tasks and timing labels
+2026-11-07T00:55:34.9533666Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:34.9534165Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:34.9534680Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T00:55:34.9535436Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/hospital-run/world/report.html?step=1" \[0m
+2026-11-07T00:55:34.9536191Z [36;1m  > "$RUNNER_TEMP/hospital-dom.html" 2> "$RUNNER_TEMP/hospital-chrome.log"[0m
+2026-11-07T00:55:34.9536711Z [36;1mpython - <<'PY'[0m
+2026-11-07T00:55:34.9537051Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T00:55:34.9537449Z [36;1mfrom pathlib import Path[0m
+2026-11-07T00:55:34.9537796Z [36;1mimport os[0m
+2026-11-07T00:55:34.9538087Z [36;1m[0m
+2026-11-07T00:55:34.9538387Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T00:55:34.9538722Z [36;1m    def __init__(self):[0m
+2026-11-07T00:55:34.9539060Z [36;1m        super().__init__()[0m
+2026-11-07T00:55:34.9539538Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-07T00:55:34.9539881Z [36;1m        self.visible_text = ''[0m
+2026-11-07T00:55:34.9540284Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T00:55:34.9540718Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-07T00:55:34.9541101Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-07T00:55:34.9541466Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T00:55:34.9541819Z [36;1m        self.visible_text += data[0m
+2026-11-07T00:55:34.9542186Z [36;1m[0m
+2026-11-07T00:55:34.9542468Z [36;1mcheck = Check()[0m
+2026-11-07T00:55:34.9542951Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'hospital-dom.html').read_text())[0m
+2026-11-07T00:55:34.9543834Z [36;1massert (check.circles, check.lines) == (32, 63), (check.circles, check.lines)[0m
+2026-11-07T00:55:34.9544347Z [36;1massert '未设置时限' in check.visible_text[0m
+2026-11-07T00:55:34.9545203Z [36;1massert '功能测试设置' in check.visible_text[0m
+2026-11-07T00:55:34.9545810Z [36;1mprint('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')[0m
+2026-11-07T00:55:34.9546321Z [36;1mPY[0m
+2026-11-07T00:55:34.9561550Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:34.9562018Z env:
+2026-11-07T00:55:34.9562411Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.9562974Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:34.9563639Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.9564081Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.9564561Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:34.9565036Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:34.9565426Z ##[endgroup]
+2026-11-07T00:55:36.5948273Z Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline
+2026-11-07T00:55:36.6023435Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:36.6023888Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:36.6024309Z [36;1mbase='https://physionet.org/files/mimic-iv-demo/2.2'[0m
+2026-11-07T00:55:36.6025022Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/hosp/d_labitems.csv.gz" -o "$RUNNER_TEMP/d_labitems.csv.gz"[0m
+2026-11-07T00:55:36.6025878Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/hosp/labevents.csv.gz" -o "$RUNNER_TEMP/labevents.csv.gz"[0m
+2026-11-07T00:55:36.6026702Z [36;1mcurl --fail --location --silent --show-error --retry 3 "$base/icu/icustays.csv.gz" -o "$RUNNER_TEMP/icustays.csv.gz"[0m
+2026-11-07T00:55:36.6027459Z [36;1mpython -m lab_transport.mimic_workload --labitems "$RUNNER_TEMP/d_labitems.csv.gz" \[0m
+2026-11-07T00:55:36.6028114Z [36;1m  --labevents "$RUNNER_TEMP/labevents.csv.gz" --icustays "$RUNNER_TEMP/icustays.csv.gz" \[0m
+2026-11-07T00:55:36.6028800Z [36;1m  --output "$RUNNER_TEMP/mimic-timeline.json"[0m
+2026-11-07T00:55:36.6029339Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T00:55:36.6030081Z [36;1m  --workload "$RUNNER_TEMP/mimic-timeline.json" --seconds-per-tick 60 --output "$RUNNER_TEMP/mimic-hospital"[0m
+2026-11-07T00:55:36.6030830Z [36;1mpython tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-hospital" 60[0m
+2026-11-07T00:55:36.6031685Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/mimic-hospital/world/report.html" mimic[0m
+2026-11-07T00:55:36.6046117Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:36.6046525Z env:
+2026-11-07T00:55:36.6046889Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:36.6047428Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:36.6047917Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:36.6048395Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:36.6048857Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:36.6049362Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:36.6049798Z ##[endgroup]
+2026-11-07T00:55:42.5134322Z {"source": "https://doi.org/10.13026/dp1f-ex47", "sample_count": 4, "relative_timeline": "single ICU stay", "transport_requests": "not observed"}
+2026-11-07T00:55:42.6758104Z {"scenario": "Tartu 路网与 MIMIC 单次 ICU 采样时序（跨机构仿真）", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "跨机构采样时序仅作测试输入；路线映射及步长为假设，不是实测运输或临床证据。", "metadata": {"workload_kind": "mimic_single_stay", "dataset_doi": "https://doi.org/10.13026/dp1f-ex47", "timing_assumption": "每步对应 60 秒仅为测试设定，不是实际路段耗时。", "mapping_assumption": "采样记录假设为 ICU 到实验室的任务；原始数据未记录机器人运输路线。"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 555, "mean_completion_ticks": 33.25, "forecast_mae_ticks": null, "blocked_move_attempts": 26}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 555, "mean_completion_ticks": 33.25, "forecast_mae_ticks": 5.75, "blocked_move_attempts": 26}}}
+2026-11-07T00:55:42.7241202Z nearest: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T00:55:42.7242441Z world: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T00:55:42.7682897Z Graph playback verified: mimic source scope, tasks and timing labels
+2026-11-07T00:55:42.7754452Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:42.7754871Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:42.7755368Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T00:55:42.7756013Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T00:55:42.7756629Z [36;1m  --workload "$RUNNER_TEMP/mimic-timeline.json" --output "$RUNNER_TEMP/mimic-nominal"[0m
+2026-11-07T00:55:42.7757346Z [36;1mpython tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-nominal" 10[0m
+2026-11-07T00:55:42.7758024Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/mimic-nominal/world/report.html" nominal[0m
+2026-11-07T00:55:42.7771921Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:42.7772352Z env:
+2026-11-07T00:55:42.7772679Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:42.7773587Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:42.7774097Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:42.7774540Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:42.7775004Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:42.7775433Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:42.7775833Z ##[endgroup]
+2026-11-07T00:55:43.4293646Z {"scenario": "Tartu 路网与 MIMIC 单次 ICU 采样时序（跨机构仿真） · 标称时间估计", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "跨机构采样时序及运输映射为测试输入，时间为模型估计，不是实测运输或临床证据。", "metadata": {"workload_kind": "mimic_single_stay", "dataset_doi": "https://doi.org/10.13026/dp1f-ex47", "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。", "mapping_assumption": "采样记录假设为 ICU 到实验室的任务；原始数据未记录机器人运输路线。", "time_model": "nominal_source_based", "seconds_per_tick": 10, "reference_metres": 67.2, "metres_per_pixel": 0.032140407, "nominal_speed_m_per_s": 0.5, "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 3263, "mean_completion_ticks": 70.5, "forecast_mae_ticks": null, "blocked_move_attempts": 41}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 3263, "mean_completion_ticks": 70.5, "forecast_mae_ticks": 10.167, "blocked_move_attempts": 41}}}
+2026-11-07T00:55:43.5845539Z nearest: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T00:55:43.5846988Z world: 4/4 replay tasks; source-directed moves; no deadline assumed; cross-institution mapping is simulated
+2026-11-07T00:55:43.6945048Z Graph playback verified: nominal source scope, tasks and timing labels
+2026-11-07T00:55:43.7038111Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:43.7038538Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:43.7039055Z [36;1mpython -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T00:55:43.7039719Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T00:55:43.7040379Z [36;1m  --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \[0m
+2026-11-07T00:55:43.7040942Z [36;1m  --output "$RUNNER_TEMP/rule-aware"[0m
+2026-11-07T00:55:43.7041383Z [36;1mpython tests/check_rule_run.py "$RUNNER_TEMP/rule-aware"[0m
+2026-11-07T00:55:43.7041932Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/rule-aware/rule/report.html" rule[0m
+2026-11-07T00:55:43.7055922Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:43.7056376Z env:
+2026-11-07T00:55:43.7056732Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.7057331Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:43.7057806Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.7058233Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.7058677Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.7059125Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:43.7059493Z ##[endgroup]
+2026-11-07T00:55:43.8285245Z {"scenario": "公开路网与跨机构样本规则（人工测试）", "note": "跨机构人工样本，仅对比模拟调度；代理上限不是实验室实际接收或临床合规。", "policies": {"nearest": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": null, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "world": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 1, "late_completed_count": 1, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 87.0, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S01"}, "rule": {"status": "completed", "sample_count": 2, "completed_count": 2, "deadline_sample_count": 2, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 121, "mean_completion_ticks": 85.5, "forecast_mae_ticks": 2.25, "blocked_move_attempts": 0, "first_assigned_sample": "S02"}}}
+2026-11-07T00:55:43.8604680Z nearest: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T00:55:43.8605339Z world: 2/2 synthetic tasks; first=S01; delivery-proxy tardiness=1
+2026-11-07T00:55:43.8606095Z rule: 2/2 synthetic tasks; first=S02; delivery-proxy tardiness=0
+2026-11-07T00:55:43.8944021Z Graph playback verified: rule source scope, tasks and timing labels
+2026-11-07T00:55:43.9012192Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:43.9012665Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:43.9013421Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T00:55:43.9014256Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/rule-aware/rule/report.html?step=1" \[0m
+2026-11-07T00:55:43.9014903Z [36;1m  > "$RUNNER_TEMP/rule-dom.html" 2> "$RUNNER_TEMP/rule-chrome.log"[0m
+2026-11-07T00:55:43.9015363Z [36;1mpython - <<'PY'[0m
+2026-11-07T00:55:43.9015721Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T00:55:43.9016121Z [36;1mfrom pathlib import Path[0m
+2026-11-07T00:55:43.9016443Z [36;1mimport os[0m
+2026-11-07T00:55:43.9016712Z [36;1m[0m
+2026-11-07T00:55:43.9017026Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T00:55:43.9017354Z [36;1m    def __init__(self):[0m
+2026-11-07T00:55:43.9017759Z [36;1m        super().__init__()[0m
+2026-11-07T00:55:43.9018160Z [36;1m        self.in_script = False[0m
+2026-11-07T00:55:43.9018553Z [36;1m        self.visible = ''[0m
+2026-11-07T00:55:43.9018900Z [36;1m        self.circles = self.lines = 0[0m
+2026-11-07T00:55:43.9019268Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T00:55:43.9019750Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T00:55:43.9020149Z [36;1m        self.circles += tag == 'circle'[0m
+2026-11-07T00:55:43.9020528Z [36;1m        self.lines += tag == 'line'[0m
+2026-11-07T00:55:43.9020907Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T00:55:43.9021309Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T00:55:43.9021793Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T00:55:43.9022192Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T00:55:43.9022575Z [36;1m[0m
+2026-11-07T00:55:43.9022877Z [36;1mcheck = Check()[0m
+2026-11-07T00:55:43.9023540Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'rule-dom.html').read_text())[0m
+2026-11-07T00:55:43.9024187Z [36;1massert (check.circles, check.lines) == (76, 112), (check.circles, check.lines)[0m
+2026-11-07T00:55:43.9024743Z [36;1massert '按时交付不等于' in check.visible and '交付代理上限' in check.visible[0m
+2026-11-07T00:55:43.9025268Z [36;1massert '仿真时间' in check.visible and '预测第' in check.visible[0m
+2026-11-07T00:55:43.9025878Z [36;1mprint('Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice')[0m
+2026-11-07T00:55:43.9026417Z [36;1mPY[0m
+2026-11-07T00:55:43.9039848Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:43.9040278Z env:
+2026-11-07T00:55:43.9040641Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.9041146Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:43.9041673Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.9042105Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.9042550Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:43.9042993Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:43.9043568Z ##[endgroup]
+2026-11-07T00:55:44.7521211Z Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice
+2026-11-07T00:55:44.7594116Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:44.7594624Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:44.7595179Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T00:55:44.7596057Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/mimic-hospital/world/report.html?step=1" \[0m
+2026-11-07T00:55:44.7596739Z [36;1m  > "$RUNNER_TEMP/mimic-dom.html" 2> "$RUNNER_TEMP/mimic-chrome.log"[0m
+2026-11-07T00:55:44.7597253Z [36;1mpython - <<'PY'[0m
+2026-11-07T00:55:44.7597645Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T00:55:44.7598079Z [36;1mfrom pathlib import Path[0m
+2026-11-07T00:55:44.7598434Z [36;1mimport os[0m
+2026-11-07T00:55:44.7598787Z [36;1m[0m
+2026-11-07T00:55:44.7599104Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T00:55:44.7599468Z [36;1m    def __init__(self):[0m
+2026-11-07T00:55:44.7599875Z [36;1m        super().__init__()[0m
+2026-11-07T00:55:44.7600402Z [36;1m        self.in_script = False[0m
+2026-11-07T00:55:44.7600773Z [36;1m        self.visible = ''[0m
+2026-11-07T00:55:44.7601160Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T00:55:44.7601678Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T00:55:44.7602108Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T00:55:44.7602521Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T00:55:44.7602951Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T00:55:44.7603576Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T00:55:44.7604018Z [36;1m[0m
+2026-11-07T00:55:44.7604319Z [36;1mcheck = Check()[0m
+2026-11-07T00:55:44.7604823Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'mimic-dom.html').read_text())[0m
+2026-11-07T00:55:44.7605455Z [36;1massert '跨机构仿真' in check.visible and 'blood_unspecified' in check.visible[0m
+2026-11-07T00:55:44.7606009Z [36;1massert '不是实际路段耗时' in check.visible and '未设置时限' in check.visible[0m
+2026-11-07T00:55:44.7606748Z [36;1mprint('Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline')[0m
+2026-11-07T00:55:44.7607292Z [36;1mPY[0m
+2026-11-07T00:55:44.7621071Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:44.7621541Z env:
+2026-11-07T00:55:44.7621976Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:44.7622484Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:44.7622996Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:44.7623622Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:44.7624110Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:44.7624597Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:44.7625001Z ##[endgroup]
+2026-11-07T00:55:45.6413762Z Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline
+2026-11-07T00:55:45.6486904Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:45.6487396Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:45.6487901Z [36;1mpython -m lab_transport.experiment --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T00:55:45.6488638Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --output "$RUNNER_TEMP/world-experiment"[0m
+2026-11-07T00:55:45.6489354Z [36;1mpython tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment"[0m
+2026-11-07T00:55:45.6489997Z [36;1mpython -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \[0m
+2026-11-07T00:55:45.6490648Z [36;1m  --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \[0m
+2026-11-07T00:55:45.6491358Z [36;1m  --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-hospital"[0m
+2026-11-07T00:55:45.6492126Z [36;1mnode tests/test_graph_playback.js "$RUNNER_TEMP/learned-hospital/learned/report.html" learned_nominal[0m
+2026-11-07T00:55:45.6493005Z [36;1mpython -m lab_transport compare --seed 42 --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" \[0m
+2026-11-07T00:55:45.6493791Z [36;1m  --output "$RUNNER_TEMP/learned-grid"[0m
+2026-11-07T00:55:45.6494508Z [36;1mnode tests/test_playback.js "$RUNNER_TEMP/learned-grid/learned/report.html"[0m
+2026-11-07T00:55:45.6508401Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:45.6508814Z env:
+2026-11-07T00:55:45.6509227Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:45.6509739Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:45.6510237Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:45.6510706Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:45.6511191Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:45.6511670Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:45.6512088Z ##[endgroup]
+2026-11-07T00:55:53.6156959Z {"description": "模拟训练与测试；不是临床运输记录或通用性能结论。", "training_episodes": 40, "training_records": 240, "training_censored_excluded": 0, "offline_censored_excluded": {"normal": 0, "short_outage": 0, "shifted": 0}, "test_episodes": 30, "aggregates": {"normal": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.0579, "candidate_evaluations": 117}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.061, "candidate_evaluations": 117}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.833, "mean_episode_cpu_seconds": 0.0606, "candidate_evaluations": 117}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.071, "completion_mae_ticks": 11.838}, "learned": {"pickup_mae_ticks": 2.409, "completion_mae_ticks": 2.472}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}, "short_outage": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.0586, "candidate_evaluations": 117}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.0604, "candidate_evaluations": 117}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 116.9, "mean_episode_cpu_seconds": 0.061, "candidate_evaluations": 117}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.004, "completion_mae_ticks": 11.699}, "learned": {"pickup_mae_ticks": 2.389, "completion_mae_ticks": 2.493}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}, "shifted": {"episodes": 10, "policies": {"nearest": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0601, "candidate_evaluations": 127}, "world": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0627, "candidate_evaluations": 127}, "learned": {"completed": 60, "total": 60, "timed_out_episodes": 0, "mean_restricted_flow_ticks": 130.75, "mean_episode_cpu_seconds": 0.0624, "candidate_evaluations": 127}}, "offline_same_decisions": {"count": 60, "errors": {"world": {"pickup_mae_ticks": 10.435, "completion_mae_ticks": 14.544}, "learned": {"pickup_mae_ticks": 5.763, "completion_mae_ticks": 9.878}}}, "same_assignment_trace_world_and_learned": 10, "learned_minus_world_restricted_flow_ticks": {"mean": 0.0, "median": 0.0, "lower": 0.0, "upper": 0.0}}}}
+2026-11-07T00:55:53.6742848Z Experiment verified: disjoint seeds, simulation-only model, completion accounting and held-out prediction metrics
+2026-11-07T00:55:53.8884639Z {"scenario": "Tartu 医院公开路网适配（功能测试任务） · 标称时间估计", "source_commit": "b9e32eeebb3a568af0e41c6e34500076cd2f6cad", "source_sha256": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058", "note": "根据公开比例尺与标称速度估计，未包含完整实际延迟。", "metadata": {"time_model": "nominal_source_based", "seconds_per_tick": 10, "reference_metres": 67.2, "metres_per_pixel": 0.032140407, "nominal_speed_m_per_s": 0.5, "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530", "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"}, "policies": {"nearest": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": null, "blocked_move_attempts": 51}, "world": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": 10.125, "blocked_move_attempts": 51}, "learned": {"status": "completed", "sample_count": 4, "completed_count": 4, "deadline_sample_count": 0, "late_count": null, "late_completed_count": null, "overdue_unfinished_count": null, "ticks": 163, "mean_completion_ticks": 83.25, "forecast_mae_ticks": 2.154, "blocked_move_attempts": 51}}}
+2026-11-07T00:55:53.9299499Z Graph playback verified: learned_nominal source scope, tasks and timing labels
+2026-11-07T00:55:54.0111005Z {"scenario": "示例实验室样本转运（合成数据）", "seed": 42, "note": "单场景单种子示例，不能据此推断普遍性能。", "policies": {"nearest": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": null, "blocked_move_attempts": 6}, "world": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 55, "mean_completion_ticks": 31.167, "forecast_mae_ticks": 3.428, "blocked_move_attempts": 11}, "learned": {"status": "completed", "sample_count": 6, "completed_count": 6, "deadline_sample_count": 6, "late_count": 0, "late_completed_count": 0, "overdue_unfinished_count": 0, "ticks": 51, "mean_completion_ticks": 27.833, "forecast_mae_ticks": 6.556, "blocked_move_attempts": 6}}}
+2026-11-07T00:55:54.0462477Z Playback controls verified: candidate predictions, slider and play
+2026-11-07T00:55:54.0526465Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:54.0526964Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:54.0527519Z [36;1mtimeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T00:55:54.0528291Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/learned-hospital/learned/report.html?step=1" \[0m
+2026-11-07T00:55:54.0528944Z [36;1m  > "$RUNNER_TEMP/learned-dom.html" 2> "$RUNNER_TEMP/learned-chrome.log"[0m
+2026-11-07T00:55:54.0529449Z [36;1mpython - <<'PY'[0m
+2026-11-07T00:55:54.0529945Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T00:55:54.0530354Z [36;1mfrom pathlib import Path[0m
+2026-11-07T00:55:54.0530717Z [36;1mimport os[0m
+2026-11-07T00:55:54.0531017Z [36;1m[0m
+2026-11-07T00:55:54.0531299Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T00:55:54.0531678Z [36;1m    def __init__(self):[0m
+2026-11-07T00:55:54.0532054Z [36;1m        super().__init__()[0m
+2026-11-07T00:55:54.0532525Z [36;1m        self.in_script = False[0m
+2026-11-07T00:55:54.0532884Z [36;1m        self.visible = ''[0m
+2026-11-07T00:55:54.0533879Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T00:55:54.0534342Z [36;1m        if tag == 'script': self.in_script = True[0m
+2026-11-07T00:55:54.0534729Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T00:55:54.0535161Z [36;1m        if tag == 'script': self.in_script = False[0m
+2026-11-07T00:55:54.0535569Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T00:55:54.0535974Z [36;1m        if not self.in_script: self.visible += data[0m
+2026-11-07T00:55:54.0536402Z [36;1m[0m
+2026-11-07T00:55:54.0536693Z [36;1mcheck = Check()[0m
+2026-11-07T00:55:54.0537200Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'learned-dom.html').read_text())[0m
+2026-11-07T00:55:54.0537721Z [36;1massert '学习预测器在仿真数据上训练' in check.visible[0m
+2026-11-07T00:55:54.0538180Z [36;1massert '预测第' in check.visible and '最终完成：4/4' in check.visible[0m
+2026-11-07T00:55:54.0538828Z [36;1mprint('Browser DOM verified: learned forecast, simulated-data notice and completed tasks')[0m
+2026-11-07T00:55:54.0539343Z [36;1mPY[0m
+2026-11-07T00:55:54.0553442Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:54.0553895Z env:
+2026-11-07T00:55:54.0554349Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.0554837Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:54.0555377Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.0555837Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.0556321Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.0556815Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:54.0557225Z ##[endgroup]
+2026-11-07T00:55:54.8374973Z Browser DOM verified: learned forecast, simulated-data notice and completed tasks
+2026-11-07T00:55:54.8468648Z ##[group]Run set -euo pipefail
+2026-11-07T00:55:54.8469332Z [36;1mset -euo pipefail[0m
+2026-11-07T00:55:54.8469897Z [36;1mcommand -v google-chrome[0m
+2026-11-07T00:55:54.8470727Z [36;1mif ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \[0m
+2026-11-07T00:55:54.8471867Z [36;1m  --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html?step=1" \[0m
+2026-11-07T00:55:54.8472883Z [36;1m  > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then[0m
+2026-11-07T00:55:54.8473835Z [36;1m  tail -n 100 "$RUNNER_TEMP/chrome.log" >&2[0m
+2026-11-07T00:55:54.8474435Z [36;1m  exit 1[0m
+2026-11-07T00:55:54.8474796Z [36;1mfi[0m
+2026-11-07T00:55:54.8475234Z [36;1mpython - <<'PY'[0m
+2026-11-07T00:55:54.8475701Z [36;1mfrom html.parser import HTMLParser[0m
+2026-11-07T00:55:54.8476227Z [36;1mfrom pathlib import Path[0m
+2026-11-07T00:55:54.8476782Z [36;1mimport os[0m
+2026-11-07T00:55:54.8477337Z [36;1m[0m
+2026-11-07T00:55:54.8477781Z [36;1mclass Check(HTMLParser):[0m
+2026-11-07T00:55:54.8478268Z [36;1m    def __init__(self):[0m
+2026-11-07T00:55:54.8478717Z [36;1m        super().__init__()[0m
+2026-11-07T00:55:54.8479443Z [36;1m        self.cells = self.robots = self.rows = self.candidates = 0[0m
+2026-11-07T00:55:54.8480116Z [36;1m        self.in_metrics = False[0m
+2026-11-07T00:55:54.8480728Z [36;1m        self.in_decision = False[0m
+2026-11-07T00:55:54.8481249Z [36;1m        self.metrics = ''[0m
+2026-11-07T00:55:54.8481735Z [36;1m        self.decision = ''[0m
+2026-11-07T00:55:54.8482345Z [36;1m    def handle_starttag(self, tag, attrs):[0m
+2026-11-07T00:55:54.8483637Z [36;1m        attrs = dict(attrs)[0m
+2026-11-07T00:55:54.8484237Z [36;1m        classes = attrs.get('class', '').split()[0m
+2026-11-07T00:55:54.8484856Z [36;1m        self.cells += 'cell' in classes[0m
+2026-11-07T00:55:54.8485489Z [36;1m        self.robots += 'robot' in classes[0m
+2026-11-07T00:55:54.8486121Z [36;1m        self.rows += tag == 'tr'[0m
+2026-11-07T00:55:54.8486644Z [36;1m        self.candidates += tag == 'li'[0m
+2026-11-07T00:55:54.8487222Z [36;1m        if attrs.get('id') == 'metrics':[0m
+2026-11-07T00:55:54.8487788Z [36;1m            self.in_metrics = True[0m
+2026-11-07T00:55:54.8488365Z [36;1m        if attrs.get('id') == 'decision':[0m
+2026-11-07T00:55:54.8488955Z [36;1m            self.in_decision = True[0m
+2026-11-07T00:55:54.8489501Z [36;1m    def handle_endtag(self, tag):[0m
+2026-11-07T00:55:54.8489987Z [36;1m        if tag == 'p':[0m
+2026-11-07T00:55:54.8490540Z [36;1m            self.in_metrics = False[0m
+2026-11-07T00:55:54.8491104Z [36;1m            self.in_decision = False[0m
+2026-11-07T00:55:54.8491650Z [36;1m    def handle_data(self, data):[0m
+2026-11-07T00:55:54.8492140Z [36;1m        if self.in_metrics:[0m
+2026-11-07T00:55:54.8492608Z [36;1m            self.metrics += data[0m
+2026-11-07T00:55:54.8493409Z [36;1m        if self.in_decision:[0m
+2026-11-07T00:55:54.8493951Z [36;1m            self.decision += data[0m
+2026-11-07T00:55:54.8494434Z [36;1m[0m
+2026-11-07T00:55:54.8494860Z [36;1mcheck = Check()[0m
+2026-11-07T00:55:54.8495500Z [36;1mcheck.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())[0m
+2026-11-07T00:55:54.8496513Z [36;1massert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)[0m
+2026-11-07T00:55:54.8497364Z [36;1massert '6/6' in check.metrics, check.metrics[0m
+2026-11-07T00:55:54.8498299Z [36;1massert '预测第' in check.decision and check.candidates > 0, (check.decision, check.candidates)[0m
+2026-11-07T00:55:54.8499172Z [36;1mprint('Browser DOM verified: map, robots, tasks and candidate predictions')[0m
+2026-11-07T00:55:54.8499796Z [36;1mPY[0m
+2026-11-07T00:55:54.8518717Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-07T00:55:54.8519376Z env:
+2026-11-07T00:55:54.8519871Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.8520835Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:54.8521709Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.8522354Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.8523647Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:54.8524384Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:54.8524908Z ##[endgroup]
+2026-11-07T00:55:54.8570342Z /usr/bin/google-chrome
+2026-11-07T00:55:55.6683066Z Browser DOM verified: map, robots, tasks and candidate predictions
+2026-11-07T00:55:55.6806246Z ##[group]Run actions/upload-artifact@v4
+2026-11-07T00:55:55.6806631Z with:
+2026-11-07T00:55:55.6806962Z   name: sample-transport-demo
+2026-11-07T00:55:55.6807342Z   path: /home/runner/work/_temp/sample-transport-demo/
+2026-11-07T00:55:55.6807739Z   if-no-files-found: warn
+2026-11-07T00:55:55.6808096Z   retention-days: 7
+2026-11-07T00:55:55.6808392Z   compression-level: 6
+2026-11-07T00:55:55.6808704Z   overwrite: false
+2026-11-07T00:55:55.6809004Z   include-hidden-files: false
+2026-11-07T00:55:55.6809298Z env:
+2026-11-07T00:55:55.6809690Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:55.6810213Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-07T00:55:55.6810704Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:55.6811143Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:55.6811566Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-07T00:55:55.6812168Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-07T00:55:55.6812666Z ##[endgroup]
+2026-11-07T00:55:55.8385348Z (node:3311) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T00:55:55.8386401Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T00:55:55.8591553Z With the provided path, there will be 11 files uploaded
+2026-11-07T00:55:55.8592274Z Artifact name is valid!
+2026-11-07T00:55:55.8592642Z Root directory input is valid!
+2026-11-07T00:55:56.2094552Z Beginning upload of artifact content to blob storage
+2026-11-07T00:55:56.2515092Z (node:3311) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T00:55:56.5034288Z Uploaded bytes 27837
+2026-11-07T00:55:56.5656771Z Finished uploading artifact content to blob storage!
+2026-11-07T00:55:56.5657618Z SHA256 digest of uploaded artifact zip is ad738685afd7865084be76233ebc50dbe1e79942f253079bdb65655aaca383a3
+2026-11-07T00:55:56.5659079Z Finalizing artifact upload
+2026-11-07T00:55:57.0630051Z Artifact sample-transport-demo.zip successfully finalized. Artifact ID 13553225925
+2026-11-07T00:55:57.0631070Z Artifact sample-transport-demo has been successfully uploaded! Final size is 27837 bytes. Artifact ID is 13553225925
+2026-11-07T00:55:57.0637102Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42321133137/artifacts/13553225925
+2026-11-07T00:55:57.0824764Z Post job cleanup.
+2026-11-07T00:55:57.1981943Z (node:3323) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T00:55:57.1982605Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T00:55:57.2152502Z Post job cleanup.
+2026-11-07T00:55:57.3034045Z [command]/usr/bin/git version
+2026-11-07T00:55:57.3071127Z git version 2.56.0
+2026-11-07T00:55:57.3137741Z Temporarily overriding HOME='/home/runner/work/_temp/8b7ac62e-a1df-4932-8ccc-73fb38c9cdb2' before making global git config changes
+2026-11-07T00:55:57.3139022Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T00:55:57.3145573Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/wm/wm
+2026-11-07T00:55:57.3186870Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T00:55:57.3221052Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T00:55:57.3487497Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T00:55:57.3520744Z http.https://github.com/.extraheader
+2026-11-07T00:55:57.3533729Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-07T00:55:57.3570988Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T00:55:57.3798114Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T00:55:57.3834316Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T00:55:57.4170181Z Cleaning up orphan processes
+2026-11-07T00:55:57.4462732Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

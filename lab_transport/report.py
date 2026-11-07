@@ -117,12 +117,12 @@ function render(index) {
   if(!latest){decision.textContent='该时刻尚无已执行的任务分配。';return}
   const selected=latest.selected, sample=data.samples.find(s=>s.id===latest.sample_id);
   let message='第 '+latest.tick+' 步：将 '+latest.sample_id+' 分配给 '+latest.robot_id+'。';
-  if(['world','rule','learned'].includes(latest.policy)) {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
+  if(['world','rule','learned','learned_rule'].includes(latest.policy)) {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
     if(selected.predicted_lateness!==null)message+=' 预计逾期 '+selected.predicted_lateness+' 步。';}
   if(sample&&sample.completed_tick!==null&&sample.completed_tick<=frame.tick) message+=' 实际第 '+sample.completed_tick+' 步完成。';
   decision.textContent=message;
   for(const candidate of latest.candidates){const item=document.createElement('li');
-    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(['world','rule','learned'].includes(latest.policy)
+    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(['world','rule','learned','learned_rule'].includes(latest.policy)
       ? '：预测完成 '+candidate.expected_completion_tick+' 步，评分 '+candidate.score
       : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }

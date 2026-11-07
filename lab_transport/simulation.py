@@ -40,9 +40,9 @@ class Simulator:
 
     def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0,
                  learned_parameters: dict | None = None):
-        if policy not in {"world", "nearest", "rule", "learned"}:
-            raise ValueError("policy must be 'world', 'nearest', 'rule' or 'learned'")
-        if policy == "learned" and learned_parameters is None:
+        if policy not in {"world", "nearest", "rule", "learned", "learned_rule"}:
+            raise ValueError("policy must be 'world', 'nearest', 'rule', 'learned' or 'learned_rule'")
+        if policy in {"learned", "learned_rule"} and learned_parameters is None:
             raise ValueError("learned policy requires trained parameters")
         self.scenario = scenario
         self.policy = policy
@@ -54,7 +54,7 @@ class Simulator:
             for sid, station in scenario.stations.items()
         }
         self.model = (LearnedWorldModel(scenario.grid, stations, learned_parameters)
-                      if policy == "learned" else WorldModel(scenario.grid, stations))
+                      if policy in {"learned", "learned_rule"} else WorldModel(scenario.grid, stations))
         self.events: list[dict[str, Any]] = []
         self.history: list[dict[str, Any]] = []
         self.prevented_moves = 0
@@ -106,7 +106,7 @@ class Simulator:
             forecasts: list[dict[str, Any]] = []
             for robot in idle:
                 for sample in waiting:
-                    if self.policy in {"world", "rule", "learned"}:
+                    if self.policy in {"world", "rule", "learned", "learned_rule"}:
                         # Only the current observed status and positions are
                         # shared. Future releases, outages and RNG are hidden.
                         context = {
@@ -118,7 +118,7 @@ class Simulator:
                         }
                         forecast = self.model.predict(tick, robot.id, robot.position,
                                                       sample.spec, self._current_station_busy(tick), context)
-                        if self.policy == "rule":
+                        if self.policy in {"rule", "learned_rule"}:
                             # Earliest known deadline first, including already
                             # infeasible tasks; use prediction to choose a robot.
                             due = sample.spec.deadline_tick if sample.spec.deadline_tick is not None else float("inf")
@@ -353,7 +353,7 @@ class Simulator:
             }
         if self.scenario.metadata:
             scenario_info["metadata"] = dict(self.scenario.metadata)
-        if self.policy == "learned":
+        if self.policy in {"learned", "learned_rule"}:
             scenario_info["prediction_model"] = {
                 "kind": "ridge_residual",
                 "training_scope": self.model.parameters.get("training_scope", "unspecified"),

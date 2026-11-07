@@ -21,15 +21,15 @@ def main() -> int:
         command.add_argument("--output", required=True, help="输出目录；不覆盖已有结果")
         command.add_argument("--model", help="学习型预测器参数 JSON；compare 时额外比较 learned 策略")
         if name == "run":
-            command.add_argument("--policy", choices=("nearest", "world", "learned"), default="world")
+            command.add_argument("--policy", choices=("nearest", "world", "rule", "learned", "learned_rule"), default="world")
     args = parser.parse_args()
     try:
         scenario = load_scenario(args.scenario)
         parameters = json.loads(Path(args.model).read_text(encoding="utf-8")) if args.model else None
         output = Path(args.output)
         if args.command == "run":
-            if args.policy != "learned" and parameters is not None:
-                raise ValueError("--model is used only with the learned policy")
+            if args.policy not in {"learned", "learned_rule"} and parameters is not None:
+                raise ValueError("--model is used only with a learned policy")
             check_output_directory(output)
             result = Simulator(scenario, args.policy, args.seed, parameters).run()
             write_run(result, output)

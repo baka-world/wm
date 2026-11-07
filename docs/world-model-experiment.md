@@ -47,11 +47,16 @@
 
 按该预设，学习模型的预测误差在三组仿真测试中更小；更强扰动下误差明显增大。与此同时，三种策略的任务耗时在本次测试中相同；事后逐场景检查发现，`world` 与 `learned` 的分配时刻、机器人和任务序列在 30/30 场景完全一致。预测更准没有在这组测试中转化成调度收益。所有任务共享同一个取点和送点，候选方案差异有限，这是值得进一步检查的可能原因，但该实验不能单独证明原因。
 
+在预设之外，还将学习预测器与规则优先顺序组合为 `learned_rule`，以[人工规则诊断场景](timing-and-rule-aware-dispatch.md)确认模块可同时运行。在这个单机器人、两样本的例子中，组合策略先分配 `S02`，两个仿真交付都未超过代理上限；但其交付预测 MAE 为 9.466 步，规则策略使用原预测器时为 2.25 步。模型训练时使用两台机器人，这个单例不能证明误差变大的原因，也不能用于声称组合策略优越；它提醒我们需要评估模型在不同机器人数量和场景下的适用性。
+
 结果只代表一个公开路网的适配和人工生成的任务、中断，不是医院实测性能。模型训练只覆盖所列仿真数据，10 个种子/条件不足以支持广泛或显著性结论。`nearest` 和 `world` 是当前系统的可运行基线，不应将其描述为经过全面优化的最强传统调度器。后续应在能够追溯来源的其他站点和任务配置上评估，并补充合理的传统调度、异常恢复与计算预算对照。
 
 - [模型参数](../examples/evidence/world-model/learned-parameters.json)和[逐场景结果](../examples/evidence/world-model/experiment-results.json)仅包含合成仿真结果。
 - [预测误差与调度耗时对照图](../examples/evidence/world-model/experiment-comparison.svg)用于论文材料，标明了仿真时间假设。
 - 无 GPU 重跑：`python -m lab_transport.experiment --map-file <固定版本医院地图> --tiago-config <固定版本速度配置> --output <新目录>`；输入获取及校验见[时间模型说明](timing-and-rule-aware-dispatch.md)。运行完成后可用 `python tests/check_world_experiment.py <结果目录>`检查数据划分和统计口径。
 - 在已有场景的回放中启用模型：`python -m lab_transport compare --model examples/evidence/world-model/learned-parameters.json --output <新目录>`。模型在医院路网仿真上训练，其他地图的回放仅供检查接口，不代表模型对该地图已验证。
+- 规则与学习预测组合：在[人工规则示例](timing-and-rule-aware-dispatch.md)的 `rule_dispatch` 命令中增加 `--model examples/evidence/world-model/learned-parameters.json`，会额外生成 `learned_rule` 回放；其上限仍是仿真交付代理，不是实际接收或临床合规结果。
 
 绘图脚本 `tools/plot_world_experiment.py` 可选用 Matplotlib 和 NumPy 重生成 SVG/PNG；核心训练、仿真与测试只依赖 Python 标准库。
+
+[GitHub Actions 42321133137](https://github.com/lieuyimo/wm/actions/runs/42321133137)对提交 `20b30a97429a2baee2d1dcd4425e7bec69381a26` 重新训练并复跑上述预设，通过 34 项 Python 测试、实验口径检查及无 GPU 浏览器检查；云端汇总误差、任务耗时和分配序列计数与本地表格一致。运行器的 CPU 时间不同，不把它作为必须一致的结果。[完整日志](../validation/logs/learned-world-experiment-action-42321133137.log)已归档。

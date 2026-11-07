@@ -50,6 +50,8 @@ python tests/check_dynamics_revision.py /tmp/dynamics-revision examples/evidence
 
 输入地图均按固定来源校验；检查器验证训练与测试种子、验证集选择过程和逐场统计，CPU 时间除外。
 
+[GitHub Actions 42361442903](https://github.com/lieuyimo/wm/actions/runs/42361442903)对提交 `58c2225ba00e3ff7f6e6e9264e3038e4f3dd67fd` 通过 62 项测试、两轮 CPU 模型复算、时间表去重检查及无 GPU 浏览器回放；[完整运行日志](../validation/logs/state-transition-action-42361442903.log)已归档。
+
 ### 查看一步预测回放
 
 ```bash

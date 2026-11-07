@@ -4,7 +4,7 @@
 
 GitHub Actions 用于复现和测试；后续计划由用户自己的本地 GPU 运行模型。当前开发和 CI 只使用 CPU，不启用付费云资源或云端 GPU，不修改上游项目，未经用户确认不合并 PR。用户希望集中处理模型内容；场景、数据、框架、脚本、验收与自动化由项目执行方准备。
 
-尚不知道本地设备的 GPU 型号、显存、系统、驱动及连接方式。历史对话中提及的 V100 16 GB 只是线索，不能当作已核实的设备。现有[草稿 PR #2](https://github.com/lieuyimo/wm/pull/2) 的分支为 `feature/sample-transport-prototype`，基于尚未合并的 PR #1；不能假定默认 `main` 已包含这些代码。
+尚不知道本地设备的 GPU 型号、显存、系统、驱动及连接方式。历史对话中提及的 V100 16 GB 只是线索，不能当作已核实的设备。[PR #2](https://github.com/lieuyimo/wm/pull/2) 已并入其基础分支，[PR #1](https://github.com/lieuyimo/wm/pull/1) 已并入 `main`；本地可从默认分支开始，具体拉取和验证步骤见[开发指南](local-development.md)。
 
 ## 目前完成的基础
 

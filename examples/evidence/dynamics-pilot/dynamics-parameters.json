@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "kind": "hybrid_linear_dynamics",
+  "motion_features": [
+    "stay",
+    "route_progress",
+    "remaining_distance",
+    "at_goal",
+    "idle_progress",
+    "pickup_progress",
+    "dropoff_progress",
+    "adjacent_other",
+    "occupied_goal_stay"
+  ],
+  "service_features": [
+    "bias",
+    "elapsed",
+    "expected",
+    "elapsed_ratio",
+    "pickup",
+    "dropoff",
+    "new_assignment"
+  ],
+  "motion_weights": [
+    -0.5439805076018074,
+    1.1955498106441622,
+    0.04326358784880914,
+    0.3023769135477039,
+    0.21237715180039118,
+    0.4284316726259273,
+    0.5547409862178289,
+    -0.008900847664378455,
+    -0.04720307243925088
+  ],
+  "service_weights": [
+    0.11007976021436147,
+    0.10344408975229992,
+    -0.12872406673337772,
+    0.06274152412718596,
+    -0.39780667579408,
+    0.5078864360084415,
+    0.0
+  ],
+  "epochs": 35,
+  "motion_learning_rate": 0.2,
+  "service_learning_rate": 0.15,
+  "l2": 0.001,
+  "training_motion_examples": 22120,
+  "training_service_examples": 1532,
+  "training_service_completions": 528,
+  "provenance": {
+    "layout": "tartu",
+    "seeds": [
+      3000,
+      3001,
+      3002,
+      3003,
+      3004,
+      3005,
+      3006,
+      3007,
+      3008,
+      3009,
+      3010,
+      3011
+    ],
+    "regimes": [
+      "normal",
+      "short_outage"
+    ],
+    "behavior_policies": [
+      "nearest",
+      "world"
+    ],
+    "scope": "synthetic simulated transitions, not clinical measurements",
+    "excluded_motion_examples": 0
+  }
+}

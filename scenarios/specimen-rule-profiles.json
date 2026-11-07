@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "id": "michigan_pediatric_blood_gas",
+      "label": "Michigan Medicine 院内儿科血气样本（参考规则）",
+      "specimen_type": "pediatric_blood_gas",
+      "institution": "Michigan Medicine, Pediatric Blood Gas Laboratory",
+      "scope": "Michigan Medicine 医院院内采集的儿科血气检验；不可视为所有医院或血样的通用规则",
+      "source_url": "https://www.pathology.med.umich.edu/handbook/details?print=1&testID=1088",
+      "source_accessed": "2026-11-06",
+      "requirements": {
+        "packaging": "sealed_biohazard_bag",
+        "temperature_condition": "room_temperature",
+        "max_collection_to_receipt_seconds": 1800,
+        "max_collection_to_analysis_seconds": 1800
+      },
+      "notes": "来源规定采集后30分钟内送达，并提到采集后30分钟内分析；两者分别检查。包装和温度仅检查录入值，无法证明实际条件。"
+    }
+  ]
+}

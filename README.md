@@ -2,12 +2,26 @@
 
 本项目的主线是完成毕业论文及配套系统：在仿真环境中设计并实现实验室样本转运调度，构建能预测候选调度结果的世界模型模块，并通过运行与实验说明系统如何工作、效果如何。文献查新和算法对比为系统设计与论文论证提供依据，不是另起一个以追求算法创新为目标的项目。
 
-仓库当前完成的是公开框架验收和资料整理；样本转运系统本身尚未实现。[毕设实施主线](docs/thesis-project-plan.md)列出了候选系统模块、当前状态和接下来的工作。
+仓库已有一个基于合成实验室场景的 CPU 原型，可运行样本任务、机器人调度、轻量预测和离线回放；完整毕业设计系统仍需结合实际需求扩展。[原型说明](docs/prototype.md)包含运行方式和限制，[毕设实施主线](docs/thesis-project-plan.md)记录后续工作。
 
 ## 当前资料
 
 - [交接背景和边界](docs/handoff.md)
 - [毕设系统与论文实施主线](docs/thesis-project-plan.md)
+- [样本转运原型与运行说明](docs/prototype.md)
+- [有论文与公开导航图来源的医院转运场景](docs/source-backed-hospital-scenario.md)
+- [样本规则与公开数据复用说明](docs/specimen-rules-and-public-data.md)
+- [有来源的时间估计与规则辅助调度](docs/timing-and-rule-aware-dispatch.md)
+- [学习型预测器与仿真对照实验](docs/world-model-experiment.md)
+- [多取送点与未见地图的对照实验](docs/multiple-locations-experiment.md)
+- [多步世界模型与毕设准备情况检查](docs/world-model-readiness.md)
+- [CPU 状态转移模型和留出场景实验](docs/state-transition-experiment.md)
+- [状态转移模型第二轮验证方案](docs/state-transition-revision.md)
+- [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
+- [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)
+- [CPU 神经模型流程验收记录](docs/pytorch-smoke-acceptance.md)
+- [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
+- [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)
 - [相邻论文和阶段零实验设计](docs/related-work-and-stage-zero.md)
 - [RGTA 与静态预检工作流](.github/workflows/mapd-cloud-validation.yml)
@@ -16,6 +30,17 @@
 
 RGTA 小规模单测和分配实验已通过。Lay2Graph 在上游仓储场景中完成了两台机器人、6 个订单的真实仿真闭环；证据、限制和原始日志见框架验收记录。这些结果用于判断系统实现基础，并不代表毕业设计系统已经完成。
 
+运行原型（Python 3.11+，不需要第三方 Python 包）：
+
+```bash
+python -m unittest discover -s tests -v
+python -m lab_transport compare --seed 42 --output runs/demo-42
+```
+
+运行后打开 `runs/demo-42/world/report.html` 查看示例回放。示例使用合成数据，原型目前不连接 Lay2Graph 或真实机器人。
+
+另可按[场景来源说明](docs/source-backed-hospital-scenario.md)运行基于公开医院 ICU—实验室路网的适配。路网来自医院项目，双机器人、到达时刻和执行步长是明确标注的功能测试设置；不填没有依据的临床时限或温度。
+
 ## 约束
 
-使用 CPU 和公开仓库的标准 GitHub-hosted Linux runner；不启用 GPU 或付费云资源，不修改上游仓库。变更在功能分支和 Pull Request 中审阅，未经用户确认不合并。上游版本固定在工作流中，日志和报告应与对应提交及运行关联。
+当前开发和 GitHub Actions 使用 CPU 及标准 GitHub-hosted Linux runner；不启用云端 GPU 或付费云资源，不修改上游仓库。后续在用户授权接入的本地 GPU 上验收模型训练。变更在功能分支和 Pull Request 中审阅，未经用户确认不合并。上游版本固定在工作流中，日志和报告应与对应提交及运行关联。

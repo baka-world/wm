@@ -1,0 +1,4033 @@
+{
+  "description": "模拟训练与测试；不是临床运输记录或通用性能结论。",
+  "training_episodes": 40,
+  "training_records": 240,
+  "training_censored_excluded": 0,
+  "offline_censored_excluded": {
+    "normal": 0,
+    "short_outage": 0,
+    "shifted": 0
+  },
+  "test_episodes": 30,
+  "aggregates": {
+    "normal": {
+      "episodes": 10,
+      "policies": {
+        "nearest": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.833,
+          "mean_episode_cpu_seconds": 0.0485,
+          "candidate_evaluations": 117
+        },
+        "world": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.833,
+          "mean_episode_cpu_seconds": 0.0493,
+          "candidate_evaluations": 117
+        },
+        "learned": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.833,
+          "mean_episode_cpu_seconds": 0.0499,
+          "candidate_evaluations": 117
+        }
+      },
+      "offline_same_decisions": {
+        "count": 60,
+        "errors": {
+          "world": {
+            "pickup_mae_ticks": 10.071,
+            "completion_mae_ticks": 11.838
+          },
+          "learned": {
+            "pickup_mae_ticks": 2.409,
+            "completion_mae_ticks": 2.472
+          }
+        }
+      },
+      "same_assignment_trace_world_and_learned": 10,
+      "learned_minus_world_restricted_flow_ticks": {
+        "mean": 0.0,
+        "median": 0.0,
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "short_outage": {
+      "episodes": 10,
+      "policies": {
+        "nearest": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.9,
+          "mean_episode_cpu_seconds": 0.0481,
+          "candidate_evaluations": 117
+        },
+        "world": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.9,
+          "mean_episode_cpu_seconds": 0.0499,
+          "candidate_evaluations": 117
+        },
+        "learned": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 116.9,
+          "mean_episode_cpu_seconds": 0.0505,
+          "candidate_evaluations": 117
+        }
+      },
+      "offline_same_decisions": {
+        "count": 60,
+        "errors": {
+          "world": {
+            "pickup_mae_ticks": 10.004,
+            "completion_mae_ticks": 11.699
+          },
+          "learned": {
+            "pickup_mae_ticks": 2.389,
+            "completion_mae_ticks": 2.493
+          }
+        }
+      },
+      "same_assignment_trace_world_and_learned": 10,
+      "learned_minus_world_restricted_flow_ticks": {
+        "mean": 0.0,
+        "median": 0.0,
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "shifted": {
+      "episodes": 10,
+      "policies": {
+        "nearest": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 130.75,
+          "mean_episode_cpu_seconds": 0.0497,
+          "candidate_evaluations": 127
+        },
+        "world": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 130.75,
+          "mean_episode_cpu_seconds": 0.0516,
+          "candidate_evaluations": 127
+        },
+        "learned": {
+          "completed": 60,
+          "total": 60,
+          "timed_out_episodes": 0,
+          "mean_restricted_flow_ticks": 130.75,
+          "mean_episode_cpu_seconds": 0.0517,
+          "candidate_evaluations": 127
+        }
+      },
+      "offline_same_decisions": {
+        "count": 60,
+        "errors": {
+          "world": {
+            "pickup_mae_ticks": 10.435,
+            "completion_mae_ticks": 14.544
+          },
+          "learned": {
+            "pickup_mae_ticks": 5.763,
+            "completion_mae_ticks": 9.878
+          }
+        }
+      },
+      "same_assignment_trace_world_and_learned": 10,
+      "learned_minus_world_restricted_flow_ticks": {
+        "mean": 0.0,
+        "median": 0.0,
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "regime": "normal",
+      "seed": 100,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05156418999999968,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04808475400000001,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04990555700000021,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 101,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.04489879799999974,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.047880471000000036,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.050126612999999764,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 102,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.047269307000000094,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05109875300000022,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.051660973000000165,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 103,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.05094268199999963,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04715445999999979,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.047248281999999975,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 104,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.049283763000000036,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04927764400000001,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04849943499999965,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 105,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04690716100000003,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04869928099999976,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04941266799999999,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 106,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04694141700000021,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04761958899999996,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05142527099999983,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 107,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.0511660260000002,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04872123499999992,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.048932105000000004,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 108,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.83333333333333,
+          "mean_completed_flow_ticks": 124.83333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.049287821999999704,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.83333333333333,
+          "mean_completed_flow_ticks": 124.83333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05222933699999999,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.83333333333333,
+          "mean_completed_flow_ticks": 124.83333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.050576226,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "normal",
+      "seed": 109,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.046839080000000255,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05244429500000036,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.0513517259999996,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 100,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05141040499999994,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04738573199999996,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "mean_completed_flow_ticks": 117.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.049044266000000114,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 101,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.049746828999999604,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.04704314099999962,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 104.5,
+          "mean_completed_flow_ticks": 104.5,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.047881598000000025,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 102,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04889522399999979,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.051758299999999924,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.66666666666667,
+          "mean_completed_flow_ticks": 127.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.056372164000000335,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 103,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04758801899999998,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04853389500000027,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 111.83333333333333,
+          "mean_completed_flow_ticks": 111.83333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.048576119000000695,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              120,
+              "R2",
+              "S05"
+            ],
+            [
+              162,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 104,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04468304199999995,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.0539566090000001,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.16666666666667,
+          "mean_completed_flow_ticks": 113.16666666666667,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04679913499999966,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 105,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.049310735000000605,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04931439599999976,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 109.33333333333333,
+          "mean_completed_flow_ticks": 109.33333333333333,
+          "candidate_evaluations": 11,
+          "cpu_seconds": 0.04948042399999952,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              41,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S04"
+            ],
+            [
+              119,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 106,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04590467800000031,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.050069673000000314,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.0,
+          "mean_completed_flow_ticks": 121.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05470112800000049,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              122,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 107,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04899186599999972,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04878497400000015,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.16666666666667,
+          "mean_completed_flow_ticks": 121.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.052490757000000166,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              45,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              167,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 108,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.5,
+          "mean_completed_flow_ticks": 125.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.047101205999999785,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.5,
+          "mean_completed_flow_ticks": 125.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04940164099999933,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.5,
+          "mean_completed_flow_ticks": 125.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.050350650000000385,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              123,
+              "R2",
+              "S05"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "short_outage",
+      "seed": 109,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.047778710000000224,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05233428000000018,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.66666666666667,
+          "mean_completed_flow_ticks": 117.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04921966199999961,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              42,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              121,
+              "R2",
+              "S05"
+            ],
+            [
+              163,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 200,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.33333333333333,
+          "mean_completed_flow_ticks": 125.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.047802423999999455,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              170,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.33333333333333,
+          "mean_completed_flow_ticks": 125.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.0499062910000001,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              170,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.33333333333333,
+          "mean_completed_flow_ticks": 125.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.0490477079999998,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              124,
+              "R2",
+              "S05"
+            ],
+            [
+              170,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 201,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.66666666666667,
+          "mean_completed_flow_ticks": 121.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.045649215000000076,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              44,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.66666666666667,
+          "mean_completed_flow_ticks": 121.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.049486087999999206,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              44,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.66666666666667,
+          "mean_completed_flow_ticks": 121.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.049645026000000314,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              44,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 202,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 150.33333333333334,
+          "mean_completed_flow_ticks": 150.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.07486045100000016,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              116,
+              "R1",
+              "S04"
+            ],
+            [
+              151,
+              "R2",
+              "S05"
+            ],
+            [
+              199,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 150.33333333333334,
+          "mean_completed_flow_ticks": 150.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.06985156599999964,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              116,
+              "R1",
+              "S04"
+            ],
+            [
+              151,
+              "R2",
+              "S05"
+            ],
+            [
+              199,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 150.33333333333334,
+          "mean_completed_flow_ticks": 150.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.07056362800000038,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              116,
+              "R1",
+              "S04"
+            ],
+            [
+              151,
+              "R2",
+              "S05"
+            ],
+            [
+              199,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 203,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 143.33333333333334,
+          "mean_completed_flow_ticks": 143.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05269301199999976,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              77,
+              "R2",
+              "S03"
+            ],
+            [
+              82,
+              "R1",
+              "S04"
+            ],
+            [
+              148,
+              "R2",
+              "S05"
+            ],
+            [
+              192,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 143.33333333333334,
+          "mean_completed_flow_ticks": 143.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.0483882969999998,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              77,
+              "R2",
+              "S03"
+            ],
+            [
+              82,
+              "R1",
+              "S04"
+            ],
+            [
+              148,
+              "R2",
+              "S05"
+            ],
+            [
+              192,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 143.33333333333334,
+          "mean_completed_flow_ticks": 143.33333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05075967100000067,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              77,
+              "R2",
+              "S03"
+            ],
+            [
+              82,
+              "R1",
+              "S04"
+            ],
+            [
+              148,
+              "R2",
+              "S05"
+            ],
+            [
+              192,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 204,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.5,
+          "mean_completed_flow_ticks": 122.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.044843721000000336,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              60,
+              "R2",
+              "S03"
+            ],
+            [
+              79,
+              "R1",
+              "S04"
+            ],
+            [
+              132,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.5,
+          "mean_completed_flow_ticks": 122.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04861237799999962,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              60,
+              "R2",
+              "S03"
+            ],
+            [
+              79,
+              "R1",
+              "S04"
+            ],
+            [
+              132,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.5,
+          "mean_completed_flow_ticks": 122.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.047006123000000066,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              60,
+              "R2",
+              "S03"
+            ],
+            [
+              79,
+              "R1",
+              "S04"
+            ],
+            [
+              132,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 205,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.16666666666667,
+          "mean_completed_flow_ticks": 124.16666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04721393500000026,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              58,
+              "R2",
+              "S03"
+            ],
+            [
+              77,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.16666666666667,
+          "mean_completed_flow_ticks": 124.16666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04595310699999988,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              58,
+              "R2",
+              "S03"
+            ],
+            [
+              77,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.16666666666667,
+          "mean_completed_flow_ticks": 124.16666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.052356281999999865,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              58,
+              "R2",
+              "S03"
+            ],
+            [
+              77,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 206,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.16666666666667,
+          "mean_completed_flow_ticks": 125.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.046257696000000514,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              81,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              168,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.16666666666667,
+          "mean_completed_flow_ticks": 125.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05147055999999939,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              81,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              168,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.16666666666667,
+          "mean_completed_flow_ticks": 125.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.049478478999999354,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              81,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              168,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 207,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04593333700000013,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              83,
+              "R1",
+              "S04"
+            ],
+            [
+              127,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05036274999999968,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              83,
+              "R1",
+              "S04"
+            ],
+            [
+              127,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.048614313999999936,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              48,
+              "R2",
+              "S03"
+            ],
+            [
+              83,
+              "R1",
+              "S04"
+            ],
+            [
+              127,
+              "R2",
+              "S05"
+            ],
+            [
+              172,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 208,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 145.83333333333334,
+          "mean_completed_flow_ticks": 145.83333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.048325759999999995,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              83,
+              "R2",
+              "S03"
+            ],
+            [
+              88,
+              "R1",
+              "S04"
+            ],
+            [
+              156,
+              "R2",
+              "S05"
+            ],
+            [
+              197,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 145.83333333333334,
+          "mean_completed_flow_ticks": 145.83333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.0541371900000005,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              83,
+              "R2",
+              "S03"
+            ],
+            [
+              88,
+              "R1",
+              "S04"
+            ],
+            [
+              156,
+              "R2",
+              "S05"
+            ],
+            [
+              197,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 145.83333333333334,
+          "mean_completed_flow_ticks": 145.83333333333334,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.050148531000000496,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              8,
+              "R1",
+              "S02"
+            ],
+            [
+              83,
+              "R2",
+              "S03"
+            ],
+            [
+              88,
+              "R1",
+              "S04"
+            ],
+            [
+              156,
+              "R2",
+              "S05"
+            ],
+            [
+              197,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "regime": "shifted",
+      "seed": 209,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.16666666666667,
+          "mean_completed_flow_ticks": 122.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.043126613999999286,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              129,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.16666666666667,
+          "mean_completed_flow_ticks": 122.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.048258042999999695,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              129,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 122.16666666666667,
+          "mean_completed_flow_ticks": 122.16666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.049147955000000465,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              12,
+              "R1",
+              "S02"
+            ],
+            [
+              46,
+              "R2",
+              "S03"
+            ],
+            [
+              78,
+              "R1",
+              "S04"
+            ],
+            [
+              129,
+              "R2",
+              "S05"
+            ],
+            [
+              171,
+              "R1",
+              "S06"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

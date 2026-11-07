@@ -1,0 +1,22 @@
+{
+  "description": "人工构造的规则功能测试数据，不是医院记录或临床建议。",
+  "samples": [
+    {
+      "id": "RULE-DEMO-1",
+      "specimen_type": "pediatric_blood_gas",
+      "rule_profile": "michigan_pediatric_blood_gas",
+      "collected_at": "2026-01-01T12:00:00Z",
+      "received_at": "2026-01-01T12:20:00Z",
+      "analyzed_at": "2026-01-01T12:25:00Z",
+      "packaging": "sealed_biohazard_bag",
+      "temperature_condition": "room_temperature"
+    },
+    {
+      "id": "RULE-DEMO-2",
+      "specimen_type": "pediatric_blood_gas",
+      "rule_profile": "michigan_pediatric_blood_gas",
+      "collected_at": "2026-01-01T12:00:00Z",
+      "received_at": "2026-01-01T12:31:00Z"
+    }
+  ]
+}

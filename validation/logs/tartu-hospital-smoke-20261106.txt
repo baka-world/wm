@@ -1,0 +1,104 @@
+Local CPU acceptance, 2026-11-06
+Pinned upstream commit: b9e32eeebb3a568af0e41c6e34500076cd2f6cad
+Pinned source SHA-256: 8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058
+The source map is acquired separately and is not redistributed in this repository.
+Workload: four artificial functional-test arrivals; not hospital records; no clinical deadline.
+
+Before adding the two-robot recovery (run completed with exit 2):
+{
+  "nearest": {
+    "status": "timed_out",
+    "sample_count": 4,
+    "completed_count": 1,
+    "deadline_sample_count": 0,
+    "late_count": null,
+    "late_completed_count": null,
+    "overdue_unfinished_count": null,
+    "ticks": 150,
+    "mean_completion_ticks": 18.0,
+    "forecast_mae_ticks": null,
+    "blocked_move_attempts": 254
+  },
+  "world": {
+    "status": "timed_out",
+    "sample_count": 4,
+    "completed_count": 1,
+    "deadline_sample_count": 0,
+    "late_count": null,
+    "late_completed_count": null,
+    "overdue_unfinished_count": null,
+    "ticks": 150,
+    "mean_completion_ticks": 18.0,
+    "forecast_mae_ticks": 0.0,
+    "blocked_move_attempts": 254
+  }
+}
+
+After adding recovery (run completed with exit 0):
+{
+  "nearest": {
+    "status": "completed",
+    "sample_count": 4,
+    "completed_count": 4,
+    "deadline_sample_count": 0,
+    "late_count": null,
+    "late_completed_count": null,
+    "overdue_unfinished_count": null,
+    "ticks": 87,
+    "mean_completion_ticks": 35.0,
+    "forecast_mae_ticks": null,
+    "blocked_move_attempts": 32
+  },
+  "world": {
+    "status": "completed",
+    "sample_count": 4,
+    "completed_count": 4,
+    "deadline_sample_count": 0,
+    "late_count": null,
+    "late_completed_count": null,
+    "overdue_unfinished_count": null,
+    "ticks": 87,
+    "mean_completion_ticks": 35.0,
+    "forecast_mae_ticks": 10.5,
+    "blocked_move_attempts": 32
+  }
+}
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python tests/check_hospital_run.py /tmp/wm-source/hospital_2nd_floor.building.yaml /workspace/sample-transport-tartu
+nearest: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+world: 4/4 test samples; 113 source-directed movements; no node overlap or edge swap; deadline unspecified
+exit code: 0
+
+$ node tests/test_graph_playback.js /workspace/sample-transport-tartu/world/report.html
+Graph playback verified: 32 waypoints, 63 directed lanes, tasks and missing deadlines
+exit code: 0
+
+$ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -m unittest discover -s tests -v
+test_direction_and_source_integrity (test_hospital_graph.HospitalGraphTests.test_direction_and_source_integrity) ... ok
+test_missing_deadline_is_not_reported_as_a_clinical_success (test_hospital_graph.HospitalGraphTests.test_missing_deadline_is_not_reported_as_a_clinical_success) ... ok
+test_two_robot_fallback_can_clear_a_blocked_bottleneck (test_hospital_graph.HospitalGraphTests.test_two_robot_fallback_can_clear_a_blocked_bottleneck) ... ok
+test_cli_compare_creates_results_and_will_not_overwrite (test_lab_transport.ReportTests.test_cli_compare_creates_results_and_will_not_overwrite) ... ok
+test_report_escapes_scenario_text (test_lab_transport.ReportTests.test_report_escapes_scenario_text) ... ok
+test_invalid_and_disconnected_inputs_are_rejected (test_lab_transport.ScenarioTests.test_invalid_and_disconnected_inputs_are_rejected) ... ok
+test_demo_completes_across_service_time_seeds (test_lab_transport.SimulationTests.test_demo_completes_across_service_time_seeds) ... ok
+test_outage_delays_service_and_becomes_an_observation (test_lab_transport.SimulationTests.test_outage_delays_service_and_becomes_an_observation) ... ok
+test_reproducible_and_duration_draws_match_across_policies (test_lab_transport.SimulationTests.test_reproducible_and_duration_draws_match_across_policies) ... ok
+test_robots_can_leave_each_others_occupied_destinations (test_lab_transport.SimulationTests.test_robots_can_leave_each_others_occupied_destinations) ... ok
+test_simulator_cannot_be_reused_with_stale_state (test_lab_transport.SimulationTests.test_simulator_cannot_be_reused_with_stale_state) ... ok
+test_six_samples_finish_with_valid_lifecycles_and_grid_safety (test_lab_transport.SimulationTests.test_six_samples_finish_with_valid_lifecycles_and_grid_safety) ... ok
+test_timeout_is_not_reported_as_success (test_lab_transport.SimulationTests.test_timeout_is_not_reported_as_success) ... ok
+test_dispatch_does_not_observe_hidden_service_countdown (test_lab_transport.WorldModelTests.test_dispatch_does_not_observe_hidden_service_countdown) ... ok
+test_forecast_depends_on_action_and_updates_from_observed_service (test_lab_transport.WorldModelTests.test_forecast_depends_on_action_and_updates_from_observed_service) ... ok
+test_forecast_does_not_access_future_outage_or_actual_duration (test_lab_transport.WorldModelTests.test_forecast_does_not_access_future_outage_or_actual_duration) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.344s
+
+OK
+exit code: 0
+
+nearest recovery plans: [{"tick": 24, "type": "recovery_planned", "robot_id": "R1", "sample_id": "S02", "steps": 13, "explored_states": 960}]
+world recovery plans: [{"tick": 24, "type": "recovery_planned", "robot_id": "R1", "sample_id": "S02", "steps": 13, "explored_states": 960}]
+
+No physical safety, clinical compliance, or general policy superiority is established.
+Local Chromium headless attempt was blocked by the execution sandbox; browser validation runs separately in GitHub Actions.

@@ -32,7 +32,7 @@ th,td{text-align:left;border-bottom:1px solid #e8eef4;padding:8px 4px} th{color:
 </style></head><body>
 <h1>样本转运仿真回放</h1><p id="subtitle"></p>
 <div class="banner" id="banner">示例数据与离散网格仿真；不代表真实实验室、物理机器人或安全认证。</div>
-<div class="layout"><section class="panel"><h2>实验室地图</h2><div class="controls">
+<div class="layout"><section class="panel"><h2>导航与站点地图</h2><div class="controls">
 <button id="play" type="button">播放</button><input id="tick" type="range" min="0" value="0">
 <strong id="time" class="mono"></strong></div><div id="grid" class="grid"></div>
 <p class="foot" id="map-note">蓝色格为站点，橙色格表示当前站点不可用，深色格为障碍；机器人按离散时间步移动。</p>
@@ -76,7 +76,7 @@ function renderGraph(frame){
   const xs=source.nodes.map(n=>n.x), ys=source.nodes.map(n=>n.y);
   const minx=Math.min(...xs)-120, miny=Math.min(...ys)-120;
   svg.setAttribute('viewBox',[minx,miny,Math.max(...xs)-minx+120,Math.max(...ys)-miny+120].join(' '));
-  svg.setAttribute('role','img');svg.setAttribute('aria-label','医院路网及机器人状态');
+  svg.setAttribute('role','img');svg.setAttribute('aria-label','导航路网及机器人状态');
   const defs=document.createElementNS(ns,'defs'), marker=document.createElementNS(ns,'marker');
   for(const [key,value] of Object.entries({id:'arrow',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'5',markerHeight:'5',orient:'auto-start-reverse'}))marker.setAttribute(key,value);
   const arrow=document.createElementNS(ns,'path');arrow.setAttribute('d','M 0 0 L 10 5 L 0 10 z');arrow.setAttribute('fill','#718096');marker.appendChild(arrow);defs.appendChild(marker);svg.appendChild(defs);
@@ -117,13 +117,14 @@ function render(index) {
   if(!latest){decision.textContent='该时刻尚无已执行的任务分配。';return}
   const selected=latest.selected, sample=data.samples.find(s=>s.id===latest.sample_id);
   let message='第 '+latest.tick+' 步：将 '+latest.sample_id+' 分配给 '+latest.robot_id+'。';
-  if(['world','rule','learned','learned_rule'].includes(latest.policy)) {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
+  const hasPrediction=['world','rule','learned','learned_rule','rollout'].includes(latest.policy);
+  if(hasPrediction) {message+=selected.expected_completion_tick===null?' 前视期内未完成，结果未知。':' 预测第 '+selected.expected_completion_tick+' 步完成。';
     if(selected.predicted_lateness!==null)message+=' 预计逾期 '+selected.predicted_lateness+' 步。';}
   if(sample&&sample.completed_tick!==null&&sample.completed_tick<=frame.tick) message+=' 实际第 '+sample.completed_tick+' 步完成。';
   decision.textContent=message;
   for(const candidate of latest.candidates){const item=document.createElement('li');
-    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(['world','rule','learned','learned_rule'].includes(latest.policy)
-      ? '：预测完成 '+candidate.expected_completion_tick+' 步，评分 '+candidate.score
+    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(hasPrediction
+      ? (candidate.expected_completion_tick===null?'：前视期内未完成，结果未知':'：预测完成 '+candidate.expected_completion_tick+' 步')+'，评分 '+candidate.score
       : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }
 slider.addEventListener('input',()=>render(Number(slider.value)));

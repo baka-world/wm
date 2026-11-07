@@ -1,14 +1,14 @@
 """Discrete-time sample transport simulation with conservative grid safety."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from collections import deque
 import hashlib
 from itertools import product
 import math
 from typing import Any
 
-from .domain import DirectedGraph, Position, Sample, Scenario
+from .domain import DirectedGraph, Position, RobotSpec, Sample, Scenario, Station
 from .world_model import PublicStation, WorldModel
 from .learned_model import LearnedWorldModel
 
@@ -40,8 +40,8 @@ class Simulator:
 
     def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0,
                  learned_parameters: dict | None = None):
-        if policy not in {"world", "nearest", "rule", "learned", "learned_rule"}:
-            raise ValueError("policy must be 'world', 'nearest', 'rule', 'learned' or 'learned_rule'")
+        if policy not in {"world", "nearest", "rule", "learned", "learned_rule", "rollout"}:
+            raise ValueError("unknown dispatch policy")
         if policy in {"learned", "learned_rule"} and learned_parameters is None:
             raise ValueError("learned policy requires trained parameters")
         self.scenario = scenario
@@ -96,6 +96,69 @@ class Simulator:
             result[sid] = max(estimates, default=0)
         return result
 
+    def _observable_rollout(self, tick: int, robot: RobotState, sample: SampleState,
+                            horizon: int = 120) -> dict[str, Any]:
+        """Evaluate one assignment on a bounded copy of the *observed* state.
+
+        Future releases and outages, RNG draws and actual service countdowns
+        never enter the copy. Current downtime is assumed to last one more
+        tick; subsequent services use rounded observed means. The same motion
+        rules and two-robot recovery as the live simulator are used.
+        """
+        if horizon < 1:
+            raise ValueError("rollout horizon must be positive")
+        visible = [s for s in self.samples.values() if s.status in {"waiting", "assigned", "in_transit"}]
+        stations = {}
+        for sid, station in self.scenario.stations.items():
+            expected = self.model.expected_service(sid)
+            stations[sid] = Station(sid, station.position, max(1, math.ceil(expected)), expected,
+                                    () if station.available(tick) else ((0, 1),), 0)
+        shadow_specs = tuple(replace(s.spec, release_tick=0,
+                                     deadline_tick=None if s.spec.deadline_tick is None
+                                     else s.spec.deadline_tick - tick) for s in visible)
+        shadow_robots = tuple(RobotSpec(r.id, r.position, r.home) for r in self.robots.values())
+        shadow_scenario = Scenario("observable rollout", self.scenario.grid, stations, shadow_robots,
+                                   shadow_specs, 0, horizon)
+        shadow = Simulator(shadow_scenario, "world", 0)
+        for sid, values in self.model.observations().items():
+            for value in values:
+                shadow.model.observe_service(sid, value)
+        for old in visible:
+            new = shadow.samples[old.spec.id]
+            new.status, new.robot_id = old.status, old.robot_id
+        for old in self.robots.values():
+            new = shadow.robots[old.id]
+            new.task_id, new.phase = old.task_id, old.phase
+            if old.task_id is not None and old.service_started is not None:
+                target_sample = self.samples[old.task_id].spec
+                sid = target_sample.pickup if old.phase == "to_pickup" else target_sample.dropoff
+                elapsed = max(0, tick - old.service_started)
+                new.service_started = -elapsed
+                new.service_remaining = max(1, math.ceil(self.model.expected_service(sid) - elapsed))
+        proposed = shadow.samples[sample.spec.id]
+        proposed.status, proposed.robot_id = "assigned", robot.id
+        shadow.robots[robot.id].task_id, shadow.robots[robot.id].phase = sample.spec.id, "to_pickup"
+        for step in range(horizon):
+            shadow._dispatch(step)
+            serviced = {r.id for r in shadow.robots.values() if shadow._handle_station(step, r)}
+            # The live motion priority rotates with absolute tick parity.
+            shadow._move(tick + step, serviced)
+            if proposed.completed_tick is not None:
+                break
+        completed = proposed.completed_tick is not None
+        completion = tick + proposed.completed_tick if completed else None
+        pickup = tick + proposed.picked_tick if proposed.picked_tick is not None else None
+        late = (max(0, completion - sample.spec.deadline_tick)
+                if completed and sample.spec.deadline_tick is not None else None)
+        # A horizon-censored candidate receives the horizon as a lower-bound
+        # score; this is a ranking convention, not an infeasibility proof.
+        score = completion + 4 * (late or 0) if completed else tick + horizon
+        return {"robot_id": robot.id, "sample_id": sample.spec.id,
+                "expected_pickup_tick": pickup, "expected_completion_tick": completion,
+                "predicted_final_sample_status": "completed" if completed else "unknown",
+                "predicted_lateness": late, "score": score, "predictor": "observable_rollout",
+                "rollout_horizon": horizon, "rollout_horizon_reached": not completed}
+
     def _dispatch(self, tick: int) -> None:
         while True:
             idle = sorted((r for r in self.robots.values() if r.task_id is None), key=lambda r: r.id)
@@ -106,7 +169,10 @@ class Simulator:
             forecasts: list[dict[str, Any]] = []
             for robot in idle:
                 for sample in waiting:
-                    if self.policy in {"world", "rule", "learned", "learned_rule"}:
+                    if self.policy == "rollout":
+                        forecast = self._observable_rollout(tick, robot, sample)
+                        key = (forecast["score"], sample.spec.release_tick, sample.spec.id, robot.id)
+                    elif self.policy in {"world", "rule", "learned", "learned_rule"}:
                         # Only the current observed status and positions are
                         # shared. Future releases, outages and RNG are hidden.
                         context = {

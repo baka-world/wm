@@ -9,6 +9,7 @@ on:
       - 'examples/specimen-rules-synthetic.json'
       - 'examples/rule-dispatch-synthetic.json'
       - 'examples/evidence/world-model/**'
+      - 'examples/evidence/multisite/**'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   pull_request:
@@ -18,6 +19,7 @@ on:
       - 'examples/specimen-rules-synthetic.json'
       - 'examples/rule-dispatch-synthetic.json'
       - 'examples/evidence/world-model/**'
+      - 'examples/evidence/multisite/**'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:
@@ -203,6 +205,61 @@ jobs:
             --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-rule"
           python tests/check_rule_run.py "$RUNNER_TEMP/learned-rule"
           node tests/test_graph_playback.js "$RUNNER_TEMP/learned-rule/learned_rule/report.html" rule
+      - name: Reproduce multi-location and unseen-layout simulation
+        shell: bash
+        run: |
+          set -euo pipefail
+          map_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos_maps/maps/clinic/clinic.building.yaml'
+          config_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos/config/clinic/deliveryRobot_config.yaml'
+          curl --fail --location --silent --show-error --retry 3 "$map_url" -o "$RUNNER_TEMP/clinic.building.yaml"
+          curl --fail --location --silent --show-error --retry 3 "$config_url" -o "$RUNNER_TEMP/clinic.delivery.yaml"
+          python -m lab_transport.multisite_experiment \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/multisite-experiment"
+          python tests/check_multisite_experiment.py "$RUNNER_TEMP/multisite-experiment" examples/evidence/multisite
+          for policy in world learned rollout; do
+            python -m lab_transport.clinic_demo --clinic-map "$RUNNER_TEMP/clinic.building.yaml" \
+              --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" --policy "$policy" \
+              --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/clinic-$policy"
+          done
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-world/report.html" clinic
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-learned/report.html" clinic_learned
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-rollout/report.html" clinic_rollout
+      - name: Check clinic playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/clinic-learned/report.html?step=1" \
+            > "$RUNNER_TEMP/clinic-dom.html" 2> "$RUNNER_TEMP/clinic-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'clinic-dom.html').read_text())
+          assert (check.circles, check.lines) == (62, 126), (check.circles, check.lines)
+          assert '公开诊所演示地图' in check.visible and '样本取送点是仿真假设' in check.visible
+          assert '学习预测器在仿真数据上训练' in check.visible and '最终完成：6/6' in check.visible
+          print('Browser DOM verified: clinic map, synthetic station roles and learned predictor')
+          PY
       - name: Check learned predictor playback in headless Chrome
         shell: bash
         run: |
@@ -291,5 +348,24 @@ jobs:
         with:
           name: sample-transport-demo
           path: ${{ runner.temp }}/sample-transport-demo/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload multi-location results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-location-experiment
+          path: ${{ runner.temp }}/multisite-experiment/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload clinic playback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clinic-playback
+          path: |
+            ${{ runner.temp }}/clinic-world/
+            ${{ runner.temp }}/clinic-learned/
+            ${{ runner.temp }}/clinic-rollout/
           if-no-files-found: warn
           retention-days: 7

@@ -13,6 +13,7 @@
 - [样本规则与公开数据复用说明](docs/specimen-rules-and-public-data.md)
 - [有来源的时间估计与规则辅助调度](docs/timing-and-rule-aware-dispatch.md)
 - [学习型预测器与仿真对照实验](docs/world-model-experiment.md)
+- [多取送点与未见地图的对照实验](docs/multiple-locations-experiment.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
 - [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)

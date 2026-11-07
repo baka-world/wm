@@ -82,6 +82,14 @@ def resolve_device(name: str) -> torch.device:
     return torch.device(name)
 
 
+def configure_deterministic_cuda() -> str:
+    """Configure cuBLAS before CUDA is initialized for deterministic training."""
+    value = os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+    if value not in {":4096:8", ":16:8"}:
+        raise ValueError("CUBLAS_WORKSPACE_CONFIG must be :4096:8 or :16:8 for deterministic CUDA training")
+    return value
+
+
 def prepare_examples(root: Path, split: str, adapter, limit: int | None) -> tuple[list[Any], dict[str, int]]:
     """Read one split only; limits count transitions, not individual entities."""
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
@@ -158,6 +166,7 @@ def train(dataset: Path, output: Path, *, adapter_name: str = DEFAULT_ADAPTER, d
     if resume is not None and not output.is_dir():
         raise ValueError("resume output must be the original existing run directory")
     device, adapter = resolve_device(device_name), load_adapter(adapter_name)
+    cublas_workspace = configure_deterministic_cuda() if device.type == "cuda" else None
     torch.set_num_threads(1)
     torch.manual_seed(seed)
     if device.type == "cuda":
@@ -174,7 +183,7 @@ def train(dataset: Path, output: Path, *, adapter_name: str = DEFAULT_ADAPTER, d
               "runtime_code_sha256": runtime_code_hashes(),
               "dataset_manifest_sha256": dataset_hash, "device_type": device.type,
               "device_name": torch.cuda.get_device_name(device) if device.type == "cuda" else "cpu",
-              "cuda_build": torch.version.cuda,
+              "cuda_build": torch.version.cuda, "cublas_workspace_config": cublas_workspace,
               "batch_size": batch_size, "learning_rate": learning_rate, "seed": seed,
               "train_limit": train_limit, "validation_limit": validation_limit,
               "torch_version": str(torch.__version__), "python_version": list(sys.version_info[:3])}

@@ -1,7 +1,7 @@
 {
   "scope": "Factual synthetic trajectories; no clinical or closed-loop improvement claim.",
   "checkpoint": "epoch-0001.pt",
-  "checkpoint_sha256": "9afe80a64f22c1cb38cd98a095573dc2642cd907c41cd6a6323e63e79022ff65",
+  "checkpoint_sha256": "dbb61d5d3f52d74f57e0c429f9cb5b5c27e9729b97b942094a6756d93667a27c",
   "dataset_manifest_sha256": "f668fb1582fb3994f5e45a7d696c3810af1d3f28619236ba808a5c661baa5c9a",
   "adapter": "lab_transport.torch_smoke_adapter",
   "device": "cpu",

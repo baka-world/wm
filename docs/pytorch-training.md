@@ -36,6 +36,8 @@ runs/torch-cpu-venv/bin/python -m lab_transport.torch_rollout \
 
 保持上面数据准备命令和参数，使用已安装 CUDA 构建的虚拟环境执行同样的训练、恢复、评估和闭环命令，把每处 `--device cpu` 改成 `--device cuda`，并使用新的输出目录。先保留两项 `--*-limit` 做少量数据验收，再依据显存与模型规模决定完整训练。显式 `--device cuda` 不可用会报错，不会静默改用 CPU；`--device auto` 会选择当前可用设备，报告中必须检查实际设备。报告记录设备名、PyTorch CUDA 构建和 PyTorch 分配器峰值显存（不等于整机显存占用）。目前这条 CUDA 路径尚未在用户设备上运行，不能视作 GPU 验收通过。
 
+为启用确定性训练，CUDA 初始化前会在未设置时配置 `CUBLAS_WORKSPACE_CONFIG=:4096:8`；已有值只能是 `:4096:8` 或 `:16:8`，该值会写入训练配置。此项只覆盖一个必要的 CUDA 配置，最终模型中的其他 GPU 运算是否支持确定性仍需在本机验证。
+
 ## 扩展点及信息边界
 
 [训练入口](../lab_transport/torch_training.py)从已验证的分组轨迹读取当前观测、真实已执行分配及下一观测，按 `--adapter` 指定 Python 模块。适配器提供 `ADAPTER_VERSION`、`build_model()`、`encode_transition(geometry, observation, assignments, next_observation)`、`collate(items)`、`loss(outputs, labels)` 和 `build_dynamics(geometry, network, device)`。批次目前使用由张量组成的扁平字典，包含变长候选项掩码；更复杂图结构、序列、优化器、损失或分布式训练如有需要仍应扩展训练框架。`model.forward()` 只收到输入字典；适配器用下一观测构造标签时，必须自行确保没有将未来信息写入输入。本仓库示例有相应测试，不能自动证明第三方适配器无泄漏。

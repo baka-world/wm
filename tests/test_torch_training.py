@@ -1,6 +1,7 @@
 """Behavioral checks for the optional neural training/integration stack."""
 from dataclasses import replace
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -17,7 +18,7 @@ if torch is not None:
     from lab_transport.torch_evaluate import evaluate
     from lab_transport.torch_smoke_adapter import collate, encode_transition, build_model
     from lab_transport.torch_training import (geometry_from_map, load_checkpoint, observation_from_dict,
-                                              resolve_device, train)
+                                              configure_deterministic_cuda, resolve_device, train)
     from lab_transport.training_data import export_dataset
     from lab_transport.transition_schema import Assignment
     from test_training_data import grid_fixture
@@ -122,6 +123,13 @@ class TorchTrainingTests(unittest.TestCase):
         with patch("torch.cuda.is_available", return_value=False):
             with self.assertRaisesRegex(ValueError, "CUDA requested"):
                 resolve_device("cuda")
+
+    def test_cuda_determinism_configuration_is_checked_without_using_gpu(self):
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(configure_deterministic_cuda(), ":4096:8")
+        with patch.dict(os.environ, {"CUBLAS_WORKSPACE_CONFIG": "invalid"}):
+            with self.assertRaisesRegex(ValueError, "CUBLAS_WORKSPACE_CONFIG"):
+                configure_deterministic_cuda()
 
     def test_fixed_checkpoint_evaluates_only_requested_held_out_prefix(self):
         result = evaluate(self.dataset, self.full / "epoch-0002.pt", self.root / "evaluation",

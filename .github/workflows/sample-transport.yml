@@ -1,0 +1,585 @@
+name: Sample transport prototype
+
+on:
+  push:
+    branches: [main, 'feature/**']
+    paths:
+      - 'lab_transport/**'
+      - 'scenarios/**'
+      - 'examples/specimen-rules-synthetic.json'
+      - 'examples/rule-dispatch-synthetic.json'
+      - 'examples/evidence/world-model/**'
+      - 'examples/evidence/multisite/**'
+      - 'examples/evidence/dynamics-pilot/**'
+      - 'examples/evidence/dynamics-revision/**'
+      - 'examples/evidence/pytorch-full/**'
+      - 'validation/logs/multisite-*.log'
+      - 'validation/logs/readiness-*.log'
+      - 'validation/logs/state-transition-*.log'
+      - 'validation/logs/pytorch-*.log'
+      - 'tests/**'
+      - 'requirements-torch-cpu.txt'
+      - '.github/workflows/sample-transport.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'scenarios/**'
+      - 'examples/specimen-rules-synthetic.json'
+      - 'examples/rule-dispatch-synthetic.json'
+      - 'examples/evidence/world-model/**'
+      - 'examples/evidence/multisite/**'
+      - 'examples/evidence/dynamics-pilot/**'
+      - 'examples/evidence/dynamics-revision/**'
+      - 'examples/evidence/pytorch-full/**'
+      - 'validation/logs/multisite-*.log'
+      - 'validation/logs/readiness-*.log'
+      - 'validation/logs/state-transition-*.log'
+      - 'validation/logs/pytorch-*.log'
+      - 'tests/**'
+      - 'requirements-torch-cpu.txt'
+      - '.github/workflows/sample-transport.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prototype:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the CPU-only PyTorch smoke-test dependencies
+        run: |
+          python -m pip install -r requirements-torch-cpu.txt
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch:', torch.__version__)"
+      - name: Test sample lifecycle, prediction and grid invariants
+        run: python -m unittest discover -s tests -v
+      - name: Export observable state transitions from synthetic example
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.transition_data --scenario scenarios/laboratory_demo.json \
+            --policy world --seed 42 --output "$RUNNER_TEMP/observable-transitions"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'observable-transitions'
+          manifest = json.loads((root / 'manifest.json').read_text())
+          rows = [json.loads(line) for line in (root / 'transitions.jsonl').read_text().splitlines()]
+          assert rows and len(rows) == manifest['bookkeeping_only_not_model_input']['transition_count']
+          assert rows[-1]['termination'] == 'completed' and rows[-1]['next_boundary'] == 'end_of_run'
+          assert 'service_remaining' not in json.dumps(rows)
+          assert 'S03' not in [s['id'] for s in rows[0]['observation']['samples']]
+          print('Observable transitions verified: synthetic inputs, factual actions and explicit boundaries')
+          PY
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from lab_transport.domain import load_scenario
+          from lab_transport.report import write_run
+          from lab_transport.simulation import Simulator
+
+          def choose(observation, candidates):
+              robots, samples, chosen = set(), set(), []
+              for candidate in candidates:
+                  if candidate.robot_id not in robots and candidate.sample_id not in samples:
+                      chosen.append(candidate)
+                      robots.add(candidate.robot_id)
+                      samples.add(candidate.sample_id)
+              return chosen
+
+          result = Simulator(load_scenario('scenarios/laboratory_demo.json'), 'world', 42).run(dispatch_policy=choose)
+          assert result['policy'] == 'external' and result['summary']['completed_count'] == 6
+          write_run(result, Path(os.environ['RUNNER_TEMP']) / 'external-policy-demo')
+          print('Injected policy verified: synthetic two-robot closed loop')
+          PY
+          node tests/test_playback.js "$RUNNER_TEMP/external-policy-demo/report.html" external
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/external-policy-demo/report.html?step=1" \
+            > "$RUNNER_TEMP/external-policy-dom.html" 2> "$RUNNER_TEMP/external-policy-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'external-policy-dom.html').read_text())
+          assert '调度策略：external' in check.visible and '可选择' in check.visible
+          assert '最终完成：6/6' in check.visible and 'undefined' not in check.visible
+          print('Browser DOM verified: injected-policy playback and candidate labels')
+          PY
+      - name: Run the example with both policies
+        run: python -m lab_transport compare --seed 42 --output "$RUNNER_TEMP/sample-transport-demo"
+      - name: Test playback controls
+        run: node tests/test_playback.js "$RUNNER_TEMP/sample-transport-demo/world/report.html"
+      - name: Exercise cited specimen rules with synthetic records
+        run: python -m lab_transport.specimen_rules --profiles scenarios/specimen-rule-profiles.json --samples examples/specimen-rules-synthetic.json > "$RUNNER_TEMP/specimen-rules.json"
+      - name: Run the pinned published hospital navigation graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'
+          curl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"
+          config_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_fleet_server/launch/fleet_adapters/tiago_fleet_adapter.launch.xml'
+          curl --fail --location --silent --show-error --retry 3 "$config_url" --output "$RUNNER_TEMP/tiago.launch.xml"
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"
+          python tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"
+      - name: Check hospital graph in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/hospital-run/world/report.html?step=1" \
+            > "$RUNNER_TEMP/hospital-dom.html" 2> "$RUNNER_TEMP/hospital-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.circles = self.lines = 0
+                  self.visible_text = ''
+              def handle_starttag(self, tag, attrs):
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_data(self, data):
+                  self.visible_text += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'hospital-dom.html').read_text())
+          assert (check.circles, check.lines) == (32, 63), (check.circles, check.lines)
+          assert '未设置时限' in check.visible_text
+          assert '功能测试设置' in check.visible_text
+          print('Browser DOM verified: hospital graph, directed lanes, test-data notice and no deadline')
+          PY
+      - name: Replay public MIMIC demo timeline on the hospital graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://physionet.org/files/mimic-iv-demo/2.2'
+          curl --fail --location --silent --show-error --retry 3 "$base/hosp/d_labitems.csv.gz" -o "$RUNNER_TEMP/d_labitems.csv.gz"
+          curl --fail --location --silent --show-error --retry 3 "$base/hosp/labevents.csv.gz" -o "$RUNNER_TEMP/labevents.csv.gz"
+          curl --fail --location --silent --show-error --retry 3 "$base/icu/icustays.csv.gz" -o "$RUNNER_TEMP/icustays.csv.gz"
+          python -m lab_transport.mimic_workload --labitems "$RUNNER_TEMP/d_labitems.csv.gz" \
+            --labevents "$RUNNER_TEMP/labevents.csv.gz" --icustays "$RUNNER_TEMP/icustays.csv.gz" \
+            --output "$RUNNER_TEMP/mimic-timeline.json"
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --workload "$RUNNER_TEMP/mimic-timeline.json" --seconds-per-tick 60 --output "$RUNNER_TEMP/mimic-hospital"
+          python tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-hospital" 60
+          node tests/test_graph_playback.js "$RUNNER_TEMP/mimic-hospital/world/report.html" mimic
+      - name: Replay real sample times with a source-based nominal travel model
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --workload "$RUNNER_TEMP/mimic-timeline.json" --output "$RUNNER_TEMP/mimic-nominal"
+          python tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-nominal" 10
+          node tests/test_graph_playback.js "$RUNNER_TEMP/mimic-nominal/world/report.html" nominal
+      - name: Exercise rule-aware dispatch with synthetic specimen times
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \
+            --output "$RUNNER_TEMP/rule-aware"
+          python tests/check_rule_run.py "$RUNNER_TEMP/rule-aware"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/rule-aware/rule/report.html" rule
+      - name: Check rule-aware playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/rule-aware/rule/report.html?step=1" \
+            > "$RUNNER_TEMP/rule-dom.html" 2> "$RUNNER_TEMP/rule-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'rule-dom.html').read_text())
+          assert (check.circles, check.lines) == (76, 112), (check.circles, check.lines)
+          assert '按时交付不等于' in check.visible and '交付代理上限' in check.visible
+          assert '仿真时间' in check.visible and '预测第' in check.visible
+          print('Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice')
+          PY
+      - name: Check cross-institution replay in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/mimic-hospital/world/report.html?step=1" \
+            > "$RUNNER_TEMP/mimic-dom.html" 2> "$RUNNER_TEMP/mimic-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'mimic-dom.html').read_text())
+          assert '跨机构仿真' in check.visible and 'blood_unspecified' in check.visible
+          assert '不是实际路段耗时' in check.visible and '未设置时限' in check.visible
+          print('Browser DOM verified: source scope, sample type, assumed time step and no clinical deadline')
+          PY
+      - name: Train and evaluate the CPU learned predictor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.experiment --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --output "$RUNNER_TEMP/world-experiment"
+          python tests/check_world_experiment.py "$RUNNER_TEMP/world-experiment" examples/evidence/world-model
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-hospital"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/learned-hospital/learned/report.html" learned_nominal
+          python -m lab_transport compare --seed 42 --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" \
+            --output "$RUNNER_TEMP/learned-grid"
+          node tests/test_playback.js "$RUNNER_TEMP/learned-grid/learned/report.html"
+          python -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \
+            --model "$RUNNER_TEMP/world-experiment/learned-parameters.json" --output "$RUNNER_TEMP/learned-rule"
+          python tests/check_rule_run.py "$RUNNER_TEMP/learned-rule"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/learned-rule/learned_rule/report.html" rule
+      - name: Reproduce multi-location and unseen-layout simulation
+        shell: bash
+        run: |
+          set -euo pipefail
+          map_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos_maps/maps/clinic/clinic.building.yaml'
+          config_url='https://raw.githubusercontent.com/open-rmf/rmf_demos/672a67a1643ac12d89fc21565fa92f33f5c2e0fc/rmf_demos/config/clinic/deliveryRobot_config.yaml'
+          curl --fail --location --silent --show-error --retry 3 "$map_url" -o "$RUNNER_TEMP/clinic.building.yaml"
+          curl --fail --location --silent --show-error --retry 3 "$config_url" -o "$RUNNER_TEMP/clinic.delivery.yaml"
+          python -m lab_transport.multisite_experiment \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/multisite-experiment"
+          python tests/check_multisite_experiment.py "$RUNNER_TEMP/multisite-experiment" examples/evidence/multisite
+          for policy in world learned rollout; do
+            python -m lab_transport.clinic_demo --clinic-map "$RUNNER_TEMP/clinic.building.yaml" \
+              --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" --policy "$policy" \
+              --model examples/evidence/world-model/learned-parameters.json --output "$RUNNER_TEMP/clinic-$policy"
+          done
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-world/report.html" clinic
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-learned/report.html" clinic_learned
+          node tests/test_graph_playback.js "$RUNNER_TEMP/clinic-rollout/report.html" clinic_rollout
+      - name: Check model-independent local-training dataset export
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.training_data export --download-sources --profile smoke \
+            --output "$RUNNER_TEMP/training-data-smoke"
+          python -m lab_transport.training_data validate --dataset "$RUNNER_TEMP/training-data-smoke"
+      - name: Train the optional neural adapter and exercise the hospital simulation loop
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.torch_training --dataset "$RUNNER_TEMP/training-data-smoke" \
+            --output "$RUNNER_TEMP/torch-training-smoke" --device cpu --epochs 2 \
+            --train-limit 500 --validation-limit 250
+          python -m lab_transport.torch_rollout \
+            --checkpoint "$RUNNER_TEMP/torch-training-smoke/epoch-0002.pt" \
+            --output "$RUNNER_TEMP/torch-rollout-smoke" --device cpu \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml"
+          python -m lab_transport.torch_evaluate --dataset "$RUNNER_TEMP/training-data-smoke" \
+            --checkpoint "$RUNNER_TEMP/torch-training-smoke/epoch-0002.pt" \
+            --output "$RUNNER_TEMP/torch-evaluation-smoke" --device cpu --limit-per-split 100
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          evidence = json.loads((Path(os.environ['RUNNER_TEMP']) / 'torch-rollout-smoke/evidence.json').read_text())
+          assert evidence['device'] == 'cpu'
+          assert evidence['summary']['completed_count'] == evidence['summary']['sample_count'] == 6
+          assert evidence['candidate_evaluations'] > 0 and evidence['model_steps'] > 0
+          assert evidence['fallbacks'] == evidence['discrete_safety_violations'] == 0
+          evaluation = json.loads((Path(os.environ['RUNNER_TEMP']) / 'torch-evaluation-smoke/evaluation.json').read_text())
+          assert evaluation['transitions_per_split'] == {'test_tartu': 100, 'test_clinic': 100}
+          print('Neural adapter verified: factual CPU training, bounded rollout and two-robot completion')
+          PY
+      - name: Verify archived full-data evaluation integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import gzip, json
+          from pathlib import Path
+          root = Path('examples/evidence/pytorch-full')
+          with gzip.open(root / 'evaluation.json.gz', 'rt', encoding='utf-8') as handle:
+              detail = json.load(handle)
+          summary = json.loads((root / 'summary.json').read_text(encoding='utf-8'))
+          assert {key: value for key, value in detail.items() if key != 'cases'} == summary
+          assert summary['transitions_per_split'] == {'test_tartu': 3904, 'test_clinic': 1529}
+          assert len(detail['cases']) == 32 and summary['limit_per_split'] is None
+          print('Archived full-data metrics agree with the 32 per-episode records')
+          PY
+      - name: Reproduce CPU state-transition model and held-out tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.dynamics_experiment \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --output "$RUNNER_TEMP/dynamics-pilot"
+          python tests/check_dynamics_experiment.py "$RUNNER_TEMP/dynamics-pilot" examples/evidence/dynamics-pilot
+      - name: Train validation-selected CPU dynamics and reproduce held-out tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.dynamics_revision \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" --tiago-config "$RUNNER_TEMP/tiago.launch.xml" \
+            --clinic-map "$RUNNER_TEMP/clinic.building.yaml" --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" \
+            --output "$RUNNER_TEMP/dynamics-revision"
+          python tests/check_dynamics_schedules.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/tiago.launch.xml" \
+            "$RUNNER_TEMP/clinic.building.yaml" "$RUNNER_TEMP/clinic.delivery.yaml"
+          python tests/check_dynamics_revision.py "$RUNNER_TEMP/dynamics-revision" examples/evidence/dynamics-revision
+          python -m lab_transport.dynamics_demo --clinic-map "$RUNNER_TEMP/clinic.building.yaml" \
+            --clinic-config "$RUNNER_TEMP/clinic.delivery.yaml" --model "$RUNNER_TEMP/dynamics-revision/dynamics-parameters.json" \
+            --output "$RUNNER_TEMP/dynamics-demo"
+          node tests/test_dynamics_playback.js "$RUNNER_TEMP/dynamics-demo/report.html"
+      - name: Check state-prediction playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/dynamics-demo/report.html?step=1" \
+            > "$RUNNER_TEMP/dynamics-dom.html" 2> "$RUNNER_TEMP/dynamics-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = self.robots = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+                  self.robots += tag == 'circle' and 'robot' in dict(attrs).get('class', '').split()
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'dynamics-dom.html').read_text())
+          assert (check.circles, check.lines, check.robots) == (248, 504, 8), (check.circles, check.lines, check.robots)
+          assert '取送点和任务是仿真假设' in check.visible and '不预知新任务或故障' in check.visible
+          assert '学习模型预测的下一步' in check.visible and '下一步实际状态' in check.visible
+          print('Browser DOM verified: four-panel state prediction and simulation scope')
+          PY
+      - name: Check clinic playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/clinic-learned/report.html?step=1" \
+            > "$RUNNER_TEMP/clinic-dom.html" 2> "$RUNNER_TEMP/clinic-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'clinic-dom.html').read_text())
+          assert (check.circles, check.lines) == (62, 126), (check.circles, check.lines)
+          assert '公开诊所演示地图' in check.visible and '样本取送点是仿真假设' in check.visible
+          assert '学习预测器在仿真数据上训练' in check.visible and '最终完成：6/6' in check.visible
+          print('Browser DOM verified: clinic map, synthetic station roles and learned predictor')
+          PY
+      - name: Check learned predictor playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/learned-hospital/learned/report.html?step=1" \
+            > "$RUNNER_TEMP/learned-dom.html" 2> "$RUNNER_TEMP/learned-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'learned-dom.html').read_text())
+          assert '学习预测器在仿真数据上训练' in check.visible
+          assert '预测第' in check.visible and '最终完成：4/4' in check.visible
+          print('Browser DOM verified: learned forecast, simulated-data notice and completed tasks')
+          PY
+      - name: Check the standalone playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome
+          if ! timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/sample-transport-demo/world/report.html?step=1" \
+            > "$RUNNER_TEMP/report-dom.html" 2> "$RUNNER_TEMP/chrome.log"; then
+            tail -n 100 "$RUNNER_TEMP/chrome.log" >&2
+            exit 1
+          fi
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.cells = self.robots = self.rows = self.candidates = 0
+                  self.in_metrics = False
+                  self.in_decision = False
+                  self.metrics = ''
+                  self.decision = ''
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  classes = attrs.get('class', '').split()
+                  self.cells += 'cell' in classes
+                  self.robots += 'robot' in classes
+                  self.rows += tag == 'tr'
+                  self.candidates += tag == 'li'
+                  if attrs.get('id') == 'metrics':
+                      self.in_metrics = True
+                  if attrs.get('id') == 'decision':
+                      self.in_decision = True
+              def handle_endtag(self, tag):
+                  if tag == 'p':
+                      self.in_metrics = False
+                      self.in_decision = False
+              def handle_data(self, data):
+                  if self.in_metrics:
+                      self.metrics += data
+                  if self.in_decision:
+                      self.decision += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'report-dom.html').read_text())
+          assert (check.cells, check.robots, check.rows) == (63, 2, 7), (check.cells, check.robots, check.rows)
+          assert '6/6' in check.metrics, check.metrics
+          assert '预测第' in check.decision and check.candidates > 0, (check.decision, check.candidates)
+          print('Browser DOM verified: map, robots, tasks and candidate predictions')
+          PY
+      - name: Upload example results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-transport-demo
+          path: ${{ runner.temp }}/sample-transport-demo/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload multi-location results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-location-experiment
+          path: ${{ runner.temp }}/multisite-experiment/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload clinic playback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clinic-playback
+          path: |
+            ${{ runner.temp }}/clinic-world/
+            ${{ runner.temp }}/clinic-learned/
+            ${{ runner.temp }}/clinic-rollout/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload state-transition results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamics-pilot
+          path: ${{ runner.temp }}/dynamics-pilot/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload revised state-transition results and playback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamics-revision
+          path: |
+            ${{ runner.temp }}/dynamics-revision/
+            ${{ runner.temp }}/dynamics-demo/
+          if-no-files-found: warn
+          retention-days: 7

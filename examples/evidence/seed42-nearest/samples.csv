@@ -1,0 +1,7 @@
+id,pickup,dropoff,release_tick,deadline_tick,status,robot_id,assigned_tick,picked_tick,completed_tick,predicted_completion_tick
+S01,收样处,检验区,0,32,completed,R1,0,11,22,
+S02,收样处,离心区,0,42,completed,R2,0,6,17,
+S03,检验区,收样处,4,52,completed,R1,22,25,37,
+S04,收样处,检验区,7,60,completed,R2,30,33,44,
+S05,离心区,收样处,10,75,completed,R2,17,20,30,
+S06,收样处,离心区,13,90,completed,R1,37,40,51,

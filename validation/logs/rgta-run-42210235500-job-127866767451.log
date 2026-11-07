@@ -1,0 +1,183 @@
+2026-11-06T11:26:17.1971317Z Current runner version: '2.338.2'
+2026-11-06T11:26:17.1994522Z ##[group]Runner Image Provisioner
+2026-11-06T11:26:17.1995255Z Hosted Compute Agent
+2026-11-06T11:26:17.1995761Z Version: 20261028.624
+2026-11-06T11:26:17.1996430Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-06T11:26:17.1997095Z Build Date: 2026-10-28T21:51:42Z
+2026-11-06T11:26:17.1997695Z Worker ID: {6406d9fb-d7d7-46eb-a284-8ff64e335f71}
+2026-11-06T11:26:17.1998311Z Region: westus2
+2026-11-06T11:26:17.1998785Z Cloud: Azure
+2026-11-06T11:26:17.1999334Z ##[endgroup]
+2026-11-06T11:26:17.2000698Z ##[group]Operating System
+2026-11-06T11:26:17.2001218Z Ubuntu
+2026-11-06T11:26:17.2001760Z 24.04.5
+2026-11-06T11:26:17.2002216Z LTS
+2026-11-06T11:26:17.2002718Z ##[endgroup]
+2026-11-06T11:26:17.2003262Z ##[group]Runner Image
+2026-11-06T11:26:17.2003770Z Image: ubuntu-24.04
+2026-11-06T11:26:17.2004330Z Version: 20261101.360.1
+2026-11-06T11:26:17.2005426Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-06T11:26:17.2006743Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-06T11:26:17.2007549Z ##[endgroup]
+2026-11-06T11:26:17.2008523Z ##[group]GITHUB_TOKEN Permissions
+2026-11-06T11:26:17.2010147Z Contents: read
+2026-11-06T11:26:17.2010905Z Metadata: read
+2026-11-06T11:26:17.2011392Z ##[endgroup]
+2026-11-06T11:26:17.2013200Z Secret source: Actions
+2026-11-06T11:26:17.2014066Z Cache mode: write
+2026-11-06T11:26:17.2014840Z Prepare workflow directory
+2026-11-06T11:26:17.2331137Z Prepare all required actions
+2026-11-06T11:26:17.2373584Z Getting action download info
+2026-11-06T11:26:17.5495767Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-06T11:26:17.7369031Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-06T11:26:17.9652052Z Complete job name: rgta-smoke
+2026-11-06T11:26:18.0415867Z ##[group]Run actions/setup-python@v5
+2026-11-06T11:26:18.0416716Z with:
+2026-11-06T11:26:18.0417088Z   python-version: 3.11
+2026-11-06T11:26:18.0417490Z   check-latest: false
+2026-11-06T11:26:18.0420981Z   token: ***
+2026-11-06T11:26:18.0421363Z   update-environment: true
+2026-11-06T11:26:18.0421791Z   allow-prereleases: false
+2026-11-06T11:26:18.0422201Z   freethreaded: false
+2026-11-06T11:26:18.0422745Z env:
+2026-11-06T11:26:18.0423156Z   RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:18.0423746Z   LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+2026-11-06T11:26:18.0424261Z ##[endgroup]
+2026-11-06T11:26:18.3173540Z ##[group]Installed versions
+2026-11-06T11:26:18.3226202Z (node:1982) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T11:26:18.3227436Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T11:26:18.3228266Z Successfully set up CPython (3.11.18)
+2026-11-06T11:26:18.3229164Z ##[endgroup]
+2026-11-06T11:26:18.3522920Z ##[group]Run set -euo pipefail
+2026-11-06T11:26:18.3523837Z set -euo pipefail
+2026-11-06T11:26:18.3524675Z mkdir -p reports rgta-src
+2026-11-06T11:26:18.3525558Z git -C rgta-src init -q
+2026-11-06T11:26:18.3526862Z git -C rgta-src remote add origin https://github.com/YiBangWon/rgta-mtmapd.git
+2026-11-06T11:26:18.3528185Z git -C rgta-src fetch -q --depth 1 origin "$RGTA_COMMIT"
+2026-11-06T11:26:18.3529144Z git -C rgta-src checkout -q --detach FETCH_HEAD
+2026-11-06T11:26:18.3530064Z test "$(git -C rgta-src rev-parse HEAD)" = "$RGTA_COMMIT"
+2026-11-06T11:26:18.3531274Z git -C rgta-src rev-parse HEAD | tee reports/rgta-commit.txt
+2026-11-06T11:26:18.3572384Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T11:26:18.3573148Z env:
+2026-11-06T11:26:18.3573572Z   RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:18.3574630Z   LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+2026-11-06T11:26:18.3575910Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.3576796Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T11:26:18.3577643Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.3578324Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.3578911Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.3579525Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T11:26:18.3580058Z ##[endgroup]
+2026-11-06T11:26:18.7788991Z bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:18.7838303Z ##[group]Run set -euo pipefail
+2026-11-06T11:26:18.7838848Z set -euo pipefail
+2026-11-06T11:26:18.7839288Z cd rgta-src
+2026-11-06T11:26:18.7839974Z python -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee ../reports/rgta-tests.log
+2026-11-06T11:26:18.7841093Z grep -Eq '^Ran [1-9][0-9]* tests? in ' ../reports/rgta-tests.log
+2026-11-06T11:26:18.7859703Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T11:26:18.7860422Z env:
+2026-11-06T11:26:18.7860893Z   RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:18.7861516Z   LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+2026-11-06T11:26:18.7862144Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.7862824Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T11:26:18.7863514Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.7864194Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.7864852Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:18.7865540Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T11:26:18.7866094Z ##[endgroup]
+2026-11-06T11:26:19.8422657Z test_grid_distance (test_rgta_core.RGTACoreTests.test_grid_distance) ... ok
+2026-11-06T11:26:20.0301908Z test_smoke_simulation (test_rgta_core.RGTACoreTests.test_smoke_simulation) ... ok
+2026-11-06T11:26:20.0394288Z test_tsp_group_cost (test_rgta_core.RGTACoreTests.test_tsp_group_cost) ... ok
+2026-11-06T11:26:20.0394877Z 
+2026-11-06T11:26:20.0395236Z ----------------------------------------------------------------------
+2026-11-06T11:26:20.0395957Z Ran 3 tests in 0.198s
+2026-11-06T11:26:20.0396270Z 
+2026-11-06T11:26:20.0396550Z OK
+2026-11-06T11:26:20.0619551Z ##[group]Run set -euo pipefail
+2026-11-06T11:26:20.0620123Z set -euo pipefail
+2026-11-06T11:26:20.0620856Z cd rgta-src
+2026-11-06T11:26:20.0621333Z python experiments/run_rgta_benchmark.py \
+2026-11-06T11:26:20.0621975Z   --maps kiva --settings 6x6 --methods tp rgta_eff \
+2026-11-06T11:26:20.0622580Z   --seeds 0 1 --total-tasks 60 --initial-tasks 12 \
+2026-11-06T11:26:20.0623146Z   --release-batch 6 --release-interval 5 \
+2026-11-06T11:26:20.0623721Z   --output ../reports/rgta-small.csv \
+2026-11-06T11:26:20.0624222Z   2>&1 | tee ../reports/rgta-benchmark.log
+2026-11-06T11:26:20.0624689Z python - <<'PY'
+2026-11-06T11:26:20.0625502Z import csv
+2026-11-06T11:26:20.0625913Z from pathlib import Path
+2026-11-06T11:26:20.0626333Z 
+2026-11-06T11:26:20.0626737Z path = Path('../reports/rgta-small.csv')
+2026-11-06T11:26:20.0627324Z assert path.is_file(), f'benchmark output missing: {path}'
+2026-11-06T11:26:20.0627887Z with path.open(newline='') as handle:
+2026-11-06T11:26:20.0628371Z     rows = list(csv.DictReader(handle))
+2026-11-06T11:26:20.0628953Z assert len(rows) == 4, f'unexpected number of benchmark rows: {len(rows)}'
+2026-11-06T11:26:20.0629640Z expected = {(method, seed) for method in ('tp', 'rgta_eff') for seed in (0, 1)}
+2026-11-06T11:26:20.0630569Z actual = {(row['method'], int(row['seed'])) for row in rows}
+2026-11-06T11:26:20.0631464Z assert actual == expected, f'unexpected method/seed combinations: {actual}'
+2026-11-06T11:26:20.0632141Z assert all(row['map_name'] == 'kiva' and int(row['num_agents']) == 6
+2026-11-06T11:26:20.0632817Z            and int(row['capacity']) == 6 for row in rows), 'unexpected scenario settings'
+2026-11-06T11:26:20.0633563Z assert all(int(row['completed_tasks']) == 60 for row in rows), 'some tasks are incomplete'
+2026-11-06T11:26:20.0634284Z print(f'RGTA small benchmark validated: {len(rows)} runs, 60 tasks each')
+2026-11-06T11:26:20.0634838Z PY
+2026-11-06T11:26:20.0654434Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-06T11:26:20.0654958Z env:
+2026-11-06T11:26:20.0655524Z   RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:20.0656084Z   LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+2026-11-06T11:26:20.0656658Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.0657282Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T11:26:20.0657885Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.0658443Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.0659008Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.0659574Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T11:26:20.0660080Z ##[endgroup]
+2026-11-06T11:26:20.4044989Z kiva(6,6) seed=0 tp: service=725.6 makespan=1620.9 alloc_ms/event=32.26
+2026-11-06T11:26:20.4392541Z kiva(6,6) seed=0 rgta_eff: service=526.7 makespan=1267.2 alloc_ms/event=3.54
+2026-11-06T11:26:20.7640008Z kiva(6,6) seed=1 tp: service=696.9 makespan=1523.9 alloc_ms/event=35.54
+2026-11-06T11:26:20.7995515Z kiva(6,6) seed=1 rgta_eff: service=506.5 makespan=1176.0 alloc_ms/event=3.63
+2026-11-06T11:26:20.8004493Z 
+2026-11-06T11:26:20.8004821Z Summary
+2026-11-06T11:26:20.8005297Z map,agents,capacity,method,service,makespan,alloc_ms_event,alloc_ms_step
+2026-11-06T11:26:20.8005846Z kiva,6,6,rgta_eff,516.58,1221.63,3.59,0.0264
+2026-11-06T11:26:20.8006208Z kiva,6,6,tp,711.27,1572.40,33.90,0.1944
+2026-11-06T11:26:20.8006408Z 
+2026-11-06T11:26:20.8006557Z Wrote raw results to ../reports/rgta-small.csv
+2026-11-06T11:26:20.8248394Z RGTA small benchmark validated: 4 runs, 60 tasks each
+2026-11-06T11:26:20.8333203Z ##[group]Run actions/upload-artifact@v4
+2026-11-06T11:26:20.8333454Z with:
+2026-11-06T11:26:20.8333620Z   name: rgta-preflight
+2026-11-06T11:26:20.8333800Z   path: reports/
+2026-11-06T11:26:20.8333975Z   if-no-files-found: warn
+2026-11-06T11:26:20.8334164Z   retention-days: 7
+2026-11-06T11:26:20.8334341Z   compression-level: 6
+2026-11-06T11:26:20.8334517Z   overwrite: false
+2026-11-06T11:26:20.8334703Z   include-hidden-files: false
+2026-11-06T11:26:20.8334892Z env:
+2026-11-06T11:26:20.8335093Z   RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+2026-11-06T11:26:20.8335405Z   LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+2026-11-06T11:26:20.8335713Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.8336040Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-06T11:26:20.8336374Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.8336707Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.8336997Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-06T11:26:20.8337291Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-06T11:26:20.8337550Z ##[endgroup]
+2026-11-06T11:26:20.9746692Z (node:2020) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T11:26:20.9747734Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T11:26:20.9801865Z With the provided path, there will be 4 files uploaded
+2026-11-06T11:26:20.9804154Z Artifact name is valid!
+2026-11-06T11:26:20.9805003Z Root directory input is valid!
+2026-11-06T11:26:21.4569347Z Beginning upload of artifact content to blob storage
+2026-11-06T11:26:21.4750941Z (node:2020) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-06T11:26:21.7669431Z Uploaded bytes 1310
+2026-11-06T11:26:21.8516333Z Finished uploading artifact content to blob storage!
+2026-11-06T11:26:21.8517637Z SHA256 digest of uploaded artifact zip is e1ed1cf99f167e59a6a4c12f5f79b13921c9226643207ca7357f02a2c4ad1dc5
+2026-11-06T11:26:21.8518589Z Finalizing artifact upload
+2026-11-06T11:26:22.3914737Z Artifact rgta-preflight.zip successfully finalized. Artifact ID 13497529701
+2026-11-06T11:26:22.3915699Z Artifact rgta-preflight has been successfully uploaded! Final size is 1310 bytes. Artifact ID is 13497529701
+2026-11-06T11:26:22.3920701Z Artifact download URL: https://github.com/lieuyimo/wm/actions/runs/42210235500/artifacts/13497529701
+2026-11-06T11:26:22.4224243Z Post job cleanup.
+2026-11-06T11:26:22.5272020Z (node:2041) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T11:26:22.5272888Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T11:26:22.5386545Z Cleaning up orphan processes
+2026-11-06T11:26:22.5777203Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

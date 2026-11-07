@@ -1,0 +1,172 @@
+{
+  "schema_version": 2,
+  "kind": "hybrid_linear_dynamics_v2",
+  "motion_features": [
+    "stay",
+    "route_progress",
+    "remaining_distance",
+    "at_goal",
+    "idle_progress",
+    "pickup_progress",
+    "dropoff_progress",
+    "adjacent_other",
+    "occupied_goal_stay",
+    "current_goal_stay"
+  ],
+  "service_features": [
+    "bias",
+    "elapsed",
+    "expected",
+    "elapsed_ratio",
+    "pickup",
+    "dropoff",
+    "new_assignment"
+  ],
+  "motion_weights": [
+    0.40199471659001124,
+    3.187133250542273,
+    0.11181066784760245,
+    1.1998474287358534,
+    1.1428801021920656,
+    0.6120953641806561,
+    1.4321577841694395,
+    -0.2509963456081417,
+    -0.40865636988526577,
+    0.7938851324513172
+  ],
+  "service_weights": [
+    0.7517115666357334,
+    3.581583719407833,
+    -0.6797812846457683,
+    2.0520727608261984,
+    -2.111075821389399,
+    2.862787388025129,
+    0.0
+  ],
+  "epoch": 180,
+  "learning_rate": 1.0,
+  "l2": 0.001,
+  "training_motion_examples": 22120,
+  "training_service_examples": 1532,
+  "training_service_completions": 528,
+  "selection": {
+    "selected_epoch": 180,
+    "validation_candidates": [
+      {
+        "epoch": 35,
+        "selection_score": 0.65603059,
+        "joint_accuracy": 0.68706118,
+        "service_finish_f1": 0.625,
+        "counts": {
+          "robot_total": 7976,
+          "robot_position_correct": 6824,
+          "robot_actual_moves": 5920,
+          "robot_actual_moves_correct": 5920,
+          "robot_predicted_moves": 7072,
+          "robot_move_detected": 5920,
+          "sample_total": 21272,
+          "sample_status_correct": 21176,
+          "sample_actual_changes": 272,
+          "sample_actual_changes_correct": 176,
+          "sample_predicted_changes": 176,
+          "sample_change_exact_true_positive": 176,
+          "service_actual_finishes": 176,
+          "service_predicted_finishes": 80,
+          "service_finish_exact_true_positive": 80,
+          "joint_total": 3988,
+          "joint_correct": 2740,
+          "new_arrivals": 80,
+          "station_changes": 16
+        }
+      },
+      {
+        "epoch": 90,
+        "selection_score": 0.72153962,
+        "joint_accuracy": 0.69307924,
+        "service_finish_f1": 0.75,
+        "counts": {
+          "robot_total": 7976,
+          "robot_position_correct": 6824,
+          "robot_actual_moves": 5920,
+          "robot_actual_moves_correct": 5920,
+          "robot_predicted_moves": 7072,
+          "robot_move_detected": 5920,
+          "sample_total": 21272,
+          "sample_status_correct": 21200,
+          "sample_actual_changes": 272,
+          "sample_actual_changes_correct": 204,
+          "sample_predicted_changes": 208,
+          "sample_change_exact_true_positive": 204,
+          "service_actual_finishes": 176,
+          "service_predicted_finishes": 112,
+          "service_finish_exact_true_positive": 108,
+          "joint_total": 3988,
+          "joint_correct": 2764,
+          "new_arrivals": 80,
+          "station_changes": 16
+        }
+      },
+      {
+        "epoch": 180,
+        "selection_score": 0.73678352,
+        "joint_accuracy": 0.69307924,
+        "service_finish_f1": 0.7804878,
+        "counts": {
+          "robot_total": 7976,
+          "robot_position_correct": 6824,
+          "robot_actual_moves": 5920,
+          "robot_actual_moves_correct": 5920,
+          "robot_predicted_moves": 7072,
+          "robot_move_detected": 5920,
+          "sample_total": 21272,
+          "sample_status_correct": 21200,
+          "sample_actual_changes": 272,
+          "sample_actual_changes_correct": 224,
+          "sample_predicted_changes": 248,
+          "sample_change_exact_true_positive": 224,
+          "service_actual_finishes": 176,
+          "service_predicted_finishes": 152,
+          "service_finish_exact_true_positive": 128,
+          "joint_total": 3988,
+          "joint_correct": 2764,
+          "new_arrivals": 80,
+          "station_changes": 16
+        }
+      }
+    ],
+    "rule": "0.5 * validation known-entity joint accuracy + 0.5 * validation service-finish F1; earlier epoch breaks ties"
+  },
+  "provenance": {
+    "layout": "tartu",
+    "train_seeds": [
+      3000,
+      3001,
+      3002,
+      3003,
+      3004,
+      3005,
+      3006,
+      3007,
+      3008,
+      3009,
+      3010,
+      3011
+    ],
+    "validation_seeds": [
+      4000,
+      4001,
+      4002,
+      4003
+    ],
+    "regimes": [
+      "normal",
+      "short_outage"
+    ],
+    "behavior_policies": [
+      "nearest",
+      "world"
+    ],
+    "scope": "synthetic simulated transitions, not clinical measurements",
+    "excluded_motion_examples": 0
+  }
+}

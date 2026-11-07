@@ -1,0 +1,119 @@
+name: Lay2Graph bounded multi-robot integration
+
+on:
+  push:
+    branches: [main, 'research/**']
+    paths:
+      - '.github/workflows/lay2graph-integration.yml'
+      - 'validation/lay2graph/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream-multi-robot-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
+      SIMULATION_DATA_PATH: ${{ github.workspace }}/.lay2graph-simulation
+      COMPOSE_PARALLEL_LIMIT: 2
+    steps:
+      - name: Checkout acceptance harness
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch pinned upstream source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lay2graph-src reports "$SIMULATION_DATA_PATH"
+          git -C lay2graph-src init -q
+          git -C lay2graph-src remote add origin https://github.com/juknierim/Lay2Graph-MAPD-Framework.git
+          git -C lay2graph-src fetch -q --depth 1 origin "$LAY2GRAPH_COMMIT"
+          git -C lay2graph-src checkout -q --detach FETCH_HEAD
+          test "$(git -C lay2graph-src rev-parse HEAD)" = "$LAY2GRAPH_COMMIT"
+          git -C lay2graph-src rev-parse HEAD | tee reports/upstream-commit.txt
+      - name: Install upstream evaluation client dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install -r lay2graph-src/ScenarioEvaluationServices/scenario_evaluation/requirements.txt
+      - name: Build and start upstream CPU services
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The upstream FastAPI lifespan connects to MQTT even when message
+          # transport is disabled. Its broker image needs writable bind mounts.
+          mkdir -p lay2graph-src/DockerComposeFiles/mqtt_log lay2graph-src/DockerComposeFiles/mqtt_data
+          chmod 0777 lay2graph-src/DockerComposeFiles/mqtt_log lay2graph-src/DockerComposeFiles/mqtt_data
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env \
+            -f lay2graph-src/DockerComposeFiles/docker-compose.yml up -d mqttbroker
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env \
+            -f lay2graph-src/DockerComposeFiles/docker-compose.yml up -d --build \
+            taskassignment systemstatemanagement ordermanagement amrcommunication \
+            basedatamanagement pathplanning amrsimulation
+      - name: Wait for service APIs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for port in 3000 3001 3002 3003 3005 3006 3011; do
+            ready=false
+            for attempt in $(seq 1 45); do
+              if curl --fail --silent --show-error --max-time 3 "http://127.0.0.1:${port}/openapi.json" >/dev/null 2>&1; then
+                echo "service on port ${port} ready"
+                ready=true
+                break
+              fi
+              sleep 2
+            done
+            if [ "$ready" != true ]; then
+              echo "service on port ${port} failed to become ready" >&2
+              exit 1
+            fi
+          done
+      - name: Execute and verify two-robot order loop
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 15m python validation/lay2graph/run_smoke.py \
+            --source lay2graph-src --output reports/lay2graph --max-seconds 600 --max-steps 1500 \
+            2>&1 | tee reports/acceptance.log
+      - name: Collect service evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p reports
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml ps -a > reports/compose-ps.txt 2>&1 || true
+          docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml logs --no-color --timestamps > reports/compose.log 2>&1 || true
+          if [ -d "$SIMULATION_DATA_PATH" ]; then
+            cp -a "$SIMULATION_DATA_PATH" reports/simulation-data
+          fi
+          if [ "${{ job.status }}" != success ]; then
+            echo 'Last 200 lines of service logs:'
+            tail -n 200 reports/compose.log || true
+          fi
+          # Artifacts expire. Emit a lossless compressed copy into the job log
+          # so the evidence can also be archived in the repository.
+          if [ -s reports/compose.log ]; then
+            echo '__LAY2GRAPH_COMPOSE_LOG_GZIP_BASE64_BEGIN__'
+            gzip -n -c reports/compose.log | base64
+            echo '__LAY2GRAPH_COMPOSE_LOG_GZIP_BASE64_END__'
+          fi
+          if [ -f reports/lay2graph/orders-result.json ]; then cat reports/lay2graph/orders-result.json; fi
+          if [ -f reports/lay2graph/steps.jsonl ]; then cat reports/lay2graph/steps.jsonl; fi
+      - name: Upload integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lay2graph-integration
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Stop isolated runner services
+        if: always()
+        shell: bash
+        run: docker compose --env-file lay2graph-src/DockerComposeFiles/.env -f lay2graph-src/DockerComposeFiles/docker-compose.yml down --remove-orphans || true

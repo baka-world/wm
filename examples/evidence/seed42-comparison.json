@@ -1,0 +1,31 @@
+{
+  "scenario": "示例实验室样本转运（合成数据）",
+  "seed": 42,
+  "note": "单场景单种子示例，不能据此推断普遍性能。",
+  "policies": {
+    "nearest": {
+      "status": "completed",
+      "sample_count": 6,
+      "completed_count": 6,
+      "late_count": 0,
+      "late_completed_count": 0,
+      "overdue_unfinished_count": 0,
+      "ticks": 51,
+      "mean_completion_ticks": 27.833,
+      "forecast_mae_ticks": null,
+      "blocked_move_attempts": 6
+    },
+    "world": {
+      "status": "completed",
+      "sample_count": 6,
+      "completed_count": 6,
+      "late_count": 0,
+      "late_completed_count": 0,
+      "overdue_unfinished_count": 0,
+      "ticks": 55,
+      "mean_completion_ticks": 31.167,
+      "forecast_mae_ticks": 3.428,
+      "blocked_move_attempts": 11
+    }
+  }
+}

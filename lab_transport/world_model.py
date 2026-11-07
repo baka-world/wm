@@ -1,0 +1,82 @@
+"""Action-conditioned, CPU-only forecasts from observations available so far."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Mapping
+
+from .domain import DirectedGraph, Grid, Position, Sample
+
+
+@dataclass(frozen=True)
+class PublicStation:
+    """Information available to the predictor, excluding future outages/noise."""
+    position: Position
+    prior_ticks: float
+
+
+class WorldModel:
+    """Predict sample pickup/completion and update service estimates online.
+
+    This is a small interpretable baseline, not a trained neural world model.
+    It models static shortest paths and an online station-duration mean; it does
+    not simulate future traffic or know future disruptions.
+    """
+
+    def __init__(self, grid: Grid | DirectedGraph, stations: Mapping[str, PublicStation]):
+        self.grid = grid
+        self.stations = dict(stations)
+        self._observed: dict[str, list[int]] = {station_id: [] for station_id in stations}
+
+    def observe_service(self, station_id: str, duration: int) -> None:
+        if station_id not in self._observed or duration < 1:
+            raise ValueError("invalid station service observation")
+        self._observed[station_id].append(duration)
+
+    def expected_service(self, station_id: str) -> float:
+        values = self._observed[station_id]
+        return sum(values) / len(values) if values else self.stations[station_id].prior_ticks
+
+    def observations(self) -> dict[str, list[int]]:
+        return {station_id: list(values) for station_id, values in self._observed.items()}
+
+    def predict(self, tick: int, robot_id: str, position: Position, sample: Sample,
+                station_busy: Mapping[str, int] | None = None,
+                context: Mapping | None = None) -> dict:
+        """Forecast consequences of assigning one available robot to one sample."""
+        pickup, dropoff = self.stations[sample.pickup], self.stations[sample.dropoff]
+        to_pickup = self.grid.shortest_path(position, pickup.position)
+        to_dropoff = self.grid.shortest_path(pickup.position, dropoff.position)
+        if to_pickup is None or to_dropoff is None:
+            raise ValueError("candidate is unreachable on the static map")
+        occupied = station_busy or {}
+        # Occupancy is a current observation, not knowledge of future arrivals.
+        pickup_wait = max(0.0, occupied.get(sample.pickup, 0) - len(to_pickup))
+        pickup_service = self.expected_service(sample.pickup)
+        dropoff_service = self.expected_service(sample.dropoff)
+        pickup_at = tick + len(to_pickup) + pickup_wait + pickup_service
+        drop_wait = max(0.0, occupied.get(sample.dropoff, 0) - (pickup_at - tick + len(to_dropoff)))
+        completion = pickup_at + len(to_dropoff) + drop_wait + dropoff_service
+        late = None if sample.deadline_tick is None else max(0.0, completion - sample.deadline_tick)
+        public = context or {}
+        route = set(to_pickup + to_dropoff)
+        features = {
+            "distance_to_pickup": len(to_pickup), "distance_to_dropoff": len(to_dropoff),
+            "pickup_service_est": pickup_service, "dropoff_service_est": dropoff_service,
+            "pickup_busy_est": occupied.get(sample.pickup, 0), "dropoff_busy_est": occupied.get(sample.dropoff, 0),
+            "other_on_route": sum(pos in route for pos in public.get("other_positions", ())),
+            "other_active": public.get("other_active", 0), "waiting_count": public.get("waiting_count", 0),
+            "pickup_unavailable_now": public.get("pickup_unavailable_now", 0),
+            "dropoff_unavailable_now": public.get("dropoff_unavailable_now", 0),
+        }
+        return {
+            "robot_id": robot_id, "sample_id": sample.id,
+            "expected_pickup_tick": round(pickup_at, 3),
+            "expected_completion_tick": round(completion, 3),
+            "expected_pickup_wait": round(pickup_wait, 3),
+            "expected_dropoff_wait": round(drop_wait, 3),
+            "predicted_final_robot_position": list(dropoff.position),
+            "predicted_final_sample_status": "completed",
+            "predicted_lateness": round(late, 3) if late is not None else None,
+            "score": round(completion + 4 * (late or 0), 3),
+            "training_features": features,
+        }

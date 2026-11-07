@@ -1,0 +1,5 @@
+# CPU-only smoke/CI environment. For a local GPU, install the matching CUDA
+# build of PyTorch 2.5.1 from pytorch.org instead of this file.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+numpy==1.26.4

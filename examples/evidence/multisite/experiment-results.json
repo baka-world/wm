@@ -1,0 +1,4717 @@
+{
+  "description": "公开地图上的合成任务；站点角色和扰动是假设，非临床运输记录。",
+  "test_episodes": 20,
+  "rollout_horizon_ticks": 120,
+  "model_training_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "aggregates": {
+    "tartu": {
+      "normal": {
+        "episodes": 5,
+        "policies": {
+          "nearest": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 119.633,
+            "mean_episode_cpu_seconds": 0.0457,
+            "candidate_evaluations": 62,
+            "discrete_safety_violations": 0
+          },
+          "world": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 120.7,
+            "mean_episode_cpu_seconds": 0.0492,
+            "candidate_evaluations": 62,
+            "discrete_safety_violations": 0
+          },
+          "learned": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 119.633,
+            "mean_episode_cpu_seconds": 0.0488,
+            "candidate_evaluations": 62,
+            "discrete_safety_violations": 0
+          },
+          "rollout": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 119.433,
+            "mean_episode_cpu_seconds": 0.2144,
+            "candidate_evaluations": 62,
+            "discrete_safety_violations": 0
+          }
+        },
+        "offline_same_world_decisions": {
+          "completed_records": 30,
+          "censored_excluded": 0,
+          "errors": {
+            "world": {
+              "pickup_mae_ticks": 6.833,
+              "completion_mae_ticks": 10.967
+            },
+            "learned": {
+              "pickup_mae_ticks": 5.959,
+              "completion_mae_ticks": 7.834
+            }
+          }
+        },
+        "same_assignment_trace_world_and_learned": 3,
+        "paired_restricted_flow_difference_vs_world_ticks": {
+          "learned": {
+            "mean": -1.067,
+            "min": -4.167,
+            "max": 0.0
+          },
+          "rollout": {
+            "mean": -1.267,
+            "min": -2.833,
+            "max": 0.5
+          }
+        }
+      },
+      "short_outage": {
+        "episodes": 5,
+        "policies": {
+          "nearest": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 120.933,
+            "mean_episode_cpu_seconds": 0.0473,
+            "candidate_evaluations": 63,
+            "discrete_safety_violations": 0
+          },
+          "world": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 122.133,
+            "mean_episode_cpu_seconds": 0.0476,
+            "candidate_evaluations": 63,
+            "discrete_safety_violations": 0
+          },
+          "learned": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 120.933,
+            "mean_episode_cpu_seconds": 0.0462,
+            "candidate_evaluations": 63,
+            "discrete_safety_violations": 0
+          },
+          "rollout": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 121.367,
+            "mean_episode_cpu_seconds": 0.2252,
+            "candidate_evaluations": 63,
+            "discrete_safety_violations": 0
+          }
+        },
+        "offline_same_world_decisions": {
+          "completed_records": 30,
+          "censored_excluded": 0,
+          "errors": {
+            "world": {
+              "pickup_mae_ticks": 6.867,
+              "completion_mae_ticks": 11.103
+            },
+            "learned": {
+              "pickup_mae_ticks": 6.164,
+              "completion_mae_ticks": 8.298
+            }
+          }
+        },
+        "same_assignment_trace_world_and_learned": 3,
+        "paired_restricted_flow_difference_vs_world_ticks": {
+          "learned": {
+            "mean": -1.2,
+            "min": -4.167,
+            "max": 0.0
+          },
+          "rollout": {
+            "mean": -0.767,
+            "min": -2.5,
+            "max": 0.5
+          }
+        }
+      }
+    },
+    "clinic": {
+      "normal": {
+        "episodes": 5,
+        "policies": {
+          "nearest": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 33.8,
+            "mean_episode_cpu_seconds": 0.0127,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "world": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 33.8,
+            "mean_episode_cpu_seconds": 0.0135,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "learned": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 33.8,
+            "mean_episode_cpu_seconds": 0.0137,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "rollout": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 36.1,
+            "mean_episode_cpu_seconds": 0.0454,
+            "candidate_evaluations": 43,
+            "discrete_safety_violations": 0
+          }
+        },
+        "offline_same_world_decisions": {
+          "completed_records": 30,
+          "censored_excluded": 0,
+          "errors": {
+            "world": {
+              "pickup_mae_ticks": 1.267,
+              "completion_mae_ticks": 4.833
+            },
+            "learned": {
+              "pickup_mae_ticks": 3.206,
+              "completion_mae_ticks": 6.006
+            }
+          }
+        },
+        "same_assignment_trace_world_and_learned": 5,
+        "paired_restricted_flow_difference_vs_world_ticks": {
+          "learned": {
+            "mean": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "rollout": {
+            "mean": 2.3,
+            "min": 0.0,
+            "max": 11.5
+          }
+        }
+      },
+      "short_outage": {
+        "episodes": 5,
+        "policies": {
+          "nearest": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 34.4,
+            "mean_episode_cpu_seconds": 0.013,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "world": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 34.4,
+            "mean_episode_cpu_seconds": 0.0145,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "learned": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 34.4,
+            "mean_episode_cpu_seconds": 0.0135,
+            "candidate_evaluations": 42,
+            "discrete_safety_violations": 0
+          },
+          "rollout": {
+            "completed": 30,
+            "total": 30,
+            "timed_out_episodes": 0,
+            "mean_restricted_flow_ticks": 36.767,
+            "mean_episode_cpu_seconds": 0.0456,
+            "candidate_evaluations": 43,
+            "discrete_safety_violations": 0
+          }
+        },
+        "offline_same_world_decisions": {
+          "completed_records": 30,
+          "censored_excluded": 0,
+          "errors": {
+            "world": {
+              "pickup_mae_ticks": 1.867,
+              "completion_mae_ticks": 5.433
+            },
+            "learned": {
+              "pickup_mae_ticks": 3.438,
+              "completion_mae_ticks": 6.554
+            }
+          }
+        },
+        "same_assignment_trace_world_and_learned": 5,
+        "paired_restricted_flow_difference_vs_world_ticks": {
+          "learned": {
+            "mean": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "rollout": {
+            "mean": 2.367,
+            "min": -1.333,
+            "max": 13.167
+          }
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 1000,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 36
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 56
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.046024274000000004,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04803502700000001,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04776481099999999,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.66666666666667,
+          "mean_completed_flow_ticks": 113.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.20493773499999998,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S03"
+            ],
+            [
+              76,
+              "R2",
+              "S05"
+            ],
+            [
+              126,
+              "R1",
+              "S04"
+            ],
+            [
+              159,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 1001,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 8
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 16
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 32
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 123.33333333333333,
+          "mean_completed_flow_ticks": 123.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.044836545000000005,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 123.33333333333333,
+          "mean_completed_flow_ticks": 123.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.046317308,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 123.33333333333333,
+          "mean_completed_flow_ticks": 123.33333333333333,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.047012794000000024,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 120.5,
+          "mean_completed_flow_ticks": 120.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.207586598,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S03"
+            ],
+            [
+              125,
+              "R2",
+              "S05"
+            ],
+            [
+              158,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 1002,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 4
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 32
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 48
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.33333333333333,
+          "mean_completed_flow_ticks": 113.33333333333333,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.042820033000000035,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ],
+            [
+              115,
+              "R2",
+              "S03"
+            ],
+            [
+              157,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.5,
+          "mean_completed_flow_ticks": 117.5,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04796409300000004,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S05"
+            ],
+            [
+              125,
+              "R2",
+              "S04"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.33333333333333,
+          "mean_completed_flow_ticks": 113.33333333333333,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04976476299999999,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ],
+            [
+              115,
+              "R2",
+              "S03"
+            ],
+            [
+              157,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 118.0,
+          "mean_completed_flow_ticks": 118.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.25233603800000004,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 1003,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 24
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 52
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 120.5,
+          "mean_completed_flow_ticks": 120.5,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.045629573999999895,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              77,
+              "R2",
+              "S06"
+            ],
+            [
+              125,
+              "R1",
+              "S03"
+            ],
+            [
+              166,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 121.66666666666667,
+          "mean_completed_flow_ticks": 121.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.054879906000000034,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S03"
+            ],
+            [
+              77,
+              "R2",
+              "S04"
+            ],
+            [
+              125,
+              "R1",
+              "S05"
+            ],
+            [
+              170,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 120.5,
+          "mean_completed_flow_ticks": 120.5,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.05032801499999984,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              77,
+              "R2",
+              "S06"
+            ],
+            [
+              125,
+              "R1",
+              "S03"
+            ],
+            [
+              166,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 119.5,
+          "mean_completed_flow_ticks": 119.5,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.20242006599999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S03"
+            ],
+            [
+              77,
+              "R2",
+              "S05"
+            ],
+            [
+              129,
+              "R1",
+              "S04"
+            ],
+            [
+              162,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 1004,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 4
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 8
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 28
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 44
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.049179829999999924,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04861765700000009,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04890649200000019,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.5,
+          "mean_completed_flow_ticks": 125.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.20484434799999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S03"
+            ],
+            [
+              121,
+              "R1",
+              "S05"
+            ],
+            [
+              159,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 1000,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 36
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 56
+        }
+      ],
+      "outages": {
+        "ICU取样点": [
+          [
+            32,
+            42
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04552660500000005,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04584334999999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 114.0,
+          "mean_completed_flow_ticks": 114.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.0455797090000003,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S05"
+            ],
+            [
+              76,
+              "R2",
+              "S06"
+            ],
+            [
+              122,
+              "R1",
+              "S03"
+            ],
+            [
+              163,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.66666666666667,
+          "mean_completed_flow_ticks": 113.66666666666667,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.20913755599999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              48,
+              "R1",
+              "S03"
+            ],
+            [
+              76,
+              "R2",
+              "S05"
+            ],
+            [
+              126,
+              "R1",
+              "S04"
+            ],
+            [
+              159,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 1001,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 8
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 16
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 32
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        }
+      ],
+      "outages": {
+        "ICU2_假设取样": [
+          [
+            14,
+            22
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.66666666666667,
+          "mean_completed_flow_ticks": 124.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04938262400000015,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              83,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.66666666666667,
+          "mean_completed_flow_ticks": 124.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.046294110999999916,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              83,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.66666666666667,
+          "mean_completed_flow_ticks": 124.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04487124600000003,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              83,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 124.66666666666667,
+          "mean_completed_flow_ticks": 124.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.23621724199999994,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R2",
+              "S04"
+            ],
+            [
+              83,
+              "R1",
+              "S05"
+            ],
+            [
+              122,
+              "R2",
+              "S03"
+            ],
+            [
+              164,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 1002,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 4
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 32
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 48
+        }
+      ],
+      "outages": {
+        "ICU取样点": [
+          [
+            34,
+            40
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.33333333333333,
+          "mean_completed_flow_ticks": 113.33333333333333,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04815745200000032,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ],
+            [
+              115,
+              "R2",
+              "S03"
+            ],
+            [
+              157,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 117.5,
+          "mean_completed_flow_ticks": 117.5,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.050094498999999626,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S05"
+            ],
+            [
+              125,
+              "R2",
+              "S04"
+            ],
+            [
+              165,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 113.33333333333333,
+          "mean_completed_flow_ticks": 113.33333333333333,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.04564697200000012,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S04"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ],
+            [
+              115,
+              "R2",
+              "S03"
+            ],
+            [
+              157,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 118.0,
+          "mean_completed_flow_ticks": 118.0,
+          "candidate_evaluations": 12,
+          "cpu_seconds": 0.2542615549999998,
+          "assignments": [
+            [
+              0,
+              "R2",
+              "S01"
+            ],
+            [
+              4,
+              "R1",
+              "S02"
+            ],
+            [
+              43,
+              "R2",
+              "S03"
+            ],
+            [
+              75,
+              "R1",
+              "S04"
+            ],
+            [
+              128,
+              "R2",
+              "S05"
+            ],
+            [
+              161,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 1003,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 24
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 40
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 52
+        }
+      ],
+      "outages": {
+        "实验室交付点": [
+          [
+            46,
+            58
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.66666666666667,
+          "mean_completed_flow_ticks": 125.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.042903647999999794,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              59,
+              "R1",
+              "S05"
+            ],
+            [
+              77,
+              "R2",
+              "S06"
+            ],
+            [
+              130,
+              "R1",
+              "S03"
+            ],
+            [
+              172,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.5,
+          "mean_completed_flow_ticks": 127.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05004604900000009,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              59,
+              "R1",
+              "S03"
+            ],
+            [
+              77,
+              "R2",
+              "S04"
+            ],
+            [
+              131,
+              "R1",
+              "S05"
+            ],
+            [
+              176,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.66666666666667,
+          "mean_completed_flow_ticks": 125.66666666666667,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.046583876999999774,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              59,
+              "R1",
+              "S05"
+            ],
+            [
+              77,
+              "R2",
+              "S06"
+            ],
+            [
+              130,
+              "R1",
+              "S03"
+            ],
+            [
+              172,
+              "R2",
+              "S04"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.0,
+          "mean_completed_flow_ticks": 125.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.21839944199999994,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              59,
+              "R1",
+              "S03"
+            ],
+            [
+              77,
+              "R2",
+              "S05"
+            ],
+            [
+              134,
+              "R1",
+              "S04"
+            ],
+            [
+              167,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 1004,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 4
+        },
+        {
+          "id": "S03",
+          "pickup": "ICU2_假设取样",
+          "dropoff": "实验室交付点",
+          "release_tick": 8
+        },
+        {
+          "id": "S04",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 12
+        },
+        {
+          "id": "S05",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 28
+        },
+        {
+          "id": "S06",
+          "pickup": "ICU取样点",
+          "dropoff": "实验室交付点",
+          "release_tick": 44
+        }
+      ],
+      "outages": {
+        "ICU取样点": [
+          [
+            22,
+            31
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.05072563799999985,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04580050599999996,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 127.0,
+          "mean_completed_flow_ticks": 127.0,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.04831447900000008,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S05"
+            ],
+            [
+              121,
+              "R1",
+              "S06"
+            ],
+            [
+              162,
+              "R2",
+              "S03"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 125.5,
+          "mean_completed_flow_ticks": 125.5,
+          "candidate_evaluations": 13,
+          "cpu_seconds": 0.20782589899999993,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              4,
+              "R2",
+              "S02"
+            ],
+            [
+              50,
+              "R1",
+              "S04"
+            ],
+            [
+              83,
+              "R2",
+              "S03"
+            ],
+            [
+              121,
+              "R1",
+              "S05"
+            ],
+            [
+              159,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 2000,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 32
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 36
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 48
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 33.666666666666664,
+          "mean_completed_flow_ticks": 33.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012967038999999847,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              61,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 33.666666666666664,
+          "mean_completed_flow_ticks": 33.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.013885700999999973,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              61,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 33.666666666666664,
+          "mean_completed_flow_ticks": 33.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.014330197000000044,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              61,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 33.666666666666664,
+          "mean_completed_flow_ticks": 33.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.044245770999999934,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              61,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 2001,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 60
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012005151000000325,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012727749999999816,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.01307550699999993,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 48.166666666666664,
+          "mean_completed_flow_ticks": 48.166666666666664,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.06416055400000031,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S04"
+            ],
+            [
+              55,
+              "R1",
+              "S05"
+            ],
+            [
+              73,
+              "R2",
+              "S03"
+            ],
+            [
+              74,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 2002,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 8
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 24
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 48
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012990059000000276,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.014246530000000313,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.014244630999999952,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.05842184500000025,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 2003,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 36
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 52
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 64
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.009626952999999716,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.009913131000000241,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.00996500499999975,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.028676581000000034,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 2004,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 60
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 64
+        }
+      ],
+      "outages": {},
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.015749073999999474,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.016764928999999817,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.01705078999999987,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.031563720000000295,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 2000,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 32
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 36
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 48
+        }
+      ],
+      "outages": {
+        "诊疗右_假设取样": [
+          [
+            36,
+            48
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012874700000000239,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              67,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012923336999999258,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              67,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.014177004999999632,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S06"
+            ],
+            [
+              67,
+              "R1",
+              "S05"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 35.333333333333336,
+          "mean_completed_flow_ticks": 35.333333333333336,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.03600083000000076,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              36,
+              "R2",
+              "S04"
+            ],
+            [
+              51,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 2001,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 12
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 20
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 60
+        }
+      ],
+      "outages": {
+        "诊疗左_假设取样": [
+          [
+            36,
+            43
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.012629752000000494,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.015584633999999653,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 36.666666666666664,
+          "mean_completed_flow_ticks": 36.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.013361752999999865,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S03"
+            ],
+            [
+              41,
+              "R2",
+              "S04"
+            ],
+            [
+              62,
+              "R1",
+              "S05"
+            ],
+            [
+              74,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 49.833333333333336,
+          "mean_completed_flow_ticks": 49.833333333333336,
+          "candidate_evaluations": 10,
+          "cpu_seconds": 0.06850325300000026,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              12,
+              "R2",
+              "S02"
+            ],
+            [
+              28,
+              "R1",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              75,
+              "R2",
+              "S03"
+            ],
+            [
+              76,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 2002,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 8
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 24
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 48
+        }
+      ],
+      "outages": {
+        "诊疗左_假设取样": [
+          [
+            21,
+            31
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.0131826859999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.013821865999999794,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.013567292000000286,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 38.666666666666664,
+          "mean_completed_flow_ticks": 38.666666666666664,
+          "candidate_evaluations": 9,
+          "cpu_seconds": 0.06314794599999995,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              8,
+              "R2",
+              "S02"
+            ],
+            [
+              30,
+              "R1",
+              "S03"
+            ],
+            [
+              38,
+              "R2",
+              "S04"
+            ],
+            [
+              57,
+              "R1",
+              "S05"
+            ],
+            [
+              78,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 2003,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 36
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 52
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 64
+        }
+      ],
+      "outages": {
+        "诊疗右_假设取样": [
+          [
+            13,
+            23
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.010301418000000062,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.010353030000000096,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.010037050999999408,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 28.666666666666668,
+          "mean_completed_flow_ticks": 28.666666666666668,
+          "candidate_evaluations": 8,
+          "cpu_seconds": 0.029228020000000576,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R1",
+              "S02"
+            ],
+            [
+              28,
+              "R2",
+              "S03"
+            ],
+            [
+              39,
+              "R1",
+              "S04"
+            ],
+            [
+              63,
+              "R2",
+              "S05"
+            ],
+            [
+              75,
+              "R1",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 2004,
+      "samples": [
+        {
+          "id": "S01",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 0
+        },
+        {
+          "id": "S02",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 16
+        },
+        {
+          "id": "S03",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 28
+        },
+        {
+          "id": "S04",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 44
+        },
+        {
+          "id": "S05",
+          "pickup": "诊疗右_假设取样",
+          "dropoff": "护理左_假设交接",
+          "release_tick": 60
+        },
+        {
+          "id": "S06",
+          "pickup": "诊疗左_假设取样",
+          "dropoff": "护理右_假设交接",
+          "release_tick": 64
+        }
+      ],
+      "outages": {
+        "护理右_假设交接": [
+          [
+            54,
+            62
+          ]
+        ]
+      },
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.015956409999999366,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.019576387999999945,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.01634225199999939,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "timed_out": false,
+          "restricted_mean_flow_ticks": 31.333333333333332,
+          "mean_completed_flow_ticks": 31.333333333333332,
+          "candidate_evaluations": 7,
+          "cpu_seconds": 0.031189678999999693,
+          "assignments": [
+            [
+              0,
+              "R1",
+              "S01"
+            ],
+            [
+              16,
+              "R2",
+              "S02"
+            ],
+            [
+              29,
+              "R1",
+              "S03"
+            ],
+            [
+              45,
+              "R2",
+              "S04"
+            ],
+            [
+              60,
+              "R1",
+              "S05"
+            ],
+            [
+              72,
+              "R2",
+              "S06"
+            ]
+          ],
+          "discrete_safety_violations": 0,
+          "censored_candidate_evaluations": 0
+        }
+      },
+      "world_censored": 0
+    }
+  ]
+}

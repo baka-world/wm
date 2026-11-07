@@ -5,10 +5,20 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/mapd-cloud-validation.yml'
+      - 'validation/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/mapd-cloud-validation.yml'
+      - 'validation/**'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  RGTA_COMMIT: bd1ad9710eb5672942767b04efff223eb784e24c
+  LAY2GRAPH_COMMIT: f04d860374ab636ddd6199c5643e3b78b5f5505b
 
 jobs:
   rgta-smoke:
@@ -19,19 +29,24 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Clone upstream RGTA and record commit
+      - name: Fetch pinned RGTA and record commit
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p reports
-          git clone --depth 1 https://github.com/YiBangWon/rgta-mtmapd.git rgta-src
+          mkdir -p reports rgta-src
+          git -C rgta-src init -q
+          git -C rgta-src remote add origin https://github.com/YiBangWon/rgta-mtmapd.git
+          git -C rgta-src fetch -q --depth 1 origin "$RGTA_COMMIT"
+          git -C rgta-src checkout -q --detach FETCH_HEAD
+          test "$(git -C rgta-src rev-parse HEAD)" = "$RGTA_COMMIT"
           git -C rgta-src rev-parse HEAD | tee reports/rgta-commit.txt
-      - name: Run RGTA unit tests
+      - name: Run RGTA unit tests and require at least one test
         shell: bash
         run: |
           set -euo pipefail
           cd rgta-src
           python -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee ../reports/rgta-tests.log
+          grep -Eq '^Ran [1-9][0-9]* tests? in ' ../reports/rgta-tests.log
       - name: Run small event-based assignment benchmark
         shell: bash
         run: |
@@ -52,6 +67,11 @@ jobs:
           with path.open(newline='') as handle:
               rows = list(csv.DictReader(handle))
           assert len(rows) == 4, f'unexpected number of benchmark rows: {len(rows)}'
+          expected = {(method, seed) for method in ('tp', 'rgta_eff') for seed in (0, 1)}
+          actual = {(row['method'], int(row['seed'])) for row in rows}
+          assert actual == expected, f'unexpected method/seed combinations: {actual}'
+          assert all(row['map_name'] == 'kiva' and int(row['num_agents']) == 6
+                     and int(row['capacity']) == 6 for row in rows), 'unexpected scenario settings'
           assert all(int(row['completed_tasks']) == 60 for row in rows), 'some tasks are incomplete'
           print(f'RGTA small benchmark validated: {len(rows)} runs, 60 tasks each')
           PY
@@ -62,17 +82,22 @@ jobs:
           name: rgta-preflight
           path: reports/
           if-no-files-found: warn
+          retention-days: 7
 
   lay2graph-static:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
-      - name: Clone upstream Lay2Graph and record commit
+      - name: Fetch pinned Lay2Graph and record commit
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p reports
-          git clone --depth 1 https://github.com/juknierim/Lay2Graph-MAPD-Framework.git lay2graph-src
+          mkdir -p reports lay2graph-src
+          git -C lay2graph-src init -q
+          git -C lay2graph-src remote add origin https://github.com/juknierim/Lay2Graph-MAPD-Framework.git
+          git -C lay2graph-src fetch -q --depth 1 origin "$LAY2GRAPH_COMMIT"
+          git -C lay2graph-src checkout -q --detach FETCH_HEAD
+          test "$(git -C lay2graph-src rev-parse HEAD)" = "$LAY2GRAPH_COMMIT"
           git -C lay2graph-src rev-parse HEAD | tee reports/lay2graph-commit.txt
       - name: Validate Docker Compose configuration
         shell: bash
@@ -93,3 +118,4 @@ jobs:
           name: lay2graph-preflight
           path: reports/
           if-no-files-found: warn
+          retention-days: 7

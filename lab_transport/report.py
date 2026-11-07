@@ -36,7 +36,7 @@ th,td{text-align:left;border-bottom:1px solid #e8eef4;padding:8px 4px} th{color:
 <button id="play" type="button">播放</button><input id="tick" type="range" min="0" value="0">
 <strong id="time" class="mono"></strong></div><div id="grid" class="grid"></div>
 <p class="foot" id="map-note">蓝色格为站点，橙色格表示当前站点不可用，深色格为障碍；机器人按离散时间步移动。</p>
-</section><section class="panel"><h2>任务状态</h2><p id="metrics"></p><table><thead><tr><th>样本</th><th>状态</th><th>机器人</th><th>时限</th><th>类型</th></tr></thead>
+</section><section class="panel"><h2>任务状态</h2><p id="metrics"></p><table><thead><tr><th>样本</th><th>状态</th><th>机器人</th><th id="deadline-header">时限</th><th>类型</th></tr></thead>
 <tbody id="tasks"></tbody></table><h2>最近调度决策</h2><p id="decision"></p>
 <ul id="forecasts"></ul><p class="foot">预测基于当时已知状态；详细事件见同目录 JSON 文件。时间单位为仿真步。</p></section></div>
 <script>
@@ -51,9 +51,19 @@ if(data.scenario.graph){
   document.getElementById('banner').textContent='公开医院路网的拓扑仿真；任务、双机器人与计时为功能测试设置，不代表医院实测或安全认证。';
   document.getElementById('map-note').textContent='箭头为原始路网允许的方向；连线只表示节点连接，每条边按一个抽象步计算，并非真实行驶时间。';
 }
+if(data.scenario.metadata&&data.scenario.metadata.time_model==='nominal_source_based'){
+  document.getElementById('banner').textContent='基于公开地图比例尺及标称速度的估计；路径、交接和延迟与真实医院可能不同，不是安全或临床认证。';
+  document.getElementById('map-note').textContent='原始路段按长度及标称速度拆分为仿真步；中间节点为计算插值。 '+data.scenario.metadata.timing_assumption;
+}
 if(data.scenario.metadata&&data.scenario.metadata.workload_kind==='mimic_single_stay'){
   document.getElementById('banner').textContent='跨机构仿真：MIMIC 单次 ICU 住院的相对采样时序映射到塔尔图路网；采样不等于转运请求，步长是测试假设。';
-  document.getElementById('map-note').textContent+=' '+data.scenario.metadata.timing_assumption;
+  if(data.scenario.metadata.time_model!=='nominal_source_based')document.getElementById('map-note').textContent+=' '+data.scenario.metadata.timing_assumption;
+}
+if(data.scenario.metadata&&data.scenario.metadata.rule_mode==='receipt_due_as_delivery_proxy'){
+  document.getElementById('banner').textContent='跨机构规则仿真：按来源规则计算交付代理上限，仅用于调度比较；按时交付不等于实验室接收或临床合规。';
+  document.getElementById('deadline-header').textContent='交付代理上限';
+  document.getElementById('metrics').textContent='最终完成：'+data.summary.completed_count+'/'+data.summary.sample_count+
+    '；仿真交付超过代理上限：'+(data.summary.late_count===null?'未设置':data.summary.late_count)+'；结束步数：'+data.summary.ticks;
 }
 const statusNames = {unreleased:'未到达',waiting:'待分配',assigned:'前往取样',in_transit:'运输中',completed:'已送达'};
 function renderGraph(frame){
@@ -79,7 +89,8 @@ function renderGraph(frame){
 }
 function render(index) {
   const frame = data.history[index]; slider.value = index;
-  document.getElementById('time').textContent = '第 ' + frame.tick + ' 步';
+  document.getElementById('time').textContent = '第 ' + frame.tick + ' 步' + (data.scenario.metadata&&data.scenario.metadata.time_model==='nominal_source_based'
+    ? '（估计仿真时间 '+(frame.tick*data.scenario.metadata.seconds_per_tick)+' 秒）':'');
   grid.replaceChildren(); grid.style.gridTemplateColumns = 'repeat(' + data.scenario.width + ', auto)';
   if(data.scenario.graph)renderGraph(frame);
   else for (let y=0; y<data.scenario.height; y++) for (let x=0; x<data.scenario.width; x++) {
@@ -103,12 +114,12 @@ function render(index) {
   if(!latest){decision.textContent='该时刻尚无已执行的任务分配。';return}
   const selected=latest.selected, sample=data.samples.find(s=>s.id===latest.sample_id);
   let message='第 '+latest.tick+' 步：将 '+latest.sample_id+' 分配给 '+latest.robot_id+'。';
-  if(latest.policy==='world') {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
+  if(latest.policy==='world'||latest.policy==='rule') {message+=' 预测第 '+selected.expected_completion_tick+' 步完成。';
     if(selected.predicted_lateness!==null)message+=' 预计逾期 '+selected.predicted_lateness+' 步。';}
   if(sample&&sample.completed_tick!==null&&sample.completed_tick<=frame.tick) message+=' 实际第 '+sample.completed_tick+' 步完成。';
   decision.textContent=message;
   for(const candidate of latest.candidates){const item=document.createElement('li');
-    item.textContent=candidate.robot_id+' / '+candidate.sample_id+(latest.policy==='world'
+    item.textContent=candidate.robot_id+' / '+candidate.sample_id+((latest.policy==='world'||latest.policy==='rule')
       ? '：预测完成 '+candidate.expected_completion_tick+' 步，评分 '+candidate.score
       : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }

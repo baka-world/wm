@@ -13,7 +13,7 @@ class Element {
   addEventListener(name, callback){this.listeners[name]=callback}
   setAttribute(name, value){this.attributes[name]=String(value)}
 }
-const ids=['tick','grid','play','subtitle','metrics','time','tasks','decision','forecasts','banner','map-note'];
+const ids=['tick','grid','play','subtitle','metrics','time','tasks','decision','forecasts','banner','map-note','deadline-header'];
 const elements=Object.fromEntries(ids.map(id=>[id,new Element()]));
 vm.runInNewContext(script[1], {
   document:{getElementById:id=>elements[id],createElement:tag=>new Element(tag),
@@ -22,18 +22,25 @@ vm.runInNewContext(script[1], {
 });
 const svg=elements.grid.children[0];
 assert.equal(svg.tag,'svg');
-assert.equal(svg.children.filter(c=>c.tag==='circle').length,32);
-assert.equal(svg.children.filter(c=>c.tag==='line').length,63);
-assert.equal(elements.tasks.children.length,4);
-assert(elements.metrics.textContent.includes('未设置时限'));
-if(process.argv[3]==='mimic'){
+const mode=process.argv[3]||'original';
+assert.equal(svg.children.filter(c=>c.tag==='circle').length,mode==='nominal'||mode==='rule'?76:32);
+assert.equal(svg.children.filter(c=>c.tag==='line').length,mode==='nominal'||mode==='rule'?112:63);
+assert.equal(elements.tasks.children.length,mode==='rule'?2:4);
+if(mode==='rule'){
+  assert(elements.banner.textContent.includes('按时交付不等于'));
+  assert(elements['deadline-header'].textContent.includes('代理'));
+  assert(elements.metrics.textContent.includes('仿真交付超过代理上限'));
+}else{
+  assert(elements.metrics.textContent.includes('未设置时限'));
+}
+if(mode==='mimic'||mode==='nominal'){
   assert(elements.banner.textContent.includes('跨机构仿真'));
   assert(elements['map-note'].textContent.includes('不是实际'));
   assert(elements.tasks.children.every(row=>row.children[4].textContent==='blood_unspecified'));
-}else{
+}else if(mode==='original'){
   assert(elements.banner.textContent.includes('功能测试设置'));
 }
 assert(elements.decision.textContent.includes('预测第'));
 elements.tick.value=elements.tick.max;elements.tick.listeners.input();
 assert(elements.tasks.children.every(row=>row.children[1].textContent==='已送达'));
-console.log('Graph playback verified: 32 waypoints, 63 directed lanes, tasks and missing deadlines');
+console.log('Graph playback verified:',mode,'source scope, tasks and timing labels');

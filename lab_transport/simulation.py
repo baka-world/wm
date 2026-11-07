@@ -38,8 +38,8 @@ class Simulator:
     """Owns real simulation state; forecasts never receive future outage data."""
 
     def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0):
-        if policy not in {"world", "nearest"}:
-            raise ValueError("policy must be 'world' or 'nearest'")
+        if policy not in {"world", "nearest", "rule"}:
+            raise ValueError("policy must be 'world', 'nearest' or 'rule'")
         self.scenario = scenario
         self.policy = policy
         self.seed = seed
@@ -63,8 +63,10 @@ class Simulator:
         """Use keyed exogenous noise so the same task has the same draw across policies."""
         key = f"{self.seed}\0{sample_id}\0{phase}\0{station_id}".encode("utf-8")
         draw = int.from_bytes(hashlib.sha256(key).digest()[:8], "big")
-        jitter = draw % (self.scenario.duration_jitter + 1)
-        return self.scenario.stations[station_id].service_ticks + jitter
+        station = self.scenario.stations[station_id]
+        jitter_limit = self.scenario.duration_jitter if station.jitter_ticks is None else station.jitter_ticks
+        jitter = draw % (jitter_limit + 1)
+        return station.service_ticks + jitter
 
     def _current_station_busy(self, tick: int) -> dict[str, int]:
         """Estimate remaining occupancy from presence, elapsed time and past observations.
@@ -98,10 +100,16 @@ class Simulator:
             forecasts: list[dict[str, Any]] = []
             for robot in idle:
                 for sample in waiting:
-                    if self.policy == "world":
+                    if self.policy in {"world", "rule"}:
                         forecast = self.model.predict(tick, robot.id, robot.position,
                                                       sample.spec, self._current_station_busy(tick))
-                        key = (forecast["score"], sample.spec.release_tick, sample.spec.id, robot.id)
+                        if self.policy == "rule":
+                            # Earliest known deadline first, including already
+                            # infeasible tasks; use prediction to choose a robot.
+                            due = sample.spec.deadline_tick if sample.spec.deadline_tick is not None else float("inf")
+                            key = (due, forecast["score"], sample.spec.release_tick, sample.spec.id, robot.id)
+                        else:
+                            key = (forecast["score"], sample.spec.release_tick, sample.spec.id, robot.id)
                     else:
                         path = self.scenario.grid.shortest_path(
                             robot.position, self.scenario.stations[sample.spec.pickup].position)

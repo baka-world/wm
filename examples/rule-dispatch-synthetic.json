@@ -1,0 +1,26 @@
+{
+  "description": "人工构造的跨机构规则调度测试：地图来自塔尔图，儿科血气规则来自 Michigan Medicine；不是临床记录。",
+  "purpose": "cross_institution_synthetic_test",
+  "clock_origin": "2026-01-01T12:00:00Z",
+  "robot_count": 1,
+  "samples": [
+    {
+      "id": "S01",
+      "release_tick": 0,
+      "specimen_type": "pediatric_blood_gas",
+      "rule_profile": "michigan_pediatric_blood_gas",
+      "collected_at": "2026-01-01T12:00:00Z",
+      "packaging": "sealed_biohazard_bag",
+      "temperature_condition": "room_temperature"
+    },
+    {
+      "id": "S02",
+      "release_tick": 0,
+      "specimen_type": "pediatric_blood_gas",
+      "rule_profile": "michigan_pediatric_blood_gas",
+      "collected_at": "2026-01-01T11:50:00Z",
+      "packaging": "sealed_biohazard_bag",
+      "temperature_condition": "room_temperature"
+    }
+  ]
+}

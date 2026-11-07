@@ -99,6 +99,7 @@ class Station:
     service_ticks: int
     prior_ticks: float
     outages: tuple[tuple[int, int], ...]
+    jitter_ticks: int | None = None
 
     def available(self, tick: int) -> bool:
         return all(not (start <= tick < end) for start, end in self.outages)
@@ -188,7 +189,9 @@ def load_scenario(path: str | Path) -> Scenario:
             if end <= start:
                 raise ValueError(f"station {sid} outage end must be after start")
             outages.append((start, end))
-        stations[sid] = Station(sid, position, service, float(prior), tuple(outages))
+        jitter_value = item.get("jitter_ticks")
+        jitter = None if jitter_value is None else _integer(jitter_value, f"station {sid} jitter_ticks")
+        stations[sid] = Station(sid, position, service, float(prior), tuple(outages), jitter)
     if not stations or len({s.position for s in stations.values()}) != len(stations):
         raise ValueError("stations must be non-empty and occupy distinct positions")
 

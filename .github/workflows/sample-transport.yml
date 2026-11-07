@@ -7,6 +7,7 @@ on:
       - 'lab_transport/**'
       - 'scenarios/**'
       - 'examples/specimen-rules-synthetic.json'
+      - 'examples/rule-dispatch-synthetic.json'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   pull_request:
@@ -14,6 +15,7 @@ on:
       - 'lab_transport/**'
       - 'scenarios/**'
       - 'examples/specimen-rules-synthetic.json'
+      - 'examples/rule-dispatch-synthetic.json'
       - 'tests/**'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:
@@ -46,6 +48,8 @@ jobs:
           set -euo pipefail
           source_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_environments/environments/hospital_2nd_floor/hospital_2nd_floor.building.yaml'
           curl --fail --location --silent --show-error --retry 3 "$source_url" --output "$RUNNER_TEMP/hospital.building.yaml"
+          config_url='https://raw.githubusercontent.com/scafld/covsg24_fleet_backend/b9e32eeebb3a568af0e41c6e34500076cd2f6cad/covsg24_fleet_server/launch/fleet_adapters/tiago_fleet_adapter.launch.xml'
+          curl --fail --location --silent --show-error --retry 3 "$config_url" --output "$RUNNER_TEMP/tiago.launch.xml"
           python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" --output "$RUNNER_TEMP/hospital-run"
           python tests/check_hospital_run.py "$RUNNER_TEMP/hospital.building.yaml" "$RUNNER_TEMP/hospital-run"
           node tests/test_graph_playback.js "$RUNNER_TEMP/hospital-run/world/report.html"
@@ -94,6 +98,59 @@ jobs:
             --workload "$RUNNER_TEMP/mimic-timeline.json" --seconds-per-tick 60 --output "$RUNNER_TEMP/mimic-hospital"
           python tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-hospital" 60
           node tests/test_graph_playback.js "$RUNNER_TEMP/mimic-hospital/world/report.html" mimic
+      - name: Replay real sample times with a source-based nominal travel model
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.hospital_case --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --workload "$RUNNER_TEMP/mimic-timeline.json" --output "$RUNNER_TEMP/mimic-nominal"
+          python tests/check_mimic_run.py "$RUNNER_TEMP/mimic-timeline.json" "$RUNNER_TEMP/mimic-nominal" 10
+          node tests/test_graph_playback.js "$RUNNER_TEMP/mimic-nominal/world/report.html" nominal
+      - name: Exercise rule-aware dispatch with synthetic specimen times
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.rule_dispatch --map-file "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml" --seconds-per-tick 10 \
+            --profiles scenarios/specimen-rule-profiles.json --samples examples/rule-dispatch-synthetic.json \
+            --output "$RUNNER_TEMP/rule-aware"
+          python tests/check_rule_run.py "$RUNNER_TEMP/rule-aware"
+          node tests/test_graph_playback.js "$RUNNER_TEMP/rule-aware/rule/report.html" rule
+      - name: Check rule-aware playback in headless Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --dump-dom "file://$RUNNER_TEMP/rule-aware/rule/report.html?step=1" \
+            > "$RUNNER_TEMP/rule-dom.html" 2> "$RUNNER_TEMP/rule-chrome.log"
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import os
+
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.visible = ''
+                  self.circles = self.lines = 0
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script': self.in_script = True
+                  self.circles += tag == 'circle'
+                  self.lines += tag == 'line'
+              def handle_endtag(self, tag):
+                  if tag == 'script': self.in_script = False
+              def handle_data(self, data):
+                  if not self.in_script: self.visible += data
+
+          check = Check()
+          check.feed((Path(os.environ['RUNNER_TEMP']) / 'rule-dom.html').read_text())
+          assert (check.circles, check.lines) == (76, 112), (check.circles, check.lines)
+          assert '按时交付不等于' in check.visible and '交付代理上限' in check.visible
+          assert '仿真时间' in check.visible and '预测第' in check.visible
+          print('Browser DOM verified: nominal-time graph, rule decision and non-clinical proxy notice')
+          PY
       - name: Check cross-institution replay in headless Chrome
         shell: bash
         run: |

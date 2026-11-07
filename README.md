@@ -4,6 +4,8 @@
 
 仓库已有一个基于合成实验室场景的 CPU 原型，可运行样本任务、机器人调度、轻量预测和离线回放；完整毕业设计系统仍需结合实际需求扩展。[原型说明](docs/prototype.md)包含运行方式和限制，[毕设实施主线](docs/thesis-project-plan.md)记录后续工作。
 
+准备在本地拉取、运行或开发模型，请从[本地开发与交接指南](docs/local-development.md)开始：包含 Windows / Linux 命令、数据与训练流程、接口说明、GPU 接入条件和常见问题。
+
 ## 当前资料
 
 - [交接背景和边界](docs/handoff.md)
@@ -18,6 +20,7 @@
 - [CPU 状态转移模型和留出场景实验](docs/state-transition-experiment.md)
 - [状态转移模型第二轮验证方案](docs/state-transition-revision.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
+- [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)
 - [CPU 神经模型流程验收记录](docs/pytorch-smoke-acceptance.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
@@ -38,6 +41,8 @@ python -m lab_transport compare --seed 42 --output runs/demo-42
 ```
 
 运行后打开 `runs/demo-42/world/report.html` 查看示例回放。示例使用合成数据，原型目前不连接 Lay2Graph 或真实机器人。
+
+未安装 PyTorch 时，神经训练相关测试会跳过；完整测试及模型训练环境请参考[本地开发指南](docs/local-development.md)。
 
 另可按[场景来源说明](docs/source-backed-hospital-scenario.md)运行基于公开医院 ICU—实验室路网的适配。路网来自医院项目，双机器人、到达时刻和执行步长是明确标注的功能测试设置；不填没有依据的临床时限或温度。
 

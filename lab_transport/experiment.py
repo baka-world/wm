@@ -86,7 +86,10 @@ def outcome(result: dict[str, Any], max_ticks: int, cpu_seconds: float) -> dict[
     # Time to termination for unfinished jobs is a right-censored lower bound.
     restricted = sum((s["completed_tick"] if s["completed_tick"] is not None else max_ticks)
                      - s["release_tick"] for s in samples) / len(samples)
-    forecasts = sum(len(e["candidates"]) for e in result["events"] if e["type"] == "assigned")
+    # An injected callback can examine the candidate batch an unknown number
+    # of times; counting each event's displayed batch would misreport work.
+    forecasts = (None if result["policy"] == "external" else
+                 sum(len(e["candidates"]) for e in result["events"] if e["type"] == "assigned"))
     return {"completed": len(completed), "total": len(samples),
             "timed_out": result["summary"]["status"] != "completed",
             "restricted_mean_flow_ticks": restricted,

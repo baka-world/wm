@@ -125,7 +125,7 @@ function render(index) {
   for(const candidate of latest.candidates){const item=document.createElement('li');
     item.textContent=candidate.robot_id+' / '+candidate.sample_id+(hasPrediction
       ? (candidate.expected_completion_tick===null?'：前视期内未完成，结果未知':'：预测完成 '+candidate.expected_completion_tick+' 步')+'，评分 '+candidate.score
-      : '：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
+      : latest.policy==='external'?'：可选择':'：距取样点 '+candidate.distance_to_pickup+' 格');forecasts.appendChild(item)}
 }
 slider.addEventListener('input',()=>render(Number(slider.value)));
 play.addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;play.textContent='播放';return}

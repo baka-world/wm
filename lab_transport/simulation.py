@@ -6,11 +6,13 @@ from collections import deque
 import hashlib
 from itertools import product
 import math
-from typing import Any
+from typing import Any, Callable
 
 from .domain import DirectedGraph, Position, RobotSpec, Sample, Scenario, Station
 from .world_model import PublicStation, WorldModel
 from .learned_model import LearnedWorldModel
+from .transition_schema import (SCHEMA_VERSION, Assignment, DispatchPolicy, Observation, ObservedRobot,
+                                ObservedSample, ObservedStation, Transition)
 
 
 @dataclass
@@ -209,6 +211,31 @@ class Simulator:
                         policy=self.policy, selected=chosen,
                         candidates=[entry["forecast"] for entry in forecasts])
 
+    def _dispatch_external(self, tick: int, observation: Observation, policy: DispatchPolicy) -> None:
+        """Validate an injected policy's whole assignment batch before applying it."""
+        idle = sorted((r for r in self.robots.values() if r.task_id is None), key=lambda r: r.id)
+        waiting = sorted((s for s in self.samples.values() if s.status == "waiting"),
+                         key=lambda s: (s.spec.release_tick, s.spec.id))
+        candidates = tuple(Assignment(r.id, s.spec.id) for r in idle for s in waiting)
+        if not candidates:
+            return
+        actions = policy(observation, candidates)
+        if not isinstance(actions, (tuple, list)) or any(not isinstance(a, Assignment) for a in actions):
+            raise ValueError("injected policy must return a list or tuple of Assignment objects")
+        if any(action not in candidates for action in actions):
+            raise ValueError("injected policy selected an unavailable candidate")
+        if len({a.robot_id for a in actions}) != len(actions) or len({a.sample_id for a in actions}) != len(actions):
+            raise ValueError("injected assignments must use distinct robots and samples")
+        candidate_records = [{"robot_id": a.robot_id, "sample_id": a.sample_id} for a in candidates]
+        for action in actions:
+            robot, sample = self.robots[action.robot_id], self.samples[action.sample_id]
+            robot.task_id, robot.phase = sample.spec.id, "to_pickup"
+            sample.status, sample.robot_id, sample.assigned_tick = "assigned", robot.id, tick
+            sample.predicted_completion_tick = None
+            selected = {"robot_id": robot.id, "sample_id": sample.spec.id}
+            self._event(tick, "assigned", robot_id=robot.id, sample_id=sample.spec.id,
+                        policy="external", selected=selected, candidates=candidate_records)
+
     def _target(self, robot: RobotState) -> Position:
         if robot.task_id is None:
             return robot.home
@@ -369,21 +396,65 @@ class Simulator:
                          for station in self.scenario.stations.values()],
         })
 
-    def run(self) -> dict[str, Any]:
+    def _observable_state(self, tick: int) -> Observation:
+        """Build a current-state observation, excluding unreleased and hidden state.
+
+        This is called by the run loop at its current tick only, never as an
+        arbitrary-time query against the simulator's future outage schedule.
+        """
+        return Observation(
+            SCHEMA_VERSION, tick,
+            tuple(ObservedRobot(r.id, r.position, r.home, r.task_id, r.phase,
+                                None if r.service_started is None else max(0, tick - r.service_started))
+                  for r in sorted(self.robots.values(), key=lambda item: item.id)),
+            tuple(ObservedSample(s.spec.id, s.spec.pickup, s.spec.dropoff, s.status, s.robot_id,
+                                 s.spec.release_tick, s.spec.deadline_tick, s.spec.specimen_type,
+                                 s.spec.packaging, s.spec.temperature_condition, s.spec.rule_profile)
+                  for s in sorted(self.samples.values(), key=lambda item: item.spec.id)
+                  if s.status != "unreleased"),
+            tuple(ObservedStation(sid, station.position, station.available(tick), self.model.expected_service(sid))
+                  for sid, station in sorted(self.scenario.stations.items())),
+        )
+
+    def run(self, on_transition: Callable[[Transition], None] | None = None,
+            dispatch_policy: DispatchPolicy | None = None) -> dict[str, Any]:
         if self._has_run:
             raise RuntimeError("a Simulator instance can only be run once")
         self._has_run = True
         self._snapshot(0)
+        pending: tuple[Observation, tuple[Assignment, ...]] | None = None
         for tick in range(self.scenario.max_ticks):
             for sample in self.samples.values():
                 if sample.status == "unreleased" and sample.spec.release_tick <= tick:
                     sample.status = "waiting"
                     self._event(tick, "released", sample_id=sample.spec.id)
-            self._dispatch(tick)
+            current = self._observable_state(tick) if on_transition is not None or dispatch_policy is not None else None
+            if on_transition is not None and pending is not None:
+                assert current is not None
+                on_transition(Transition(pending[0], pending[1], current, "before_dispatch", None))
+            events_before_dispatch = len(self.events) if on_transition is not None else 0
+            if dispatch_policy is None:
+                self._dispatch(tick)
+            else:
+                assert current is not None
+                self._dispatch_external(tick, current, dispatch_policy)
+            assignments = (tuple(Assignment(e["robot_id"], e["sample_id"])
+                                 for e in self.events[events_before_dispatch:] if e["type"] == "assigned")
+                           if on_transition is not None else ())
             serviced = {r.id for r in self.robots.values() if self._handle_station(tick, r)}
             self._move(tick, serviced)
             self._snapshot(tick + 1)
-            if all(sample.status == "completed" for sample in self.samples.values()):
+            completed = all(sample.status == "completed" for sample in self.samples.values())
+            final_step = completed or tick + 1 == self.scenario.max_ticks
+            if on_transition is not None:
+                assert current is not None
+                if final_step:
+                    termination = "completed" if completed else "time_limit"
+                    on_transition(Transition(current, assignments, self._observable_state(tick + 1),
+                                             "end_of_run", termination))
+                else:
+                    pending = (current, assignments)
+            if completed:
                 break
         complete = [s for s in self.samples.values() if s.completed_tick is not None]
         errors = [abs(s.completed_tick - s.predicted_completion_tick) for s in complete
@@ -419,7 +490,7 @@ class Simulator:
             }
         if self.scenario.metadata:
             scenario_info["metadata"] = dict(self.scenario.metadata)
-        if self.policy in {"learned", "learned_rule"}:
+        if self.policy in {"learned", "learned_rule"} and dispatch_policy is None:
             scenario_info["prediction_model"] = {
                 "kind": "ridge_residual",
                 "training_scope": self.model.parameters.get("training_scope", "unspecified"),
@@ -428,7 +499,7 @@ class Simulator:
             }
         return {
             "scenario": scenario_info,
-            "policy": self.policy, "seed": self.seed, "summary": summary,
+            "policy": "external" if dispatch_policy is not None else self.policy, "seed": self.seed, "summary": summary,
             "samples": [{"id": s.spec.id, "pickup": s.spec.pickup, "dropoff": s.spec.dropoff,
                          "release_tick": s.spec.release_tick, "deadline_tick": s.spec.deadline_tick,
                          "specimen_type": s.spec.specimen_type, "collected_at": s.spec.collected_at,

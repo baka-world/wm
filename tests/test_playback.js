@@ -35,7 +35,10 @@ vm.runInNewContext(match[1], {
 });
 assert.equal(elements.grid.children.length, 63);
 assert.equal(elements.tasks.children.length, 6);
-assert(elements.decision.textContent.includes('预测第'));
+if(process.argv[3]==='external'){
+  assert(elements.decision.textContent.includes('分配给'));
+  assert(elements.forecasts.children.every(item=>item.textContent.includes('可选择')&&!item.textContent.includes('undefined')));
+} else assert(elements.decision.textContent.includes('预测第'));
 assert(elements.forecasts.children.length > 0);
 elements.tick.value = elements.tick.max;
 elements.tick.listeners.input();
@@ -45,4 +48,4 @@ elements.tick.listeners.input();
 elements.play.listeners.click();
 interval();
 assert.equal(elements.time.textContent, '第 1 步');
-console.log('Playback controls verified: candidate predictions, slider and play');
+console.log('Playback controls verified:',process.argv[3]==='external'?'injected policy candidates':'candidate predictions',', slider and play');

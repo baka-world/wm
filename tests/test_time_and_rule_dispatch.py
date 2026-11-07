@@ -62,8 +62,11 @@ class RuleDispatchTests(unittest.TestCase):
         self.doc["samples"][1]["collected_at"] = "2026-01-01T11:20:00Z"
         scenario = apply_rule_proxies(self.base, self.doc, self.profiles)
         self.assertEqual(scenario.samples[1].deadline_tick, -60)
-        result = Simulator(scenario, "rule").run()
-        self.assertEqual(next(e["sample_id"] for e in result["events"] if e["type"] == "assigned"), "S02")
+        decisions = {}
+        for policy in ("world", "rule"):
+            result = Simulator(scenario, policy).run()
+            decisions[policy] = next(e["sample_id"] for e in result["events"] if e["type"] == "assigned")
+        self.assertEqual(decisions, {"world": "S01", "rule": "S02"})
 
     def test_rule_requires_matching_type_and_missing_collection_stays_unknown(self):
         self.doc["samples"][0]["specimen_type"] = "blood_unspecified"

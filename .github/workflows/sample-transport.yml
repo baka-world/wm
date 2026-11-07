@@ -16,6 +16,7 @@ on:
       - 'validation/logs/readiness-*.log'
       - 'validation/logs/state-transition-*.log'
       - 'tests/**'
+      - 'requirements-torch-cpu.txt'
       - '.github/workflows/sample-transport.yml'
   pull_request:
     paths:
@@ -31,6 +32,7 @@ on:
       - 'validation/logs/readiness-*.log'
       - 'validation/logs/state-transition-*.log'
       - 'tests/**'
+      - 'requirements-torch-cpu.txt'
       - '.github/workflows/sample-transport.yml'
   workflow_dispatch:
 
@@ -40,7 +42,7 @@ permissions:
 jobs:
   prototype:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -48,6 +50,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install the CPU-only PyTorch smoke-test dependencies
+        run: |
+          python -m pip install -r requirements-torch-cpu.txt
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch:', torch.__version__)"
       - name: Test sample lifecycle, prediction and grid invariants
         run: python -m unittest discover -s tests -v
       - name: Export observable state transitions from synthetic example
@@ -310,6 +316,33 @@ jobs:
           python -m lab_transport.training_data export --download-sources --profile smoke \
             --output "$RUNNER_TEMP/training-data-smoke"
           python -m lab_transport.training_data validate --dataset "$RUNNER_TEMP/training-data-smoke"
+      - name: Train the optional neural adapter and exercise the hospital simulation loop
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m lab_transport.torch_training --dataset "$RUNNER_TEMP/training-data-smoke" \
+            --output "$RUNNER_TEMP/torch-training-smoke" --device cpu --epochs 2 \
+            --train-limit 500 --validation-limit 250
+          python -m lab_transport.torch_rollout \
+            --checkpoint "$RUNNER_TEMP/torch-training-smoke/epoch-0002.pt" \
+            --output "$RUNNER_TEMP/torch-rollout-smoke" --device cpu \
+            --hospital-map "$RUNNER_TEMP/hospital.building.yaml" \
+            --tiago-config "$RUNNER_TEMP/tiago.launch.xml"
+          python -m lab_transport.torch_evaluate --dataset "$RUNNER_TEMP/training-data-smoke" \
+            --checkpoint "$RUNNER_TEMP/torch-training-smoke/epoch-0002.pt" \
+            --output "$RUNNER_TEMP/torch-evaluation-smoke" --device cpu --limit-per-split 100
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          evidence = json.loads((Path(os.environ['RUNNER_TEMP']) / 'torch-rollout-smoke/evidence.json').read_text())
+          assert evidence['device'] == 'cpu'
+          assert evidence['summary']['completed_count'] == evidence['summary']['sample_count'] == 6
+          assert evidence['candidate_evaluations'] > 0 and evidence['model_steps'] > 0
+          assert evidence['fallbacks'] == evidence['discrete_safety_violations'] == 0
+          evaluation = json.loads((Path(os.environ['RUNNER_TEMP']) / 'torch-evaluation-smoke/evaluation.json').read_text())
+          assert evaluation['transitions_per_split'] == {'test_tartu': 100, 'test_clinic': 100}
+          print('Neural adapter verified: factual CPU training, bounded rollout and two-robot completion')
+          PY
       - name: Reproduce CPU state-transition model and held-out tests
         shell: bash
         run: |

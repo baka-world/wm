@@ -18,6 +18,8 @@
 - [CPU 状态转移模型和留出场景实验](docs/state-transition-experiment.md)
 - [状态转移模型第二轮验证方案](docs/state-transition-revision.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
+- [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)
+- [CPU 神经模型流程验收记录](docs/pytorch-smoke-acceptance.md)
 - [系统设计论文材料草稿](docs/thesis-system-design-draft.md)
 - [示例仿真结果和离线回放](examples/evidence/)
 - [框架验收与结果](docs/framework-assessment.md)
@@ -41,4 +43,4 @@ python -m lab_transport compare --seed 42 --output runs/demo-42
 
 ## 约束
 
-使用 CPU 和公开仓库的标准 GitHub-hosted Linux runner；不启用 GPU 或付费云资源，不修改上游仓库。变更在功能分支和 Pull Request 中审阅，未经用户确认不合并。上游版本固定在工作流中，日志和报告应与对应提交及运行关联。
+当前开发和 GitHub Actions 使用 CPU 及标准 GitHub-hosted Linux runner；不启用云端 GPU 或付费云资源，不修改上游仓库。后续在用户授权接入的本地 GPU 上验收模型训练。变更在功能分支和 Pull Request 中审阅，未经用户确认不合并。上游版本固定在工作流中，日志和报告应与对应提交及运行关联。

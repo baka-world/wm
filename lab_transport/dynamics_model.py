@@ -267,6 +267,16 @@ class HybridDynamicsModel:
                         candidate: Position, others: tuple[Position, ...]) -> list[float]:
         return _motion_features(self.geometry, robot, phase, goal, candidate, others)
 
+    def score_motion(self, features: list[list[float]]) -> list[float]:
+        """Score feasible moves; alternate model backends may override this hook."""
+        assert self.parameters is not None
+        return [_dot(self.parameters["motion_weights"], values) for values in features]
+
+    def service_advances(self, features: list[float]) -> bool:
+        """Predict whether the current service finishes in this step."""
+        assert self.parameters is not None
+        return _dot(self.parameters["service_weights"], features) >= 0
+
     def predict_next(self, observation: Observation, assignments: tuple[Assignment, ...]) -> Observation:
         if self.mode == "persistence":
             _intent(observation, assignments)
@@ -296,10 +306,9 @@ class HybridDynamicsModel:
                     if self.mode == "heuristic":
                         advance = current_elapsed + 1 >= math.ceil(station.expected_service_ticks)
                     else:
-                        assert self.parameters is not None
                         features = _service_features(robot, phase, station.expected_service_ticks,
                                                      sample_id in new_assignments)
-                        advance = _dot(self.parameters["service_weights"], features) >= 0
+                        advance = self.service_advances(features)
                 if advance and phase == "to_pickup":
                     new_samples[sample_id] = replace(new_samples[sample_id], status="in_transit")
                     robot_updates[rid] = ("to_dropoff", sample_id, None)
@@ -326,9 +335,11 @@ class HybridDynamicsModel:
                 path = self.geometry.shortest_path(robot.position, goal, blocked - {goal})
                 next_pos = path[0] if path and path[0] in options else robot.position
             else:
-                assert self.parameters is not None
-                next_pos = max(options, key=lambda p: _dot(self.parameters["motion_weights"],
-                               self.motion_features(robot, phase, goal, p, others)))
+                features = [self.motion_features(robot, phase, goal, p, others) for p in options]
+                scores = self.score_motion(features)
+                if len(scores) != len(options) or any(not math.isfinite(score) for score in scores):
+                    raise ValueError("model returned invalid motion scores")
+                next_pos = options[max(range(len(options)), key=lambda index: scores[index])]
             positions[rid] = next_pos
             if next_pos != robot.position:
                 reserved.add(next_pos)

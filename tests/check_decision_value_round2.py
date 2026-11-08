@@ -18,6 +18,20 @@ assert s['paired_true_short_minus_heuristic_flow']['clusters'] == (2 if profile 
 assert s['reference_vs_rule_decision_counts']['full_flow_reference']['worse'] == 0
 ordinary = near = 0
 meaningful = 0
+
+def short_primary(components, initial):
+    deadlines = {s['id']: s['deadline_tick'] for s in initial['samples']}
+    ids = components['sample_ids']
+    assert ids == sorted(deadlines)
+    assert len(components['steps']) == 20
+    score = 0
+    for tick, statuses in components['steps']:
+        assert len(statuses) == len(ids)
+        for sid, status in zip(ids, statuses):
+            if status != 'completed':
+                score += 1 + 4 * int(deadlines[sid] is not None and tick > deadlines[sid])
+    return score
+
 for c in d['cases']:
     assert set(c['policies']) == {'nearest', 'world', 'rule', 'rollout', 'heuristic', 'learned'}
     for policy in c['policies'].values():
@@ -33,6 +47,15 @@ for c in d['cases']:
         assert x['candidate_evaluated'] <= 8
         assert x['candidate_count'] >= x['candidate_evaluated'] >= 2
         assert all(y['discrete_safety_violations'] == 0 for y in x['candidates'])
+        for candidate in x['candidates']:
+            samples = candidate['full_sample_outcomes']
+            recomputed = sum((s['completed_tick'] if s['completed_tick'] is not None else c['config']['max_ticks'])
+                             - s['release_tick'] for s in samples) / len(samples)
+            assert abs(recomputed - candidate['full_restricted_mean_flow_ticks']) < 1e-9
+            if candidate['short_reference_complete']:
+                assert short_primary(candidate['true_short_components'], x['initial_observation']) == candidate['true_short_score'][0]
+                for prediction in candidate['predictions'].values():
+                    assert short_primary(prediction['short_components'], x['initial_observation']) == prediction['short_score'][0]
         if not x['fully_comparable']:
             continue
         best = x['choices']['full_flow_reference']

@@ -146,7 +146,7 @@ def post_run_trace(result):
     allowed = {'tick', 'type', 'robot_id', 'sample_id', 'station_id', 'phase',
                'observed_ticks', 'deadline_tick', 'steps', 'explored_states'}
     events = [{k: v for k, v in e.items() if k in allowed} for e in result['events']]
-    return {'scope': 'offline factual history; contains unreleased task states; never policy/training input',
+    return {'scope': 'offline simulated history, not real observations; contains unreleased task states; never policy/training input',
             'robot_columns': ['id', 'position_key', 'task_id', 'phase'],
             'sample_columns': ['id', 'status', 'robot_id'],
             'station_columns': ['id', 'available'], 'history': history, 'events': events}
@@ -331,6 +331,16 @@ def pairwise_loss(predicted, truth):
             'rate': wrong/comparable if comparable else None}
 
 
+def short_score_components(initial, trace):
+    """Persist the 20 known-sample statuses needed to recompute the primary score."""
+    ids = sorted(s.id for s in initial.samples)
+    rows = []
+    for obs in trace:
+        samples = {s.id: s for s in obs.samples}
+        rows.append([obs.tick, [samples[sid].status for sid in ids]])
+    return {'sample_ids': ids, 'columns': ['tick', 'statuses_in_sample_id_order'], 'steps': rows}
+
+
 def analyze_decision(case, seed, pauses, factual, rows, row, labels, parameters):
     obs = row.observation
     geo = Geometry(case.grid)
@@ -346,9 +356,14 @@ def analyze_decision(case, seed, pauses, factual, rows, row, labels, parameters)
         record = {'batch': encode_batch(batch), 'short_reference_complete': complete,
                   'full_episode_completed': outcome['summary']['status'] == 'completed',
                   'full_restricted_mean_flow_ticks': metrics(outcome, case.max_ticks, None, incident_end(case, pauses))['restricted_mean_flow_ticks'],
-                  'discrete_safety_violations': metrics(outcome, case.max_ticks, None, incident_end(case, pauses))['discrete_safety_violations']}
+                  'discrete_safety_violations': metrics(outcome, case.max_ticks, None, incident_end(case, pauses))['discrete_safety_violations'],
+                  'full_sample_outcomes': [{k: sample[k] for k in ('id', 'release_tick', 'assigned_tick', 'picked_tick', 'completed_tick', 'deadline_tick')}
+                                           for sample in outcome['samples']],
+                  'full_assignment_events': [[event['tick'], event['robot_id'], event['sample_id']]
+                                             for event in outcome['events'] if event['type'] == 'assigned']}
         if complete:
             record['true_short_score'] = list(trace_score(obs, trace, geo))
+            record['true_short_components'] = short_score_components(obs, trace)
             record['true_states'] = {str(h): record_observation(trace[h-1]) for h in (1,5,20)}
             record['future_arrivals'] = len({s.id for o in trace for s in o.samples} - {s.id for s in obs.samples})
             record['future_station_change'] = any({s.id:s.available for s in o.stations} !=
@@ -358,6 +373,7 @@ def analyze_decision(case, seed, pauses, factual, rows, row, labels, parameters)
                 pred = traces[i]
                 record['predictions'][name] = {'short_score': list(trace_score(obs, pred, geo)),
                     'short_primary_abs_error': abs(trace_score(obs, pred, geo)[0] - record['true_short_score'][0]),
+                    'short_components': short_score_components(obs, pred),
                     'joint_counts': {str(h): compare(obs, trace[h-1], pred[h-1]) for h in (1,5,20)},
                     'states': {str(h): record_observation(pred[h-1]) for h in (1,5,20)}}
         candidates.append(record)

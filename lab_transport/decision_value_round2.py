@@ -118,15 +118,47 @@ def run_policy(case, seed, pauses, name, parameters, capture=False):
     geometry = Geometry(case.grid)
     controller = None
     if name == 'heuristic':
-        controller = ModelPolicy(HybridDynamicsModel(geometry, mode='heuristic'), geometry)
+        controller = TieAwareModelPolicy(HybridDynamicsModel(geometry, mode='heuristic'), geometry)
     elif name == 'learned':
-        controller = ModelPolicy(RevisedDynamicsModel(geometry, parameters), geometry)
+        controller = TieAwareModelPolicy(RevisedDynamicsModel(geometry, parameters), geometry)
     rows = []
     start = time.process_time()
     sim = Simulator(case, 'world' if controller else name, seed, motion_pauses=pauses, collect_metrics=True)
     result = sim.run(on_transition=rows.append if capture else None, dispatch_policy=controller)
     elapsed = time.process_time() - start
     return result, rows, controller, elapsed
+
+
+def select_index(scores, batches):
+    """On an exact tie prefer a feasible assignment over indefinite waiting."""
+    if not scores or len(scores) != len(batches):
+        raise ValueError('scores and candidate batches must be nonempty and aligned')
+    return min(range(len(scores)), key=lambda i: (scores[i], not bool(batches[i]), i))
+
+
+class TieAwareModelPolicy(ModelPolicy):
+    """The same no-op tie rule for both predictors; wait remains available."""
+    def __call__(self, obs, candidates):
+        start = time.process_time()
+        batches, total = batch_candidates(obs, candidates, self.geometry)
+        records = []
+        try:
+            for batch in batches:
+                trace = predict_trace(self.model, obs, batch, self.geometry)
+                self.model_steps += len(trace)
+                records.append({'batch': encode_batch(batch), 'score': list(trace_score(obs, trace, self.geometry))})
+            chosen = select_index([entry['score'] for entry in records], batches)
+        except (ValueError, RuntimeError, TypeError, KeyError, StopIteration, OverflowError) as exc:
+            self.fallbacks += 1
+            chosen = 1 if len(batches) > 1 else 0
+            self.decisions.append({'tick': obs.tick, 'candidate_count': total, 'evaluated': records,
+                                   'fallback': type(exc).__name__, 'selected': encode_batch(batches[chosen])})
+            self.cpu_seconds += time.process_time() - start
+            return batches[chosen]
+        self.decisions.append({'tick': obs.tick, 'candidate_count': total, 'evaluated': records,
+                               'fallback': None, 'selected': encode_batch(batches[chosen])})
+        self.cpu_seconds += time.process_time() - start
+        return batches[chosen]
 
 
 def service_sessions(result, case, incident):
@@ -213,6 +245,7 @@ def paired_incident(result, baseline, case, incident):
             'interrupted_sessions': sum(s['interrupted_after_service_start'] for s in sessions),
             'dropoff_arrivals_during_outage': sum(s['dropoff_arrived_during_outage'] for s in sessions),
             'fault_vs_no_fault_completion_deltas': changes, 'completion_censored_samples': censored,
+            'completed_paired_samples': len(changes),
             'affected_extra_delay_sample_count': sum(x['completion_delta_ticks'] > 0 for x in changes),
             'mean_signed_completion_delta_ticks': statistics.mean(x['completion_delta_ticks'] for x in changes) if changes else None,
             'pending_at_recovery': pending_at(result, case, incident['end']),
@@ -313,14 +346,14 @@ def analyze_decision(case, seed, pauses, factual, rows, row, labels, parameters)
         return result
     flows = [c['full_restricted_mean_flow_ticks'] for c in candidates]
     true_short = [tuple(c['true_short_score']) for c in candidates]
-    best = min(range(len(flows)), key=lambda i: (flows[i], i))
-    short = min(range(len(flows)), key=lambda i: (true_short[i], i))
+    best = select_index(flows, batches)
+    short = select_index(true_short, batches)
     choices = {'full_flow_reference': best, 'true_short_reference': short}
     rankings = {'true_short_vs_full_spearman': spearman(true_short, flows)}
     maes = {}
     for name in models:
         predicted = [tuple(c['predictions'][name]['short_score']) for c in candidates]
-        choices[name] = min(range(len(flows)), key=lambda i: (predicted[i], i))
+        choices[name] = select_index(predicted, batches)
         rankings[name + '_vs_true_short_pairwise'] = pairwise_loss(predicted, true_short)
         rankings[name + '_vs_full_spearman'] = spearman(predicted, flows)
         maes[name] = statistics.mean(c['predictions'][name]['short_primary_abs_error'] for c in candidates)
@@ -359,7 +392,9 @@ def bootstrap_paired(case_values):
         by_map[layout].append(statistics.mean(values))
     values = [v for group in by_map.values() for v in group]
     if not values: return {'clusters': 0, 'mean': None, 'ci95': None}
-    if len(values) < 2: return {'clusters': len(values), 'mean': statistics.mean(values), 'ci95': None}
+    if len(values) < 2 or any(len(group) < 2 for group in by_map.values()):
+        return {'clusters': len(values), 'mean': statistics.mean(values), 'ci95': None,
+                'reason': 'fewer than two seed clusters in a map stratum'}
     rng = random.Random(BOOTSTRAP_SEED)
     draws = []
     for _ in range(BOOTSTRAP_SAMPLES):

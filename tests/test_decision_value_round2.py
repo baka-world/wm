@@ -1,9 +1,10 @@
 import unittest
 
 from lab_transport.decision_value_round2 import (bootstrap_paired, contention_proxy, paired_incident,
-                                                   pairwise_loss, service_sessions, spearman)
+                                                   pairwise_loss, select_index, service_sessions, spearman)
 from lab_transport.domain import Grid, RobotSpec, Sample, Scenario, Station
 from lab_transport.simulation import Simulator
+from lab_transport.transition_schema import Assignment
 
 
 class Round2Tests(unittest.TestCase):
@@ -65,7 +66,14 @@ class Round2Tests(unittest.TestCase):
         self.assertEqual(a['clusters'], 3)
         self.assertAlmostEqual(a['mean'], 3)
         self.assertEqual(a, bootstrap_paired(values))
-        self.assertLessEqual(a['ci95'][0], a['ci95'][1])
+        self.assertIsNone(a['ci95'])  # one map stratum has only one independent seed
+        extended = values + [('map2', 4, 4)]
+        self.assertLessEqual(bootstrap_paired(extended)['ci95'][0], bootstrap_paired(extended)['ci95'][1])
+
+    def test_tied_scores_prefer_assignment_but_strictly_better_wait_is_allowed(self):
+        batches = [(), (Assignment('R1', 'S1'),)]
+        self.assertEqual(select_index([(2, 0), (2, 0)], batches), 1)
+        self.assertEqual(select_index([(1, 0), (2, 0)], batches), 0)
 
 
 if __name__ == '__main__': unittest.main()

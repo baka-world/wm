@@ -41,7 +41,8 @@ class Simulator:
     """Owns real simulation state; forecasts never receive future outage data."""
 
     def __init__(self, scenario: Scenario, policy: str = "world", seed: int = 0,
-                 learned_parameters: dict | None = None):
+                 learned_parameters: dict | None = None, *, motion_pauses: dict | None = None,
+                 collect_metrics: bool = False):
         if policy not in {"world", "nearest", "rule", "learned", "learned_rule", "rollout"}:
             raise ValueError("unknown dispatch policy")
         if policy in {"learned", "learned_rule"} and learned_parameters is None:
@@ -50,6 +51,21 @@ class Simulator:
         self.policy = policy
         self.seed = seed
         self.robots = {r.id: RobotState(r.id, r.position, r.home) for r in scenario.robots}
+        self.motion_pauses = {}
+        for rid, intervals in (motion_pauses or {}).items():
+            if rid not in self.robots or not isinstance(intervals, (tuple, list)):
+                raise ValueError("motion pause names an unknown robot or invalid intervals")
+            checked = []
+            for interval in intervals:
+                if (not isinstance(interval, (tuple, list)) or len(interval) != 2 or
+                        any(not isinstance(x, int) or isinstance(x, bool) for x in interval) or
+                        interval[0] < 0 or interval[1] <= interval[0]):
+                    raise ValueError("motion pause must be a nonnegative [start, end) interval")
+                checked.append(tuple(interval))
+            self.motion_pauses[rid] = tuple(checked)
+        self.collect_metrics = collect_metrics
+        self.metrics = {"station_unavailable_wait_ticks": 0, "motion_pause_ticks": 0,
+                        "path_search_calls": 0, "blocked_station_target_attempts": 0}
         self.samples = {s.id: SampleState(s) for s in scenario.samples}
         stations = {
             sid: PublicStation(station.position, station.prior_ticks)
@@ -255,6 +271,8 @@ class Simulator:
             self._event(tick, "service_started", robot_id=robot.id, sample_id=sample.spec.id,
                         station_id=station_id, phase=robot.phase)
         if not station.available(tick):
+            if self.collect_metrics:
+                self.metrics["station_unavailable_wait_ticks"] += 1
             return True
         robot.service_remaining -= 1
         if robot.service_remaining > 0:
@@ -278,7 +296,10 @@ class Simulator:
 
     def _move(self, tick: int, serviced: set[str]) -> None:
         before = {rid: robot.position for rid, robot in self.robots.items()}
-        if self._follow_recovery(tick, before, serviced):
+        paused = {rid for rid, intervals in self.motion_pauses.items()
+                  if any(start <= tick < end for start, end in intervals)}
+        immobilized = serviced | paused
+        if self._follow_recovery(tick, before, immobilized):
             return
         occupied = frozenset(before.values())
         reserved: set[Position] = set()
@@ -288,21 +309,30 @@ class Simulator:
             robot = self.robots[rid]
             if rid in serviced or robot.position == self._target(robot):
                 continue
+            if rid in paused:
+                if self.collect_metrics:
+                    self.metrics["motion_pause_ticks"] += 1
+                continue
             blocked = (occupied - {robot.position}) | reserved
             target = self._target(robot)
             # Plan toward an occupied destination, but never enter it while it
             # is occupied. Otherwise two robots at each other's destinations
             # can both wait forever without even leaving their starting cells.
+            if self.collect_metrics:
+                self.metrics["path_search_calls"] += 1
             path = self.scenario.grid.shortest_path(robot.position, target, frozenset(blocked - {target}))
             if not path or path[0] in blocked:
                 self.prevented_moves += 1
+                if self.collect_metrics and target in blocked and any(
+                        station.position == target for station in self.scenario.stations.values()):
+                    self.metrics["blocked_station_target_attempts"] += 1
                 continue
             robot.position = path[0]
             reserved.add(robot.position)
         after = {rid: robot.position for rid, robot in self.robots.items()}
         if before == after and isinstance(self.scenario.grid, DirectedGraph):
-            self._plan_recovery(tick, before, serviced)
-            if self._follow_recovery(tick, before, serviced):
+            self._plan_recovery(tick, before, immobilized)
+            if self._follow_recovery(tick, before, immobilized):
                 return
         if len(set(after.values())) != len(after):
             raise RuntimeError("grid safety invariant failed: two robots share a cell")
@@ -477,6 +507,9 @@ class Simulator:
             "forecast_mae_ticks": round(sum(errors) / len(errors), 3) if errors else None,
             "blocked_move_attempts": self.prevented_moves,
         }
+        if self.collect_metrics:
+            summary.update(self.metrics)
+            summary["recovery_plans"] = sum(e["type"] == "recovery_planned" for e in self.events)
         scenario_info: dict[str, Any] = {"name": self.scenario.name, "width": self.scenario.grid.width,
                          "height": self.scenario.grid.height,
                          "blocked": [list(p) for p in sorted(self.scenario.grid.blocked)],

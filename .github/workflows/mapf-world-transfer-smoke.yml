@@ -1,0 +1,63 @@
+name: MAPF-World pretrained transfer CPU check
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/mapf-world-transfer-smoke.yml'
+      - 'validation/mapf_world_reuse/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pretrained-fast-branch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU-only dependencies
+        run: |
+          python -m pip install -r requirements-torch-cpu.txt tqdm loguru
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch:', torch.__version__)"
+      - name: Fetch pinned public model implementations
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/mapf-world" "$RUNNER_TEMP/mapf-gpt"
+          git -C "$RUNNER_TEMP/mapf-world" init -q
+          git -C "$RUNNER_TEMP/mapf-world" remote add origin https://github.com/Fibonaccirabbit/MAPF-World.git
+          git -C "$RUNNER_TEMP/mapf-world" fetch -q --depth 1 origin f18c879646248e79345c4c05c2ecf396f26b3437
+          git -C "$RUNNER_TEMP/mapf-world" checkout -q --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/mapf-world" rev-parse HEAD)" = f18c879646248e79345c4c05c2ecf396f26b3437
+          git -C "$RUNNER_TEMP/mapf-gpt" init -q
+          git -C "$RUNNER_TEMP/mapf-gpt" remote add origin https://github.com/CognitiveAISystems/MAPF-GPT.git
+          git -C "$RUNNER_TEMP/mapf-gpt" fetch -q --depth 1 origin d6307447ddc6bc2b7bf5da4f81d4e0707fbc8fa3
+          git -C "$RUNNER_TEMP/mapf-gpt" checkout -q --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/mapf-gpt" rev-parse HEAD)" = d6307447ddc6bc2b7bf5da4f81d4e0707fbc8fa3
+      - name: Fetch and verify public pretrained checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://huggingface.co/aandreychuk/MAPF-GPT/resolve/ec203665ad30c6675bb30592c4285f3b4b2c98e8/MAPF-GPT-2M.pt' \
+            --output "$RUNNER_TEMP/MAPF-GPT-2M.pt"
+          echo '1a26ed541484b096f00565dc4b654c5827ad238c137c4ad15566ceb5cede7f56  '\"$RUNNER_TEMP/MAPF-GPT-2M.pt\" | sha256sum -c -
+      - name: Compare mapped pretrained fast branch on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/mapf_world_reuse/check_pretrained.py \
+            --mapf-world "$RUNNER_TEMP/mapf-world" --mapf-gpt "$RUNNER_TEMP/mapf-gpt" \
+            --checkpoint "$RUNNER_TEMP/MAPF-GPT-2M.pt" --output "$RUNNER_TEMP/mapf-transfer-evidence.json"
+      - name: Upload compact compatibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapf-pretrained-transfer
+          path: ${{ runner.temp }}/mapf-transfer-evidence.json
+          if-no-files-found: warn
+          retention-days: 7

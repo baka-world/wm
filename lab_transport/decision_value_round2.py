@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from collections import defaultdict
 from dataclasses import replace
+import hashlib
 import json
 import math
 import os
@@ -427,13 +428,52 @@ def summarize(result):
     for regime in REGIMES:
         subset = [c for c in cases if c['regime'] == regime]
         ds = [d for c in subset for d in c['decisions'] if d['fully_comparable']]
+        gap_cases, rho_cases, ranking_h, ranking_l, mae_h, mae_l, regime_regret = [], [], [], [], [], [], []
+        for c in subset:
+            valid = [d for d in c['decisions'] if d['fully_comparable']]
+            if not valid:
+                continue
+            identity = (c['layout'], c['seed'])
+            gap_cases.append((*identity, statistics.mean(d['full_flow_gap_ticks'] for d in valid)))
+            regime_regret.append((*identity, statistics.mean(
+                d['full_flow_regret_ticks']['learned'] - d['full_flow_regret_ticks']['heuristic'] for d in valid)))
+            for key, target in (('true_short_vs_full_spearman', rho_cases),):
+                vals = [d['rankings'][key] for d in valid if d['rankings'][key] is not None]
+                if vals: target.append((*identity, statistics.mean(vals)))
+            for name, rank_target, mae_target in (('heuristic', ranking_h, mae_h), ('learned', ranking_l, mae_l)):
+                vals = [d['rankings'][name + '_vs_true_short_pairwise']['rate'] for d in valid
+                        if d['rankings'][name + '_vs_true_short_pairwise']['rate'] is not None]
+                if vals: rank_target.append((*identity, statistics.mean(vals)))
+                mae_target.append((*identity, statistics.mean(d['short_primary_score_mae'][name] for d in valid)))
+        paired_regime_flow = [(c['layout'], c['seed'],
+            c['policies']['learned']['metrics']['restricted_mean_flow_ticks'] -
+            c['policies']['heuristic']['metrics']['restricted_mean_flow_ticks']) for c in subset]
+        incident_deltas = [(c['layout'], c['seed'], c['policies']['nearest']['incident']['mean_signed_completion_delta_ticks'])
+                           for c in subset if c['policies']['nearest']['incident'] is not None
+                           and c['policies']['nearest']['incident']['mean_signed_completion_delta_ticks'] is not None]
+        exposed = [c['policies']['nearest']['incident'] for c in subset if c['policies']['nearest']['incident'] is not None]
         by_regime[regime] = {'episodes': len(subset), 'comparable_decisions': len(ds),
             'meaningful_gap_decisions': sum(d['full_flow_gap_ticks'] >= MEANINGFUL_FLOW_GAP for d in ds),
-            'mean_gap_ticks': statistics.mean(d['full_flow_gap_ticks'] for d in ds) if ds else None,
+            'mean_gap_ticks_episode_weighted': bootstrap_paired(gap_cases),
             'near_event_decisions': sum(any(x in d['sampling_labels'].split(',') for x in ('before','during','after')) for d in ds),
-            'true_short_vs_full_spearman': statistics.mean(d['rankings']['true_short_vs_full_spearman'] for d in ds
-                    if d['rankings']['true_short_vs_full_spearman'] is not None)
-                if any(d['rankings']['true_short_vs_full_spearman'] is not None for d in ds) else None}
+            'true_short_vs_full_spearman_episode_weighted': bootstrap_paired(rho_cases),
+            'heuristic_short_rank_error': bootstrap_paired(ranking_h),
+            'learned_short_rank_error': bootstrap_paired(ranking_l),
+            'heuristic_short_primary_mae': bootstrap_paired(mae_h),
+            'learned_short_primary_mae': bootstrap_paired(mae_l),
+            'paired_learned_minus_heuristic_flow': bootstrap_paired(paired_regime_flow),
+            'paired_learned_minus_heuristic_decision_regret': bootstrap_paired(regime_regret),
+            'nearest_fault_minus_no_fault_completion_delta': bootstrap_paired(incident_deltas),
+            'nearest_exposure': {'interrupted_sessions': sum(x['interrupted_sessions'] for x in exposed),
+                'dropoff_arrivals_during_outage': sum(x['dropoff_arrivals_during_outage'] for x in exposed),
+                'service_wait_ticks': sum(x['service_wait_ticks'] for x in exposed),
+                'affected_service_samples': sum(x['affected_service_sample_count'] for x in exposed),
+                'positive_completion_deltas': sum(x['affected_extra_delay_sample_count'] for x in exposed),
+                'censored_samples': sum(len(x['completion_censored_samples']) for x in exposed),
+                'pending_at_recovery': sum(x['pending_at_recovery'] for x in exposed),
+                'pending_at_recovery_no_fault': sum(x['pending_at_recovery_no_fault'] for x in exposed)},
+            'nearest_competition_nonmoving_ticks': sum(c['policies']['nearest']['contention']['occupied_target_nonmoving_ticks']
+                                                        for c in subset)}
     return {'profile': result['profile'], 'episodes': len(cases), 'comparable_decisions': len(decisions),
             'candidate_branches': sum(d['candidate_evaluated'] for d in decisions),
             'truncated_decisions': sum(d['candidate_count'] > d['candidate_evaluated'] for d in decisions),
@@ -489,6 +529,7 @@ def run_experiment(profile):
             'environment': {'python': platform.python_version(), 'platform': platform.platform(),
                             'github_sha': os.environ.get('GITHUB_SHA'), 'github_run_id': os.environ.get('GITHUB_RUN_ID')},
             'source_sha256': {k:v[1] for k,v in SOURCES.items()}, 'parameters_path': str(PARAMETERS.relative_to(ROOT)),
+            'parameters_sha256': hashlib.sha256(PARAMETERS.read_bytes()).hexdigest(),
             'schedule_audit': audit, 'horizon': HORIZON, 'candidate_budget': BUDGET,
             'meaningful_mean_flow_gap_ticks': MEANINGFUL_FLOW_GAP, 'cases': cases_out,
             'cpu_seconds': time.process_time()-begin}

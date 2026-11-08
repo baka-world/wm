@@ -39,6 +39,7 @@ def main() -> int:
     parser.add_argument("--mapf-gpt", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--save-initialized", type=Path, help="write an initialized MAPF-World checkpoint; the world branch remains untrained")
     args = parser.parse_args()
 
     # Local checkouts are fixed by the workflow; no source files are modified.
@@ -105,6 +106,31 @@ def main() -> int:
     if not torch.allclose(expected_logits, actual_logits, rtol=1e-5, atol=1e-6):
         raise ValueError(f"mapped fast branch differs from original: max_abs_error={max_error}")
 
+    # Export an optional initialization checkpoint for the upstream
+    # MAPF-World trainer. It contains pretrained fast weights but an
+    # untrained world branch; it is not an optimizer/resume checkpoint.
+    restored_max_error = None
+    if args.save_initialized is not None:
+        args.save_initialized.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "model": target.state_dict(),
+            "transfer_source": "MAPF-GPT-2M",
+            "transfer_checkpoint_sha256": checkpoint_hash,
+            "world_branch_pretrained": False,
+            "note": "Initialization only; no optimizer state or sample-transport training.",
+        }
+        with args.save_initialized.open("xb") as handle:
+            torch.save(payload, handle)
+        reloaded = torch.load(args.save_initialized, map_location="cpu", weights_only=True)
+        restored = FastAndSlow_S_2().eval()
+        restored.load_state_dict(reloaded["model"], strict=True)
+        with torch.inference_mode():
+            restored_hidden = restored.shared_backbone(restored._encode_fast(tokens))
+            restored_logits = restored.lm_head(restored.fast_norm(restored_hidden)[:, [-1], :])
+        restored_max_error = float((expected_logits - restored_logits).abs().max().item())
+        if not torch.allclose(expected_logits, restored_logits, rtol=1e-5, atol=1e-6):
+            raise ValueError(f"saved initialization differs from original: max_abs_error={restored_max_error}")
+
     result = {
         "device": "cpu",
         "reference": "MAPF-GPT-2M",
@@ -115,6 +141,8 @@ def main() -> int:
         "mapped_fast_tensor_values": sum(value.numel() for value in mapped.values()),
         "fast_branch_max_abs_logit_error": max_error,
         "embedding_weights_tied": True,
+        "initialized_checkpoint_saved_and_reloaded": args.save_initialized is not None,
+        "reloaded_fast_branch_max_abs_logit_error": restored_max_error,
         "world_branch_pretrained": False,
         "transport_model_adapted": False,
         "scope": "CPU weight mapping and synthetic-token equality only; world branch and sample transport are not evaluated.",

@@ -45,7 +45,7 @@ jobs:
           curl --fail --location --silent --show-error --retry 3 \
             'https://huggingface.co/aandreychuk/MAPF-GPT/resolve/ec203665ad30c6675bb30592c4285f3b4b2c98e8/MAPF-GPT-2M.pt' \
             --output "$RUNNER_TEMP/MAPF-GPT-2M.pt"
-          echo '1a26ed541484b096f00565dc4b654c5827ad238c137c4ad15566ceb5cede7f56  '\"$RUNNER_TEMP/MAPF-GPT-2M.pt\" | sha256sum -c -
+          printf '%s  %s\n' '1a26ed541484b096f00565dc4b654c5827ad238c137c4ad15566ceb5cede7f56' "$RUNNER_TEMP/MAPF-GPT-2M.pt" | sha256sum -c -
       - name: Compare mapped pretrained fast branch on CPU
         shell: bash
         run: |

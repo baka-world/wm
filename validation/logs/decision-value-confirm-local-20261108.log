@@ -1,0 +1,13 @@
+tartu normal seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+tartu short_outage seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+tartu burst seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+tartu urgent seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+tartu contention seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+tartu motion_delay seed=11001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic normal seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic short_outage seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic burst seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic urgent seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic contention seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+clinic motion_delay seed=12001: decisions=2 nearest=6/6 world=6/6 rule=6/6 rollout=6/6 heuristic=6/6 learned=6/6
+{"profile": "confirm", "cases": 12, "decisions": 24, "cpu_seconds": 12.080294807}

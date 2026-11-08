@@ -32,6 +32,20 @@ class DecisionValueTests(unittest.TestCase):
             self.assertEqual(len(batch), len({a.sample_id for a in batch}))
         self.assertEqual(nearest_batch(obs, (), self.geo), ())
 
+    def test_reachable_multi_robot_batch_is_not_dropped_for_large_total_distance(self):
+        grid = Grid(10, 1, frozenset())
+        case = Scenario('distance', grid,
+                        {'A': Station('A', (8, 0), 1, 1, ()),
+                         'B': Station('B', (9, 0), 1, 1, ())},
+                        (RobotSpec('R1', (0, 0), (0, 0)), RobotSpec('R2', (1, 0), (1, 0))),
+                        (Sample('S1', 'A', 'B', 0, None), Sample('S2', 'A', 'B', 0, None)), 0, 1)
+        simulator = Simulator(case)
+        for sample in simulator.samples.values():
+            sample.status = 'waiting'
+        obs = simulator._observable_state(0)
+        batches, _ = batch_candidates(obs, candidates_for(obs), Geometry(grid))
+        self.assertEqual(len(batches[1]), 2)
+
     def test_replay_prefix_and_independent_candidates_are_reproducible(self):
         original, rows = factual_run(self.case, 42, {})
         row = next(r for r in rows if r.observation.tick > 0 and candidates_for(r.observation))

@@ -19,6 +19,7 @@
 - [多步世界模型与毕设准备情况检查](docs/world-model-readiness.md)
 - [CPU 状态转移模型和留出场景实验](docs/state-transition-experiment.md)
 - [状态转移模型第二轮验证方案](docs/state-transition-revision.md)
+- [预测对样本转运决策的价值：CPU 反事实验证](docs/decision-value-experiment.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)

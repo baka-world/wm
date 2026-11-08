@@ -1,0 +1,53 @@
+name: Decision-value round 2 CPU validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - '.github/workflows/decision-value-round2.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - '.github/workflows/decision-value-round2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  round2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test round-two experiment and existing replay
+        run: python -m unittest discover -s tests -p 'test_decision_value*.py' -v
+      - name: Pilot with coverage gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/round2"
+          timeout 240s python -m lab_transport.decision_value_round2 --profile pilot \
+            --output "$RUNNER_TEMP/round2/pilot" 2>&1 | tee "$RUNNER_TEMP/round2/pilot.log"
+          python tests/check_decision_value_round2.py "$RUNNER_TEMP/round2/pilot" pilot
+      - name: Independent confirmation after the pilot gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600s python -m lab_transport.decision_value_round2 --profile confirm \
+            --output "$RUNNER_TEMP/round2/confirm" 2>&1 | tee "$RUNNER_TEMP/round2/confirm.log"
+          python tests/check_decision_value_round2.py "$RUNNER_TEMP/round2/confirm" confirm
+      - name: Upload all results and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-value-round2-${{ github.run_id }}
+          path: ${{ runner.temp }}/round2/
+          if-no-files-found: warn
+          retention-days: 14

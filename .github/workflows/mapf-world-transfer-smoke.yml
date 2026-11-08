@@ -52,7 +52,8 @@ jobs:
           set -euo pipefail
           python validation/mapf_world_reuse/check_pretrained.py \
             --mapf-world "$RUNNER_TEMP/mapf-world" --mapf-gpt "$RUNNER_TEMP/mapf-gpt" \
-            --checkpoint "$RUNNER_TEMP/MAPF-GPT-2M.pt" --output "$RUNNER_TEMP/mapf-transfer-evidence.json"
+            --checkpoint "$RUNNER_TEMP/MAPF-GPT-2M.pt" --output "$RUNNER_TEMP/mapf-transfer-evidence.json" \
+            --save-initialized "$RUNNER_TEMP/mapf-world-initialized.pt"
       - name: Upload compact compatibility evidence
         if: always()
         uses: actions/upload-artifact@v4

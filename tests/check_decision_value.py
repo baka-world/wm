@@ -26,6 +26,17 @@ for case in result['cases']:
         assert decision['candidate_count'] >= decision['candidate_evaluated']
         assert len(decision['candidates']) == decision['candidate_evaluated']
         assert decision['candidates'][0]['batch'] == []
+        initial = decision['initial_observation']
+        assert initial['tick'] == decision['tick']
+        known = {s['id'] for s in initial['samples']}
+        for candidate in decision['candidates']:
+            assert candidate['full_episode']['discrete_safety_violations'] == 0
+            if candidate['reference_complete']:
+                assert set(candidate['reference_states']) == {'1', '5', '20'}
+                for prediction in candidate['predictions'].values():
+                    assert set(prediction['states']) == {'1', '5', '20'}
+                    assert all({s['id'] for s in state['samples']} == known
+                               for state in prediction['states'].values())
         for index in decision['choices'].values():
             assert 0 <= index < decision['candidate_evaluated']
 print(f"validated {expected_profile}: {len(result['cases'])} cases, {summary['comparable_decisions']} comparable decisions; no efficacy claim")

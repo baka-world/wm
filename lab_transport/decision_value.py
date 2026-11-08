@@ -133,6 +133,20 @@ def encode_batch(batch: tuple[Assignment, ...]) -> list[dict[str, str]]:
     return [asdict(a) for a in batch]
 
 
+def record_observation(obs: Observation) -> dict:
+    """Store state without redistributing the source map or its coordinates."""
+    def position_key(position):
+        return hashlib.sha256(f"{position[0]},{position[1]}".encode()).hexdigest()[:16]
+    return {"tick": obs.tick,
+            "robots": [{"id": r.id, "position_key": position_key(r.position), "phase": r.phase,
+                        "task_id": r.task_id, "service_elapsed": r.service_elapsed} for r in obs.robots],
+            "samples": [{"id": s.id, "pickup": s.pickup, "dropoff": s.dropoff, "status": s.status,
+                         "robot_id": s.robot_id, "release_tick": s.release_tick,
+                         "deadline_tick": s.deadline_tick} for s in obs.samples],
+            "stations": [{"id": s.id, "available": s.available,
+                          "expected_service_ticks": s.expected_service_ticks} for s in obs.stations]}
+
+
 class ModelPolicy:
     """Controlled online policy: no future scenario or simulator reference."""
     def __init__(self, model: Any, geometry: Geometry):
@@ -321,6 +335,7 @@ def decision_analysis(case: Scenario, seed: int, pauses: dict, original: dict, r
                     "full_episode": metrics(actual, case.max_ticks, None, incident_end(case, pauses))}
             if valid:
                 item["reference_score"] = list(trace_score(initial, trace, geometry))
+                item["reference_states"] = {str(h): record_observation(trace[h - 1]) for h in (1, 5, 20)}
                 item["future_new_samples"] = len({s.id for o in trace for s in o.samples} - {s.id for s in initial.samples})
                 item["future_station_change"] = any(
                     {s.id: s.available for s in o.stations} != {s.id: s.available for s in initial.stations}
@@ -332,7 +347,9 @@ def decision_analysis(case: Scenario, seed: int, pauses: dict, original: dict, r
                     for horizon in (1, 5, 20):
                         counts[str(horizon)] = compare(initial, trace[horizon - 1], predicted[horizon - 1])
                     item["predictions"][name] = {"score": list(trace_score(initial, predicted, geometry)),
-                                                  "horizon_counts": counts}
+                                                  "horizon_counts": counts,
+                                                  "states": {str(h): record_observation(predicted[h - 1])
+                                                             for h in (1, 5, 20)}}
             candidate_records.append(item)
         valid_all = all(x["reference_complete"] for x in candidate_records)
         choice = {}
@@ -342,7 +359,8 @@ def decision_analysis(case: Scenario, seed: int, pauses: dict, original: dict, r
             for name in predictions:
                 choice[name] = min(range(len(batches)),
                     key=lambda i: (candidate_records[i]["predictions"][name]["score"], i))
-        records.append({"tick": initial.tick, "known_samples": len(initial.samples), "candidate_count": total,
+        records.append({"tick": initial.tick, "initial_observation": record_observation(initial),
+                        "known_samples": len(initial.samples), "candidate_count": total,
                         "candidate_evaluated": len(batches), "prediction_errors": errors,
                         "choices": choice, "candidates": candidate_records})
     return records

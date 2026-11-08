@@ -1,0 +1,24 @@
+{
+  "device": "cpu",
+  "reference": "MAPF-GPT-2M",
+  "checkpoint_sha256": "1a26ed541484b096f00565dc4b654c5827ad238c137c4ad15566ceb5cede7f56",
+  "config": {
+    "n_layer": 5,
+    "n_head": 5,
+    "n_embd": 160,
+    "block_size": 256,
+    "vocab_size": 67
+  },
+  "source_tensor_count": 34,
+  "mapped_fast_tensors": 34,
+  "mapped_fast_tensor_values": 1600160,
+  "fast_branch_max_abs_logit_error": 0,
+  "embedding_weights_tied": true,
+  "world_branch_pretrained": false,
+  "transport_model_adapted": false,
+  "scope": "CPU weight mapping and synthetic-token equality only; world branch and sample transport are not evaluated.",
+  "workflow_run": "https://github.com/lieuyimo/wm/actions/runs/42429994102",
+  "mapf_world_commit": "f18c879646248e79345c4c05c2ecf396f26b3437",
+  "mapf_gpt_commit": "d6307447ddc6bc2b7bf5da4f81d4e0707fbc8fa3",
+  "checkpoint_revision": "ec203665ad30c6675bb30592c4285f3b4b2c98e8"
+}

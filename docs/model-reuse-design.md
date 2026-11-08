@@ -1,6 +1,6 @@
 # 样本转运世界模型：复用与预训练迁移方案
 
-状态：设计候选；源码与公开权重页面已核对，尚未完成权重加载、参数映射、模型训练或 GPU 验收。目标是复用成熟模型完成毕业设计，不预设必须原创网络或从随机权重训练全部模块。
+状态：设计候选；已完成预训练快分支的 CPU 权重映射与输出一致性检查，尚未完成世界预测分支训练、样本转运适配或 GPU 验收。目标是复用成熟模型完成毕业设计，不预设必须原创网络或从随机权重训练全部模块。
 
 ## 现状与需要纠正的判断
 
@@ -17,7 +17,7 @@
 
 ### 已发现的参数对应线索
 
-MAPF-World 的 [FastAndSlow_S_2](https://github.com/Fibonaccirabbit/MAPF-World/blob/f18c879646248e79345c4c05c2ecf396f26b3437/model/world.py) 使用 5 层、5 个注意力头、160 维的快分支共享主干，上下文长度 256；[MAPF-GPT 2M 训练配置](https://github.com/CognitiveAISystems/MAPF-GPT/blob/d6307447ddc6bc2b7bf5da4f81d4e0707fbc8fa3/experiment_setup/config-2M.py)也列出 5 层、5 个注意力头、160 维、256 上下文。这是值得做迁移试验的代码级线索，尚不是二进制检查点的兼容性证明。
+MAPF-World 的 [FastAndSlow_S_2](https://github.com/Fibonaccirabbit/MAPF-World/blob/f18c879646248e79345c4c05c2ecf396f26b3437/model/world.py) 使用 5 层、5 个注意力头、160 维的快分支共享主干，上下文长度 256；[MAPF-GPT 2M 训练配置](https://github.com/CognitiveAISystems/MAPF-GPT/blob/d6307447ddc6bc2b7bf5da4f81d4e0707fbc8fa3/experiment_setup/config-2M.py)也列出 5 层、5 个注意力头、160 维、256 上下文。这是迁移试验的代码级线索；二进制检查点的 CPU 验证结果如下。
 
 基于两份源码，拟检查以下名称对应关系：
 
@@ -33,7 +33,13 @@ MAPF-World 的 [FastAndSlow_S_2](https://github.com/Fibonaccirabbit/MAPF-World/b
 
 MAPF-World 的[训练入口](https://github.com/Fibonaccirabbit/MAPF-World/blob/f18c879646248e79345c4c05c2ecf396f26b3437/train/main.py#L720-L726)对初始化权重使用 strict=True；它不能被当作已支持直接加载另一架构的 MAPF-GPT 检查点。应在本项目的适配层实现可审计的名称映射，不修改上游仓库。
 
-**即便迁移成功，复用的也主要是快分支及共享主干。** 慢速世界预测分支和新增的样本、站点适配部分尚无相应预训练证据，仍需选择初始化方式并用目标仿真数据训练或微调；实际效果须实验验证。
+**目前已验证复用的部分是快分支及共享主干。** 慢速世界预测分支和新增的样本、站点适配部分尚无相应预训练证据，仍需选择初始化方式并用目标仿真数据训练或微调；实际效果须实验验证。
+
+## 已完成：预训练快分支 CPU 兼容性测试
+
+[GitHub Actions 42429994102](https://github.com/lieuyimo/wm/actions/runs/42429994102) 固定下载两份上游源码和公开的 MAPF-GPT 2M 权重，以 SHA-256 校验权重，使用 PyTorch 的 weights_only 模式在 CPU 加载。检查点实际配置是 5 层、5 头、160 维、长度 256、词表 67。按上表映射后，34 个快分支张量的名称和值均通过检查，输入嵌入和输出头仍共享权重；对同一批 2×256 测试 token，迁移前后 logits 的最大绝对差为 0.0。
+
+[紧凑验证结果](../examples/evidence/mapf-reuse/fast-transfer-cpu-42429994102.json)及[完整工作流日志](../validation/logs/mapf-pretrained-action-42429994102.log)已归档；权重未提交。测试输入仅验证参数和快分支前向等价，不等于已接入样本转运仿真，也不证明预测效果、慢分支已经预训练或 GPU 可运行。
 
 ## 本项目拟采用的分层组合
 
@@ -59,8 +65,8 @@ MAPF-World 原始动作是网格上的等待、上下左右，当前转运调度
 
 ## 下一步验收
 
-1. 固定开源提交与来源、许可证，安全取得并校验 MAPF-GPT 2M 权重，不把大权重提交到本仓库。
-2. CPU 上核验权重字典与拟映射参数，输出匹配、缺失及不兼容的名称、形状、参数量，并测试快分支同输入输出一致。若不兼容，保留 MAPF-GPT 作为独立已预训练基线，不伪称已迁移。
+1. 已固定开源提交与来源、许可证，安全取得并校验 MAPF-GPT 2M 权重；大权重未提交到本仓库。
+2. 已在 CPU 上验证快分支 34 个张量的映射、形状、共享权重和相同输入输出；后续仍需验证真实网格输入及训练适配。
 3. 在网格仿真上实现可观察数据编码、预测和有预算调度的适配，完成无未来信息泄漏、训练/预测、保存/加载和闭环检查。
 4. 梳理公开医院地图转换的证据及误差，决定可复用权重的范围，再用用户本地 GPU 完成小批次训练和性能实测。
 5. 比较迁移、非迁移、规则等方案，更新可视化和论文材料；不以事先假定模型获胜为目标。

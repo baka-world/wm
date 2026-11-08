@@ -130,6 +130,28 @@ def run_policy(case, seed, pauses, name, parameters, capture=False):
     return result, rows, controller, elapsed
 
 
+def post_run_trace(result):
+    """Reproducible offline evidence; never an online policy or training input.
+
+    The factual history includes tasks before their release, so this record
+    is stored only after execution. Position keys allow consistency checks
+    without publishing the source map's coordinate list or graph.
+    """
+    def key(position):
+        return hashlib.sha256(f'{position[0]},{position[1]}'.encode()).hexdigest()[:16]
+    history = [{'tick': snap['tick'],
+                'robots': [[r['id'], key(r['position']), r['task_id'], r['phase']] for r in snap['robots']],
+                'samples': [[s['id'], s['status'], s['robot_id']] for s in snap['samples']],
+                'stations': [[s['id'], s['available']] for s in snap['stations']]} for snap in result['history']]
+    allowed = {'tick', 'type', 'robot_id', 'sample_id', 'station_id', 'phase',
+               'observed_ticks', 'deadline_tick', 'steps', 'explored_states'}
+    events = [{k: v for k, v in e.items() if k in allowed} for e in result['events']]
+    return {'scope': 'offline factual history; contains unreleased task states; never policy/training input',
+            'robot_columns': ['id', 'position_key', 'task_id', 'phase'],
+            'sample_columns': ['id', 'status', 'robot_id'],
+            'station_columns': ['id', 'available'], 'history': history, 'events': events}
+
+
 def select_index(scores, batches):
     """On an exact tie prefer a feasible assignment over indefinite waiting."""
     if not scores or len(scores) != len(batches):
@@ -415,8 +437,12 @@ def summarize(result):
         'A_near_equal_candidates', 'B_predicted_short_ranking_has_errors',
         'B_heuristic_scores_all_equal', 'B_learned_scores_all_equal',
         'C_true_short_choice_full_regret', 'D_learning_improves_short_error_rank_and_flow')}
-    paired_flows = []
-    paired_regret = []
+    paired_flows, paired_regret, paired_rank_error, paired_primary_mae = [], [], [], []
+    short_vs_rule, full_vs_rule = [], []
+    reference_outcomes = {name: {'better': 0, 'equal': 0, 'worse': 0}
+                          for name in ('true_short_reference', 'full_flow_reference', 'learned')}
+    gap_by_episode, short_regret_by_episode, rho_by_episode = [], [], []
+    joint_by_episode = {name: {h: [] for h in ('1', '5', '20')} for name in ('heuristic', 'learned')}
     for c in cases:
         h, l = c['policies']['heuristic']['metrics'], c['policies']['learned']['metrics']
         paired_flows.append((c['layout'], c['seed'], l['restricted_mean_flow_ticks'] - h['restricted_mean_flow_ticks']))
@@ -424,6 +450,37 @@ def summarize(result):
         if ds:
             paired_regret.append((c['layout'], c['seed'], statistics.mean(
                 d['full_flow_regret_ticks']['learned'] - d['full_flow_regret_ticks']['heuristic'] for d in ds)))
+            gap_by_episode.append((c['layout'], c['seed'], statistics.mean(d['full_flow_gap_ticks'] for d in ds)))
+            short_regret_by_episode.append((c['layout'], c['seed'], statistics.mean(
+                d['full_flow_regret_ticks']['true_short_reference'] for d in ds)))
+            paired_primary_mae.append((c['layout'], c['seed'], statistics.mean(
+                d['short_primary_score_mae']['learned'] - d['short_primary_score_mae']['heuristic'] for d in ds)))
+            short_vs_rule.append((c['layout'], c['seed'], statistics.mean(
+                d['full_flow_regret_ticks']['true_short_reference'] - d['full_flow_regret_ticks']['heuristic'] for d in ds)))
+            full_vs_rule.append((c['layout'], c['seed'], statistics.mean(
+                d['full_flow_regret_ticks']['full_flow_reference'] - d['full_flow_regret_ticks']['heuristic'] for d in ds)))
+            for d in ds:
+                for name in reference_outcomes:
+                    delta = d['full_flow_regret_ticks'][name] - d['full_flow_regret_ticks']['heuristic']
+                    reference_outcomes[name]['better' if delta < 0 else 'worse' if delta > 0 else 'equal'] += 1
+            paired_ranks = [d['rankings']['learned_vs_true_short_pairwise']['rate'] -
+                            d['rankings']['heuristic_vs_true_short_pairwise']['rate'] for d in ds
+                            if d['rankings']['learned_vs_true_short_pairwise']['rate'] is not None and
+                               d['rankings']['heuristic_vs_true_short_pairwise']['rate'] is not None]
+            if paired_ranks:
+                paired_rank_error.append((c['layout'], c['seed'], statistics.mean(paired_ranks)))
+            correlations = [d['rankings']['true_short_vs_full_spearman'] for d in ds
+                            if d['rankings']['true_short_vs_full_spearman'] is not None]
+            if correlations:
+                rho_by_episode.append((c['layout'], c['seed'], statistics.mean(correlations)))
+            for name in ('heuristic', 'learned'):
+                for h in ('1', '5', '20'):
+                    counts = [candidate['predictions'][name]['joint_counts'][h]
+                              for d in ds for candidate in d['candidates']]
+                    total = sum(x['joint_total'] for x in counts)
+                    if total:
+                        joint_by_episode[name][h].append((c['layout'], c['seed'],
+                                                         sum(x['joint_correct'] for x in counts) / total))
     by_regime = {}
     for regime in REGIMES:
         subset = [c for c in cases if c['regime'] == regime]
@@ -478,6 +535,16 @@ def summarize(result):
             'candidate_branches': sum(d['candidate_evaluated'] for d in decisions),
             'truncated_decisions': sum(d['candidate_count'] > d['candidate_evaluated'] for d in decisions),
             'diagnostics': diagnostics, 'by_regime': by_regime,
+            'mean_candidate_flow_gap': bootstrap_paired(gap_by_episode),
+            'true_short_choice_flow_regret': bootstrap_paired(short_regret_by_episode),
+            'true_short_vs_full_spearman': bootstrap_paired(rho_by_episode),
+            'paired_learned_minus_heuristic_rank_error': bootstrap_paired(paired_rank_error),
+            'paired_learned_minus_heuristic_short_primary_mae': bootstrap_paired(paired_primary_mae),
+            'reference_vs_rule_decision_counts': reference_outcomes,
+            'paired_true_short_minus_heuristic_flow': bootstrap_paired(short_vs_rule),
+            'paired_full_reference_minus_heuristic_flow': bootstrap_paired(full_vs_rule),
+            'joint_accuracy_episode_weighted': {name: {h: bootstrap_paired(rows) for h, rows in values.items()}
+                                                for name, values in joint_by_episode.items()},
             'paired_learned_minus_heuristic_flow': bootstrap_paired(paired_flows),
             'paired_learned_minus_heuristic_decision_regret': bootstrap_paired(paired_regret),
             'cpu_seconds': result['cpu_seconds']}
@@ -509,18 +576,25 @@ def run_experiment(profile):
                         no_fault = result
                     entry = {'metrics': metrics(result, case.max_ticks, elapsed, incident_end(case, pauses)),
                              'contention': contention_proxy(result, case),
-                             'incident': paired_incident(result, no_fault, case, incident)}
+                             'incident': paired_incident(result, no_fault, case, incident),
+                             'post_run_trace': post_run_trace(result),
+                             'paired_no_fault_trace': post_run_trace(no_fault) if incident else None}
                     if controller:
                         entry['model_steps'] = controller.model_steps
                         entry['fallbacks'] = controller.fallbacks
                         entry['decision_cpu_seconds'] = controller.cpu_seconds
+                        entry['online_decisions'] = controller.decisions
                     policies[name] = entry
                     if name == 'world': source_result, source_rows = result, rows
                 assert source_result is not None and source_rows is not None
                 selected = chosen_decisions(source_rows, incident)
                 analyses = [analyze_decision(case, seed, pauses, source_result, source_rows, row, label, params)
                             for row, label in selected]
-                cases_out.append({'layout': layout, 'seed': seed, 'regime': regime, 'config': case_config(case, pauses),
+                config = case_config(case, pauses)
+                config['station_position_keys'] = {sid: hashlib.sha256(
+                    f'{station.position[0]},{station.position[1]}'.encode()).hexdigest()[:16]
+                    for sid, station in case.stations.items()}
+                cases_out.append({'layout': layout, 'seed': seed, 'regime': regime, 'config': config,
                                   'incident': incident, 'design_basis': design, 'policies': policies, 'decisions': analyses})
                 print(f'{layout} seed={seed} {regime}: decisions={len(analyses)} ' +
                       (f"world_station_wait={policies['world']['incident']['service_wait_ticks']} " if incident else '') +

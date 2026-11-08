@@ -13,14 +13,21 @@ assert d['schedule_audit']['cross_split_duplicate_groups'] == 0
 assert d['horizon'] == 20 and d['candidate_budget'] == 8
 assert d['cpu_seconds'] < (240 if profile == 'pilot' else 600)
 assert s['comparable_decisions'] > 0
+assert s['paired_learned_minus_heuristic_flow']['clusters'] == (2 if profile == 'pilot' else 8)
+assert s['paired_true_short_minus_heuristic_flow']['clusters'] == (2 if profile == 'pilot' else 8)
+assert s['reference_vs_rule_decision_counts']['full_flow_reference']['worse'] == 0
 ordinary = near = 0
 meaningful = 0
 for c in d['cases']:
     assert set(c['policies']) == {'nearest', 'world', 'rule', 'rollout', 'heuristic', 'learned'}
     for policy in c['policies'].values():
         assert policy['metrics']['discrete_safety_violations'] == 0
+        trace = policy['post_run_trace']
+        assert len(trace['history']) == policy['metrics']['summary']['ticks'] + 1
+        assert 'never policy/training input' in trace['scope']
         incident = policy['incident']
         if incident:
+            assert policy['paired_no_fault_trace'] is not None
             assert incident['service_wait_ticks'] == policy['metrics']['summary']['station_unavailable_wait_ticks']
     for x in c['decisions']:
         assert x['candidate_evaluated'] <= 8
@@ -28,6 +35,9 @@ for c in d['cases']:
         assert all(y['discrete_safety_violations'] == 0 for y in x['candidates'])
         if not x['fully_comparable']:
             continue
+        best = x['choices']['full_flow_reference']
+        assert x['candidates'][best]['full_restricted_mean_flow_ticks'] == min(
+            y['full_restricted_mean_flow_ticks'] for y in x['candidates'])
         ordinary += 'ordinary' in x['sampling_labels'].split(',')
         near += any(y in x['sampling_labels'].split(',') for y in ('before','during','after'))
         meaningful += x['full_flow_gap_ticks'] >= d['meaningful_mean_flow_gap_ticks']

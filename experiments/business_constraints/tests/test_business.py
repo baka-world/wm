@@ -16,7 +16,7 @@ from lab_transport.paper_reuse.ortools_dispatch import CPSATDispatcher
 from lab_transport.paper_reuse.pets_service import PETSRuleDynamics,ServiceDistribution
 from lab_transport.service_dynamics import RuleMotionNeuralService
 from experiments.service_value.counterfactual import load_pr9_model
-from experiments.business_constraints.run import lifecycle_audit
+from experiments.business_constraints.run import lifecycle_audit,run_policy
 from lab_transport.simulation import Simulator
 from lab_transport.torch_structured_adapter import ProgressAwareRule
 from lab_transport.transition_schema import Assignment
@@ -148,6 +148,21 @@ class BusinessConstraintsTests(unittest.TestCase):
             solver=BusinessCPSAT(Geometry(case.scenario.grid),case.rules,seed=1)
             values.append((current,solver.proposals(current,candidates_for(current))))
         self.assertEqual(values[0],values[1])
+
+    def test_policy_randomness_is_independent_of_simulator_seed(self):
+        import torch
+        torch.set_num_threads(1)
+        base,cfg,_=fixture(1)
+        noisy=replace(base,stations={key:replace(station,jitter_ticks=2)
+                                     for key,station in base.stations.items()})
+        business=compile_scenario(noisy,cfg)
+        outputs=[]
+        for environment_seed in (11,17):
+            _,rows,metrics=run_policy(business,environment_seed,'cpsat_pets',None,None,
+                                      capture=True,policy_seed=20261109)
+            outputs.append((rows[0].observation,metrics['decisions'][0]['plans'],
+                            metrics['decisions'][0]['selected']))
+        self.assertEqual(outputs[0],outputs[1])
 
     def test_blocked_service_does_not_gain_fake_progress_in_prediction(self):
         _,_,business=fixture(1);rows=[]

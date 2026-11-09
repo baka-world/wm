@@ -12,6 +12,7 @@ def verify(root):
         assert data['profile']==profile and len(data['cases'])==expected
         assert data['scenario_audit']['cross_seed_duplicates']==0
         assert data['scenario_audit']['previous_source_hash_overlap']==0
+        assert data['scenario_audit']['planner_seed_equals_environment'] is False
         for case in data['cases']:
             for name,m in case['methods'].items():
                 assert m['jobs_completed']==m['jobs'] and m['status']=='completed'

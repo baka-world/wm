@@ -41,8 +41,10 @@
     "workflow_parallel": {"capacity_A": 2, "capacity_B": 2, "capacity_C": 1, "single_stage_only": false},
     "workflow_outage": {"capacity_A": 1, "capacity_B": 1, "capacity_C": 1, "single_stage_only": false, "outage": {"station": "B0", "start": 10, "end": 23}}
   },
+  "planner_seed": 20261109,
   "seeds": {"development": {"empty8": [61000], "random32": [62000]},
-            "confirmation": {"empty8": [65000, 65001], "random32": [66000, 66001]}},
+            "confirmation": {"empty8": [67000, 67005], "random32": [68000, 68001]}},
   "previous_confirmation_pilot": {"empty8": [63000, 63001], "random32": [64001, 64002]},
+  "previous_shared_rng_confirmation": {"empty8": [65000, 65001], "random32": [66000, 66001]},
   "max_ticks": 500
 }

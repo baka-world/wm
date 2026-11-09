@@ -41,7 +41,8 @@ def evaluate(reference,output):
         if case['config']['jobs']!=make_case(config,layout,seed,regime)[1]['jobs']:
             raise ValueError('scenario task configuration changed')
         for origin in ORIGINS:
-            factual,rows,metrics=run_policy(business,seed,origin,network,info['threshold'],capture=True)
+            factual,rows,metrics=run_policy(business,seed,origin,network,info['threshold'],capture=True,
+                                           policy_seed=config['planner_seed'])
             expected=case['methods'][origin]
             chosen=lambda m:[(x['tick'],x['selected']) for x in m['decisions']]
             if (metrics['job_outcomes']!=expected['job_outcomes'] or chosen(metrics)!=chosen(expected) or
@@ -51,7 +52,7 @@ def evaluate(reference,output):
             for index,row in enumerate(rows):
                 obs=enriched[index].observation;current=candidates_for(obs)
                 if not row.assignments or len(current)<2:continue
-                solver=BusinessCPSAT(geo,business.rules,seed=seed,candidate_limit=4,time_limit_seconds=.5)
+                solver=BusinessCPSAT(geo,business.rules,seed=config['planner_seed'],candidate_limit=4,time_limit_seconds=.5)
                 plans=solver.proposals(obs,current)
                 if solver.truncated or solver.fallbacks:
                     raise ValueError('same-state candidate solver truncated or fell back')
@@ -59,7 +60,7 @@ def evaluate(reference,output):
                 predictions={}
                 for name in MODELS:
                     policy=BusinessPolicy('cpsat_'+name,geo,business.rules,BusinessObserver(),
-                        make_model(name,geo,network,info['threshold'],seed),seed=seed)
+                        make_model(name,geo,network,info['threshold'],config['planner_seed']),seed=config['planner_seed'])
                     scored=policy.evaluate(obs,plans)
                     choice=min(range(len(plans)),key=lambda i:(scored[i]['score'],i))
                     predictions[name]={'choice':choice,'scores':[r['score'] for r in scored]}

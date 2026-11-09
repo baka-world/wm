@@ -116,12 +116,12 @@ def summarize_result(result,business,policy):
       'decisions':policy.log,'solver_log':solver.log if solver else [],'job_outcomes':rows}
 
 
-def run_policy(business,seed,name,network,threshold,capture=False):
+def run_policy(business,seed,name,network,threshold,capture=False,*,policy_seed):
     geo=Geometry(business.scenario.grid);observer=BusinessObserver()
     model_kind={'nearest':None,'nearest_rollout':'rule','cpsat_rule':'rule',
                 'cpsat_pets':'pets','cpsat_structured':'structured'}[name]
-    model=make_model(model_kind,geo,network,threshold,seed) if model_kind else None
-    policy=BusinessPolicy(name,geo,business.rules,observer,model,seed=seed)
+    model=make_model(model_kind,geo,network,threshold,policy_seed) if model_kind else None
+    policy=BusinessPolicy(name,geo,business.rules,observer,model,seed=policy_seed)
     rows=[]
     result=BusinessSimulator(business,'world',seed,collect_metrics=True).run(
         on_transition=rows.append if capture else None,dispatch_policy=policy,on_observation=observer.observe)
@@ -136,7 +136,7 @@ def rich_rows(rows):
     return out
 
 
-def state_prediction(rows,business,seed,network,threshold):
+def state_prediction(rows,business,policy_seed,network,threshold):
     geo=Geometry(business.scenario.grid);out={}
     for h in (1,3,5):
         windows,coverage=eligible_windows(rows,h);windows=windows[::5]
@@ -144,7 +144,7 @@ def state_prediction(rows,business,seed,network,threshold):
         for i,window in enumerate(windows):
             initial=window[0].observation;actual=window[-1].next_observation
             for name in MODELS:
-                model=CapacityDynamics(make_model(name,geo,network,threshold,seed+h*10000+i),business.rules)
+                model=CapacityDynamics(make_model(name,geo,network,threshold,policy_seed+h*10000+i),business.rules)
                 state=initial
                 for step,row in enumerate(window):
                     nxt=model.predict_next(state,row.assignments if step==0 else ())
@@ -185,7 +185,7 @@ def replay_branch(business,seed,factual,rows,tick,plan):
             'status':replay['summary']['status'],'capacity_wait_ticks':audit['capacity_wait_ticks']}
 
 
-def same_state(factual,rows,rich,business,seed,network,threshold):
+def same_state(factual,rows,rich,business,seed,network,threshold,*,policy_seed):
     geo=Geometry(business.scenario.grid)
     eligible=[i for i,row in enumerate(rows) if row.assignments and len(candidates_for(row.observation))>=2]
     if not eligible:return []
@@ -193,13 +193,13 @@ def same_state(factual,rows,rich,business,seed,network,threshold):
     results=[]
     for index in indices:
         obs=rich[index].observation;current=candidates_for(obs)
-        solver=BusinessCPSAT(geo,business.rules,seed=seed,candidate_limit=4,time_limit_seconds=.5)
+        solver=BusinessCPSAT(geo,business.rules,seed=policy_seed,candidate_limit=4,time_limit_seconds=.5)
         plans=solver.proposals(obs,current)
         nearest,_=batch_candidates(obs,current,geo,5);nearest=tuple(x for x in nearest if x)
         forecasts={}
         for name in MODELS:
             policy=BusinessPolicy('cpsat_'+name,geo,business.rules,BusinessObserver(),
-                 make_model(name,geo,network,threshold,seed),seed=seed)
+                 make_model(name,geo,network,threshold,policy_seed),seed=policy_seed)
             records=policy.evaluate(obs,plans)
             choice=min(range(len(plans)),key=lambda i:(records[i]['score'],i))
             forecasts[name]={'choice':choice,'scores':[r['score'] for r in records],
@@ -293,12 +293,14 @@ def run(profile,output):
                 business,assumptions=make_case(config,layout,seed,regime)
                 values={};factual=None;rows=None
                 for name in METHODS:
-                    result,transitions,metric=run_policy(business,seed,name,network,info['threshold'],capture=name=='nearest')
+                    result,transitions,metric=run_policy(business,seed,name,network,info['threshold'],
+                                                        capture=name=='nearest',policy_seed=config['planner_seed'])
                     values[name]=metric
                     if name=='nearest':factual,rows=result,transitions
                 rich=rich_rows(rows)
-                state=state_prediction(rich,business,seed,network,info['threshold'])
-                diagnostic=same_state(factual,rows,rich,business,seed,network,info['threshold'])
+                state=state_prediction(rich,business,config['planner_seed'],network,info['threshold'])
+                diagnostic=same_state(factual,rows,rich,business,seed,network,info['threshold'],
+                                      policy_seed=config['planner_seed'])
                 cases.append({'layout':layout,'seed':seed,'regime':regime,'config':assumptions,
                               'methods':values,'state_prediction':state,'same_state':diagnostic})
                 print(profile,layout,seed,regime,'done',flush=True)

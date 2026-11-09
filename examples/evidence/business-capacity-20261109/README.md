@@ -1,5 +1,7 @@
 # 多阶段与资源容量对照：完整证据
 
+**历史批次：**本目录保存隔离策略与环境随机数之前的结果；代码未使用种子读取未来，但为避免随机流关联，最终确认改用独立随机流和新的环境种子。本目录既有原始数据未被覆盖，[历史报告](../../../docs/business-constraints-shared-rng-pilot.md)记录当时的结果；`SHA256SUMS.pre-rng-isolation` 保留原有哈希清单。
+
 实验设定、限制及结果见 [报告](../../../docs/business-constraints-results.md) 和 [冻结协议](../../../docs/business-constraints-protocol.md)。配置中的所有设备容量、流程、服务时间与故障均为合成仿真假设。原始轨迹不包含可以在线使用的未来事实；反事实分支及其离线结果只能用于事后诊断。
 
 * `scenario-config.json`：最终固定配置；与源码配置一致。

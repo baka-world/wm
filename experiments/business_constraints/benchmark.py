@@ -59,14 +59,21 @@ def make_case(config,layout_name,seed,regime_name):
 
 def audit(config):
     signatures={}
-    for layout,seeds in config['previous_confirmation_pilot'].items():
-        for seed in seeds:
-            for regime in ('single_compatible','workflow_serial'):
-                _,business=make_case(config,layout,seed,regime)
-                key=(layout,tuple((j['workflow'],j['release_tick']) for j in business['jobs']))
-                signatures.setdefault(key,[]).append(('prior_pilot',seed,regime))
+    planner_seed=config['planner_seed']
+    if not isinstance(planner_seed,int) or isinstance(planner_seed,bool) or planner_seed<0:
+        raise ValueError('planner seed must be a nonnegative integer')
+    all_seeds=[]
+    for prior_name in ('previous_confirmation_pilot','previous_shared_rng_confirmation'):
+        for layout,seeds in config[prior_name].items():
+            all_seeds.extend(seeds)
+            for seed in seeds:
+                for regime in ('single_compatible','workflow_serial'):
+                    _,business=make_case(config,layout,seed,regime)
+                    key=(layout,tuple((j['workflow'],j['release_tick']) for j in business['jobs']))
+                    signatures.setdefault(key,[]).append((prior_name,seed,regime))
     for profile,maps in config['seeds'].items():
         for layout,seeds in maps.items():
+            all_seeds.extend(seeds)
             for seed in seeds:
                 # Serial, parallel and outage share the same task table by design.
                 for regime in ('single_compatible','workflow_serial'):
@@ -75,6 +82,7 @@ def audit(config):
                     signatures.setdefault(key,[]).append((profile,seed,regime))
     conflicts=[v for v in signatures.values() if len(v)>1]
     if conflicts:raise ValueError(f'duplicate new task patterns: {conflicts}')
+    if planner_seed in all_seeds:raise ValueError('planner seed must be independent of environment seeds')
     prior_files=('examples/evidence/service-dynamics-20261109/dataset-manifest.json',
                  'examples/evidence/service-decision-value-20261109/scenario-config.json',
                  'examples/evidence/paper-reuse-integration-20261109/scenario-config.json')
@@ -85,4 +93,5 @@ def audit(config):
         raise ValueError('benchmark map hash overlaps previous data source')
     return {'unique_layout_job_patterns':len(signatures),'cross_seed_duplicates':0,
             'previous_source_hash_overlap':0,
+            'planner_seed':planner_seed,'planner_seed_equals_environment':False,
             'old_pr8_pr11_note':'PR #8–#11 used hospital/clinic maps; these exact benchmark maps differ.'}

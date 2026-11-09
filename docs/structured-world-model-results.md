@@ -40,3 +40,14 @@
 面向论文结论，仍需补充故障确实影响服务且彼此独立的事实轨迹，确认服务进度遥测的可获得性，评估少机器人/多机器人和未见地图，保留进度修正规则作为强基线；长期代理未通过独立确认，应继续与原评分并列报告，在固定独立数据上检验更适合实际任务的评价，不以确认集反复调权重。无有效处理遥测时，模型只能基于不完整历史估计，真实剩余时间可能不可识别。现有训练集的短故障暴露不足，因此 GPU 工程验收并不等于异常调度效果已得到验证。
 
 完整反事实记录为 [开发集压缩 JSON](../examples/evidence/structured-world-model/long-score-development-raw.json.gz) 与 [独立确认集压缩 JSON](../examples/evidence/structured-world-model/long-score-test-raw.json.gz)，逐例包含场景参数、动作、结果、短期状态和评分；输出不重新分发地图坐标。更多运行环境与源码哈希见同目录的汇总、清单和日志。
+
+## GitHub Actions 验收记录
+
+对提交 `bd31431` 的 PR 检查，四项均在标准 GitHub-hosted CPU runner 上成功：
+
+- [结构化世界模型 CPU 验收](https://github.com/lieuyimo/wm/actions/runs/42554437148)：105 项回归、训练与恢复、三个闭环，以及两套预设种子评分均通过；[完整日志](../validation/logs/structured-action-42554437148.log.gz)。
+- [完整样本转运原型回归](https://github.com/lieuyimo/wm/actions/runs/42554437147)：[完整日志](../validation/logs/prototype-regression-42554437147.log.gz)。
+- [第一轮决策价值回归](https://github.com/lieuyimo/wm/actions/runs/42554437141)：[完整日志](../validation/logs/round1-regression-42554437141.log.gz)。
+- [第二轮异常与决策价值回归](https://github.com/lieuyimo/wm/actions/runs/42554437169)：[完整日志](../validation/logs/round2-regression-42554437169.log.gz)。
+
+这些日志随后作为不改模型与实验代码的独立提交归档。云端 Python 3.11 与本地 Python 3.12 的小模型训练结果略有数值差异：clinic 一步联合正确率分别为 0.660、0.655；均只是功能验收前缀，不能视为泛化效果差异。最终提交的检查状态以 PR 页面为准。

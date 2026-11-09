@@ -1,0 +1,30 @@
+{
+  "scope": "Synthetic integration smoke test, not a clinical or comparative evaluation.",
+  "checkpoint": "epoch-0002.pt",
+  "checkpoint_sha256": "c34c4dca044e91ac03af056571fc24b4322133c0fef22c9ba6de527d5512c224",
+  "dataset_manifest_sha256": "eb688b2cc35679aaaf7d5c0f8b2953257f7e5e2ddacba635ed34f22b6f790448",
+  "adapter": "lab_transport.torch_structured_adapter",
+  "adapter_source_sha256": "30f994c49e28e8bcd8bd2e64b65696000104910f86444d2e0a8794ecf46ecd09",
+  "device": "cpu",
+  "horizon": 3,
+  "candidate_budget_per_dispatch": 4,
+  "dispatch_calls": 6,
+  "candidate_evaluations": 12,
+  "model_steps": 36,
+  "fallbacks": 0,
+  "model_process_cpu_seconds": 0.010556582999999842,
+  "discrete_safety_violations": 0,
+  "summary": {
+    "status": "completed",
+    "sample_count": 6,
+    "completed_count": 6,
+    "deadline_sample_count": 0,
+    "late_count": null,
+    "late_completed_count": null,
+    "overdue_unfinished_count": null,
+    "ticks": 244,
+    "mean_completion_ticks": 114.0,
+    "forecast_mae_ticks": null,
+    "blocked_move_attempts": 54
+  }
+}

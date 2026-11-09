@@ -56,11 +56,16 @@ def evaluate(dataset: Path, checkpoint_path: Path, output: Path, *, device_name:
             topology = json.loads(_path(dataset, manifest["maps"][layout]["file"]).read_text(encoding="utf-8"))
             geometries[layout] = geometry_from_map(topology)
         rows = []
+        observer = adapter.make_observer() if hasattr(adapter, "make_observer") else None
         with _path(dataset, entry["file"]).open(encoding="utf-8") as handle:
             for line in handle:
                 value = json.loads(line)
-                rows.append(Transition(observation_from_dict(value["observation"]),
-                    tuple(Assignment(**a) for a in value["assignments"]), observation_from_dict(value["next_observation"]),
+                current = observation_from_dict(value["observation"])
+                future = observation_from_dict(value["next_observation"])
+                if observer is not None:
+                    current, future = observer.observe(current), observer.observe(future)
+                rows.append(Transition(current,
+                    tuple(Assignment(**a) for a in value["assignments"]), future,
                     value["next_boundary"], value["termination"]))
                 counts[split] += 1
                 if limit_per_split is not None and counts[split] >= limit_per_split:
@@ -69,7 +74,8 @@ def evaluate(dataset: Path, checkpoint_path: Path, output: Path, *, device_name:
                           entry["episode_status"], entry["completed_tasks"], rows)
         def factory(geometry, parameters, mode):
             return adapter.build_dynamics(geometry, network, device)
-        cases.append(evaluate_episode(episode, geometries[layout], None, factory))
+        extra_models = adapter.build_baselines(geometries[layout]) if hasattr(adapter, 'build_baselines') else None
+        cases.append(evaluate_episode(episode, geometries[layout], None, factory, extra_models))
     if any(not counts[name] for name in splits):
         raise ValueError("a requested evaluation split has no transitions")
     summaries = {split: aggregate(cases, split) for split in splits}

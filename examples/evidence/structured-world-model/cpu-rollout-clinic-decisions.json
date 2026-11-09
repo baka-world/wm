@@ -1,0 +1,134 @@
+[
+  {
+    "tick": 0,
+    "candidates_available": 2,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S01",
+        "score": 7,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          451,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S01",
+        "score": 10,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          389,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 16,
+    "candidates_available": 2,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S02",
+        "score": 5,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          384,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S02",
+        "score": 10,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          389,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 32,
+    "candidates_available": 2,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S03",
+        "score": 15,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          444,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S03",
+        "score": 20,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          387,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 40,
+    "candidates_available": 1,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R2",
+        "sample_id": "S04",
+        "score": 25,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          387,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 55,
+    "candidates_available": 1,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S05",
+        "score": 11,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          405,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 77,
+    "candidates_available": 1,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R2",
+        "sample_id": "S06",
+        "score": 12,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          394,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  }
+]

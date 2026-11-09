@@ -23,7 +23,7 @@ from .torch_training import load_adapter, load_checkpoint, resolve_device, runti
 
 class RolloutPolicy:
     """Rank a bounded list of available single assignments using model rollout."""
-    def __init__(self, dynamics, geometry, horizon: int = 3, budget: int = 8):
+    def __init__(self, dynamics, geometry, horizon: int = 3, budget: int = 8, observer=None):
         if not 1 <= horizon <= 20 or not 1 <= budget <= 100:
             raise ValueError("horizon or candidate budget is outside the smoke-test range")
         self.dynamics, self.geometry = dynamics, geometry
@@ -31,8 +31,11 @@ class RolloutPolicy:
         self.log = []
         self.model_steps = 0
         self.fallbacks = 0
+        self.observer = observer
 
     def __call__(self, observation, candidates):
+        if self.observer is not None:
+            observation = self.observer.observe(observation)
         records = []
         for action in candidates[:self.budget]:
             try:
@@ -88,8 +91,10 @@ def run(checkpoint_path: Path, output: Path, scenario, *, adapter_name: str | No
     network = adapter.build_model()
     network.load_state_dict(checkpoint["model_state"])
     geometry = Geometry(scenario.grid)
-    policy = RolloutPolicy(adapter.build_dynamics(geometry, network, device), geometry, horizon, budget)
-    result = Simulator(scenario, "world", seed).run(dispatch_policy=policy)
+    observer = adapter.make_observer() if hasattr(adapter, "make_observer") else None
+    policy = RolloutPolicy(adapter.build_dynamics(geometry, network, device), geometry, horizon, budget, observer)
+    result = Simulator(scenario, "world", seed).run(dispatch_policy=policy,
+                                                       on_observation=observer.observe if observer else None)
     evidence = {"scope": "Synthetic integration smoke test, not a clinical or comparative evaluation.",
                 "checkpoint": checkpoint_path.name,
                 "checkpoint_sha256": hashlib.sha256(checkpoint_path.read_bytes()).hexdigest(),
@@ -99,6 +104,7 @@ def run(checkpoint_path: Path, output: Path, scenario, *, adapter_name: str | No
                 "horizon": horizon, "candidate_budget_per_dispatch": budget,
                 "dispatch_calls": len(policy.log), "candidate_evaluations": sum(len(x["candidates_evaluated"]) for x in policy.log),
                 "model_steps": policy.model_steps, "fallbacks": policy.fallbacks,
+                "model_process_cpu_seconds": getattr(policy.dynamics, "process_cpu_seconds", None),
                 "discrete_safety_violations": discrete_safety_violations(result),
                 "summary": result["summary"]}
     output.mkdir(parents=True, exist_ok=True)

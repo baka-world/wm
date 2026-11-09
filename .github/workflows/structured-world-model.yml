@@ -1,0 +1,61 @@
+name: Structured world model CPU validation
+
+on:
+  push:
+    branches: [main, 'feature/**']
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'tools/structured_cpu_acceptance.sh'
+      - '.github/workflows/structured-world-model.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'tools/structured_cpu_acceptance.sh'
+      - '.github/workflows/structured-world-model.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cpu-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU-only PyTorch
+        run: python -m pip install -r requirements-torch-cpu.txt
+      - name: State, model, resume and counterfactual regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Small CPU training, held-out prediction and simulation loops
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 360s bash tools/structured_cpu_acceptance.sh "$RUNNER_TEMP/structured-acceptance" 2>&1 | tee "$RUNNER_TEMP/structured-acceptance.log"
+      - name: Predeclared development and independent confirmation scores
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 240s python -m lab_transport.long_score_experiment --profile development --output "$RUNNER_TEMP/long-score-development" 2>&1 | tee "$RUNNER_TEMP/long-score-development.log"
+          timeout 240s python -m lab_transport.long_score_experiment --profile test --output "$RUNNER_TEMP/long-score-test" 2>&1 | tee "$RUNNER_TEMP/long-score-test.log"
+          python tests/check_long_score.py "$RUNNER_TEMP/long-score-development" development
+          python tests/check_long_score.py "$RUNNER_TEMP/long-score-test" test
+      - name: Preserve CPU logs and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structured-world-model-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/structured-acceptance.log
+            ${{ runner.temp }}/structured-acceptance/train/
+            ${{ runner.temp }}/structured-acceptance/evaluate/
+            ${{ runner.temp }}/structured-acceptance/rollout-*/
+            ${{ runner.temp }}/long-score-*/
+            ${{ runner.temp }}/long-score-*.log
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,137 @@
+{
+  "cases": 20,
+  "comparable_decisions": 52,
+  "mean_candidate_gap_ticks": {
+    "clusters": 4,
+    "mean": 5.5125,
+    "ci95": [
+      4.916666666666666,
+      6.108333333333333
+    ],
+    "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+    "resamples": 2000,
+    "seed": 20261109
+  },
+  "mean_regret_ticks": {
+    "original20": {
+      "clusters": 4,
+      "mean": 0.5555555555555551,
+      "ci95": [
+        0.4111111111111105,
+        0.6999999999999997
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "long5": {
+      "clusters": 4,
+      "mean": 0.7694444444444442,
+      "ci95": [
+        0.6055555555555552,
+        0.9333333333333331
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "long20": {
+      "clusters": 4,
+      "mean": 0.7652777777777775,
+      "ci95": [
+        0.5361111111111108,
+        0.9944444444444442
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "rule_long20": {
+      "clusters": 4,
+      "mean": 0.923611111111111,
+      "ci95": [
+        0.8166666666666667,
+        1.0305555555555552
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "linear_long20": {
+      "clusters": 4,
+      "mean": 1.1875000000000004,
+      "ci95": [
+        1.052777777777779,
+        1.3222222222222217
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "progress_rule_long20": {
+      "clusters": 4,
+      "mean": 0.9041666666666665,
+      "ci95": [
+        0.7777777777777776,
+        1.0305555555555552
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    }
+  },
+  "long20_minus_original20_regret_ticks": {
+    "clusters": 4,
+    "mean": 0.20972222222222242,
+    "ci95": [
+      -0.06388888888888881,
+      0.48333333333333367
+    ],
+    "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+    "resamples": 2000,
+    "seed": 20261109
+  },
+  "by_regime_case_mean_regret_ticks": {
+    "normal": {
+      "original20": 0.3958333333333366,
+      "long5": 0.3958333333333366,
+      "long20": 0.3958333333333366,
+      "rule_long20": 0.3958333333333366,
+      "linear_long20": 0.3958333333333366,
+      "progress_rule_long20": 0.3958333333333366
+    },
+    "burst": {
+      "original20": 0.2291666666666643,
+      "long5": 0.43749999999999734,
+      "long20": 1.3333333333333313,
+      "rule_long20": 1.4999999999999973,
+      "linear_long20": 1.5416666666666652,
+      "progress_rule_long20": 1.4999999999999973
+    },
+    "outage_processing": {
+      "original20": 1.0277777777777775,
+      "long5": 1.055555555555556,
+      "long20": 0.6944444444444452,
+      "rule_long20": 1.1944444444444453,
+      "linear_long20": 2.1666666666666665,
+      "progress_rule_long20": 1.0972222222222228
+    },
+    "outage_arrival": {
+      "original20": 0.2499999999999988,
+      "long5": 0.44444444444444403,
+      "long20": 0.41666666666666546,
+      "rule_long20": 0.5833333333333334,
+      "linear_long20": 0.4722222222222226,
+      "progress_rule_long20": 0.5833333333333334
+    },
+    "motion_delay": {
+      "original20": 0.8749999999999982,
+      "long5": 1.5138888888888868,
+      "long20": 0.9861111111111088,
+      "rule_long20": 0.9444444444444423,
+      "linear_long20": 1.3611111111111107,
+      "progress_rule_long20": 0.9444444444444423
+    }
+  },
+  "note": "Equal decision weighting within case, equal case weighting within seed cluster; layout-stratified seed bootstrap."
+}

@@ -2,7 +2,7 @@ name: Structured world model CPU validation
 
 on:
   push:
-    branches: [main, 'feature/**']
+    branches: [main]
     paths:
       - 'lab_transport/**'
       - 'tests/**'

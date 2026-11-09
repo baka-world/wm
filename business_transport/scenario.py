@@ -56,11 +56,9 @@ def compile_scenario(base: Scenario, config: dict) -> BusinessScenario:
         if any(r.id==rid for r in resources):
             raise ValueError('resource IDs must be unique')
         resources.append(Resource(rid,cap,ports));covered.update(ports)
-    for sid in base.stations:
-        if sid not in covered:
-            name=f'station:{sid}'
-            if any(r.id==name for r in resources):raise ValueError('resource ID collides with station default')
-            resources.append(Resource(name,1,(sid,)))
+    missing=set(base.stations)-covered
+    if missing:
+        raise ValueError(f'every business station needs explicitly configured capacity: {sorted(missing)}')
     workflows={}
     for name,stages in config.get('workflows',{}).items():
         if not isinstance(name,str) or not name or not isinstance(stages,list) or not stages:

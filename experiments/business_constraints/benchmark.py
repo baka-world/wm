@@ -49,15 +49,22 @@ def make_case(config,layout_name,seed,regime_name):
     types=list(first)+[rng.choice(allowed) for _ in config['release_ticks'][2:]]
     jobs=[{'id':f'S{i+1:02}','workflow':name,'release_tick':release,'deadline_tick':None}
           for i,(name,release) in enumerate(zip(types,config['release_ticks']))]
+    resources=[{'id':entry['id'],'stations':entry['stations'],'capacity':regime[entry['capacity_setting']]}
+               for entry in config['resource_groups']]
     business={'name':f'{layout_name} {regime_name} seed={seed} (synthetic roles)',
-        'resources':[{'id':'collection','stations':['A0','A1'],'capacity':regime['capacity_A']},
-                     {'id':'processing','stations':['B0','B1'],'capacity':regime['capacity_B']}],
+        'resources':resources,
         'workflows':config['workflows'],'jobs':jobs,'max_ticks':config['max_ticks']}
     return compile_scenario(base,business),business
 
 
 def audit(config):
     signatures={}
+    for layout,seeds in config['previous_confirmation_pilot'].items():
+        for seed in seeds:
+            for regime in ('single_compatible','workflow_serial'):
+                _,business=make_case(config,layout,seed,regime)
+                key=(layout,tuple((j['workflow'],j['release_tick']) for j in business['jobs']))
+                signatures.setdefault(key,[]).append(('prior_pilot',seed,regime))
     for profile,maps in config['seeds'].items():
         for layout,seeds in maps.items():
             for seed in seeds:

@@ -29,7 +29,8 @@ def fixture(capacity=1):
     robots=(RobotSpec('R1',(1,1),(0,0)),RobotSpec('R2',(1,3),(0,4)),RobotSpec('R3',(0,2),(0,2)))
     base=Scenario('unit',Grid(7,5,frozenset()),stations,robots,(),0,150)
     config={'resources':[{'id':'A','stations':['A0','A1'],'capacity':capacity},
-                         {'id':'B','stations':['B0','B1'],'capacity':2}],
+                         {'id':'B','stations':['B0','B1'],'capacity':2},
+                         {'id':'station:C','stations':['C'],'capacity':1}],
       'workflows':{'w0':[{'pickup':'A0','dropoff':'B0'},{'pickup':'B0','dropoff':'C'}],
                    'w1':[{'pickup':'A1','dropoff':'B1'},{'pickup':'B1','dropoff':'C'}]},
       'jobs':[{'id':'J1','workflow':'w0','release_tick':0},{'id':'J2','workflow':'w1','release_tick':0}],
@@ -65,6 +66,8 @@ class BusinessConstraintsTests(unittest.TestCase):
         base,cfg,_=fixture()
         with self.assertRaisesRegex(ValueError,'capacity'):
             compile_scenario(base,{**cfg,'resources':[{'id':'bad','stations':['A0'],'capacity':2}]})
+        with self.assertRaisesRegex(ValueError,'explicitly configured capacity'):
+            compile_scenario(base,{**cfg,'resources':cfg['resources'][:-1]})
         with self.assertRaisesRegex(ValueError,'teleporting'):
             compile_scenario(base,{**cfg,'workflows':{'w0':[{'pickup':'A0','dropoff':'B0'},
                                                {'pickup':'A1','dropoff':'C'}],'w1':cfg['workflows']['w1']}})
@@ -91,6 +94,19 @@ class BusinessConstraintsTests(unittest.TestCase):
         self.assertEqual(audit['peaks']['A'],2)
         self.assertEqual(audit['violations'],[])
         self.assertEqual(result['summary']['status'],'completed')
+
+    def test_three_configured_stages_release_only_after_predecessor(self):
+        base,cfg,_=fixture(1)
+        route=cfg['workflows']['w0']+[{'pickup':'C','dropoff':'B1'}]
+        data={**cfg,'workflows':{**cfg['workflows'],'w0':route},
+              'jobs':[{'id':'J1','workflow':'w0','release_tick':0}]}
+        business=compile_scenario(base,data)
+        result,_=run_nearest(business)
+        stages={s['id']:s for s in result['samples']}
+        self.assertEqual(result['summary']['status'],'completed')
+        for left,right in zip(business.jobs[0]['stages'],business.jobs[0]['stages'][1:]):
+            self.assertEqual(stages[left]['completed_tick'],stages[right]['release_tick'])
+            self.assertGreaterEqual(stages[right]['assigned_tick'],stages[left]['completed_tick'])
 
     def test_cpsat_enforces_capacity_and_precedence(self):
         _,_,business=fixture(1);states=[]

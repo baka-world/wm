@@ -16,6 +16,7 @@ from lab_transport.paper_reuse.ortools_dispatch import CPSATDispatcher
 from lab_transport.paper_reuse.pets_service import PETSRuleDynamics,ServiceDistribution
 from lab_transport.service_dynamics import RuleMotionNeuralService
 from experiments.service_value.counterfactual import load_pr9_model
+from experiments.business_constraints.run import lifecycle_audit
 from lab_transport.simulation import Simulator
 from lab_transport.torch_structured_adapter import ProgressAwareRule
 from lab_transport.transition_schema import Assignment
@@ -186,6 +187,11 @@ class BusinessConstraintsTests(unittest.TestCase):
                 {'type':'service_finished','tick':1,'robot_id':'R2','sample_id':'s2','phase':'to_pickup','station_id':'A1'}]
         result={'events':events,'summary':{'ticks':1}}
         self.assertTrue(resource_audit(result,business.rules)['violations'])
+
+    def test_lifecycle_auditor_detects_invalid_reverse_transition(self):
+        snapshots=[{'tick':0,'robots':[],'samples':[{'id':'S','status':'completed','robot_id':None}]},
+                   {'tick':1,'robots':[],'samples':[{'id':'S','status':'waiting','robot_id':None}]}]
+        self.assertEqual(lifecycle_audit(snapshots)[0]['type'],'invalid_status_transition')
 
     def test_nearest_rollout_and_cpsat_have_bounded_legal_candidates(self):
         _,_,business=fixture(1)

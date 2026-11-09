@@ -34,6 +34,33 @@ MODELS=('rule','pets','structured')
 CHECKPOINT=Path('examples/evidence/paper-reuse-integration-20261109/pets-service-cpu.pt')
 
 
+def lifecycle_audit(history):
+    """Check actual snapshot status transitions and robot/sample relations."""
+    allowed={'unreleased':{'unreleased','waiting','assigned','in_transit'},
+             'waiting':{'waiting','assigned','in_transit'},'assigned':{'assigned','in_transit'},
+             'in_transit':{'in_transit','completed'},'completed':{'completed'}}
+    issues=[];previous={}
+    for snapshot in history:
+        samples={s['id']:s for s in snapshot['samples']}
+        robots={r['id']:r for r in snapshot['robots']}
+        for sid,sample in samples.items():
+            prior=previous.get(sid)
+            if prior is not None and sample['status'] not in allowed.get(prior,set()):
+                issues.append({'tick':snapshot['tick'],'sample_id':sid,'type':'invalid_status_transition'})
+            if sample['status'] in ('assigned','in_transit'):
+                robot=robots.get(sample['robot_id'])
+                if robot is None or robot['task_id']!=sid:
+                    issues.append({'tick':snapshot['tick'],'sample_id':sid,'type':'robot_sample_mismatch'})
+        for robot in robots.values():
+            if robot['task_id'] is not None:
+                sample=samples.get(robot['task_id'])
+                expected={'to_pickup':'assigned','to_dropoff':'in_transit'}.get(robot['phase'])
+                if sample is None or sample['status']!=expected or sample['robot_id']!=robot['id']:
+                    issues.append({'tick':snapshot['tick'],'robot_id':robot['id'],'type':'robot_phase_mismatch'})
+        previous={sid:s['status'] for sid,s in samples.items()}
+    return issues
+
+
 def make_model(name,geometry,network,threshold,seed):
     if name=='rule':return ProgressAwareRule(geometry)
     if name=='pets':return PETSRuleDynamics(geometry,ServiceDistribution.load(CHECKPOINT),seed)
@@ -43,7 +70,7 @@ def make_model(name,geometry,network,threshold,seed):
 
 def summarize_result(result,business,policy):
     by_id={s['id']:s for s in result['samples']}
-    rows=[];violations=[]
+    rows=[];violations=lifecycle_audit(result['history'])
     for job in business.jobs:
         stages=[by_id[sid] for sid in job['stages']]
         completed=all(s['completed_tick'] is not None for s in stages)

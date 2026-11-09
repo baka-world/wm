@@ -1,0 +1,70 @@
+{
+  "profile": "pilot",
+  "episodes": 10,
+  "comparable_decisions": 24,
+  "candidate_branches": 121,
+  "truncated_decisions": 0,
+  "diagnostics": {
+    "A_near_equal_candidates": 2,
+    "B_predicted_short_ranking_has_errors": 13,
+    "B_heuristic_scores_all_equal": 6,
+    "B_learned_scores_all_equal": 13,
+    "C_true_short_choice_full_regret": 12,
+    "D_learning_improves_short_error_rank_and_flow": 0
+  },
+  "by_regime": {
+    "normal": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 3,
+      "mean_gap_ticks": 4.041666666666664,
+      "near_event_decisions": 0,
+      "true_short_vs_full_spearman": 1.0
+    },
+    "burst": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 4,
+      "mean_gap_ticks": 11.708333333333337,
+      "near_event_decisions": 0,
+      "true_short_vs_full_spearman": -0.01691300370478706
+    },
+    "outage_processing": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 4,
+      "mean_gap_ticks": 6.083333333333339,
+      "near_event_decisions": 3,
+      "true_short_vs_full_spearman": 0.09912051836384816
+    },
+    "outage_arrival": {
+      "episodes": 2,
+      "comparable_decisions": 6,
+      "meaningful_gap_decisions": 5,
+      "mean_gap_ticks": 9.638888888888891,
+      "near_event_decisions": 2,
+      "true_short_vs_full_spearman": 0.8084194191694253
+    },
+    "motion_delay": {
+      "episodes": 2,
+      "comparable_decisions": 6,
+      "meaningful_gap_decisions": 6,
+      "mean_gap_ticks": 4.277777777777776,
+      "near_event_decisions": 3,
+      "true_short_vs_full_spearman": 0.5842580269759509
+    }
+  },
+  "paired_learned_minus_heuristic_flow": {
+    "clusters": 2,
+    "mean": 2.8000000000000016,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "paired_learned_minus_heuristic_decision_regret": {
+    "clusters": 2,
+    "mean": 0.31666666666666643,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "cpu_seconds": 13.316561665
+}

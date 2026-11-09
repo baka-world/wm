@@ -1,0 +1,53 @@
+name: Decision-value CPU validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - '.github/workflows/decision-value.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - '.github/workflows/decision-value.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  decision-value:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Focused regression tests
+        run: python -m unittest discover -s tests -p 'test_decision_value.py' -v
+      - name: Run bounded pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/decision-value"
+          timeout 240s python -m lab_transport.decision_value --profile pilot \
+            --output "$RUNNER_TEMP/decision-value/pilot" 2>&1 | tee "$RUNNER_TEMP/decision-value/pilot.log"
+          python tests/check_decision_value.py "$RUNNER_TEMP/decision-value/pilot" pilot
+      - name: Run fixed confirmation seeds after valid pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 240s python -m lab_transport.decision_value --profile confirm \
+            --output "$RUNNER_TEMP/decision-value/confirm" 2>&1 | tee "$RUNNER_TEMP/decision-value/confirm.log"
+          python tests/check_decision_value.py "$RUNNER_TEMP/decision-value/confirm" confirm
+      - name: Upload configurations, decisions and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-value-${{ github.run_id }}
+          path: ${{ runner.temp }}/decision-value/
+          if-no-files-found: warn
+          retention-days: 14

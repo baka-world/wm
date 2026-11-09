@@ -1,0 +1,841 @@
+{
+  "profile": "pilot",
+  "case_count": 12,
+  "decision_count": 24,
+  "comparable_decisions": 24,
+  "candidate_branches": 95,
+  "truncated_candidate_decisions": 4,
+  "prediction_errors": 0,
+  "discrete_safety_violations": 0,
+  "model_comparison": {
+    "heuristic": {
+      "n": 24,
+      "same_reference_score": 21,
+      "strictly_worse_primary_score": 1,
+      "same_reference_index": 21,
+      "joint_accuracy": {
+        "1": {
+          "correct": 91,
+          "total": 95
+        },
+        "5": {
+          "correct": 89,
+          "total": 95
+        },
+        "20": {
+          "correct": 23,
+          "total": 95
+        }
+      }
+    },
+    "learned": {
+      "n": 24,
+      "same_reference_score": 21,
+      "strictly_worse_primary_score": 1,
+      "same_reference_index": 17,
+      "joint_accuracy": {
+        "1": {
+          "correct": 82,
+          "total": 95
+        },
+        "5": {
+          "correct": 60,
+          "total": 95
+        },
+        "20": {
+          "correct": 4,
+          "total": 95
+        }
+      }
+    }
+  },
+  "per_case": [
+    {
+      "layout": "tartu",
+      "regime": "normal",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.06928431000000002,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.07225992800000003,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.074009039,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 110.0,
+          "cpu_seconds": 0.356511122,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 113.5,
+          "cpu_seconds": 0.379629566,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "cpu_seconds": 0.324899201,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "tartu",
+      "regime": "short_outage",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.07035885300000011,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.07469780300000028,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.0723998680000002,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 110.0,
+          "cpu_seconds": 0.35062077800000013,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 113.5,
+          "cpu_seconds": 0.37692935999999966,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "cpu_seconds": 0.31981869900000026,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "tartu",
+      "regime": "burst",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.07448850299999998,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.08008892500000009,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.07980146899999951,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 133.33333333333334,
+          "cpu_seconds": 0.472653588,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 135.83333333333334,
+          "cpu_seconds": 0.3510569400000003,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 138.16666666666666,
+          "cpu_seconds": 0.331676077,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "tartu",
+      "regime": "urgent",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 120.66666666666667,
+          "cpu_seconds": 0.06522446099999968,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 120.66666666666667,
+          "cpu_seconds": 0.07298627299999971,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 120.66666666666667,
+          "cpu_seconds": 0.06989544999999975,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 116.66666666666667,
+          "cpu_seconds": 0.39650168199999936,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 121.5,
+          "cpu_seconds": 0.4156482620000004,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 123.83333333333333,
+          "cpu_seconds": 0.380880146,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "tartu",
+      "regime": "contention",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.07023211699999976,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.07529853299999978,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 136.33333333333334,
+          "cpu_seconds": 0.073905946,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 133.33333333333334,
+          "cpu_seconds": 0.43418635699999975,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 135.83333333333334,
+          "cpu_seconds": 0.34401977099999925,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 138.16666666666666,
+          "cpu_seconds": 0.32746432400000103,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "tartu",
+      "regime": "motion_delay",
+      "seed": 11000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.07585425899999976,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.06991702999999916,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 114.0,
+          "cpu_seconds": 0.0707515549999993,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 110.0,
+          "cpu_seconds": 0.34792174599999903,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 113.5,
+          "cpu_seconds": 0.3737749800000003,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 117.16666666666667,
+          "cpu_seconds": 0.31759300699999926,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 6,
+        "world": 6,
+        "rule": 6,
+        "rollout": 6,
+        "heuristic": 0,
+        "learned": 6
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "normal",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.0407564899999997,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.0493145479999999,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.03993287499999987,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.08510773300000096,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 32.666666666666664,
+          "cpu_seconds": 0.11889806299999961,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.833333333333332,
+          "cpu_seconds": 0.1283078280000005,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "short_outage",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.039699629000001124,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.040782878999999994,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.04083761200000069,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.666666666666668,
+          "cpu_seconds": 0.08882005499999934,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 32.666666666666664,
+          "cpu_seconds": 0.11787829300000041,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.833333333333332,
+          "cpu_seconds": 0.12854123500000014,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "burst",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 51.0,
+          "cpu_seconds": 0.04424822000000006,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 52.166666666666664,
+          "cpu_seconds": 0.02989690199999906,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 52.166666666666664,
+          "cpu_seconds": 0.029540227999998336,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 43.833333333333336,
+          "cpu_seconds": 0.1293374079999996,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 40.0,
+          "cpu_seconds": 0.0904516760000007,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 41.333333333333336,
+          "cpu_seconds": 0.1084971019999994,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "urgent",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.0,
+          "cpu_seconds": 0.05337470600000138,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.0,
+          "cpu_seconds": 0.053769071999999696,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.0,
+          "cpu_seconds": 0.054390620999999584,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 29.0,
+          "cpu_seconds": 0.11453559999999996,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 28.0,
+          "cpu_seconds": 0.09731271799999952,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 27.166666666666668,
+          "cpu_seconds": 0.08785558599999987,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "contention",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 54.0,
+          "cpu_seconds": 0.029600750000000176,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 54.0,
+          "cpu_seconds": 0.032548856000000015,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 54.0,
+          "cpu_seconds": 0.03252210700000013,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 54.0,
+          "cpu_seconds": 0.1748400580000009,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 46.833333333333336,
+          "cpu_seconds": 0.12985726900000039,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 47.833333333333336,
+          "cpu_seconds": 0.16314733600000153,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      }
+    },
+    {
+      "layout": "clinic",
+      "regime": "motion_delay",
+      "seed": 12000,
+      "policies": {
+        "nearest": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 30.0,
+          "cpu_seconds": 0.018102752000000777,
+          "fallbacks": null
+        },
+        "world": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 30.0,
+          "cpu_seconds": 0.019747208999998378,
+          "fallbacks": null
+        },
+        "rule": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 30.0,
+          "cpu_seconds": 0.019027697000002064,
+          "fallbacks": null
+        },
+        "rollout": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 30.0,
+          "cpu_seconds": 0.05143312599999916,
+          "fallbacks": null
+        },
+        "heuristic": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 35.666666666666664,
+          "cpu_seconds": 0.0665009000000012,
+          "fallbacks": 0
+        },
+        "learned": {
+          "completed": 6,
+          "total": 6,
+          "restricted_mean_flow_ticks": 46.666666666666664,
+          "cpu_seconds": 0.08745469800000194,
+          "fallbacks": 0
+        }
+      },
+      "station_outage_exposure": {
+        "nearest": 0,
+        "world": 0,
+        "rule": 0,
+        "rollout": 0,
+        "heuristic": 0,
+        "learned": 0
+      },
+      "motion_delay_exposure": {
+        "nearest": 6,
+        "world": 6,
+        "rule": 6,
+        "rollout": 6,
+        "heuristic": 6,
+        "learned": 6
+      }
+    }
+  ],
+  "cpu_seconds": 17.022536402,
+  "different_model_choices": 4,
+  "paired_counterfactual_flow": {
+    "learned_better": 0,
+    "equal": 24,
+    "learned_worse": 0
+  }
+}

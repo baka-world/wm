@@ -1,0 +1,357 @@
+{
+  "scope": "synthetic paired full scenarios; cluster by layout/seed, decision points are not independent",
+  "scenarios": 16,
+  "clusters": 4,
+  "methods": {
+    "nearest": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 40.666666666666664,
+      "restricted_mean_flow": 40.666666666666664,
+      "mean_stage_wait_per_job": 11.28125,
+      "capacity_wait_ticks": 123,
+      "resource_busy_slot_ticks": 851,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 0.1595265399057256,
+      "decision_wall_p95_ms": 0.6373048017849214,
+      "solver_calls": 0,
+      "solver_success_calls": 0,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 0
+    },
+    "nearest_rollout": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.135416666666664,
+      "restricted_mean_flow": 41.135416666666664,
+      "mean_stage_wait_per_job": 12.28125,
+      "capacity_wait_ticks": 116,
+      "resource_busy_slot_ticks": 851,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 15.676023224183028,
+      "decision_wall_p95_ms": 26.351772248744965,
+      "solver_calls": 0,
+      "solver_success_calls": 0,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 4455
+    },
+    "cpsat_rule": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.520833333333336,
+      "restricted_mean_flow": 41.520833333333336,
+      "mean_stage_wait_per_job": 12.5,
+      "capacity_wait_ticks": 81,
+      "resource_busy_slot_ticks": 851,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 25.018091137052323,
+      "decision_wall_p95_ms": 49.26109260704829,
+      "solver_calls": 117,
+      "solver_success_calls": 117,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 4575
+    },
+    "cpsat_pets": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.875,
+      "restricted_mean_flow": 41.875,
+      "mean_stage_wait_per_job": 12.84375,
+      "capacity_wait_ticks": 88,
+      "resource_busy_slot_ticks": 851,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 32.50135776860954,
+      "decision_wall_p95_ms": 63.56529260228851,
+      "solver_calls": 117,
+      "solver_success_calls": 117,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 3548,
+      "structured_service_calls": 0,
+      "rollout_steps": 4545
+    },
+    "cpsat_structured": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.708333333333336,
+      "restricted_mean_flow": 41.708333333333336,
+      "mean_stage_wait_per_job": 12.572916666666666,
+      "capacity_wait_ticks": 85,
+      "resource_busy_slot_ticks": 851,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 46.50191352147963,
+      "decision_wall_p95_ms": 78.61570500535889,
+      "solver_calls": 117,
+      "solver_success_calls": 117,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 3519,
+      "rollout_steps": 4515
+    }
+  },
+  "paired": {
+    "nearest_rollout_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.4687499999999998,
+        "ci95": [
+          -0.12500000000000044,
+          1.0625
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 9,
+      "ties": 4
+    },
+    "cpsat_rule_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.8541666666666665,
+        "ci95": [
+          0.0,
+          1.708333333333333
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 11,
+      "ties": 2
+    },
+    "cpsat_rule_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.38541666666666674,
+        "ci95": [
+          0.10416666666666652,
+          0.666666666666667
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 6,
+      "ties": 9
+    },
+    "cpsat_rule_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 16
+    },
+    "cpsat_pets_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 1.2083333333333337,
+        "ci95": [
+          0.7083333333333335,
+          1.708333333333334
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 11,
+      "ties": 2
+    },
+    "cpsat_pets_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.7395833333333339,
+        "ci95": [
+          0.520833333333333,
+          0.9583333333333348
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 8,
+      "ties": 6
+    },
+    "cpsat_pets_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.3541666666666672,
+        "ci95": [
+          -0.125,
+          0.8333333333333344
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 4,
+      "ties": 10
+    },
+    "cpsat_structured_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 1.0416666666666667,
+        "ci95": [
+          0.22916666666666652,
+          1.854166666666667
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 11,
+      "ties": 2
+    },
+    "cpsat_structured_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.572916666666667,
+        "ci95": [
+          0.16666666666666696,
+          0.979166666666667
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 9,
+      "ties": 5
+    },
+    "cpsat_structured_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.18750000000000022,
+        "ci95": [
+          -0.375,
+          0.7500000000000004
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 4,
+      "ties": 10
+    }
+  },
+  "joint_state_prediction": {
+    "1": {
+      "rule": {
+        "mean_scenario_accuracy": 0.8314674908424908,
+        "correct": 115,
+        "windows": 134
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.8066649496336996,
+        "correct": 107,
+        "windows": 134
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.7702400030525031,
+        "correct": 102,
+        "windows": 134
+      }
+    },
+    "3": {
+      "rule": {
+        "mean_scenario_accuracy": 0.8385416666666666,
+        "correct": 55,
+        "windows": 65
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.6614583333333334,
+        "correct": 41,
+        "windows": 65
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.6180555555555556,
+        "correct": 36,
+        "windows": 65
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_scenario_accuracy": 0.8398046398046398,
+        "correct": 29,
+        "windows": 40
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.7360805860805861,
+        "correct": 20,
+        "windows": 40
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.6904761904761905,
+        "correct": 17,
+        "windows": 40
+      }
+    }
+  },
+  "same_state_decisions": 32,
+  "pets_vs_rule": {
+    "same": 29,
+    "different": 3,
+    "worse": 2,
+    "improved": 1
+  },
+  "structured_vs_rule": {
+    "same": 29,
+    "different": 3,
+    "worse": 2,
+    "improved": 1
+  },
+  "candidate_overlap_intersection": 118,
+  "candidate_overlap_union": 120
+}

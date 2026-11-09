@@ -1,0 +1,50 @@
+{
+  "scope": "Synthetic workstation roles, capacity, service durations, workflows and releases; not a real laboratory layout or clinical record.",
+  "map_source": "Moving AI MAPF benchmark maps, distributed in the LaCAM3 repository at commit 1c3ecf8ade40298f16047544634e9c0c1cf3b93c",
+  "layouts": {
+    "empty8": {
+      "map": "business_transport/scenarios/maps/empty-8-8.map",
+      "sha256": "42776e4904ec90689dd034fbd84524d671dc554472cc4221432b0c523d51f152",
+      "stations": {"A0": [1, 1], "A1": [1, 5], "B0": [6, 1], "B1": [6, 5], "C": [4, 3]},
+      "robot_positions": [[1, 1], [1, 5], [0, 3]],
+      "robot_homes": [[0, 0], [0, 7], [0, 3]]
+    },
+    "random32": {
+      "map": "business_transport/scenarios/maps/random-32-32-20.map",
+      "sha256": "8c5a83498ab92a2579aeef91c5f42d9ecf9019ef038cf98e623061a15beb6f56",
+      "stations": {"A0": [2, 2], "A1": [2, 5], "B0": [11, 2], "B1": [11, 7], "C": [13, 9]},
+      "robot_positions": [[2, 2], [2, 5], [0, 2]],
+      "robot_homes": [[0, 0], [0, 6], [0, 2]]
+    }
+  },
+  "station_service_ticks": {"A0": 3, "A1": 3, "B0": 2, "B1": 2, "C": 2},
+  "station_prior_ticks": {"A0": 3, "A1": 3, "B0": 2, "B1": 2, "C": 2},
+  "duration_jitter": 1,
+  "resource_groups": [
+    {"id": "collection", "stations": ["A0", "A1"], "capacity_setting": "capacity_A"},
+    {"id": "processing", "stations": ["B0", "B1"], "capacity_setting": "capacity_B"},
+    {"id": "station:C", "stations": ["C"], "capacity_setting": "capacity_C"}
+  ],
+  "workflows": {
+    "two_stage_0": [{"pickup": "A0", "dropoff": "B0"}, {"pickup": "B0", "dropoff": "C"}],
+    "two_stage_1": [{"pickup": "A1", "dropoff": "B1"}, {"pickup": "B1", "dropoff": "C"}],
+    "single_0": [{"pickup": "A0", "dropoff": "B1"}],
+    "single_1": [{"pickup": "A1", "dropoff": "B0"}]
+  },
+  "release_ticks": [0, 0, 2, 4, 6, 8],
+  "simple_first_two": ["single_0", "single_1"],
+  "multistage_first_two": ["two_stage_0", "two_stage_1"],
+  "later_templates": ["two_stage_0", "two_stage_1", "single_0", "single_1"],
+  "regimes": {
+    "single_compatible": {"capacity_A": 1, "capacity_B": 1, "capacity_C": 1, "single_stage_only": true},
+    "workflow_serial": {"capacity_A": 1, "capacity_B": 1, "capacity_C": 1, "single_stage_only": false},
+    "workflow_parallel": {"capacity_A": 2, "capacity_B": 2, "capacity_C": 1, "single_stage_only": false},
+    "workflow_outage": {"capacity_A": 1, "capacity_B": 1, "capacity_C": 1, "single_stage_only": false, "outage": {"station": "B0", "start": 10, "end": 23}}
+  },
+  "planner_seed": 20261109,
+  "seeds": {"development": {"empty8": [61000], "random32": [62000]},
+            "confirmation": {"empty8": [67000, 67005], "random32": [68000, 68001]}},
+  "previous_confirmation_pilot": {"empty8": [63000, 63001], "random32": [64001, 64002]},
+  "previous_shared_rng_confirmation": {"empty8": [65000, 65001], "random32": [66000, 66001]},
+  "max_ticks": 500
+}

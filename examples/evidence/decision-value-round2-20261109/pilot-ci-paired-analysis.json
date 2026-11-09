@@ -1,0 +1,484 @@
+{
+  "profile": "pilot",
+  "episodes": 10,
+  "comparable_decisions": 24,
+  "candidate_branches": 121,
+  "truncated_decisions": 0,
+  "diagnostics": {
+    "A_near_equal_candidates": 2,
+    "B_predicted_short_ranking_has_errors": 13,
+    "B_heuristic_scores_all_equal": 6,
+    "B_learned_scores_all_equal": 13,
+    "C_true_short_choice_full_regret": 12,
+    "D_learning_improves_short_error_rank_and_flow": 0
+  },
+  "by_regime": {
+    "normal": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 3,
+      "mean_gap_ticks_episode_weighted": {
+        "clusters": 2,
+        "mean": 4.041666666666664,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "near_event_decisions": 0,
+      "true_short_vs_full_spearman_episode_weighted": {
+        "clusters": 2,
+        "mean": 1.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.25,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.25,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.25,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_flow": {
+        "clusters": 2,
+        "mean": 1.25,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_decision_regret": {
+        "clusters": 2,
+        "mean": -0.41666666666666785,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_fault_minus_no_fault_completion_delta": {
+        "clusters": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "nearest_exposure": {
+        "interrupted_sessions": 0,
+        "dropoff_arrivals_during_outage": 0,
+        "service_wait_ticks": 0,
+        "affected_service_samples": 0,
+        "positive_completion_deltas": 0,
+        "censored_samples": 0,
+        "pending_at_recovery": 0,
+        "pending_at_recovery_no_fault": 0
+      },
+      "nearest_competition_nonmoving_ticks": 0
+    },
+    "burst": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 4,
+      "mean_gap_ticks_episode_weighted": {
+        "clusters": 2,
+        "mean": 11.708333333333337,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "near_event_decisions": 0,
+      "true_short_vs_full_spearman_episode_weighted": {
+        "clusters": 2,
+        "mean": 0.15836787880035708,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.15476190476190477,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.20833333333333331,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.8,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.7,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_flow": {
+        "clusters": 2,
+        "mean": 2.1666666666666714,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_decision_regret": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_fault_minus_no_fault_completion_delta": {
+        "clusters": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "nearest_exposure": {
+        "interrupted_sessions": 0,
+        "dropoff_arrivals_during_outage": 0,
+        "service_wait_ticks": 0,
+        "affected_service_samples": 0,
+        "positive_completion_deltas": 0,
+        "censored_samples": 0,
+        "pending_at_recovery": 0,
+        "pending_at_recovery_no_fault": 0
+      },
+      "nearest_competition_nonmoving_ticks": 7
+    },
+    "outage_processing": {
+      "episodes": 2,
+      "comparable_decisions": 4,
+      "meaningful_gap_decisions": 4,
+      "mean_gap_ticks_episode_weighted": {
+        "clusters": 2,
+        "mean": 6.083333333333339,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "near_event_decisions": 3,
+      "true_short_vs_full_spearman_episode_weighted": {
+        "clusters": 2,
+        "mean": 0.2453930203518335,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.1369047619047619,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.20833333333333331,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_primary_mae": {
+        "clusters": 2,
+        "mean": 1.4,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_primary_mae": {
+        "clusters": 2,
+        "mean": 1.2,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_flow": {
+        "clusters": 2,
+        "mean": 4.583333333333336,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_decision_regret": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_fault_minus_no_fault_completion_delta": {
+        "clusters": 2,
+        "mean": 17,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_exposure": {
+        "interrupted_sessions": 2,
+        "dropoff_arrivals_during_outage": 0,
+        "service_wait_ticks": 40,
+        "affected_service_samples": 2,
+        "positive_completion_deltas": 12,
+        "censored_samples": 0,
+        "pending_at_recovery": 12,
+        "pending_at_recovery_no_fault": 11
+      },
+      "nearest_competition_nonmoving_ticks": 41
+    },
+    "outage_arrival": {
+      "episodes": 2,
+      "comparable_decisions": 6,
+      "meaningful_gap_decisions": 5,
+      "mean_gap_ticks_episode_weighted": {
+        "clusters": 2,
+        "mean": 9.638888888888891,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "near_event_decisions": 2,
+      "true_short_vs_full_spearman_episode_weighted": {
+        "clusters": 2,
+        "mean": 0.8403495159745211,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.2976190476190476,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.5,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_primary_mae": {
+        "clusters": 2,
+        "mean": 2.1666666666666665,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_primary_mae": {
+        "clusters": 2,
+        "mean": 2.3333333333333335,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_flow": {
+        "clusters": 2,
+        "mean": 4.166666666666671,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_decision_regret": {
+        "clusters": 2,
+        "mean": 1.3888888888888904,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_fault_minus_no_fault_completion_delta": {
+        "clusters": 2,
+        "mean": 7.416666666666667,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_exposure": {
+        "interrupted_sessions": 0,
+        "dropoff_arrivals_during_outage": 2,
+        "service_wait_ticks": 38,
+        "affected_service_samples": 2,
+        "positive_completion_deltas": 9,
+        "censored_samples": 0,
+        "pending_at_recovery": 12,
+        "pending_at_recovery_no_fault": 10
+      },
+      "nearest_competition_nonmoving_ticks": 17
+    },
+    "motion_delay": {
+      "episodes": 2,
+      "comparable_decisions": 6,
+      "meaningful_gap_decisions": 6,
+      "mean_gap_ticks_episode_weighted": {
+        "clusters": 2,
+        "mean": 4.277777777777777,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "near_event_decisions": 3,
+      "true_short_vs_full_spearman_episode_weighted": {
+        "clusters": 2,
+        "mean": 0.5842580269759509,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.1875,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_rank_error": {
+        "clusters": 2,
+        "mean": 0.35416666666666663,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "heuristic_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.5833333333333334,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "learned_short_primary_mae": {
+        "clusters": 2,
+        "mean": 0.7333333333333333,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_flow": {
+        "clusters": 2,
+        "mean": 1.8333333333333286,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "paired_learned_minus_heuristic_decision_regret": {
+        "clusters": 2,
+        "mean": 0.6111111111111095,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_fault_minus_no_fault_completion_delta": {
+        "clusters": 2,
+        "mean": -0.5833333333333333,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "nearest_exposure": {
+        "interrupted_sessions": 0,
+        "dropoff_arrivals_during_outage": 0,
+        "service_wait_ticks": 0,
+        "affected_service_samples": 0,
+        "positive_completion_deltas": 4,
+        "censored_samples": 0,
+        "pending_at_recovery": 10,
+        "pending_at_recovery_no_fault": 10
+      },
+      "nearest_competition_nonmoving_ticks": 1
+    }
+  },
+  "mean_candidate_flow_gap": {
+    "clusters": 2,
+    "mean": 7.150000000000002,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "true_short_choice_flow_regret": {
+    "clusters": 2,
+    "mean": 3.9527777777777806,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "true_short_vs_full_spearman": {
+    "clusters": 2,
+    "mean": 0.5656736884205325,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "paired_learned_minus_heuristic_rank_error": {
+    "clusters": 2,
+    "mean": 0.04880952380952381,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "paired_learned_minus_heuristic_short_primary_mae": {
+    "clusters": 2,
+    "mean": 0.0033333333333333214,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "reference_vs_rule_decision_counts": {
+    "true_short_reference": {
+      "better": 4,
+      "equal": 20,
+      "worse": 0
+    },
+    "full_flow_reference": {
+      "better": 16,
+      "equal": 8,
+      "worse": 0
+    },
+    "learned": {
+      "better": 1,
+      "equal": 21,
+      "worse": 2
+    }
+  },
+  "paired_true_short_minus_heuristic_flow": {
+    "clusters": 2,
+    "mean": -0.2944444444444443,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "paired_full_reference_minus_heuristic_flow": {
+    "clusters": 2,
+    "mean": -4.247222222222225,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "joint_accuracy_episode_weighted": {
+    "heuristic": {
+      "1": {
+        "clusters": 2,
+        "mean": 0.9166666666666666,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "5": {
+        "clusters": 2,
+        "mean": 0.7108333333333333,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "20": {
+        "clusters": 2,
+        "mean": 0.2316666666666667,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      }
+    },
+    "learned": {
+      "1": {
+        "clusters": 2,
+        "mean": 0.8395833333333333,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "5": {
+        "clusters": 2,
+        "mean": 0.4158333333333334,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "20": {
+        "clusters": 2,
+        "mean": 0.11833333333333333,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      }
+    }
+  },
+  "paired_learned_minus_heuristic_flow": {
+    "clusters": 2,
+    "mean": 2.8000000000000016,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "paired_learned_minus_heuristic_decision_regret": {
+    "clusters": 2,
+    "mean": 0.31666666666666643,
+    "ci95": null,
+    "reason": "fewer than two seed clusters in a map stratum"
+  },
+  "cpu_seconds": 12.192307511000001
+}

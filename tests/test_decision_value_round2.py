@@ -1,10 +1,13 @@
+from dataclasses import replace
 import unittest
 from unittest.mock import patch
 
+from lab_transport.decision_value import HORIZON, trace_score
 from lab_transport.decision_value_round2 import (TieAwareModelPolicy, bootstrap_paired, contention_proxy, paired_incident,
-                                                   pairwise_loss, post_run_trace, select_index, service_sessions, spearman)
+                                                   pairwise_loss, post_run_trace, select_index, service_sessions,
+                                                   short_score_components, spearman)
 from lab_transport.domain import Grid, RobotSpec, Sample, Scenario, Station
-from lab_transport.dynamics_model import Geometry
+from lab_transport.dynamics_model import Geometry, HybridDynamicsModel
 from lab_transport.simulation import Simulator
 from lab_transport.transition_schema import Assignment
 
@@ -34,6 +37,17 @@ class Round2Tests(unittest.TestCase):
         self.assertEqual(matched['affected_service_sample_count'], 1)
         self.assertEqual(matched['fault_vs_no_fault_completion_deltas'][0]['completion_delta_ticks'], 3)
         self.assertEqual(matched['service_wait_ticks'], 3)
+
+    def test_rule_can_predict_service_finished_too_early_after_outage(self):
+        case = self.make_case(outage_a=((1, 5),))
+        rows = []
+        Simulator(case, 'nearest', 1).run(on_transition=rows.append)
+        row = next(x for x in rows if x.observation.tick == 5)
+        predicted = HybridDynamicsModel(Geometry(case.grid), mode='heuristic').predict_next(
+            row.observation, row.assignments)
+        self.assertEqual(row.observation.robots[0].service_elapsed, 5)
+        self.assertEqual(predicted.samples[0].status, 'in_transit')
+        self.assertEqual(row.next_observation.samples[0].status, 'assigned')
 
     def test_arrival_during_outage_is_distinct_from_ordinary_service(self):
         case = self.make_case(outage_b=((6, 10),))
@@ -100,6 +114,20 @@ class Round2Tests(unittest.TestCase):
         self.assertEqual(select_index(short_scores, batches), 0)
         self.assertEqual(select_index(final_flow, batches), 1)
         self.assertAlmostEqual(spearman(short_scores, final_flow), -1)
+
+    def test_short_score_deadline_boundary_and_recorded_components(self):
+        case = self.make_case()
+        sim = Simulator(case)
+        sim.samples['S1'].status = 'waiting'
+        sim.samples['S1'].spec = replace(sim.samples['S1'].spec, deadline_tick=1)
+        initial = sim._observable_state(0)
+        sample = initial.samples[0]
+        trace = [replace(initial, tick=t, samples=(replace(sample, status='waiting' if t <= 2 else 'completed'),))
+                 for t in range(1, HORIZON + 1)]
+        self.assertEqual(trace_score(initial, trace, Geometry(case.grid))[0], 6)
+        components = short_score_components(initial, trace)
+        self.assertEqual(components['sample_ids'], ['S1'])
+        self.assertEqual(components['steps'][:3], [[1, ['waiting']], [2, ['waiting']], [3, ['completed']]])
 
     def test_online_tie_policy_assigns_without_fallback(self):
         case = self.make_case()

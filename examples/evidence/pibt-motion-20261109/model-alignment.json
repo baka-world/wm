@@ -1,0 +1,63 @@
+{
+  "scope": "small synthetic functionality check, no training; current pause visible, future changes unknown",
+  "factual_status": "completed",
+  "factual_execution_native_calls": 29,
+  "parity": {
+    "rule": {
+      "matching_one_step_robot_configurations": 29,
+      "factual_transitions": 29,
+      "current_paused_robot_observations": 4,
+      "native_prediction_calls": 29
+    },
+    "pets": {
+      "matching_one_step_robot_configurations": 29,
+      "factual_transitions": 29,
+      "current_paused_robot_observations": 4,
+      "native_prediction_calls": 29
+    },
+    "structured": {
+      "matching_one_step_robot_configurations": 29,
+      "factual_transitions": 29,
+      "current_paused_robot_observations": 4,
+      "native_prediction_calls": 29
+    }
+  },
+  "closed_loop": {
+    "rule": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "execution_native_calls": 26,
+      "prediction_native_calls": 120,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "capacity_violations": 0,
+      "discrete_safety_violations": 0
+    },
+    "pets": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "execution_native_calls": 26,
+      "prediction_native_calls": 120,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 93,
+      "structured_service_calls": 0,
+      "capacity_violations": 0,
+      "discrete_safety_violations": 0
+    },
+    "structured": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "execution_native_calls": 26,
+      "prediction_native_calls": 120,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 87,
+      "capacity_violations": 0,
+      "discrete_safety_violations": 0
+    }
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "layout": "tartu",
+    "nodes": 76,
+    "directed_edges": 112,
+    "one_way_edges": 50,
+    "weakly_connected": true,
+    "undirected_projection_bridge_count": 21,
+    "undirected_projection_articulation_count": 19,
+    "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+  },
+  {
+    "layout": "clinic",
+    "nodes": 62,
+    "directed_edges": 126,
+    "one_way_edges": 0,
+    "weakly_connected": true,
+    "undirected_projection_bridge_count": 25,
+    "undirected_projection_articulation_count": 25,
+    "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+  },
+  {
+    "layout": "empty8",
+    "nodes": 64,
+    "directed_edges": 224,
+    "one_way_edges": 0,
+    "weakly_connected": true,
+    "undirected_projection_bridge_count": 0,
+    "undirected_projection_articulation_count": 0,
+    "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+  },
+  {
+    "layout": "random32",
+    "nodes": 819,
+    "directed_edges": 2540,
+    "one_way_edges": 0,
+    "weakly_connected": true,
+    "undirected_projection_bridge_count": 20,
+    "undirected_projection_articulation_count": 23,
+    "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+  }
+]

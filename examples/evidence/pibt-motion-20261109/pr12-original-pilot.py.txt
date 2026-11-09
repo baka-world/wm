@@ -1,0 +1,26 @@
+from dataclasses import replace
+from lab_transport.service_fault_data import source_bases
+from lab_transport.domain import RobotSpec
+from lab_transport.business.scenario import compile_scenario
+from lab_transport.business.simulation import BusinessSimulator,resource_audit
+from lab_transport.business.observation import BusinessObserver
+from lab_transport.business.policy import BusinessPolicy
+from lab_transport.dynamics_model import Geometry
+
+bases,_=source_bases()
+for name,base in bases.items():
+ keys=list(base.stations)
+ if name=='tartu':a,b,c=keys; endpoints=(a,c);stage2=(b,c);home=(166,0)
+ else:a,c,b,d=keys;endpoints=(a,c);stage2=(b,d);home=(433,0)
+ base=replace(base,robots=base.robots+(RobotSpec('R3',home,home),),max_ticks=800)
+ cfg={'resources':[{'id':'collection','stations':list(endpoints),'capacity':1}],
+ 'workflows':{
+ 'wa':[{'pickup':endpoints[0],'dropoff':b},{'pickup':b,'dropoff':stage2[1]}],
+ 'wb':[{'pickup':endpoints[1],'dropoff':b},{'pickup':b,'dropoff':stage2[1]}],
+ 'wc':[{'pickup':endpoints[0],'dropoff':b}]},
+ 'jobs':[{'id':'J1','workflow':'wa','release_tick':0},{'id':'J2','workflow':'wb','release_tick':0},
+ {'id':'J3','workflow':'wc','release_tick':1},{'id':'J4','workflow':'wa','release_tick':5},{'id':'J5','workflow':'wb','release_tick':9}], 'max_ticks':800}
+ bspec=compile_scenario(base,cfg);geo=Geometry(base.grid);obs=BusinessObserver()
+ p=BusinessPolicy('nearest',geo,bspec.rules,obs)
+ result=BusinessSimulator(bspec,'world',61000,collect_metrics=True).run(dispatch_policy=p,on_observation=obs.observe)
+ print(name,result['summary'],resource_audit(result,bspec.rules),flush=True)

@@ -6,3 +6,4 @@
 /business_transport/scenarios/maps/*.map -text
 /examples/evidence/business-capacity-20261109/** -text
 /examples/evidence/business-capacity-independent-rng-20261109/** -text
+/examples/evidence/pibt-motion-20261109/** -text

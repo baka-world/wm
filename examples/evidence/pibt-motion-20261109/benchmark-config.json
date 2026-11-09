@@ -1,0 +1,18 @@
+{
+  "purpose": "Fixed CPU execution comparison: same nearest dispatcher, tasks, resources and exogenous events; only motion backend changes.",
+  "pr12_config": "business_transport/scenarios/benchmark.json",
+  "comparison": "all 16 PR12 independent confirmation scenarios at 3 robots, plus the predeclared 5-robot cases below",
+  "extra_five_robot_cases": [
+    {"layout": "empty8", "seed": 67000, "regimes": ["single_compatible", "workflow_serial"],
+     "robots": [{"id": "R4", "position": [7, 7], "home": [7, 7]},
+                {"id": "R5", "position": [7, 6], "home": [7, 6]}]},
+    {"layout": "random32", "seed": 68000, "regimes": ["single_compatible", "workflow_serial"],
+     "robots": [{"id": "R4", "position": [0, 11], "home": [0, 11]},
+                {"id": "R5", "position": [0, 12], "home": [0, 12]}]}
+  ],
+  "dispatcher": "nearest",
+  "planner_seed": 20261109,
+  "max_ticks": 500,
+  "source_assumptions": "Public MAPF maps, synthetic station roles, resources and sample workflows; no real hospital performance claim. Extra robot starts are explicit simulation assumptions.",
+  "planner_semantics": "Official C++ PIBT one-step call with exact current directed distances; priority ages reset each step. Current service and observed paused robots are locked. No guaranteed liveness."
+}

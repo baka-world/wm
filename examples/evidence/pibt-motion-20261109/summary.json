@@ -1,0 +1,293 @@
+{
+  "hospital": {
+    "legacy": {
+      "tartu": {
+        "jobs": 5,
+        "jobs_completed": 2,
+        "jobs_unfinished": 3,
+        "job_completion_rate": 0.4,
+        "mean_flow_completed_only": 121,
+        "restricted_mean_flow": 527.2,
+        "longest_no_movement": 640,
+        "path_wall_mean_ms": 0.389760679918254,
+        "path_wall_p95_ms": 1.1177785912877876,
+        "pibt_calls": 0,
+        "safety": {
+          "vertex_collisions": 0,
+          "edge_swaps": 0,
+          "invalid_edges": 0,
+          "longest_no_robot_move": 640
+        },
+        "stages": 9,
+        "stages_completed": 4,
+        "ticks": 800
+      },
+      "clinic": {
+        "jobs": 5,
+        "jobs_completed": 2,
+        "jobs_unfinished": 3,
+        "job_completion_rate": 0.4,
+        "mean_flow_completed_only": 57.5,
+        "restricted_mean_flow": 501.8,
+        "longest_no_movement": 722,
+        "path_wall_mean_ms": 0.33578300854060217,
+        "path_wall_p95_ms": 0.7623441444593476,
+        "pibt_calls": 0,
+        "safety": {
+          "vertex_collisions": 0,
+          "edge_swaps": 0,
+          "invalid_edges": 0,
+          "longest_no_robot_move": 722
+        },
+        "stages": 9,
+        "stages_completed": 4,
+        "ticks": 800
+      }
+    },
+    "pibt": {
+      "tartu": {
+        "jobs": 5,
+        "jobs_completed": 5,
+        "jobs_unfinished": 0,
+        "job_completion_rate": 1.0,
+        "mean_flow_completed_only": 113,
+        "restricted_mean_flow": 113,
+        "longest_no_movement": 3,
+        "path_wall_mean_ms": 0.3240066858208073,
+        "path_wall_p95_ms": 1.2294944011955518,
+        "pibt_calls": 175,
+        "safety": {
+          "vertex_collisions": 0,
+          "edge_swaps": 0,
+          "invalid_edges": 0,
+          "longest_no_robot_move": 3
+        },
+        "stages": 9,
+        "stages_completed": 9,
+        "ticks": 175
+      },
+      "clinic": {
+        "jobs": 5,
+        "jobs_completed": 2,
+        "jobs_unfinished": 3,
+        "job_completion_rate": 0.4,
+        "mean_flow_completed_only": 25,
+        "restricted_mean_flow": 487.2,
+        "longest_no_movement": 2,
+        "path_wall_mean_ms": 0.22614540859649424,
+        "path_wall_p95_ms": 0.7205038018582849,
+        "pibt_calls": 798,
+        "safety": {
+          "vertex_collisions": 0,
+          "edge_swaps": 0,
+          "invalid_edges": 0,
+          "longest_no_robot_move": 2
+        },
+        "stages": 9,
+        "stages_completed": 4,
+        "ticks": 800
+      }
+    }
+  },
+  "grid": {
+    "3": {
+      "legacy": {
+        "scenarios": 16,
+        "jobs_completed": 96,
+        "jobs": 96,
+        "stages_completed": 135,
+        "stages": 135,
+        "mean_restricted_flow": 40.666666666666664,
+        "path_wall_mean_ms": 0.3185235511135799,
+        "path_wall_p95_ms": 0.8440009914920665,
+        "pibt_native_calls": 0,
+        "max_longest_no_move": 11,
+        "vertex_collisions": 0,
+        "edge_swaps": 0,
+        "invalid_edges": 0
+      },
+      "pibt": {
+        "scenarios": 16,
+        "jobs_completed": 96,
+        "jobs": 96,
+        "stages_completed": 135,
+        "stages": 135,
+        "mean_restricted_flow": 43.90625,
+        "path_wall_mean_ms": 1.2662191526983109,
+        "path_wall_p95_ms": 4.242460703972028,
+        "pibt_native_calls": 1151,
+        "max_longest_no_move": 14,
+        "vertex_collisions": 0,
+        "edge_swaps": 0,
+        "invalid_edges": 0
+      }
+    },
+    "5": {
+      "legacy": {
+        "scenarios": 4,
+        "jobs_completed": 24,
+        "jobs": 24,
+        "stages_completed": 30,
+        "stages": 30,
+        "mean_restricted_flow": 31.125,
+        "path_wall_mean_ms": 0.41742936539051373,
+        "path_wall_p95_ms": 1.4154667049297132,
+        "pibt_native_calls": 0,
+        "max_longest_no_move": 3,
+        "vertex_collisions": 0,
+        "edge_swaps": 0,
+        "invalid_edges": 0
+      },
+      "pibt": {
+        "scenarios": 4,
+        "jobs_completed": 24,
+        "jobs": 24,
+        "stages_completed": 30,
+        "stages": 30,
+        "mean_restricted_flow": 34.33333333333333,
+        "path_wall_mean_ms": 1.9271946253461971,
+        "path_wall_p95_ms": 6.150844688818322,
+        "pibt_native_calls": 243,
+        "max_longest_no_move": 4,
+        "vertex_collisions": 0,
+        "edge_swaps": 0,
+        "invalid_edges": 0
+      }
+    }
+  },
+  "alignment": {
+    "scope": "small synthetic functionality check, no training; current pause visible, future changes unknown",
+    "factual_status": "completed",
+    "factual_execution_native_calls": 29,
+    "parity": {
+      "rule": {
+        "matching_one_step_robot_configurations": 29,
+        "factual_transitions": 29,
+        "current_paused_robot_observations": 4,
+        "native_prediction_calls": 29
+      },
+      "pets": {
+        "matching_one_step_robot_configurations": 29,
+        "factual_transitions": 29,
+        "current_paused_robot_observations": 4,
+        "native_prediction_calls": 29
+      },
+      "structured": {
+        "matching_one_step_robot_configurations": 29,
+        "factual_transitions": 29,
+        "current_paused_robot_observations": 4,
+        "native_prediction_calls": 29
+      }
+    },
+    "closed_loop": {
+      "rule": {
+        "status": "completed",
+        "stages_completed": 4,
+        "stages": 4,
+        "execution_native_calls": 26,
+        "prediction_native_calls": 120,
+        "model_fallbacks": 0,
+        "pets_forward_calls": 0,
+        "structured_service_calls": 0,
+        "capacity_violations": 0,
+        "discrete_safety_violations": 0
+      },
+      "pets": {
+        "status": "completed",
+        "stages_completed": 4,
+        "stages": 4,
+        "execution_native_calls": 26,
+        "prediction_native_calls": 120,
+        "model_fallbacks": 0,
+        "pets_forward_calls": 93,
+        "structured_service_calls": 0,
+        "capacity_violations": 0,
+        "discrete_safety_violations": 0
+      },
+      "structured": {
+        "status": "completed",
+        "stages_completed": 4,
+        "stages": 4,
+        "execution_native_calls": 26,
+        "prediction_native_calls": 120,
+        "model_fallbacks": 0,
+        "pets_forward_calls": 0,
+        "structured_service_calls": 87,
+        "capacity_violations": 0,
+        "discrete_safety_violations": 0
+      }
+    }
+  },
+  "joint_diagnostic": [
+    {
+      "layout": "tartu",
+      "selected_robot": "R2",
+      "target": [
+        204,
+        0
+      ],
+      "found_witness": true,
+      "steps": 33,
+      "searched_states": 266048,
+      "search_limited": false,
+      "queue_exhausted": false,
+      "conditions": "static directed edges; no vertex conflict or edge swap; other robots freeze at their task goals"
+    },
+    {
+      "layout": "clinic",
+      "selected_robot": "R1",
+      "target": [
+        398,
+        0
+      ],
+      "found_witness": true,
+      "steps": 5,
+      "searched_states": 5174,
+      "search_limited": false,
+      "queue_exhausted": false,
+      "conditions": "static directed edges; no vertex conflict or edge swap; other robots freeze at their task goals"
+    }
+  ],
+  "topology_audit": [
+    {
+      "layout": "tartu",
+      "nodes": 76,
+      "directed_edges": 112,
+      "one_way_edges": 50,
+      "weakly_connected": true,
+      "undirected_projection_bridge_count": 21,
+      "undirected_projection_articulation_count": 19,
+      "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+    },
+    {
+      "layout": "clinic",
+      "nodes": 62,
+      "directed_edges": 126,
+      "one_way_edges": 0,
+      "weakly_connected": true,
+      "undirected_projection_bridge_count": 25,
+      "undirected_projection_articulation_count": 25,
+      "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+    },
+    {
+      "layout": "empty8",
+      "nodes": 64,
+      "directed_edges": 224,
+      "one_way_edges": 0,
+      "weakly_connected": true,
+      "undirected_projection_bridge_count": 0,
+      "undirected_projection_articulation_count": 0,
+      "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+    },
+    {
+      "layout": "random32",
+      "nodes": 819,
+      "directed_edges": 2540,
+      "one_way_edges": 0,
+      "weakly_connected": true,
+      "undirected_projection_bridge_count": 20,
+      "undirected_projection_articulation_count": 23,
+      "note": "Undirected projection is for offline bridge counting only; execution retains original directed arcs."
+    }
+  ]
+}

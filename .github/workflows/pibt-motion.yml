@@ -1,0 +1,72 @@
+name: Official PIBT motion integration CPU
+
+on:
+  pull_request:
+    paths:
+      - 'business_transport/pibt_*.py'
+      - 'experiments/pibt_motion/**'
+      - 'native/pibt_bridge/**'
+      - 'tools/pibt_motion/**'
+      - 'examples/evidence/pibt-motion-20261109/**'
+      - '.github/workflows/pibt-motion.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  official-pibt-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      WM_PIBT_LIBRARY: ${{ runner.temp }}/pibt-upstream/bridge/libwm_pibt_bridge.so
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch',torch.__version__)"
+      - name: Build unmodified official PIBT, native tests, MAPF and MAPD samples
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/pibt-upstream" 2>&1 | tee "$RUNNER_TEMP/pibt-upstream.log"
+      - name: Check old and new regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$WM_PIBT_LIBRARY"
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s experiments/service_value/tests -v
+          python -m unittest discover -s experiments/paper_reuse/tests -v
+          python -m unittest discover -s experiments/business_constraints/tests -v
+          python -m unittest discover -s experiments/pibt_motion/tests -v
+      - name: Verify evidence hashes and reproduce frozen motion comparisons
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd examples/evidence/pibt-motion-20261109 && sha256sum -c SHA256SUMS)
+          python -m tools.pibt_motion.prepare_sources --output "$RUNNER_TEMP/pibt-hospital-sources"
+          timeout 600s bash tools/pibt_motion/run_acceptance.sh "$WM_PIBT_LIBRARY" "$RUNNER_TEMP/pibt-hospital-sources" "$RUNNER_TEMP/pibt-acceptance" 2>&1 | tee "$RUNNER_TEMP/pibt-acceptance.log"
+      - name: Preserve upstream and integration logs and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pibt-motion-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pibt-upstream.log
+            ${{ runner.temp }}/pibt-upstream/*.log
+            ${{ runner.temp }}/pibt-upstream/*status.txt
+            ${{ runner.temp }}/pibt-upstream/*result.txt
+            ${{ runner.temp }}/pibt-upstream/submodules.txt
+            ${{ runner.temp }}/pibt-upstream/linked-symbols.txt
+            ${{ runner.temp }}/pibt-acceptance.log
+            ${{ runner.temp }}/pibt-acceptance/
+          if-no-files-found: warn
+          retention-days: 14

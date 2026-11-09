@@ -53,6 +53,16 @@ class OfficialPIBTIntegrationTests(unittest.TestCase):
                 dispatch_policy=p,on_observation=obs.observe)
         self.assertEqual(run(True),run(False))
 
+    def test_future_pause_schedule_is_not_an_online_observation(self):
+        _,_,business=fixture(1)
+        first=CoordinatedBusinessSimulator(business,'world',1,motion_backend='pibt',pibt_library=LIBRARY,
+                                           motion_pauses={'R1':((10,20),)})
+        second=CoordinatedBusinessSimulator(business,'world',1,motion_backend='pibt',pibt_library=LIBRARY,
+                                            motion_pauses={'R1':((20,30),)})
+        first_now=first._observable_state(0);second_now=second._observable_state(0)
+        self.assertEqual(first_now,second_now)
+        self.assertTrue(all(r.operational_available for r in first_now.robots))
+
     def test_world_models_use_same_pibt_steps_as_execution_and_current_pauses(self):
         import torch
         torch.set_num_threads(1)
@@ -96,6 +106,27 @@ class OfficialPIBTIntegrationTests(unittest.TestCase):
         self.assertGreater(bridge.solver_calls,0)
         self.assertEqual(policy.fallbacks,0)
         self.assertFalse(resource_audit(result,business.rules)['violations'])
+
+    def test_existing_neural_service_models_participate_in_cp_sat_rollout(self):
+        import torch
+        torch.set_num_threads(1)
+        _,_,business=fixture(1);geometry=Geometry(business.scenario.grid)
+        network,info=load_pr9_model()
+        ckpt=ROOT/'examples/evidence/paper-reuse-integration-20261109/pets-service-cpu.pt'
+        for name,model in (
+            ('cpsat_pets',PETSRuleDynamics(geometry,ServiceDistribution.load(ckpt),20261109)),
+            ('cpsat_structured',CountingStructuredService(geometry,network,torch.device('cpu'),info['threshold']))):
+            observer=MotionObserver();bridge=PIBTMotion(geometry,LIBRARY)
+            policy=BusinessPolicy(name,geometry,business.rules,observer,PIBTMovementModel(model,geometry,bridge),
+                                  seed=20261109)
+            sim=CoordinatedBusinessSimulator(business,'world',1,motion_backend='pibt',pibt_library=LIBRARY,
+                                             collect_metrics=True)
+            result=sim.run(dispatch_policy=policy,on_observation=observer.observe)
+            self.assertEqual(result['summary']['status'],'completed')
+            self.assertGreater(sim.pibt.solver_calls,0);self.assertGreater(bridge.solver_calls,0)
+            self.assertEqual(policy.fallbacks,0)
+            self.assertFalse(resource_audit(result,business.rules)['violations'])
+            self.assertGreater(model.distribution.forward_calls if name=='cpsat_pets' else model.service_calls,0)
 
 
 if __name__=='__main__':unittest.main()

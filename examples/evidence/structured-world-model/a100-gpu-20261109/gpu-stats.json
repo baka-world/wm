@@ -1,0 +1,64 @@
+{
+  "training": {
+    "util": {
+      "mean": 2.387,
+      "min": 0.0,
+      "max": 4.0
+    },
+    "mem_util": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "mem": {
+      "mean": 527.258,
+      "min": 4.0,
+      "max": 633.0
+    },
+    "power": {
+      "mean": 70.7,
+      "min": 65.19,
+      "max": 71.84
+    },
+    "temp": {
+      "mean": 34.871,
+      "min": 34.0,
+      "max": 35.0
+    },
+    "samples": 62
+  },
+  "evaluation": {
+    "util": {
+      "mean": 10.409,
+      "min": 0.0,
+      "max": 12.0
+    },
+    "mem_util": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "mem": {
+      "mean": 483.091,
+      "min": 4.0,
+      "max": 531.0
+    },
+    "power": {
+      "mean": 72.061,
+      "min": 65.46,
+      "max": 73.04
+    },
+    "temp": {
+      "mean": 35.273,
+      "min": 35.0,
+      "max": 36.0
+    },
+    "samples": 44
+  },
+  "training_peak_allocator_bytes": 68979200,
+  "training_peak_allocator_MiB": 65.784,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "cuda_build": "12.4",
+  "torch_version": "2.5.1+cu124",
+  "note": "nvidia-smi 1 s sampling; mem/power are whole-GPU, allocator peak is PyTorch tensors."
+}

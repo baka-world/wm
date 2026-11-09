@@ -1,0 +1,90 @@
+{
+  "device": "cuda",
+  "checkpoint": "epoch-0010.pt",
+  "wall_seconds": 5.553,
+  "peak_gpu_memory_MiB": 9.152,
+  "summaries": {
+    "test_tartu": {
+      "transitions": 200,
+      "one_step_joint": {
+        "persistence": 0.005,
+        "heuristic": 0.965,
+        "learned": 0.775,
+        "progress_rule": 0.965
+      },
+      "multi_step": {
+        "3": {
+          "coverage": {
+            "candidate_windows": 198,
+            "future_assignments": 10,
+            "new_arrivals": 13,
+            "station_changes": 0,
+            "eligible": 175
+          },
+          "joint": {
+            "persistence": 0.0,
+            "heuristic": 0.925714,
+            "learned": 0.634286,
+            "progress_rule": 0.925714
+          }
+        },
+        "5": {
+          "coverage": {
+            "candidate_windows": 196,
+            "future_assignments": 20,
+            "new_arrivals": 20,
+            "station_changes": 0,
+            "eligible": 156
+          },
+          "joint": {
+            "persistence": 0.0,
+            "heuristic": 0.884615,
+            "learned": 0.544872,
+            "progress_rule": 0.884615
+          }
+        }
+      }
+    },
+    "test_clinic": {
+      "transitions": 200,
+      "one_step_joint": {
+        "persistence": 0.025,
+        "heuristic": 0.925,
+        "learned": 0.8,
+        "progress_rule": 0.925
+      },
+      "multi_step": {
+        "3": {
+          "coverage": {
+            "candidate_windows": 194,
+            "future_assignments": 22,
+            "new_arrivals": 23,
+            "station_changes": 0,
+            "eligible": 149
+          },
+          "joint": {
+            "persistence": 0.006711,
+            "heuristic": 0.751678,
+            "learned": 0.577181,
+            "progress_rule": 0.751678
+          }
+        },
+        "5": {
+          "coverage": {
+            "candidate_windows": 188,
+            "future_assignments": 40,
+            "new_arrivals": 26,
+            "station_changes": 0,
+            "eligible": 122
+          },
+          "joint": {
+            "persistence": 0.0,
+            "heuristic": 0.598361,
+            "learned": 0.377049,
+            "progress_rule": 0.598361
+          }
+        }
+      }
+    }
+  }
+}

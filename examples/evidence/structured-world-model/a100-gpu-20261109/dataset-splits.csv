@@ -1,0 +1,5 @@
+split,episodes,transitions
+test_clinic,16,1529
+test_tartu,16,3904
+train,48,11848
+validation,16,3988

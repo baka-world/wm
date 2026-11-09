@@ -1,0 +1,3372 @@
+{
+  "dataset": "runs/structured-data",
+  "manifest_sha256": "f668fb1582fb3994f5e45a7d696c3810af1d3f28619236ba808a5c661baa5c9a",
+  "dataset_check": {
+    "episodes": 96,
+    "transitions": 21269,
+    "maps": 2,
+    "schedules_not_verifiable_from_trajectory": 0
+  },
+  "episodes": [
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3000,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3000-normal-nearest.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 292,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3000,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3000-normal-world.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 292,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3000,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3000-short_outage-nearest.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 6,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 292,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 6,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3000,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3000-short_outage-world.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 6,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 292,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 6,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3001,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3001-normal-nearest.jsonl",
+      "transitions": 256,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3001,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3001-normal-world.jsonl",
+      "transitions": 256,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3001,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3001-short_outage-nearest.jsonl",
+      "transitions": 256,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3001,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3001-short_outage-world.jsonl",
+      "transitions": 256,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3002,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3002-normal-nearest.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 15,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 234,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3002,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3002-normal-world.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 15,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 234,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3002,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3002-short_outage-nearest.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 15,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 234,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3002,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3002-short_outage-world.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 15,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 234,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3003,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3003-normal-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 24,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 315,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 152,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3003,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3003-normal-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 24,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 315,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 152,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3003,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3003-short_outage-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 10,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 24,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 315,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 10,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 152,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3003,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3003-short_outage-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 10,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 24,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 315,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 10,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 152,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3004,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3004-normal-nearest.jsonl",
+      "transitions": 239,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 225,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 135,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3004,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3004-normal-world.jsonl",
+      "transitions": 239,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 225,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 135,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3004,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3004-short_outage-nearest.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 14,
+      "service_pause_ticks": 5,
+      "service_in_progress_ticks": 21,
+      "max_paused": 5,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 245,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 14,
+      "ticks_with_paused_service": 5,
+      "ticks_with_waiting": 145,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3004,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3004-short_outage-world.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 14,
+      "service_pause_ticks": 5,
+      "service_in_progress_ticks": 21,
+      "max_paused": 5,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 245,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 14,
+      "ticks_with_paused_service": 5,
+      "ticks_with_waiting": 145,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3005,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3005-normal-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 190,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3005,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3005-normal-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 190,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3005,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3005-short_outage-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 190,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3005,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3005-short_outage-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 190,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 131,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3006,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3006-normal-nearest.jsonl",
+      "transitions": 252,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3006,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3006-normal-world.jsonl",
+      "transitions": 252,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3006,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3006-short_outage-nearest.jsonl",
+      "transitions": 252,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3006,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3006-short_outage-world.jsonl",
+      "transitions": 252,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3007,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3007-normal-nearest.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 303,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3007,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3007-normal-world.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 303,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3007,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3007-short_outage-nearest.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 303,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3007,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3007-short_outage-world.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 303,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3008,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3008-normal-nearest.jsonl",
+      "transitions": 242,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 138,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3008,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3008-normal-world.jsonl",
+      "transitions": 242,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 138,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3008,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3008-short_outage-nearest.jsonl",
+      "transitions": 242,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 138,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3008,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3008-short_outage-world.jsonl",
+      "transitions": 242,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 138,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3009,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3009-normal-nearest.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3009,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3009-normal-world.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3009,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3009-short_outage-nearest.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 14,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 14,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3009,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3009-short_outage-world.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 14,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 17,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 14,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 146,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3010,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3010-normal-nearest.jsonl",
+      "transitions": 260,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 25,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 246,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 154,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3010,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3010-normal-world.jsonl",
+      "transitions": 260,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 25,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 246,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 154,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3010,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3010-short_outage-nearest.jsonl",
+      "transitions": 260,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 25,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 246,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 154,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3010,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3010-short_outage-world.jsonl",
+      "transitions": 260,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 25,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 246,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 154,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3011,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3011-normal-nearest.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3011,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/train/tartu-3011-normal-world.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3011,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/train/tartu-3011-short_outage-nearest.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 11,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 11,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "train",
+      "layout": "tartu",
+      "seed": 3011,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/train/tartu-3011-short_outage-world.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 11,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 20,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 258,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 11,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4000,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4000-normal-nearest.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 262,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 143,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4000,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4000-normal-world.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 262,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 143,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4000,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4000-short_outage-nearest.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 262,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 143,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4000,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4000-short_outage-world.jsonl",
+      "transitions": 251,
+      "unavailable_ticks": 9,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 262,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 9,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 143,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4001,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4001-normal-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 259,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 140,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4001,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4001-normal-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 259,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 140,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4001,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4001-short_outage-nearest.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 8,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 259,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 8,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 140,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4001,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4001-short_outage-world.jsonl",
+      "transitions": 243,
+      "unavailable_ticks": 8,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 259,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 8,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 140,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4002,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4002-normal-nearest.jsonl",
+      "transitions": 259,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4002,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4002-normal-world.jsonl",
+      "transitions": 259,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4002,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4002-short_outage-nearest.jsonl",
+      "transitions": 259,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4002,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4002-short_outage-world.jsonl",
+      "transitions": 259,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 153,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4003,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4003-normal-nearest.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4003,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4003-normal-world.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4003,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/validation/tartu-4003-short_outage-nearest.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 11,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 11,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "validation",
+      "layout": "tartu",
+      "seed": 4003,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/validation/tartu-4003-short_outage-world.jsonl",
+      "transitions": 244,
+      "unavailable_ticks": 11,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 264,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 11,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9000,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9000-normal-nearest.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 274,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 151,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9000,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9000-normal-world.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 274,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 151,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9000,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9000-short_outage-nearest.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 274,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 151,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9000,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9000-short_outage-world.jsonl",
+      "transitions": 241,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 21,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 274,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 151,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9001,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9001-normal-nearest.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 16,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9001,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9001-normal-world.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 16,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9001,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9001-short_outage-nearest.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 16,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9001,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9001-short_outage-world.jsonl",
+      "transitions": 249,
+      "unavailable_ticks": 13,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 16,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 254,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 13,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 139,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9002,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9002-normal-nearest.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 301,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 149,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9002,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9002-normal-world.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 301,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 149,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9002,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9002-short_outage-nearest.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 301,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 149,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9002,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9002-short_outage-world.jsonl",
+      "transitions": 236,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 301,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 149,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9003,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9003-normal-nearest.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 302,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9003,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9003-normal-world.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 302,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9003,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_tartu/tartu-9003-short_outage-nearest.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 302,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_tartu",
+      "layout": "tartu",
+      "seed": 9003,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_tartu/tartu-9003-short_outage-world.jsonl",
+      "transitions": 250,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 302,
+      "max_waiting_samples": 4,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        3
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 155,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10000,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10000-normal-nearest.jsonl",
+      "transitions": 79,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 49,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 37,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10000,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10000-normal-world.jsonl",
+      "transitions": 106,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 58,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 46,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10000,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10000-short_outage-nearest.jsonl",
+      "transitions": 102,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 5,
+      "service_in_progress_ticks": 20,
+      "max_paused": 5,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 54,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 5,
+      "ticks_with_waiting": 37,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10000,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10000-short_outage-world.jsonl",
+      "transitions": 102,
+      "unavailable_ticks": 7,
+      "service_pause_ticks": 5,
+      "service_in_progress_ticks": 20,
+      "max_paused": 5,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 54,
+      "max_waiting_samples": 3,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 7,
+      "ticks_with_paused_service": 5,
+      "ticks_with_waiting": 37,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10001,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10001-normal-nearest.jsonl",
+      "transitions": 98,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 26,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 23,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10001,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10001-normal-world.jsonl",
+      "transitions": 98,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 22,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 26,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 23,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10001,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10001-short_outage-nearest.jsonl",
+      "transitions": 88,
+      "unavailable_ticks": 8,
+      "service_pause_ticks": 7,
+      "service_in_progress_ticks": 23,
+      "max_paused": 4,
+      "max_service_elapsed": 7,
+      "waiting_sample_ticks": 34,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 8,
+      "ticks_with_paused_service": 7,
+      "ticks_with_waiting": 31,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10001,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10001-short_outage-world.jsonl",
+      "transitions": 102,
+      "unavailable_ticks": 8,
+      "service_pause_ticks": 7,
+      "service_in_progress_ticks": 23,
+      "max_paused": 4,
+      "max_service_elapsed": 7,
+      "waiting_sample_ticks": 65,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 8,
+      "ticks_with_paused_service": 7,
+      "ticks_with_waiting": 52,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10002,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10002-normal-nearest.jsonl",
+      "transitions": 106,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 49,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 43,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10002,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10002-normal-world.jsonl",
+      "transitions": 106,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 23,
+      "max_paused": 0,
+      "max_service_elapsed": 5,
+      "waiting_sample_ticks": 49,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 43,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10002,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10002-short_outage-nearest.jsonl",
+      "transitions": 89,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 10,
+      "service_in_progress_ticks": 24,
+      "max_paused": 10,
+      "max_service_elapsed": 10,
+      "waiting_sample_ticks": 36,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 10,
+      "ticks_with_waiting": 32,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10002,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10002-short_outage-world.jsonl",
+      "transitions": 111,
+      "unavailable_ticks": 12,
+      "service_pause_ticks": 10,
+      "service_in_progress_ticks": 24,
+      "max_paused": 10,
+      "max_service_elapsed": 10,
+      "waiting_sample_ticks": 51,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 12,
+      "ticks_with_paused_service": 10,
+      "ticks_with_waiting": 47,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10003,
+      "regime": "normal",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10003-normal-nearest.jsonl",
+      "transitions": 84,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 59,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 46,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10003,
+      "regime": "normal",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10003-normal-world.jsonl",
+      "transitions": 84,
+      "unavailable_ticks": 0,
+      "service_pause_ticks": 0,
+      "service_in_progress_ticks": 19,
+      "max_paused": 0,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 59,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 0,
+      "ticks_with_paused_service": 0,
+      "ticks_with_waiting": 46,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10003,
+      "regime": "short_outage",
+      "policy": "nearest",
+      "file": "episodes/test_clinic/clinic-10003-short_outage-nearest.jsonl",
+      "transitions": 87,
+      "unavailable_ticks": 6,
+      "service_pause_ticks": 4,
+      "service_in_progress_ticks": 20,
+      "max_paused": 4,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 63,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 6,
+      "ticks_with_paused_service": 4,
+      "ticks_with_waiting": 46,
+      "unknown_progress_ticks": 0
+    },
+    {
+      "split": "test_clinic",
+      "layout": "clinic",
+      "seed": 10003,
+      "regime": "short_outage",
+      "policy": "world",
+      "file": "episodes/test_clinic/clinic-10003-short_outage-world.jsonl",
+      "transitions": 87,
+      "unavailable_ticks": 6,
+      "service_pause_ticks": 4,
+      "service_in_progress_ticks": 20,
+      "max_paused": 4,
+      "max_service_elapsed": 4,
+      "waiting_sample_ticks": 63,
+      "max_waiting_samples": 2,
+      "robot_counts": [
+        2
+      ],
+      "station_counts": [
+        4
+      ],
+      "sample_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "assignments": 6,
+      "ticks_with_unavailable": 6,
+      "ticks_with_paused_service": 4,
+      "ticks_with_waiting": 46,
+      "unknown_progress_ticks": 0
+    }
+  ]
+}

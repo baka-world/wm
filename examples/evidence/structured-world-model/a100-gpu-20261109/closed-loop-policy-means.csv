@@ -1,0 +1,6 @@
+policy,completed_rate,mean_completion_ticks,mean_assigned_wait_ticks,max_assigned_wait_ticks,station_unavailable_wait_ticks,max_backlog,max_waiting,blocked_move_attempts,discrete_safety_violations,assignments,dispatch_ticks,decision_mean_ms,decision_p95_ms,model_steps,fallbacks
+nearest,1.0,75.8645,26.4167,69.75,1.4375,4.75,2.875,35.6875,0,6,5.9375,,,,
+world,1.0,77.3437,26.9896,72.625,1.4375,4.75,2.875,35.4375,0,6,5.9375,,,,
+rule,1.0,77.3437,26.9896,72.625,1.4375,4.75,2.875,35.4375,0,6,5.9375,,,,
+progress_rule_rollout,1.0,76.7604,26.8334,66.4375,1.4375,4.75,2.875,32.4375,0,6,6,0.9166,1.6173,32.0625,0
+neural_rollout,1.0,77.3437,27.0,72.6875,1.4375,4.75,2.875,35.4375,0,6,6,6.6321,17.3742,32.0625,0

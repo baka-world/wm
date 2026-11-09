@@ -18,8 +18,6 @@ jobs:
   official-pibt-cpu:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
-    env:
-      WM_PIBT_LIBRARY: ${{ runner.temp }}/pibt-upstream/bridge/libwm_pibt_bridge.so
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,6 +35,7 @@ jobs:
         run: |
           set -euo pipefail
           timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/pibt-upstream" 2>&1 | tee "$RUNNER_TEMP/pibt-upstream.log"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/pibt-upstream/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
       - name: Check old and new regression tests
         shell: bash
         run: |

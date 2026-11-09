@@ -73,4 +73,6 @@ bash tools/pibt_motion/run_acceptance.sh "$WM_PIBT_LIBRARY" /tmp/wm-pibt-hospita
 
 验收脚本独立运行两次医院及网格对照、比较除墙钟耗时外全部结果，再执行离线见证与安全审计。本地原有和新增 Python 测试分别为 **112、11、11、14、7 项**。CPU 工作流见 [pibt-motion.yml](../.github/workflows/pibt-motion.yml)。
 
+首次提交的 [Actions 运行](https://github.com/lieuyimo/wm/actions/runs/42661104475)因工作流定义无效而未启动任何作业；GitHub 未返回更具体的作业日志。经检查，作业级 `env` 使用了不适用的 `runner.temp` 上下文，现改为在构建步骤通过 `GITHUB_ENV` 设置路径，后续运行需要重新核验；这次工作流错误不影响已归档的本地实验。
+
 真实部署仍需要：真实实验室布局及单向规则和设备容量；定位、控制与连续空间避障；机器人和工作站状态实时接口；对设备停机/网络失联和异常恢复的验证；以及针对动态锁定、桥边和三台以上机器人的长期活性保障。这个仿真结果不是临床实测，也不能证明所有医院路网可通行。

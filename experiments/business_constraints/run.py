@@ -175,7 +175,11 @@ def replay_branch(business,seed,factual,rows,tick,plan):
     if replay['history'][:tick+1]!=factual['history'][:tick+1]:
         raise ValueError('counterfactual did not reproduce complete simulator prefix')
     audit=resource_audit(replay,business.rules)
-    if audit['violations'] or discrete_safety_violations(replay):
+    samples={s['id']:s for s in replay['samples']}
+    bad_dependencies=any(samples[right]['assigned_tick'] is not None and
+       (samples[left]['completed_tick'] is None or samples[right]['assigned_tick']<samples[left]['completed_tick'])
+       for job in business.jobs for left,right in zip(job['stages'],job['stages'][1:]))
+    if audit['violations'] or discrete_safety_violations(replay) or lifecycle_audit(replay['history']) or bad_dependencies:
         raise ValueError('unsafe counterfactual execution')
     return {'flow':branch_flow(replay,business),'completed_stages':replay['summary']['completed_count'],
             'status':replay['summary']['status'],'capacity_wait_ticks':audit['capacity_wait_ticks']}

@@ -1,0 +1,45 @@
+{
+  "base_commit": "0f7629b545de8abca0aad1ad2d36d9f066cbd006",
+  "base_pr": 11,
+  "local_cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "local_python": "3.10.22",
+  "local_system": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "map_mirror_commit": "1c3ecf8ade40298f16047544634e9c0c1cf3b93c",
+  "mbrl_lib_source_commit": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+  "notes": "No new neural model training; historical baselines and checkpoints are not overwritten.",
+  "ortools_python_version": "9.14.6206",
+  "ortools_source_commit": "100f66e6242ab8bf8d32feb8f3bf086db66ae2b5",
+  "pets_checkpoint_sha256": "3748a5b96af507c1708355b6b33c25d1ecb56813a57b8469fc9144650bf35e38",
+  "reproduction": "both profiles rerun, compared excluding wall and CPU timing; exploratory diagnostic rerun byte-identical",
+  "scenario_audit": {
+    "cross_seed_duplicates": 0,
+    "old_pr8_pr11_note": "PR #8–#11 used hospital/clinic maps; these exact benchmark maps differ.",
+    "previous_source_hash_overlap": 0,
+    "unique_layout_job_patterns": 20
+  },
+  "scenario_config_sha256": "c2272564e5535d02b3dddf8194a5b8870edb64114e096be48a533e4ab30ed341",
+  "source_file_sha256": {
+    "business_transport/__init__.py": "60f3b4c5cdb1a4f001e14c288e3396ab046991529315306d744aed21a3290474",
+    "business_transport/dispatch.py": "180547ad208b69c4e260dc1e2887a0e5dd0b0defd1c664eaa92fafd74521af25",
+    "business_transport/dynamics.py": "f77623df23d73d61a7a1d0d217e9d72f2d087b4642fe0138322df11ecd5241ef",
+    "business_transport/models.py": "7f43e9667354e2385b7d1912bc3cae758bc6ed2079760b0ee77aa9f40b33ebb4",
+    "business_transport/observation.py": "1aec4c45b12ff924d5b3ca62acda12b0c7836df38e7cc46c8a09a158e7cd37fc",
+    "business_transport/policy.py": "24f6f38fa800946580b827f5b7502c715a7989de55b1ff7a625861c625767286",
+    "business_transport/scenario.py": "8850a71b2dbc136f60de6431719839f162da197a20cf8bf2134cf12ca1ff617f",
+    "business_transport/scenarios/benchmark.json": "c2272564e5535d02b3dddf8194a5b8870edb64114e096be48a533e4ab30ed341",
+    "business_transport/simulation.py": "a82a966fce3ca78fa0b7d4d897234d2f8be4a5a4d65ac7a6718e8a1fe4e9ac0f",
+    "experiments/business_constraints/__init__.py": "35a1f17bf056d729e579dfb5c19fa6c4cb7d7bfd35c912e09ff393d763332aed",
+    "experiments/business_constraints/benchmark.py": "69fd93b0f5cb17a86dabf7e337371e2467188d98c9dc12ca978da95286b8f5c1",
+    "experiments/business_constraints/full_state_audit.py": "d201794b74e21ce83d8e127c4c2b9e473faff2b07043c8c78d8c07b9a3859a3e",
+    "experiments/business_constraints/run.py": "028c139835a619aa1b62a22d2f864b64ed1b718c12d29b41c3165570dc402b42",
+    "experiments/business_constraints/verify.py": "d444c05b9a7d36d25525d07954504294cf63e964638a7b2bb0f5a3dbe40bdabc",
+    "requirements-paper-reuse.lock": "cd71545f8eed813cd1c788f3a40e95996f19d13129c14e9621d47d7409e81cb4",
+    "tools/business_constraints/run_cpu.sh": "043bb7a423657274f857524be13ebf62a1fe91aa0439c5d0cbd4d41f7f73425f"
+  },
+  "structured_checkpoint": {
+    "best_epoch": 5,
+    "checkpoint_sha256": "a3f5d5c3bae54d2889b8a92414c3763998a9a139006fc01b8df6be25b234a95e",
+    "dataset_manifest_sha256": "ef95bc4e932217e18fb7a8acbd495a1ad9458f8dad9055b7b727a77f75a930c5",
+    "threshold": 0.6
+  }
+}

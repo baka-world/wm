@@ -27,6 +27,7 @@
 - [服务动力学故障覆盖与 CPU 消融结果](docs/service-dynamics-results.md)
 - [服务预测的调度价值：方案与实验结果](docs/service-decision-results.md)
 - [指定源码复用：CP-SAT 与 PETS CPU 闭环集成](docs/paper_reuse_integration.md)
+- [多阶段转运、工作站容量与五组调度对照](docs/business-constraints-results.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)

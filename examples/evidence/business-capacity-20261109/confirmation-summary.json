@@ -1,0 +1,351 @@
+{
+  "scope": "synthetic paired full scenarios; cluster by layout/seed, decision points are not independent",
+  "scenarios": 16,
+  "clusters": 4,
+  "methods": {
+    "nearest": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.885416666666664,
+      "restricted_mean_flow": 41.885416666666664,
+      "mean_stage_wait_per_job": 11.4375,
+      "capacity_wait_ticks": 131,
+      "resource_busy_slot_ticks": 867,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 0.14962365094106644,
+      "decision_wall_p95_ms": 0.6507580001198221,
+      "solver_calls": 0,
+      "solver_success_calls": 0,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 0
+    },
+    "nearest_rollout": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 42.46875,
+      "restricted_mean_flow": 42.46875,
+      "mean_stage_wait_per_job": 12.875,
+      "capacity_wait_ticks": 102,
+      "resource_busy_slot_ticks": 855,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 14.910128168296069,
+      "decision_wall_p95_ms": 24.746457807486877,
+      "solver_calls": 0,
+      "solver_success_calls": 0,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 4980
+    },
+    "cpsat_rule": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 41.760416666666664,
+      "restricted_mean_flow": 41.760416666666664,
+      "mean_stage_wait_per_job": 12.583333333333334,
+      "capacity_wait_ticks": 71,
+      "resource_busy_slot_ticks": 855,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 23.66651886485569,
+      "decision_wall_p95_ms": 43.43878825602587,
+      "solver_calls": 126,
+      "solver_success_calls": 126,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "rollout_steps": 5040
+    },
+    "cpsat_pets": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 42.614583333333336,
+      "restricted_mean_flow": 42.614583333333336,
+      "mean_stage_wait_per_job": 13.291666666666666,
+      "capacity_wait_ticks": 81,
+      "resource_busy_slot_ticks": 855,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 30.614254611709693,
+      "decision_wall_p95_ms": 54.7543557586323,
+      "solver_calls": 126,
+      "solver_success_calls": 126,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 3899,
+      "structured_service_calls": 0,
+      "rollout_steps": 5055
+    },
+    "cpsat_structured": {
+      "cases": 16,
+      "jobs": 96,
+      "jobs_completed": 96,
+      "mean_flow_completed": 42.458333333333336,
+      "restricted_mean_flow": 42.458333333333336,
+      "mean_stage_wait_per_job": 13.114583333333334,
+      "capacity_wait_ticks": 78,
+      "resource_busy_slot_ticks": 855,
+      "resource_capacity_violations": 0,
+      "discrete_safety_violations": 0,
+      "duplicate_assignments": 0,
+      "lifecycle_violations": 0,
+      "decision_wall_mean_ms": 44.03034910994149,
+      "decision_wall_p95_ms": 72.04153128986944,
+      "solver_calls": 127,
+      "solver_success_calls": 127,
+      "solver_fallbacks": 0,
+      "solver_truncations": 0,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 3954,
+      "rollout_steps": 5070
+    }
+  },
+  "paired": {
+    "nearest_rollout_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.5833333333333328,
+        "ci95": [
+          0.39583333333333304,
+          0.7708333333333326
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 8,
+      "ties": 5
+    },
+    "cpsat_rule_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": -0.12500000000000067,
+        "ci95": [
+          -0.5208333333333344,
+          0.27083333333333304
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 9,
+      "ties": 4
+    },
+    "cpsat_rule_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": -0.7083333333333335,
+        "ci95": [
+          -1.291666666666667,
+          -0.125
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 6,
+      "losses": 2,
+      "ties": 8
+    },
+    "cpsat_rule_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 16
+    },
+    "cpsat_pets_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.7291666666666665,
+        "ci95": [
+          -0.5416666666666679,
+          2.000000000000001
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 4,
+      "losses": 8,
+      "ties": 4
+    },
+    "cpsat_pets_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.1458333333333337,
+        "ci95": [
+          -1.1041666666666665,
+          1.395833333333334
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 4,
+      "losses": 5,
+      "ties": 7
+    },
+    "cpsat_pets_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.8541666666666672,
+        "ci95": [
+          -0.08333333333333348,
+          1.7916666666666679
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 5,
+      "ties": 10
+    },
+    "cpsat_structured_minus_nearest": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.5729166666666663,
+        "ci95": [
+          -0.1666666666666674,
+          1.3125
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 3,
+      "losses": 9,
+      "ties": 4
+    },
+    "cpsat_structured_minus_nearest_rollout": {
+      "clustered": {
+        "clusters": 4,
+        "mean": -0.010416666666666519,
+        "ci95": [
+          -0.7291666666666661,
+          0.708333333333333
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 4,
+      "losses": 4,
+      "ties": 8
+    },
+    "cpsat_structured_minus_cpsat_rule": {
+      "clustered": {
+        "clusters": 4,
+        "mean": 0.697916666666667,
+        "ci95": [
+          0.29166666666666696,
+          1.104166666666667
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 4,
+      "ties": 11
+    }
+  },
+  "joint_state_prediction": {
+    "1": {
+      "rule": {
+        "mean_scenario_accuracy": 0.8527484668109668,
+        "correct": 126,
+        "windows": 145
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.83737261002886,
+        "correct": 120,
+        "windows": 145
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.8138708513708514,
+        "correct": 117,
+        "windows": 145
+      }
+    },
+    "3": {
+      "rule": {
+        "mean_scenario_accuracy": 0.8231872294372294,
+        "correct": 56,
+        "windows": 72
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.6852813852813853,
+        "correct": 44,
+        "windows": 72
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.5816558441558441,
+        "correct": 36,
+        "windows": 72
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_scenario_accuracy": 0.7984126984126985,
+        "correct": 33,
+        "windows": 48
+      },
+      "pets": {
+        "mean_scenario_accuracy": 0.553968253968254,
+        "correct": 20,
+        "windows": 48
+      },
+      "structured": {
+        "mean_scenario_accuracy": 0.47857142857142854,
+        "correct": 16,
+        "windows": 48
+      }
+    }
+  },
+  "same_state_decisions": 32,
+  "pets_vs_rule": {
+    "same": 32
+  },
+  "structured_vs_rule": {
+    "same": 32
+  },
+  "candidate_overlap_intersection": 118,
+  "candidate_overlap_union": 118
+}

@@ -1,0 +1,46 @@
+{
+  "scope": "post-confirmation exploratory all-decision diagnostic; same scenario and origins are correlated",
+  "factual_episodes": 64,
+  "same_state_decisions": 370,
+  "counts": {
+    "pets_vs_rule": {
+      "same": 332,
+      "different": 38,
+      "worse": 29,
+      "better": 8,
+      "equal_flow": 1
+    },
+    "structured_vs_rule": {
+      "same": 338,
+      "different": 32,
+      "better": 5,
+      "worse": 26,
+      "equal_flow": 1
+    }
+  },
+  "flow_difference": {
+    "pets_vs_rule_mean_flow_on_differences": 1.0614035087719305,
+    "structured_vs_rule_mean_flow_on_differences": 1.2447916666666679
+  },
+  "unique_observable_states": 181,
+  "duplicate_origin_records_removed": 189,
+  "duplicate_observation_outcome_disagreement_groups": 0,
+  "unique_state_counts": {
+    "pets_vs_rule": {
+      "same": 160,
+      "different": 21,
+      "worse": 15,
+      "better": 5,
+      "equal_flow": 1
+    },
+    "structured_vs_rule": {
+      "same": 161,
+      "different": 20,
+      "better": 4,
+      "worse": 15,
+      "equal_flow": 1
+    }
+  },
+  "candidate_overlap_intersection": 1197,
+  "candidate_overlap_union": 1215
+}

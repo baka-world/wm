@@ -1,0 +1,137 @@
+{
+  "cases": 20,
+  "comparable_decisions": 48,
+  "mean_candidate_gap_ticks": {
+    "clusters": 4,
+    "mean": 6.2027777777777775,
+    "ci95": [
+      5.038888888888888,
+      7.366666666666667
+    ],
+    "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+    "resamples": 2000,
+    "seed": 20261109
+  },
+  "mean_regret_ticks": {
+    "original20": {
+      "clusters": 4,
+      "mean": 2.783333333333333,
+      "ci95": [
+        1.0305555555555552,
+        4.536111111111111
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "long5": {
+      "clusters": 4,
+      "mean": 2.2416666666666663,
+      "ci95": [
+        0.8277777777777771,
+        3.6555555555555554
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "long20": {
+      "clusters": 4,
+      "mean": 1.5194444444444446,
+      "ci95": [
+        1.0861111111111115,
+        1.9527777777777777
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "rule_long20": {
+      "clusters": 4,
+      "mean": 2.572222222222222,
+      "ci95": [
+        1.1444444444444444,
+        4.0
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "linear_long20": {
+      "clusters": 4,
+      "mean": 2.447222222222221,
+      "ci95": [
+        0.9555555555555553,
+        3.9388888888888873
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    },
+    "progress_rule_long20": {
+      "clusters": 4,
+      "mean": 2.672222222222222,
+      "ci95": [
+        1.1444444444444444,
+        4.199999999999999
+      ],
+      "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+      "resamples": 2000,
+      "seed": 20261109
+    }
+  },
+  "long20_minus_original20_regret_ticks": {
+    "clusters": 4,
+    "mean": -1.2638888888888884,
+    "ci95": [
+      -2.583333333333333,
+      0.055555555555556156
+    ],
+    "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+    "resamples": 2000,
+    "seed": 20261109
+  },
+  "by_regime_case_mean_regret_ticks": {
+    "normal": {
+      "original20": 0.5625,
+      "long5": 0.5625,
+      "long20": 0.5625,
+      "rule_long20": 0.7708333333333339,
+      "linear_long20": 0.5625,
+      "progress_rule_long20": 0.7708333333333339
+    },
+    "burst": {
+      "original20": 5.062499999999999,
+      "long5": 3.875,
+      "long20": 2.562500000000001,
+      "rule_long20": 4.375,
+      "linear_long20": 3.875,
+      "progress_rule_long20": 4.375
+    },
+    "outage_processing": {
+      "original20": 2.333333333333334,
+      "long5": 1.4375,
+      "long20": 2.833333333333334,
+      "rule_long20": 1.4375,
+      "linear_long20": 1.4375,
+      "progress_rule_long20": 1.9375
+    },
+    "outage_arrival": {
+      "original20": 4.111111111111111,
+      "long5": 4.083333333333332,
+      "long20": 0.625,
+      "rule_long20": 4.4305555555555545,
+      "linear_long20": 4.583333333333331,
+      "progress_rule_long20": 4.4305555555555545
+    },
+    "motion_delay": {
+      "original20": 1.8472222222222214,
+      "long5": 1.249999999999999,
+      "long20": 1.0138888888888882,
+      "rule_long20": 1.8472222222222214,
+      "linear_long20": 1.777777777777775,
+      "progress_rule_long20": 1.8472222222222214
+    }
+  },
+  "note": "Equal decision weighting within case, equal case weighting within seed cluster; layout-stratified seed bootstrap."
+}

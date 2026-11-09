@@ -203,11 +203,15 @@ def eligible_windows(rows: list[Transition], horizon: int) -> tuple[list[list[Tr
 
 
 def evaluate_episode(episode: Episode, geometry: Geometry, parameters: dict[str, Any],
-                     learned_factory=HybridDynamicsModel) -> dict[str, Any]:
+                     learned_factory=HybridDynamicsModel, extra_models=None) -> dict[str, Any]:
     models = {"persistence": HybridDynamicsModel(geometry, mode="persistence"),
               "heuristic": HybridDynamicsModel(geometry, mode="heuristic"),
               "learned": learned_factory(geometry, parameters, "learned")}
-    one_step = {name: zero_counts() for name in PREDICTORS}
+    if extra_models:
+        if set(models) & set(extra_models):
+            raise ValueError("extra model names must be distinct")
+        models.update(extra_models)
+    one_step = {name: zero_counts() for name in models}
     for row in episode.rows:
         for name, model in models.items():
             estimate = model.predict_next(row.observation, row.assignments)
@@ -216,7 +220,7 @@ def evaluate_episode(episode: Episode, geometry: Geometry, parameters: dict[str,
     multi_step = {}
     for horizon in HORIZONS:
         windows, coverage = eligible_windows(episode.rows, horizon)
-        totals = {name: zero_counts() for name in PREDICTORS}
+        totals = {name: zero_counts() for name in models}
         for window in windows:
             start, actual = window[0].observation, window[-1].next_observation
             for name, model in models.items():
@@ -235,13 +239,16 @@ def evaluate_episode(episode: Episode, geometry: Geometry, parameters: dict[str,
 
 def aggregate(evaluations: list[dict[str, Any]], split: str) -> dict[str, Any]:
     cases = [case for case in evaluations if case["split"] == split]
-    one_step = {name: zero_counts() for name in PREDICTORS}
-    per_episode_joint = {name: [] for name in PREDICTORS}
+    predictors = tuple(cases[0]["one_step"]) if cases else PREDICTORS
+    if any(tuple(case["one_step"]) != predictors for case in cases):
+        raise ValueError("episodes have inconsistent prediction baselines")
+    one_step = {name: zero_counts() for name in predictors}
+    per_episode_joint = {name: [] for name in predictors}
     multi = {str(h): {"coverage": {"candidate_windows": 0, "future_assignments": 0, "new_arrivals": 0,
                                     "station_changes": 0, "eligible": 0},
-                       "counts": {name: zero_counts() for name in PREDICTORS}} for h in HORIZONS}
+                       "counts": {name: zero_counts() for name in predictors}} for h in HORIZONS}
     for case in cases:
-        for name in PREDICTORS:
+        for name in predictors:
             counts = case["one_step"][name]
             merge_counts(one_step[name], counts)
             if counts["joint_total"]:
@@ -250,15 +257,15 @@ def aggregate(evaluations: list[dict[str, Any]], split: str) -> dict[str, Any]:
             key = str(horizon)
             for field, count in case["multi_step"][key]["coverage"].items():
                 multi[key]["coverage"][field] += count
-            for name in PREDICTORS:
+            for name in predictors:
                 merge_counts(multi[key]["counts"][name], case["multi_step"][key]["counts"][name])
     for key in multi:
-        multi[key]["rates"] = {name: rates(multi[key]["counts"][name]) for name in PREDICTORS}
+        multi[key]["rates"] = {name: rates(multi[key]["counts"][name]) for name in predictors}
     return {"episodes": len(cases), "timed_out_episodes": sum(case["episode_status"] != "completed" for case in cases),
             "completed_tasks": sum(case["completed"] for case in cases),
             "one_step": {name: {"counts": one_step[name], "rates": rates(one_step[name]),
                          "mean_episode_joint_accuracy": round(sum(per_episode_joint[name]) / len(per_episode_joint[name]), 6)
-                         if per_episode_joint[name] else None} for name in PREDICTORS}, "multi_step": multi}
+                         if per_episode_joint[name] else None} for name in predictors}, "multi_step": multi}
 
 
 def run_experiment(tartu: Any, clinic: Any) -> tuple[dict[str, Any], dict[str, Any]]:

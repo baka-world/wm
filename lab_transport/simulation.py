@@ -447,7 +447,8 @@ class Simulator:
         )
 
     def run(self, on_transition: Callable[[Transition], None] | None = None,
-            dispatch_policy: DispatchPolicy | None = None) -> dict[str, Any]:
+            dispatch_policy: DispatchPolicy | None = None,
+            on_observation: Callable[[Observation], Any] | None = None) -> dict[str, Any]:
         if self._has_run:
             raise RuntimeError("a Simulator instance can only be run once")
         self._has_run = True
@@ -458,7 +459,11 @@ class Simulator:
                 if sample.status == "unreleased" and sample.spec.release_tick <= tick:
                     sample.status = "waiting"
                     self._event(tick, "released", sample_id=sample.spec.id)
-            current = self._observable_state(tick) if on_transition is not None or dispatch_policy is not None else None
+            current = self._observable_state(tick) if (on_transition is not None or dispatch_policy is not None
+                                                      or on_observation is not None) else None
+            if on_observation is not None:
+                assert current is not None
+                on_observation(current)
             if on_transition is not None and pending is not None:
                 assert current is not None
                 on_transition(Transition(pending[0], pending[1], current, "before_dispatch", None))

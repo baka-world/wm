@@ -1,0 +1,35 @@
+{
+  "device": "cpu",
+  "data_check": {
+    "episodes": 16,
+    "transitions": 3357,
+    "maps": 2,
+    "schedules_not_verifiable_from_trajectory": 0
+  },
+  "dataset_manifest_sha256": "eb688b2cc35679aaaf7d5c0f8b2953257f7e5e2ddacba635ed34f22b6f790448",
+  "adapter": "lab_transport.torch_structured_adapter",
+  "train": {
+    "episodes_read": 2,
+    "transitions_read": 400,
+    "examples": 800
+  },
+  "validation": {
+    "episodes_read": 1,
+    "transitions_read": 200,
+    "examples": 400
+  },
+  "device_name": "cpu",
+  "cuda_build": null,
+  "peak_gpu_memory_bytes": null,
+  "best_epoch": 1,
+  "best_validation_loss": 0.8532253575325012,
+  "best_checkpoint": "epoch-0001.pt",
+  "epochs_this_run": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8672581696510315,
+      "validation_loss": 0.8532253575325012,
+      "seconds": 0.25678848099778406
+    }
+  ]
+}

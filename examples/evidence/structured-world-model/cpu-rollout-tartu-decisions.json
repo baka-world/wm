@@ -1,0 +1,164 @@
+[
+  {
+    "tick": 0,
+    "candidates_available": 2,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S01",
+        "score": 43,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          173,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S01",
+        "score": 33,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          208,
+          0
+        ]
+      }
+    ],
+    "selected_index": 1
+  },
+  {
+    "tick": 8,
+    "candidates_available": 1,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S02",
+        "score": 41,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          244,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 42,
+    "candidates_available": 3,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R2",
+        "sample_id": "S03",
+        "score": 61,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S04",
+        "score": 61,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S05",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 75,
+    "candidates_available": 3,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S04",
+        "score": 61,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      },
+      {
+        "robot_id": "R1",
+        "sample_id": "S05",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      },
+      {
+        "robot_id": "R1",
+        "sample_id": "S06",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 117,
+    "candidates_available": 2,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R2",
+        "sample_id": "S05",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      },
+      {
+        "robot_id": "R2",
+        "sample_id": "S06",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  },
+  {
+    "tick": 159,
+    "candidates_available": 1,
+    "candidates_evaluated": [
+      {
+        "robot_id": "R1",
+        "sample_id": "S06",
+        "score": 63,
+        "predicted_status": "assigned",
+        "predicted_position": [
+          226,
+          0
+        ]
+      }
+    ],
+    "selected_index": 0
+  }
+]

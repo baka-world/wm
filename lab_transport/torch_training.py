@@ -68,7 +68,8 @@ def source_hash(module) -> str:
 def runtime_code_hashes() -> dict[str, str]:
     """Fingerprint shared contracts/features used by the bundled adapter."""
     directory = Path(__file__).parent
-    names = ("torch_training.py", "transition_schema.py", "dynamics_model.py", "dynamics_revision.py")
+    names = ("torch_training.py", "transition_schema.py", "simulation.py", "dynamics_model.py",
+             "dynamics_revision.py", "dynamics_experiment.py", "state_v2.py")
     return {name: hashlib.sha256((directory / name).read_bytes()).hexdigest() for name in names}
 
 
@@ -103,13 +104,18 @@ def prepare_examples(root: Path, split: str, adapter, limit: int | None) -> tupl
             topology = json.loads(_path(root, manifest["maps"][layout]["file"]).read_text(encoding="utf-8"))
             geometries[layout] = geometry_from_map(topology)
         episodes += 1
+        observer = adapter.make_observer() if hasattr(adapter, "make_observer") else None
         with _path(root, entry["file"]).open(encoding="utf-8") as handle:
             for line in handle:
                 row = json.loads(line)
                 current = observation_from_dict(row["observation"])
                 actions = tuple(Assignment(**a) for a in row["assignments"])
                 future = observation_from_dict(row["next_observation"])
+                if observer is not None:
+                    current = observer.observe(current)
                 examples.extend(adapter.encode_transition(geometries[layout], current, actions, future))
+                if observer is not None:
+                    observer.observe(future)
                 transitions += 1
                 if limit is not None and transitions >= limit:
                     break

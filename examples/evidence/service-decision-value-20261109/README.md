@@ -9,6 +9,6 @@
 - `online-*-raw.json.gz`：四种可在线使用配置的闭环指标、逐决策耗时和动作；场景配置引用同目录 JSON。
 - `*-summary.json`、`*-analysis.json`、`online-*-paired.json`：原始记录派生的窗口、事件、排序、配对及闭环汇总。
 - `initial-original-horizon-development-summary.json`：冻结新评分前的开发集原评分窗口诊断结果；不是确认集。
-- `logs/`：本地实际执行的完整实验、回归测试和逐候选复核日志，gzip 压缩。GitHub Actions 的运行和日志也在对应 PR 的检查项中。
+- `logs/`：本地实际执行的完整实验、回归测试和逐候选复核日志，gzip 压缩。`github-actions-42599689192.log.gz` 保存了 [GitHub Actions 首次完整成功运行](https://github.com/lieuyimo/wm/actions/runs/42599689192)的全部日志（提交 `cfc9b00228b4a7d6cdab5dd90129cb2c787b3990`）；最终 PR 提交的检查项另见 PR。
 
 `SHA256SUMS` 记录归档文件内容，可在本目录执行 `sha256sum -c SHA256SUMS` 校验。所有场景为合成实验假设；离线参考包含未来信息，不是可部署调度器。

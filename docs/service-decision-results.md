@@ -86,3 +86,5 @@ python -m experiments.service_value.archive --input runs/service-decision-value-
 ```
 
 脚本先检查归档及训练合同哈希，再依次运行开发集与确认集的候选独立回放、服务事件复核、原/新评分、后续分配敏感性、四组在线闭环及完整性检查。输出目录必须是新的空目录。新增的 [CPU Actions 工作流](../.github/workflows/service-decision-value.yml) 运行原有和本轮回归测试并保存结果；统计值可重现，实际毫秒耗时会因硬件和负载变化。
+
+[首次云端运行](https://github.com/lieuyimo/wm/actions/runs/42599689192)成功，原有 112 项及新增 11 项测试通过，并复现 129/118 个逐候选复核及确认集闭环均值；完整 Actions 日志已压缩保存在本轮证据中。

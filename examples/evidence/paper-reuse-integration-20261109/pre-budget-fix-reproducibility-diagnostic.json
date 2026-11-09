@@ -1,0 +1,22 @@
+{
+  "scope": "same-seed pilot runs; scheduler wall-time truncated one candidate search",
+  "layout": "tartu",
+  "seed": 41000,
+  "regime": "burst",
+  "differences": [
+    {
+      "tick": 121,
+      "first_statuses": [
+        "OPTIMAL",
+        "OPTIMAL",
+        "INFEASIBLE"
+      ],
+      "rerun_statuses": [
+        "OPTIMAL",
+        "UNKNOWN"
+      ]
+    }
+  ],
+  "first_rollout_steps": 180,
+  "rerun_rollout_steps": 165
+}

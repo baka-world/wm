@@ -15,7 +15,8 @@ from lab_transport.service_fault_data import select_seeds,source_bases
 from lab_transport.training_data import _task_hash
 
 SEEDS={'development':{'tartu':(41000,41002),'clinic':(42000,42001)},
-       'confirmation':{'tartu':(45001,45004),'clinic':(46000,46002)}}
+       'confirmation':{'tartu':(49002,49003),'clinic':(50000,50001)}}
+PREVIOUS_PILOT={'tartu':(45001,45004),'clinic':(46000,46002)}
 REGIMES=('normal','burst','outage_processing','outage_arrival')
 
 
@@ -32,6 +33,8 @@ def audit(bases):
     for maps in PR10_SEEDS.values():
         for layout,seeds in maps.items():
             for seed in seeds: old.update(signatures(layout,seed))
+    for layout,seeds in PREVIOUS_PILOT.items():
+        for seed in seeds: old.update(signatures(layout,seed))
     seen=set()
     for profile,maps in SEEDS.items():
         for layout,seeds in maps.items():
@@ -57,7 +60,8 @@ def build():
                     cases.append({'profile':profile,'layout':layout,'seed':seed,'regime':regime,'design':design,
                                   'incident':incident,'config':case_config(case,pauses)})
     return {'scope':'fixed synthetic scenarios only; config contains offline future events and is never model input',
-            'seeds':SEEDS,'regimes':REGIMES,'horizon':5,'particles':3,'solver_time_limit_seconds':.05,
+            'seeds':SEEDS,'previous_pilot':PREVIOUS_PILOT,'regimes':REGIMES,'horizon':5,'particles':3,
+            'solver_time_limit_seconds':.5,'solver_deterministic_time_limit':.05,
             'solver_candidates':4,'schedule_audit':proof,'source_sha256':sources,'cases':cases}
 
 

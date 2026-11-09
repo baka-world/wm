@@ -127,7 +127,7 @@ def run_policy(case,seed,pauses,name,distribution):
         dynamics=(ProgressAwareRule(geometry) if name=='cpsat_rule' else
                   PETSRuleDynamics(geometry,distribution,seed=seed))
         policy=RolloutDispatch(geometry,dynamics,observer,horizon=5,particles=3,seed=seed,
-                               solver_seconds=.05,proposals=4)
+                               solver_seconds=.5,proposals=4)
     raw=[]
     result=Simulator(case,'world',seed,motion_pauses=pauses,collect_metrics=True).run(
         on_transition=raw.append if name=='nearest_rule' else None,
@@ -148,6 +148,7 @@ def run_policy(case,seed,pauses,name,distribution):
         'neural_model_forward_calls':policy.model_calls,
         'model_forward_calls_per_decision':policy.model_calls/len(elapsed) if elapsed else 0,
         'prediction_fallbacks':policy.fallbacks,'solver_fallbacks':solver.fallbacks if solver else 0,
+        'solver_partial_truncations':solver.truncated if solver else 0,
         'solver_calls':solver.calls if solver else 0,'duplicate_assignments':duplicates,
         'discrete_safety_violations':discrete_safety_violations(result),
         'station_unavailable_wait_ticks':summary.get('station_unavailable_wait_ticks',0),
@@ -171,6 +172,7 @@ def summarize(cases):
           'model_calls_per_decision':sum(r['neural_model_forward_calls'] for r in rows)/max(1,sum(r['decision_count'] for r in rows)),
           'rollout_steps':sum(r['rollout_steps'] for r in rows),'prediction_fallbacks':sum(r['prediction_fallbacks'] for r in rows),
           'solver_fallbacks':sum(r['solver_fallbacks'] for r in rows),
+          'solver_partial_truncations':sum(r['solver_partial_truncations'] for r in rows),
           'duplicate_assignments':sum(r['duplicate_assignments'] for r in rows),
           'discrete_safety_violations':sum(r['discrete_safety_violations'] for r in rows)}
     return result

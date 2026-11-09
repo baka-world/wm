@@ -12,7 +12,7 @@ from lab_transport.paper_reuse.ortools_dispatch import CPSATDispatcher
 class RolloutDispatch:
     """CP-SAT generates legal matching candidates; model scores their futures."""
     def __init__(self,geometry,dynamics,observer,*,horizon=5,particles=3,seed=123,
-                 solver_seconds=0.05,proposals=4):
+                 solver_seconds=0.5,proposals=4):
         if not 1 <= horizon <= 20 or not 1 <= particles <= 10:
             raise ValueError('invalid bounded rollout budget')
         self.geometry,self.dynamics,self.observer = geometry,dynamics,observer

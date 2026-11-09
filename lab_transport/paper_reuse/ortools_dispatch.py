@@ -18,14 +18,18 @@ except ImportError:
 
 
 class CPSATDispatcher:
-    def __init__(self, geometry, *, time_limit_seconds=0.05, candidate_limit=4, seed=0):
+    def __init__(self, geometry, *, time_limit_seconds=0.5, candidate_limit=4, seed=0,
+                 deterministic_time_limit=0.05):
         if not 0 < time_limit_seconds <= 1 or not 1 <= candidate_limit <= 20:
             raise ValueError('invalid finite solver budget')
+        if not 0 < deterministic_time_limit <= 1:
+            raise ValueError('invalid deterministic solver budget')
         self.geometry = geometry
         self.time_limit_seconds = time_limit_seconds
         self.candidate_limit = candidate_limit
         self.seed = seed
-        self.calls = self.fallbacks = 0
+        self.deterministic_time_limit = deterministic_time_limit
+        self.calls = self.fallbacks = self.truncated = 0
         self.log = []
 
     def _items(self, observation, candidates):
@@ -100,6 +104,7 @@ class CPSATDispatcher:
         model.Minimize((horizon + 1)*(max_assignments-sum(flags))+makespan)
         solver = cp_model.CpSolver()
         solver.parameters.max_time_in_seconds = self.time_limit_seconds
+        solver.parameters.max_deterministic_time = self.deterministic_time_limit
         solver.parameters.num_search_workers = 1
         solver.parameters.random_seed = self.seed
         plans, statuses = [], []
@@ -123,8 +128,11 @@ class CPSATDispatcher:
             plans = list(fallback)
         else:
             reason = None
+        truncated = bool(plans and statuses and statuses[-1] == 'UNKNOWN')
+        self.truncated += int(truncated)
         self.log.append({'tick':observation.tick,'fallback':reason,'statuses':statuses,
-                         'solutions':len(plans),'cpu_seconds':time.process_time()-started})
+                         'partial_truncation':truncated,'solutions':len(plans),
+                         'cpu_seconds':time.process_time()-started})
         return tuple(plans)
 
     def __call__(self, observation, candidates):

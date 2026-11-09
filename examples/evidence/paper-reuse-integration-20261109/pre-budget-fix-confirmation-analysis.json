@@ -1,0 +1,206 @@
+{
+  "scope": "Earlier 0.05-second wall-time pilot; preserved after candidate truncation found; not final independent confirmation.",
+  "independent_layout_seed_clusters": 4,
+  "scenarios": 16,
+  "closed_loop": {
+    "nearest_rule": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 99.77083333333333,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 0.8633375952381825,
+      "neural_model_forward_calls": 0,
+      "model_calls_per_decision": 0.0,
+      "rollout_steps": 420,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    },
+    "cpsat_rule": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 96.4375,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 9.037090216867508,
+      "neural_model_forward_calls": 0,
+      "model_calls_per_decision": 0.0,
+      "rollout_steps": 2760,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    },
+    "cpsat_pets": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 96.4375,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 20.30831832530121,
+      "neural_model_forward_calls": 4179,
+      "model_calls_per_decision": 50.34939759036145,
+      "rollout_steps": 2760,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    }
+  },
+  "paired_flow_differences": {
+    "cpsat_rule_minus_nearest_rule": {
+      "by_layout_seed_cluster": {
+        "clusters": 4,
+        "mean": -3.333333333333335,
+        "ci95": [
+          -4.770833333333333,
+          -1.8958333333333366
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 13,
+      "scenario_losses": 1,
+      "scenario_ties": 2
+    },
+    "cpsat_pets_minus_cpsat_rule": {
+      "by_layout_seed_cluster": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 0,
+      "scenario_losses": 0,
+      "scenario_ties": 16
+    }
+  },
+  "per_regime_mean_flow": {
+    "burst": {
+      "nearest_rule": 96.04166666666666,
+      "cpsat_rule": 90.70833333333333,
+      "cpsat_pets": 90.70833333333333
+    },
+    "normal": {
+      "nearest_rule": 75.25,
+      "cpsat_rule": 73.45833333333333,
+      "cpsat_pets": 73.45833333333333
+    },
+    "outage_arrival": {
+      "nearest_rule": 107.0,
+      "cpsat_rule": 105.54166666666667,
+      "cpsat_pets": 105.54166666666667
+    },
+    "outage_processing": {
+      "nearest_rule": 120.79166666666667,
+      "cpsat_rule": 116.04166666666666,
+      "cpsat_pets": 116.04166666666666
+    }
+  },
+  "mean_scenario_service_metrics": {
+    "duration_mae": {
+      "rule": 0.6197916666666666,
+      "pets": 0.5179079076081644,
+      "structured": null
+    },
+    "duration_nll": {
+      "rule": null,
+      "pets": 0.16884661562555614,
+      "structured": null
+    },
+    "interval90_coverage": {
+      "rule": null,
+      "pets": 0.9635416666666666,
+      "structured": null
+    },
+    "brier": {
+      "rule": 0.1852010528673835,
+      "structured": 0.13900902764618248,
+      "pets": 0.15383188433948494
+    }
+  },
+  "service_completed_sessions": 192,
+  "service_event_opportunities": 514,
+  "joint_state_prediction": {
+    "1": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.899432735629305,
+        "correct_windows": 522,
+        "windows": 570
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.7304047642566864,
+        "correct_windows": 404,
+        "windows": 570
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.9078260896264223,
+        "correct_windows": 528,
+        "windows": 570
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.8822823555729719,
+        "correct_windows": 515,
+        "windows": 570
+      }
+    },
+    "3": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.7966305286183757,
+        "correct_windows": 437,
+        "windows": 512
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.541641486178163,
+        "correct_windows": 288,
+        "windows": 512
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.7918058462754659,
+        "correct_windows": 435,
+        "windows": 512
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.790166938715043,
+        "correct_windows": 434,
+        "windows": 512
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.7641493595475408,
+        "correct_windows": 390,
+        "windows": 469
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.43335491622999445,
+        "correct_windows": 221,
+        "windows": 469
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.7278391079605852,
+        "correct_windows": 380,
+        "windows": 469
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.7442726829153494,
+        "correct_windows": 381,
+        "windows": 469
+      }
+    }
+  }
+}

@@ -23,6 +23,8 @@
 - [第二轮：故障覆盖、候选差距及评分对齐](docs/decision-value-round2-report.md)
 - [结构化世界模型、状态边界与本地训练协议](docs/structured-world-model.md)
 - [新版评分与最小模型 CPU 验收结果](docs/structured-world-model-results.md)
+- [PR #8 GPU 基线冻结说明](docs/pr8-baseline-provenance.md)
+- [服务动力学故障覆盖与 CPU 消融结果](docs/service-dynamics-results.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)

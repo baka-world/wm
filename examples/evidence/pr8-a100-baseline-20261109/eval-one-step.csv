@@ -1,0 +1,9 @@
+split,model,known_entity_joint_accuracy,robot_position_accuracy,sample_status_accuracy,service_finish_exact_recall,service_finish_exact_precision
+test_tartu,persistence,0.008197,0.240779,0.987228,0.0,
+test_tartu,heuristic,0.971311,1.0,0.994741,0.681818,0.681818
+test_tartu,progress_rule,0.971311,1.0,0.994741,0.681818,0.681818
+test_tartu,learned,0.778689,0.896004,0.996431,0.636364,0.903226
+test_clinic,persistence,0.023545,0.324068,0.95956,0.0,
+test_clinic,heuristic,0.929366,0.996076,0.98543,0.761364,0.705263
+test_clinic,progress_rule,0.93329,0.996076,0.986322,0.772727,0.723404
+test_clinic,learned,0.803139,0.916612,0.988849,0.613636,0.93913

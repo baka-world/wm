@@ -1,0 +1,9 @@
+split,regime,episodes,transitions,episodes_with_service_pause,service_pause_ticks,max_service_pause,episodes_with_station_unavailable
+test_clinic,normal,8,761,0,0,0,0
+test_clinic,short_outage,8,768,8,52,10,8
+test_tartu,normal,8,1952,0,0,0,0
+test_tartu,short_outage,8,1952,0,0,0,8
+train,normal,24,5914,0,0,0,0
+train,short_outage,24,5934,2,10,5,24
+validation,normal,8,1994,0,0,0,0
+validation,short_outage,8,1994,0,0,0,8

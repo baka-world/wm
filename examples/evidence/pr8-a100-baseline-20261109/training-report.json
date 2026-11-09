@@ -1,0 +1,89 @@
+{
+  "device": "cuda",
+  "data_check": {
+    "episodes": 96,
+    "transitions": 21269,
+    "maps": 2,
+    "schedules_not_verifiable_from_trajectory": 0
+  },
+  "dataset_manifest_sha256": "f668fb1582fb3994f5e45a7d696c3810af1d3f28619236ba808a5c661baa5c9a",
+  "adapter": "lab_transport.torch_structured_adapter",
+  "train": {
+    "episodes_read": 48,
+    "transitions_read": 11848,
+    "examples": 23666
+  },
+  "validation": {
+    "episodes_read": 16,
+    "transitions_read": 3988,
+    "examples": 7976
+  },
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "cuda_build": "12.4",
+  "peak_gpu_memory_bytes": 68979200,
+  "best_epoch": 10,
+  "best_validation_loss": 0.3021162622113158,
+  "best_checkpoint": "epoch-0010.pt",
+  "epochs_this_run": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6420929692084294,
+      "validation_loss": 0.4961292614399968,
+      "seconds": 5.212352566421032
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4223784666703941,
+      "validation_loss": 0.4362673047433048,
+      "seconds": 4.914533533155918
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3702098709470289,
+      "validation_loss": 0.3897842452445683,
+      "seconds": 4.903756091371179
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.3272323413233901,
+      "validation_loss": 0.3579792156142959,
+      "seconds": 4.920208189636469
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.2981282336002854,
+      "validation_loss": 0.3396789344380738,
+      "seconds": 4.848449720069766
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.2799751740101677,
+      "validation_loss": 0.3305874641399939,
+      "seconds": 4.842060104012489
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.26718840763372026,
+      "validation_loss": 0.3266176785376958,
+      "seconds": 4.943476181477308
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.25834120105208097,
+      "validation_loss": 0.3148749796617608,
+      "seconds": 4.902723981067538
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.250272806457118,
+      "validation_loss": 0.3041434340662843,
+      "seconds": 4.92730569653213
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.2440018363968816,
+      "validation_loss": 0.3021162622113158,
+      "seconds": 4.925712056457996
+    }
+  ]
+}

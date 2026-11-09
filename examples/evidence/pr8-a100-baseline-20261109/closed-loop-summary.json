@@ -1,0 +1,1371 @@
+{
+  "checkpoint": "epoch-0010.pt",
+  "checkpoint_sha256": "3572c6c3697c4ca76944519ff0a612432bd65d922fd339dc0835036c6c75dfdf",
+  "scenarios": 16,
+  "seeds": {
+    "tartu": [
+      9000,
+      9001,
+      9002,
+      9003
+    ],
+    "clinic": [
+      10000,
+      10001,
+      10002,
+      10003
+    ]
+  },
+  "regimes": [
+    "normal",
+    "short_outage"
+  ],
+  "horizon": 3,
+  "candidate_budget": 8,
+  "policy_note": "progress_rule_rollout and neural_rollout use the identical external RolloutPolicy (horizon=3, budget=8, one assignment per dispatch tick); nearest/world/rule are native Simulator policies and may assign multiple compatible tasks per tick.",
+  "paired": {
+    "neural_rollout_minus_progress_rule_rollout": {
+      "completed_rate": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "completed_count": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_completion_ticks": {
+        "n": 16,
+        "mean": 0.5832,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 2.666,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.125,
+          1.0832
+        ]
+      },
+      "mean_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.1666,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.667,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.0416,
+          0.2918
+        ]
+      },
+      "max_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 6.25,
+        "median": 0.0,
+        "min": 0,
+        "max": 48,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.125,
+          15.25
+        ]
+      },
+      "max_backlog": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_waiting": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "station_unavailable_wait_ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "late_count": null,
+      "ticks": {
+        "n": 16,
+        "mean": 0.375,
+        "median": 0.0,
+        "min": -3,
+        "max": 6,
+        "wins": 2,
+        "losses": 2,
+        "ties": 12,
+        "bootstrap_95": [
+          -0.75,
+          1.5
+        ]
+      },
+      "blocked_move_attempts": {
+        "n": 16,
+        "mean": 3,
+        "median": 0.0,
+        "min": 0,
+        "max": 12,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.75,
+          5.25
+        ]
+      },
+      "recovery_plans": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "discrete_safety_violations": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "assignments": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "dispatch_ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "decision_mean_ms": {
+        "n": 16,
+        "mean": 5.7156,
+        "median": 4.3615,
+        "min": 2.644,
+        "max": 29.956,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          3.7063,
+          9.1616
+        ]
+      },
+      "decision_p95_ms": {
+        "n": 16,
+        "mean": 15.7569,
+        "median": 7.295,
+        "min": 3.771,
+        "max": 151.403,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          5.9276,
+          34.2927
+        ]
+      },
+      "decision_total_seconds": {
+        "n": 16,
+        "mean": 0.0343,
+        "median": 0.0262,
+        "min": 0.0159,
+        "max": 0.1797,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0222,
+          0.055
+        ]
+      },
+      "model_steps": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "fallbacks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "run_wall_seconds": {
+        "n": 16,
+        "mean": 0.0347,
+        "median": 0.0215,
+        "min": -0.0381,
+        "max": 0.1839,
+        "wins": 1,
+        "losses": 15,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0153,
+          0.0593
+        ]
+      },
+      "run_cpu_seconds": {
+        "n": 16,
+        "mean": 0.0346,
+        "median": 0.0214,
+        "min": -0.0381,
+        "max": 0.1838,
+        "wins": 1,
+        "losses": 15,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0153,
+          0.0593
+        ]
+      }
+    },
+    "neural_rollout_minus_nearest": {
+      "completed_rate": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "completed_count": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_completion_ticks": {
+        "n": 16,
+        "mean": 1.4792,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 9.666,
+        "wins": 0,
+        "losses": 3,
+        "ties": 13,
+        "bootstrap_95": [
+          0.0,
+          3.1979
+        ]
+      },
+      "mean_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.5833,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 5.166,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.0104,
+          1.3749
+        ]
+      },
+      "max_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 2.9375,
+        "median": 0.0,
+        "min": 0,
+        "max": 21,
+        "wins": 0,
+        "losses": 4,
+        "ties": 12,
+        "bootstrap_95": [
+          0.0625,
+          6.1875
+        ]
+      },
+      "max_backlog": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_waiting": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "station_unavailable_wait_ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "late_count": null,
+      "ticks": {
+        "n": 16,
+        "mean": 3.9375,
+        "median": 0.0,
+        "min": 0,
+        "max": 27,
+        "wins": 0,
+        "losses": 3,
+        "ties": 13,
+        "bootstrap_95": [
+          0.0,
+          8.4375
+        ]
+      },
+      "blocked_move_attempts": {
+        "n": 16,
+        "mean": -0.25,
+        "median": 0.0,
+        "min": -3,
+        "max": 0,
+        "wins": 2,
+        "losses": 0,
+        "ties": 14,
+        "bootstrap_95": [
+          -0.625,
+          0.0
+        ]
+      },
+      "recovery_plans": {
+        "n": 16,
+        "mean": 0.125,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 2,
+        "ties": 14,
+        "bootstrap_95": [
+          0.0,
+          0.3125
+        ]
+      },
+      "discrete_safety_violations": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "assignments": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "dispatch_ticks": {
+        "n": 16,
+        "mean": 0.0625,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.1875
+        ]
+      },
+      "decision_mean_ms": null,
+      "decision_p95_ms": null,
+      "decision_total_seconds": null,
+      "model_steps": null,
+      "fallbacks": null,
+      "run_wall_seconds": {
+        "n": 16,
+        "mean": 0.0586,
+        "median": 0.05,
+        "min": 0.0259,
+        "max": 0.2015,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0403,
+          0.0826
+        ]
+      },
+      "run_cpu_seconds": {
+        "n": 16,
+        "mean": 0.0586,
+        "median": 0.0499,
+        "min": 0.0259,
+        "max": 0.2008,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0403,
+          0.0825
+        ]
+      }
+    },
+    "neural_rollout_minus_world": {
+      "completed_rate": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "completed_count": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_completion_ticks": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.0104,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.167,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.0313
+        ]
+      },
+      "max_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.0625,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.1875
+        ]
+      },
+      "max_backlog": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_waiting": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "station_unavailable_wait_ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "late_count": null,
+      "ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "blocked_move_attempts": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_plans": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "discrete_safety_violations": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "assignments": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "dispatch_ticks": {
+        "n": 16,
+        "mean": 0.0625,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.1875
+        ]
+      },
+      "decision_mean_ms": null,
+      "decision_p95_ms": null,
+      "decision_total_seconds": null,
+      "model_steps": null,
+      "fallbacks": null,
+      "run_wall_seconds": {
+        "n": 16,
+        "mean": 0.0524,
+        "median": 0.0421,
+        "min": -0.0134,
+        "max": 0.2019,
+        "wins": 1,
+        "losses": 15,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0329,
+          0.0785
+        ]
+      },
+      "run_cpu_seconds": {
+        "n": 16,
+        "mean": 0.0525,
+        "median": 0.042,
+        "min": -0.0134,
+        "max": 0.2019,
+        "wins": 1,
+        "losses": 15,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0329,
+          0.0785
+        ]
+      }
+    },
+    "neural_rollout_minus_rule": {
+      "completed_rate": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "completed_count": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_completion_ticks": {
+        "n": 16,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.0104,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.167,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.0313
+        ]
+      },
+      "max_assigned_wait_ticks": {
+        "n": 16,
+        "mean": 0.0625,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.1875
+        ]
+      },
+      "max_backlog": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_waiting": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "station_unavailable_wait_ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "late_count": null,
+      "ticks": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "blocked_move_attempts": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_plans": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "discrete_safety_violations": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "assignments": {
+        "n": 16,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 16,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "dispatch_ticks": {
+        "n": 16,
+        "mean": 0.0625,
+        "median": 0.0,
+        "min": 0,
+        "max": 1,
+        "wins": 0,
+        "losses": 1,
+        "ties": 15,
+        "bootstrap_95": [
+          0.0,
+          0.1875
+        ]
+      },
+      "decision_mean_ms": null,
+      "decision_p95_ms": null,
+      "decision_total_seconds": null,
+      "model_steps": null,
+      "fallbacks": null,
+      "run_wall_seconds": {
+        "n": 16,
+        "mean": 0.0549,
+        "median": 0.0421,
+        "min": 0.0248,
+        "max": 0.2021,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0365,
+          0.0801
+        ]
+      },
+      "run_cpu_seconds": {
+        "n": 16,
+        "mean": 0.055,
+        "median": 0.042,
+        "min": 0.0247,
+        "max": 0.2021,
+        "wins": 0,
+        "losses": 16,
+        "ties": 0,
+        "bootstrap_95": [
+          0.0366,
+          0.0801
+        ]
+      }
+    }
+  },
+  "groups": {
+    "tartu/normal": {
+      "neural_minus_progress_rule_completed_count": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_completion_ticks": {
+        "n": 4,
+        "mean": 1.1665,
+        "median": 1.0,
+        "min": 0.0,
+        "max": 2.666,
+        "wins": 0,
+        "losses": 2,
+        "ties": 2,
+        "bootstrap_95": [
+          0.0,
+          2.333
+        ]
+      },
+      "neural_minus_progress_rule_mean_assigned_wait_ticks": {
+        "n": 4,
+        "mean": 0.3332,
+        "median": 0.333,
+        "min": 0.0,
+        "max": 0.667,
+        "wins": 0,
+        "losses": 2,
+        "ties": 2,
+        "bootstrap_95": [
+          0.0,
+          0.6665
+        ]
+      },
+      "neural_minus_progress_rule_station_unavailable_wait_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_max_backlog": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_late_count": null,
+      "neural_minus_progress_rule_ticks": {
+        "n": 4,
+        "mean": 0.75,
+        "median": 0.0,
+        "min": -3,
+        "max": 6,
+        "wins": 1,
+        "losses": 1,
+        "ties": 2,
+        "bootstrap_95": [
+          -2.25,
+          4.5
+        ]
+      }
+    },
+    "tartu/short_outage": {
+      "neural_minus_progress_rule_completed_count": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_completion_ticks": {
+        "n": 4,
+        "mean": 1.1665,
+        "median": 1.0,
+        "min": 0.0,
+        "max": 2.666,
+        "wins": 0,
+        "losses": 2,
+        "ties": 2,
+        "bootstrap_95": [
+          0.0,
+          2.333
+        ]
+      },
+      "neural_minus_progress_rule_mean_assigned_wait_ticks": {
+        "n": 4,
+        "mean": 0.3332,
+        "median": 0.333,
+        "min": 0.0,
+        "max": 0.667,
+        "wins": 0,
+        "losses": 2,
+        "ties": 2,
+        "bootstrap_95": [
+          0.0,
+          0.6665
+        ]
+      },
+      "neural_minus_progress_rule_station_unavailable_wait_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_max_backlog": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_late_count": null,
+      "neural_minus_progress_rule_ticks": {
+        "n": 4,
+        "mean": 0.75,
+        "median": 0.0,
+        "min": -3,
+        "max": 6,
+        "wins": 1,
+        "losses": 1,
+        "ties": 2,
+        "bootstrap_95": [
+          -2.25,
+          4.5
+        ]
+      }
+    },
+    "clinic/normal": {
+      "neural_minus_progress_rule_completed_count": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_completion_ticks": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_assigned_wait_ticks": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_station_unavailable_wait_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_max_backlog": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_late_count": null,
+      "neural_minus_progress_rule_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clinic/short_outage": {
+      "neural_minus_progress_rule_completed_count": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_completion_ticks": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_mean_assigned_wait_ticks": {
+        "n": 4,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_station_unavailable_wait_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_max_backlog": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "neural_minus_progress_rule_late_count": null,
+      "neural_minus_progress_rule_ticks": {
+        "n": 4,
+        "mean": 0,
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "wins": 0,
+        "losses": 0,
+        "ties": 4,
+        "bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  }
+}

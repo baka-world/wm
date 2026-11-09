@@ -1,0 +1,3 @@
+# Frozen evidence checksums must survive checkout on Linux and Windows.
+/examples/evidence/pr8-a100-baseline-20261109/** -text whitespace=cr-at-eol,-blank-at-eof
+/examples/evidence/service-dynamics-20261109/** -text

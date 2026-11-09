@@ -1,0 +1,60 @@
+name: Service dynamics CPU ablations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'tools/run_service_cpu_experiment.sh'
+      - '.github/workflows/service-dynamics.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'tools/run_service_cpu_experiment.sh'
+      - '.github/workflows/service-dynamics.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  service-ablation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU PyTorch
+        run: python -m pip install -r requirements-torch-cpu.txt
+      - name: Verify preserved PR 8 baseline
+        working-directory: examples/evidence/pr8-a100-baseline-20261109
+        run: |
+          sha256sum -c SHA256SUMS
+          echo 'ea1b2dc8a686f1a7acb27e2310835c65e35fcaa826ab30870f8ee830608cf31d  PR8-REPORT.md' | sha256sum -c -
+      - name: Verify archived CPU evidence
+        working-directory: examples/evidence/service-dynamics-20261109
+        run: sha256sum -c SHA256SUMS
+      - name: Existing and new regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Reproduce small CPU dataset, training and paired evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 720s bash tools/run_service_cpu_experiment.sh "$RUNNER_TEMP/service-ablation" 2>&1 | tee "$RUNNER_TEMP/service-ablation.log"
+      - name: Save configurations, metrics and checkpoints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-dynamics-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/service-ablation.log
+            ${{ runner.temp }}/service-ablation/dataset/manifest.json
+            ${{ runner.temp }}/service-ablation/dataset/coverage.json
+            ${{ runner.temp }}/service-ablation/training/
+            ${{ runner.temp }}/service-ablation/evaluation/
+          if-no-files-found: warn
+          retention-days: 14

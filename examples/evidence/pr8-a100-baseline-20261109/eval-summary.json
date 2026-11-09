@@ -1,0 +1,1090 @@
+{
+  "checkpoint": "epoch-0010.pt",
+  "checkpoint_sha256": "3572c6c3697c4ca76944519ff0a612432bd65d922fd339dc0835036c6c75dfdf",
+  "device": "cuda",
+  "dataset_manifest_sha256": "f668fb1582fb3994f5e45a7d696c3810af1d3f28619236ba808a5c661baa5c9a",
+  "transitions_per_split": {
+    "test_tartu": 3904,
+    "test_clinic": 1529
+  },
+  "splits": {
+    "test_tartu": {
+      "episodes": 16,
+      "timed_out_episodes": 0,
+      "one_step": {
+        "persistence": {
+          "counts": {
+            "robot_total": 7808,
+            "robot_position_correct": 1880,
+            "robot_actual_moves": 5928,
+            "robot_actual_moves_correct": 0,
+            "robot_predicted_moves": 0,
+            "robot_move_detected": 0,
+            "sample_total": 21296,
+            "sample_status_correct": 21024,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 0,
+            "sample_predicted_changes": 0,
+            "sample_change_exact_true_positive": 0,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 0,
+            "service_finish_exact_true_positive": 0,
+            "joint_total": 3904,
+            "joint_correct": 32,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.240779,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.987228,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.008197
+          }
+        },
+        "heuristic": {
+          "counts": {
+            "robot_total": 7808,
+            "robot_position_correct": 7808,
+            "robot_actual_moves": 5928,
+            "robot_actual_moves_correct": 5928,
+            "robot_predicted_moves": 5928,
+            "robot_move_detected": 5928,
+            "sample_total": 21296,
+            "sample_status_correct": 21184,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 216,
+            "sample_predicted_changes": 272,
+            "sample_change_exact_true_positive": 216,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 176,
+            "service_finish_exact_true_positive": 120,
+            "joint_total": 3904,
+            "joint_correct": 3792,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 1.0,
+            "moving_robot_exact_accuracy": 1.0,
+            "robot_move_detection_recall": 1.0,
+            "sample_status_accuracy": 0.994741,
+            "sample_change_exact_recall": 0.794118,
+            "sample_change_exact_precision": 0.794118,
+            "service_finish_exact_recall": 0.681818,
+            "service_finish_exact_precision": 0.681818,
+            "known_entity_joint_accuracy": 0.971311
+          }
+        },
+        "progress_rule": {
+          "counts": {
+            "robot_total": 7808,
+            "robot_position_correct": 7808,
+            "robot_actual_moves": 5928,
+            "robot_actual_moves_correct": 5928,
+            "robot_predicted_moves": 5928,
+            "robot_move_detected": 5928,
+            "sample_total": 21296,
+            "sample_status_correct": 21184,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 216,
+            "sample_predicted_changes": 272,
+            "sample_change_exact_true_positive": 216,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 176,
+            "service_finish_exact_true_positive": 120,
+            "joint_total": 3904,
+            "joint_correct": 3792,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 1.0,
+            "moving_robot_exact_accuracy": 1.0,
+            "robot_move_detection_recall": 1.0,
+            "sample_status_accuracy": 0.994741,
+            "sample_change_exact_recall": 0.794118,
+            "sample_change_exact_precision": 0.794118,
+            "service_finish_exact_recall": 0.681818,
+            "service_finish_exact_precision": 0.681818,
+            "known_entity_joint_accuracy": 0.971311
+          }
+        },
+        "learned": {
+          "counts": {
+            "robot_total": 7808,
+            "robot_position_correct": 6996,
+            "robot_actual_moves": 5928,
+            "robot_actual_moves_correct": 5848,
+            "robot_predicted_moves": 6584,
+            "robot_move_detected": 5852,
+            "sample_total": 21296,
+            "sample_status_correct": 21220,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 208,
+            "sample_predicted_changes": 220,
+            "sample_change_exact_true_positive": 208,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 124,
+            "service_finish_exact_true_positive": 112,
+            "joint_total": 3904,
+            "joint_correct": 3040,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.896004,
+            "moving_robot_exact_accuracy": 0.986505,
+            "robot_move_detection_recall": 0.987179,
+            "sample_status_accuracy": 0.996431,
+            "sample_change_exact_recall": 0.764706,
+            "sample_change_exact_precision": 0.945455,
+            "service_finish_exact_recall": 0.636364,
+            "service_finish_exact_precision": 0.903226,
+            "known_entity_joint_accuracy": 0.778689
+          }
+        }
+      },
+      "multi_step": {
+        "3": {
+          "coverage": {
+            "candidate_windows": 3872,
+            "future_assignments": 160,
+            "new_arrivals": 200,
+            "station_changes": 32,
+            "eligible": 3480
+          },
+          "rates": {
+            "persistence": {
+              "robot_position_accuracy": 0.149425,
+              "moving_robot_exact_accuracy": 0.0,
+              "robot_move_detection_recall": 0.0,
+              "sample_status_accuracy": 0.977094,
+              "sample_change_exact_recall": 0.0,
+              "sample_change_exact_precision": null,
+              "service_finish_exact_recall": 0.0,
+              "service_finish_exact_precision": null,
+              "known_entity_joint_accuracy": 0.001149
+            },
+            "heuristic": {
+              "robot_position_accuracy": 0.973563,
+              "moving_robot_exact_accuracy": 0.976689,
+              "robot_move_detection_recall": 0.991216,
+              "sample_status_accuracy": 0.993558,
+              "sample_change_exact_recall": 0.825893,
+              "sample_change_exact_precision": 0.885167,
+              "service_finish_exact_recall": 0.782123,
+              "service_finish_exact_precision": 0.853659,
+              "known_entity_joint_accuracy": 0.933908
+            },
+            "progress_rule": {
+              "robot_position_accuracy": 0.973563,
+              "moving_robot_exact_accuracy": 0.976689,
+              "robot_move_detection_recall": 0.991216,
+              "sample_status_accuracy": 0.993558,
+              "sample_change_exact_recall": 0.825893,
+              "sample_change_exact_precision": 0.885167,
+              "service_finish_exact_recall": 0.782123,
+              "service_finish_exact_precision": 0.853659,
+              "known_entity_joint_accuracy": 0.933908
+            },
+            "learned": {
+              "robot_position_accuracy": 0.833046,
+              "moving_robot_exact_accuracy": 0.869257,
+              "robot_move_detection_recall": 0.977703,
+              "sample_status_accuracy": 0.993353,
+              "sample_change_exact_recall": 0.736607,
+              "sample_change_exact_precision": 0.964912,
+              "service_finish_exact_recall": 0.670391,
+              "service_finish_exact_precision": 0.952381,
+              "known_entity_joint_accuracy": 0.664368
+            }
+          }
+        },
+        "5": {
+          "coverage": {
+            "candidate_windows": 3840,
+            "future_assignments": 320,
+            "new_arrivals": 288,
+            "station_changes": 42,
+            "eligible": 3190
+          },
+          "rates": {
+            "persistence": {
+              "robot_position_accuracy": 0.088715,
+              "moving_robot_exact_accuracy": 0.0,
+              "robot_move_detection_recall": 0.0,
+              "sample_status_accuracy": 0.967438,
+              "sample_change_exact_recall": 0.0,
+              "sample_change_exact_precision": null,
+              "service_finish_exact_recall": 0.0,
+              "service_finish_exact_precision": null,
+              "known_entity_joint_accuracy": 0.0
+            },
+            "heuristic": {
+              "robot_position_accuracy": 0.948589,
+              "moving_robot_exact_accuracy": 0.952872,
+              "robot_move_detection_recall": 0.993808,
+              "sample_status_accuracy": 0.994299,
+              "sample_change_exact_recall": 0.885522,
+              "sample_change_exact_precision": 0.935943,
+              "service_finish_exact_recall": 0.868726,
+              "service_finish_exact_precision": 0.925926,
+              "known_entity_joint_accuracy": 0.898433
+            },
+            "progress_rule": {
+              "robot_position_accuracy": 0.948589,
+              "moving_robot_exact_accuracy": 0.952872,
+              "robot_move_detection_recall": 0.993808,
+              "sample_status_accuracy": 0.994299,
+              "sample_change_exact_recall": 0.885522,
+              "sample_change_exact_precision": 0.935943,
+              "service_finish_exact_recall": 0.868726,
+              "service_finish_exact_precision": 0.925926,
+              "known_entity_joint_accuracy": 0.898433
+            },
+            "learned": {
+              "robot_position_accuracy": 0.773981,
+              "moving_robot_exact_accuracy": 0.781562,
+              "robot_move_detection_recall": 0.978672,
+              "sample_status_accuracy": 0.99408,
+              "sample_change_exact_recall": 0.824916,
+              "sample_change_exact_precision": 0.991903,
+              "service_finish_exact_recall": 0.799228,
+              "service_finish_exact_precision": 0.990431,
+              "known_entity_joint_accuracy": 0.584953
+            }
+          }
+        }
+      }
+    },
+    "test_clinic": {
+      "episodes": 16,
+      "timed_out_episodes": 0,
+      "one_step": {
+        "persistence": {
+          "counts": {
+            "robot_total": 3058,
+            "robot_position_correct": 991,
+            "robot_actual_moves": 2067,
+            "robot_actual_moves_correct": 0,
+            "robot_predicted_moves": 0,
+            "robot_move_detected": 0,
+            "sample_total": 6726,
+            "sample_status_correct": 6454,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 0,
+            "sample_predicted_changes": 0,
+            "sample_change_exact_true_positive": 0,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 0,
+            "service_finish_exact_true_positive": 0,
+            "joint_total": 1529,
+            "joint_correct": 36,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.324068,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.95956,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.023545
+          }
+        },
+        "heuristic": {
+          "counts": {
+            "robot_total": 3058,
+            "robot_position_correct": 3046,
+            "robot_actual_moves": 2067,
+            "robot_actual_moves_correct": 2061,
+            "robot_predicted_moves": 2069,
+            "robot_move_detected": 2063,
+            "sample_total": 6726,
+            "sample_status_correct": 6628,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 230,
+            "sample_predicted_changes": 286,
+            "sample_change_exact_true_positive": 230,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 190,
+            "service_finish_exact_true_positive": 134,
+            "joint_total": 1529,
+            "joint_correct": 1421,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.996076,
+            "moving_robot_exact_accuracy": 0.997097,
+            "robot_move_detection_recall": 0.998065,
+            "sample_status_accuracy": 0.98543,
+            "sample_change_exact_recall": 0.845588,
+            "sample_change_exact_precision": 0.804196,
+            "service_finish_exact_recall": 0.761364,
+            "service_finish_exact_precision": 0.705263,
+            "known_entity_joint_accuracy": 0.929366
+          }
+        },
+        "progress_rule": {
+          "counts": {
+            "robot_total": 3058,
+            "robot_position_correct": 3046,
+            "robot_actual_moves": 2067,
+            "robot_actual_moves_correct": 2061,
+            "robot_predicted_moves": 2069,
+            "robot_move_detected": 2063,
+            "sample_total": 6726,
+            "sample_status_correct": 6634,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 232,
+            "sample_predicted_changes": 284,
+            "sample_change_exact_true_positive": 232,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 188,
+            "service_finish_exact_true_positive": 136,
+            "joint_total": 1529,
+            "joint_correct": 1427,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.996076,
+            "moving_robot_exact_accuracy": 0.997097,
+            "robot_move_detection_recall": 0.998065,
+            "sample_status_accuracy": 0.986322,
+            "sample_change_exact_recall": 0.852941,
+            "sample_change_exact_precision": 0.816901,
+            "service_finish_exact_recall": 0.772727,
+            "service_finish_exact_precision": 0.723404,
+            "known_entity_joint_accuracy": 0.93329
+          }
+        },
+        "learned": {
+          "counts": {
+            "robot_total": 3058,
+            "robot_position_correct": 2803,
+            "robot_actual_moves": 2067,
+            "robot_actual_moves_correct": 1925,
+            "robot_predicted_moves": 2155,
+            "robot_move_detected": 2042,
+            "sample_total": 6726,
+            "sample_status_correct": 6651,
+            "sample_actual_changes": 272,
+            "sample_actual_changes_correct": 204,
+            "sample_predicted_changes": 211,
+            "sample_change_exact_true_positive": 204,
+            "service_actual_finishes": 176,
+            "service_predicted_finishes": 115,
+            "service_finish_exact_true_positive": 108,
+            "joint_total": 1529,
+            "joint_correct": 1228,
+            "new_arrivals": 80,
+            "station_changes": 16
+          },
+          "rates": {
+            "robot_position_accuracy": 0.916612,
+            "moving_robot_exact_accuracy": 0.931301,
+            "robot_move_detection_recall": 0.987905,
+            "sample_status_accuracy": 0.988849,
+            "sample_change_exact_recall": 0.75,
+            "sample_change_exact_precision": 0.966825,
+            "service_finish_exact_recall": 0.613636,
+            "service_finish_exact_precision": 0.93913,
+            "known_entity_joint_accuracy": 0.803139
+          }
+        }
+      },
+      "multi_step": {
+        "3": {
+          "coverage": {
+            "candidate_windows": 1497,
+            "future_assignments": 156,
+            "new_arrivals": 176,
+            "station_changes": 28,
+            "eligible": 1137
+          },
+          "rates": {
+            "persistence": {
+              "robot_position_accuracy": 0.206245,
+              "moving_robot_exact_accuracy": 0.0,
+              "robot_move_detection_recall": 0.0,
+              "sample_status_accuracy": 0.926069,
+              "sample_change_exact_recall": 0.0,
+              "sample_change_exact_precision": null,
+              "service_finish_exact_recall": 0.0,
+              "service_finish_exact_precision": null,
+              "known_entity_joint_accuracy": 0.002639
+            },
+            "heuristic": {
+              "robot_position_accuracy": 0.929639,
+              "moving_robot_exact_accuracy": 0.934626,
+              "robot_move_detection_recall": 0.961773,
+              "sample_status_accuracy": 0.979592,
+              "sample_change_exact_recall": 0.817708,
+              "sample_change_exact_precision": 0.897143,
+              "service_finish_exact_recall": 0.768212,
+              "service_finish_exact_precision": 0.865672,
+              "known_entity_joint_accuracy": 0.817062
+            },
+            "progress_rule": {
+              "robot_position_accuracy": 0.932278,
+              "moving_robot_exact_accuracy": 0.936842,
+              "robot_move_detection_recall": 0.965097,
+              "sample_status_accuracy": 0.982287,
+              "sample_change_exact_recall": 0.851562,
+              "sample_change_exact_precision": 0.903315,
+              "service_finish_exact_recall": 0.811258,
+              "service_finish_exact_precision": 0.875,
+              "known_entity_joint_accuracy": 0.825858
+            },
+            "learned": {
+              "robot_position_accuracy": 0.806508,
+              "moving_robot_exact_accuracy": 0.773407,
+              "robot_move_detection_recall": 0.941274,
+              "sample_status_accuracy": 0.978629,
+              "sample_change_exact_recall": 0.726562,
+              "sample_change_exact_precision": 0.978947,
+              "service_finish_exact_recall": 0.652318,
+              "service_finish_exact_precision": 0.970443,
+              "known_entity_joint_accuracy": 0.617414
+            }
+          }
+        },
+        "5": {
+          "coverage": {
+            "candidate_windows": 1465,
+            "future_assignments": 302,
+            "new_arrivals": 244,
+            "station_changes": 22,
+            "eligible": 897
+          },
+          "rates": {
+            "persistence": {
+              "robot_position_accuracy": 0.146042,
+              "moving_robot_exact_accuracy": 0.0,
+              "robot_move_detection_recall": 0.0,
+              "sample_status_accuracy": 0.889125,
+              "sample_change_exact_recall": 0.0,
+              "sample_change_exact_precision": null,
+              "service_finish_exact_recall": 0.0,
+              "service_finish_exact_precision": null,
+              "known_entity_joint_accuracy": 0.0
+            },
+            "heuristic": {
+              "robot_position_accuracy": 0.867893,
+              "moving_robot_exact_accuracy": 0.869452,
+              "robot_move_detection_recall": 0.960836,
+              "sample_status_accuracy": 0.981324,
+              "sample_change_exact_recall": 0.889126,
+              "sample_change_exact_precision": 0.939189,
+              "service_finish_exact_recall": 0.868354,
+              "service_finish_exact_precision": 0.927027,
+              "known_entity_joint_accuracy": 0.714604
+            },
+            "progress_rule": {
+              "robot_position_accuracy": 0.874025,
+              "moving_robot_exact_accuracy": 0.875326,
+              "robot_move_detection_recall": 0.96671,
+              "sample_status_accuracy": 0.984397,
+              "sample_change_exact_recall": 0.916844,
+              "sample_change_exact_precision": 0.940919,
+              "service_finish_exact_recall": 0.901266,
+              "service_finish_exact_precision": 0.929504,
+              "known_entity_joint_accuracy": 0.727982
+            },
+            "learned": {
+              "robot_position_accuracy": 0.710702,
+              "moving_robot_exact_accuracy": 0.680809,
+              "robot_move_detection_recall": 0.934073,
+              "sample_status_accuracy": 0.978487,
+              "sample_change_exact_recall": 0.814499,
+              "sample_change_exact_precision": 0.989637,
+              "service_finish_exact_recall": 0.779747,
+              "service_finish_exact_precision": 0.987179,
+              "known_entity_joint_accuracy": 0.48495
+            }
+          }
+        }
+      }
+    }
+  },
+  "by_regime": {
+    "test_clinic/normal": {
+      "one_step": {
+        "persistence": {
+          "robot_position_accuracy": 0.315375,
+          "moving_robot_exact_accuracy": 0.0,
+          "robot_move_detection_recall": 0.0,
+          "sample_status_accuracy": 0.959306,
+          "sample_change_exact_recall": 0.0,
+          "sample_change_exact_precision": null,
+          "service_finish_exact_recall": 0.0,
+          "service_finish_exact_precision": null,
+          "known_entity_joint_accuracy": 0.030223
+        },
+        "heuristic": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.986236,
+          "sample_change_exact_recall": 0.852941,
+          "sample_change_exact_precision": 0.816901,
+          "service_finish_exact_recall": 0.772727,
+          "service_finish_exact_precision": 0.723404,
+          "known_entity_joint_accuracy": 0.939553
+        },
+        "progress_rule": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.986236,
+          "sample_change_exact_recall": 0.852941,
+          "sample_change_exact_precision": 0.816901,
+          "service_finish_exact_recall": 0.772727,
+          "service_finish_exact_precision": 0.723404,
+          "known_entity_joint_accuracy": 0.939553
+        },
+        "learned": {
+          "robot_position_accuracy": 0.916557,
+          "moving_robot_exact_accuracy": 0.931862,
+          "robot_move_detection_recall": 0.988484,
+          "sample_status_accuracy": 0.989527,
+          "sample_change_exact_recall": 0.764706,
+          "sample_change_exact_precision": 0.971963,
+          "service_finish_exact_recall": 0.636364,
+          "service_finish_exact_precision": 0.949153,
+          "known_entity_joint_accuracy": 0.804205
+        }
+      },
+      "multi_step": {
+        "3": {
+          "persistence": {
+            "robot_position_accuracy": 0.203098,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.927328,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.005164
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.94062,
+            "moving_robot_exact_accuracy": 0.947084,
+            "robot_move_detection_recall": 0.970842,
+            "sample_status_accuracy": 0.981453,
+            "sample_change_exact_recall": 0.848958,
+            "sample_change_exact_precision": 0.89071,
+            "service_finish_exact_recall": 0.806667,
+            "service_finish_exact_precision": 0.858156,
+            "known_entity_joint_accuracy": 0.831325
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.94062,
+            "moving_robot_exact_accuracy": 0.947084,
+            "robot_move_detection_recall": 0.970842,
+            "sample_status_accuracy": 0.981453,
+            "sample_change_exact_recall": 0.848958,
+            "sample_change_exact_precision": 0.89071,
+            "service_finish_exact_recall": 0.806667,
+            "service_finish_exact_precision": 0.858156,
+            "known_entity_joint_accuracy": 0.831325
+          },
+          "learned": {
+            "robot_position_accuracy": 0.810671,
+            "moving_robot_exact_accuracy": 0.776458,
+            "robot_move_detection_recall": 0.943844,
+            "sample_status_accuracy": 0.979182,
+            "sample_change_exact_recall": 0.734375,
+            "sample_change_exact_precision": 0.972414,
+            "service_finish_exact_recall": 0.66,
+            "service_finish_exact_precision": 0.961165,
+            "known_entity_joint_accuracy": 0.624785
+          }
+        },
+        "5": {
+          "persistence": {
+            "robot_position_accuracy": 0.138829,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.889917,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.0
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.882863,
+            "moving_robot_exact_accuracy": 0.88665,
+            "robot_move_detection_recall": 0.973552,
+            "sample_status_accuracy": 0.983811,
+            "sample_change_exact_recall": 0.920168,
+            "sample_change_exact_precision": 0.931915,
+            "service_finish_exact_recall": 0.90404,
+            "service_finish_exact_precision": 0.917949,
+            "known_entity_joint_accuracy": 0.735358
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.882863,
+            "moving_robot_exact_accuracy": 0.88665,
+            "robot_move_detection_recall": 0.973552,
+            "sample_status_accuracy": 0.983811,
+            "sample_change_exact_recall": 0.920168,
+            "sample_change_exact_precision": 0.931915,
+            "service_finish_exact_recall": 0.90404,
+            "service_finish_exact_precision": 0.917949,
+            "known_entity_joint_accuracy": 0.735358
+          },
+          "learned": {
+            "robot_position_accuracy": 0.713666,
+            "moving_robot_exact_accuracy": 0.678841,
+            "robot_move_detection_recall": 0.934509,
+            "sample_status_accuracy": 0.979648,
+            "sample_change_exact_recall": 0.823529,
+            "sample_change_exact_precision": 0.989899,
+            "service_finish_exact_recall": 0.787879,
+            "service_finish_exact_precision": 0.987342,
+            "known_entity_joint_accuracy": 0.494577
+          }
+        }
+      }
+    },
+    "test_clinic/short_outage": {
+      "one_step": {
+        "persistence": {
+          "robot_position_accuracy": 0.332682,
+          "moving_robot_exact_accuracy": 0.0,
+          "robot_move_detection_recall": 0.0,
+          "sample_status_accuracy": 0.959811,
+          "sample_change_exact_recall": 0.0,
+          "sample_change_exact_precision": null,
+          "service_finish_exact_recall": 0.0,
+          "service_finish_exact_precision": null,
+          "known_entity_joint_accuracy": 0.016927
+        },
+        "heuristic": {
+          "robot_position_accuracy": 0.992188,
+          "moving_robot_exact_accuracy": 0.994146,
+          "robot_move_detection_recall": 0.996098,
+          "sample_status_accuracy": 0.984634,
+          "sample_change_exact_recall": 0.838235,
+          "sample_change_exact_precision": 0.791667,
+          "service_finish_exact_recall": 0.75,
+          "service_finish_exact_precision": 0.6875,
+          "known_entity_joint_accuracy": 0.919271
+        },
+        "progress_rule": {
+          "robot_position_accuracy": 0.992188,
+          "moving_robot_exact_accuracy": 0.994146,
+          "robot_move_detection_recall": 0.996098,
+          "sample_status_accuracy": 0.986407,
+          "sample_change_exact_recall": 0.852941,
+          "sample_change_exact_precision": 0.816901,
+          "service_finish_exact_recall": 0.772727,
+          "service_finish_exact_precision": 0.723404,
+          "known_entity_joint_accuracy": 0.927083
+        },
+        "learned": {
+          "robot_position_accuracy": 0.916667,
+          "moving_robot_exact_accuracy": 0.930732,
+          "robot_move_detection_recall": 0.987317,
+          "sample_status_accuracy": 0.98818,
+          "sample_change_exact_recall": 0.735294,
+          "sample_change_exact_precision": 0.961538,
+          "service_finish_exact_recall": 0.590909,
+          "service_finish_exact_precision": 0.928571,
+          "known_entity_joint_accuracy": 0.802083
+        }
+      },
+      "multi_step": {
+        "3": {
+          "persistence": {
+            "robot_position_accuracy": 0.209532,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.924765,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.0
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.918165,
+            "moving_robot_exact_accuracy": 0.921502,
+            "robot_move_detection_recall": 0.952218,
+            "sample_status_accuracy": 0.977665,
+            "sample_change_exact_recall": 0.786458,
+            "sample_change_exact_precision": 0.904192,
+            "service_finish_exact_recall": 0.730263,
+            "service_finish_exact_precision": 0.874016,
+            "known_entity_joint_accuracy": 0.802158
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.923561,
+            "moving_robot_exact_accuracy": 0.926052,
+            "robot_move_detection_recall": 0.959044,
+            "sample_status_accuracy": 0.98315,
+            "sample_change_exact_recall": 0.854167,
+            "sample_change_exact_precision": 0.916201,
+            "service_finish_exact_recall": 0.815789,
+            "service_finish_exact_precision": 0.892086,
+            "known_entity_joint_accuracy": 0.820144
+          },
+          "learned": {
+            "robot_position_accuracy": 0.802158,
+            "moving_robot_exact_accuracy": 0.770193,
+            "robot_move_detection_recall": 0.938567,
+            "sample_status_accuracy": 0.978056,
+            "sample_change_exact_recall": 0.71875,
+            "sample_change_exact_precision": 0.985714,
+            "service_finish_exact_recall": 0.644737,
+            "service_finish_exact_precision": 0.98,
+            "known_entity_joint_accuracy": 0.609712
+          }
+        },
+        "5": {
+          "persistence": {
+            "robot_position_accuracy": 0.15367,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.888298,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.0
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.852064,
+            "moving_robot_exact_accuracy": 0.850949,
+            "robot_move_detection_recall": 0.947154,
+            "sample_status_accuracy": 0.978723,
+            "sample_change_exact_recall": 0.857143,
+            "sample_change_exact_precision": 0.947368,
+            "service_finish_exact_recall": 0.832487,
+            "service_finish_exact_precision": 0.937143,
+            "known_entity_joint_accuracy": 0.692661
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.864679,
+            "moving_robot_exact_accuracy": 0.863144,
+            "robot_move_detection_recall": 0.95935,
+            "sample_status_accuracy": 0.98501,
+            "sample_change_exact_recall": 0.91342,
+            "sample_change_exact_precision": 0.95045,
+            "service_finish_exact_recall": 0.898477,
+            "service_finish_exact_precision": 0.941489,
+            "known_entity_joint_accuracy": 0.720183
+          },
+          "learned": {
+            "robot_position_accuracy": 0.707569,
+            "moving_robot_exact_accuracy": 0.682927,
+            "robot_move_detection_recall": 0.933604,
+            "sample_status_accuracy": 0.977273,
+            "sample_change_exact_recall": 0.805195,
+            "sample_change_exact_precision": 0.989362,
+            "service_finish_exact_recall": 0.771574,
+            "service_finish_exact_precision": 0.987013,
+            "known_entity_joint_accuracy": 0.474771
+          }
+        }
+      }
+    },
+    "test_tartu/normal": {
+      "one_step": {
+        "persistence": {
+          "robot_position_accuracy": 0.240779,
+          "moving_robot_exact_accuracy": 0.0,
+          "robot_move_detection_recall": 0.0,
+          "sample_status_accuracy": 0.987228,
+          "sample_change_exact_recall": 0.0,
+          "sample_change_exact_precision": null,
+          "service_finish_exact_recall": 0.0,
+          "service_finish_exact_precision": null,
+          "known_entity_joint_accuracy": 0.008197
+        },
+        "heuristic": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.994741,
+          "sample_change_exact_recall": 0.794118,
+          "sample_change_exact_precision": 0.794118,
+          "service_finish_exact_recall": 0.681818,
+          "service_finish_exact_precision": 0.681818,
+          "known_entity_joint_accuracy": 0.971311
+        },
+        "progress_rule": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.994741,
+          "sample_change_exact_recall": 0.794118,
+          "sample_change_exact_precision": 0.794118,
+          "service_finish_exact_recall": 0.681818,
+          "service_finish_exact_precision": 0.681818,
+          "known_entity_joint_accuracy": 0.971311
+        },
+        "learned": {
+          "robot_position_accuracy": 0.896516,
+          "moving_robot_exact_accuracy": 0.987179,
+          "robot_move_detection_recall": 0.987854,
+          "sample_status_accuracy": 0.996431,
+          "sample_change_exact_recall": 0.764706,
+          "sample_change_exact_precision": 0.945455,
+          "service_finish_exact_recall": 0.636364,
+          "service_finish_exact_precision": 0.903226,
+          "known_entity_joint_accuracy": 0.779713
+        }
+      },
+      "multi_step": {
+        "3": {
+          "persistence": {
+            "robot_position_accuracy": 0.150342,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.976423,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.001139
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.973235,
+            "moving_robot_exact_accuracy": 0.976542,
+            "robot_move_detection_recall": 0.991287,
+            "sample_status_accuracy": 0.993496,
+            "sample_change_exact_recall": 0.827586,
+            "sample_change_exact_precision": 0.888889,
+            "service_finish_exact_recall": 0.784946,
+            "service_finish_exact_precision": 0.858824,
+            "known_entity_joint_accuracy": 0.932802
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.973235,
+            "moving_robot_exact_accuracy": 0.976542,
+            "robot_move_detection_recall": 0.991287,
+            "sample_status_accuracy": 0.993496,
+            "sample_change_exact_recall": 0.827586,
+            "sample_change_exact_precision": 0.888889,
+            "service_finish_exact_recall": 0.784946,
+            "service_finish_exact_precision": 0.858824,
+            "known_entity_joint_accuracy": 0.932802
+          },
+          "learned": {
+            "robot_position_accuracy": 0.833144,
+            "moving_robot_exact_accuracy": 0.868633,
+            "robot_move_detection_recall": 0.976542,
+            "sample_status_accuracy": 0.993293,
+            "sample_change_exact_recall": 0.741379,
+            "sample_change_exact_precision": 0.966292,
+            "service_finish_exact_recall": 0.677419,
+            "service_finish_exact_precision": 0.954545,
+            "known_entity_joint_accuracy": 0.665148
+          }
+        },
+        "5": {
+          "persistence": {
+            "robot_position_accuracy": 0.090965,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.966319,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.0
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.94802,
+            "moving_robot_exact_accuracy": 0.952349,
+            "robot_move_detection_recall": 0.993873,
+            "sample_status_accuracy": 0.99435,
+            "sample_change_exact_recall": 0.890323,
+            "sample_change_exact_precision": 0.938776,
+            "service_finish_exact_recall": 0.875,
+            "service_finish_exact_precision": 0.929688,
+            "known_entity_joint_accuracy": 0.897277
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.94802,
+            "moving_robot_exact_accuracy": 0.952349,
+            "robot_move_detection_recall": 0.993873,
+            "sample_status_accuracy": 0.99435,
+            "sample_change_exact_recall": 0.890323,
+            "sample_change_exact_precision": 0.938776,
+            "service_finish_exact_recall": 0.875,
+            "service_finish_exact_precision": 0.929688,
+            "known_entity_joint_accuracy": 0.897277
+          },
+          "learned": {
+            "robot_position_accuracy": 0.773515,
+            "moving_robot_exact_accuracy": 0.780123,
+            "robot_move_detection_recall": 0.976174,
+            "sample_status_accuracy": 0.994133,
+            "sample_change_exact_recall": 0.832258,
+            "sample_change_exact_precision": 0.992308,
+            "service_finish_exact_recall": 0.808824,
+            "service_finish_exact_precision": 0.990991,
+            "known_entity_joint_accuracy": 0.586634
+          }
+        }
+      }
+    },
+    "test_tartu/short_outage": {
+      "one_step": {
+        "persistence": {
+          "robot_position_accuracy": 0.240779,
+          "moving_robot_exact_accuracy": 0.0,
+          "robot_move_detection_recall": 0.0,
+          "sample_status_accuracy": 0.987228,
+          "sample_change_exact_recall": 0.0,
+          "sample_change_exact_precision": null,
+          "service_finish_exact_recall": 0.0,
+          "service_finish_exact_precision": null,
+          "known_entity_joint_accuracy": 0.008197
+        },
+        "heuristic": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.994741,
+          "sample_change_exact_recall": 0.794118,
+          "sample_change_exact_precision": 0.794118,
+          "service_finish_exact_recall": 0.681818,
+          "service_finish_exact_precision": 0.681818,
+          "known_entity_joint_accuracy": 0.971311
+        },
+        "progress_rule": {
+          "robot_position_accuracy": 1.0,
+          "moving_robot_exact_accuracy": 1.0,
+          "robot_move_detection_recall": 1.0,
+          "sample_status_accuracy": 0.994741,
+          "sample_change_exact_recall": 0.794118,
+          "sample_change_exact_precision": 0.794118,
+          "service_finish_exact_recall": 0.681818,
+          "service_finish_exact_precision": 0.681818,
+          "known_entity_joint_accuracy": 0.971311
+        },
+        "learned": {
+          "robot_position_accuracy": 0.895492,
+          "moving_robot_exact_accuracy": 0.98583,
+          "robot_move_detection_recall": 0.986505,
+          "sample_status_accuracy": 0.996431,
+          "sample_change_exact_recall": 0.764706,
+          "sample_change_exact_precision": 0.945455,
+          "service_finish_exact_recall": 0.636364,
+          "service_finish_exact_precision": 0.903226,
+          "known_entity_joint_accuracy": 0.777664
+        }
+      },
+      "multi_step": {
+        "3": {
+          "persistence": {
+            "robot_position_accuracy": 0.148492,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.977773,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.00116
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.973898,
+            "moving_robot_exact_accuracy": 0.976839,
+            "robot_move_detection_recall": 0.991144,
+            "sample_status_accuracy": 0.99362,
+            "sample_change_exact_recall": 0.824074,
+            "sample_change_exact_precision": 0.881188,
+            "service_finish_exact_recall": 0.77907,
+            "service_finish_exact_precision": 0.848101,
+            "known_entity_joint_accuracy": 0.935035
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.973898,
+            "moving_robot_exact_accuracy": 0.976839,
+            "robot_move_detection_recall": 0.991144,
+            "sample_status_accuracy": 0.99362,
+            "sample_change_exact_recall": 0.824074,
+            "sample_change_exact_precision": 0.881188,
+            "service_finish_exact_recall": 0.77907,
+            "service_finish_exact_precision": 0.848101,
+            "known_entity_joint_accuracy": 0.935035
+          },
+          "learned": {
+            "robot_position_accuracy": 0.832947,
+            "moving_robot_exact_accuracy": 0.869891,
+            "robot_move_detection_recall": 0.978883,
+            "sample_status_accuracy": 0.993414,
+            "sample_change_exact_recall": 0.731481,
+            "sample_change_exact_precision": 0.963415,
+            "service_finish_exact_recall": 0.662791,
+            "service_finish_exact_precision": 0.95,
+            "known_entity_joint_accuracy": 0.663573
+          }
+        },
+        "5": {
+          "persistence": {
+            "robot_position_accuracy": 0.086404,
+            "moving_robot_exact_accuracy": 0.0,
+            "robot_move_detection_recall": 0.0,
+            "sample_status_accuracy": 0.968577,
+            "sample_change_exact_recall": 0.0,
+            "sample_change_exact_precision": null,
+            "service_finish_exact_recall": 0.0,
+            "service_finish_exact_precision": null,
+            "known_entity_joint_accuracy": 0.0
+          },
+          "heuristic": {
+            "robot_position_accuracy": 0.949174,
+            "moving_robot_exact_accuracy": 0.953408,
+            "robot_move_detection_recall": 0.993741,
+            "sample_status_accuracy": 0.994247,
+            "sample_change_exact_recall": 0.880282,
+            "sample_change_exact_precision": 0.932836,
+            "service_finish_exact_recall": 0.861789,
+            "service_finish_exact_precision": 0.921739,
+            "known_entity_joint_accuracy": 0.899619
+          },
+          "progress_rule": {
+            "robot_position_accuracy": 0.949174,
+            "moving_robot_exact_accuracy": 0.953408,
+            "robot_move_detection_recall": 0.993741,
+            "sample_status_accuracy": 0.994247,
+            "sample_change_exact_recall": 0.880282,
+            "sample_change_exact_precision": 0.932836,
+            "service_finish_exact_recall": 0.861789,
+            "service_finish_exact_precision": 0.921739,
+            "known_entity_joint_accuracy": 0.899619
+          },
+          "learned": {
+            "robot_position_accuracy": 0.77446,
+            "moving_robot_exact_accuracy": 0.783032,
+            "robot_move_detection_recall": 0.981224,
+            "sample_status_accuracy": 0.994025,
+            "sample_change_exact_recall": 0.816901,
+            "sample_change_exact_precision": 0.991453,
+            "service_finish_exact_recall": 0.788618,
+            "service_finish_exact_precision": 0.989796,
+            "known_entity_joint_accuracy": 0.583227
+          }
+        }
+      }
+    }
+  }
+}

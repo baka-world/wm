@@ -1,0 +1,356 @@
+{
+  "profile": "development",
+  "scope": "Paired full synthetic episodes, clustered by layout/seed.",
+  "paired": {
+    "all": {
+      "rule_new_minus_rule_old": {
+        "cases": 16,
+        "difference": {
+          "clusters": 4,
+          "mean": -0.6874999999999998,
+          "ci95": [
+            -2.291666666666667,
+            0.9166666666666674
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 3,
+        "losses": 5,
+        "ties": 8
+      },
+      "hybrid_new_minus_hybrid_old": {
+        "cases": 16,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.4270833333333337,
+          "ci95": [
+            -0.020833333333333037,
+            0.8750000000000004
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 2,
+        "losses": 6,
+        "ties": 8
+      },
+      "hybrid_old_minus_rule_old": {
+        "cases": 16,
+        "difference": {
+          "clusters": 4,
+          "mean": -0.9895833333333335,
+          "ci95": [
+            -2.020833333333334,
+            0.04166666666666696
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 1,
+        "losses": 1,
+        "ties": 14
+      },
+      "hybrid_new_minus_rule_new": {
+        "cases": 16,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.125,
+          "ci95": [
+            0.0,
+            0.25
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 1,
+        "ties": 15
+      }
+    },
+    "normal": {
+      "rule_new_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": -1.6250000000000009,
+          "ci95": [
+            -3.916666666666668,
+            0.6666666666666661
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 1,
+        "losses": 1,
+        "ties": 2
+      },
+      "hybrid_new_minus_hybrid_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": -1.6250000000000009,
+          "ci95": [
+            -3.916666666666668,
+            0.6666666666666661
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 1,
+        "losses": 1,
+        "ties": 2
+      },
+      "hybrid_old_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      },
+      "hybrid_new_minus_rule_new": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    "burst": {
+      "rule_new_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.3333333333333339,
+          "ci95": [
+            0.0,
+            0.6666666666666679
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 1,
+        "ties": 3
+      },
+      "hybrid_new_minus_hybrid_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.25,
+          "ci95": [
+            0.0,
+            0.5
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 1,
+        "ties": 3
+      },
+      "hybrid_old_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.08333333333333393,
+          "ci95": [
+            0.0,
+            0.16666666666666785
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 1,
+        "ties": 3
+      },
+      "hybrid_new_minus_rule_new": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    "outage_processing": {
+      "rule_new_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": -3.041666666666666,
+          "ci95": [
+            -5.75,
+            -0.33333333333333215
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 2,
+        "losses": 0,
+        "ties": 2
+      },
+      "hybrid_new_minus_hybrid_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 1.0000000000000018,
+          "ci95": [
+            -0.33333333333333215,
+            2.3333333333333357
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 1,
+        "losses": 1,
+        "ties": 2
+      },
+      "hybrid_old_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": -4.041666666666668,
+          "ci95": [
+            -8.083333333333336,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 1,
+        "losses": 0,
+        "ties": 3
+      },
+      "hybrid_new_minus_rule_new": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    "outage_arrival": {
+      "rule_new_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 1.583333333333334,
+          "ci95": [
+            0.5,
+            2.666666666666668
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 3,
+        "ties": 1
+      },
+      "hybrid_new_minus_hybrid_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 2.083333333333334,
+          "ci95": [
+            1.5,
+            2.666666666666668
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 3,
+        "ties": 1
+      },
+      "hybrid_old_minus_rule_old": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      },
+      "hybrid_new_minus_rule_new": {
+        "cases": 4,
+        "difference": {
+          "clusters": 4,
+          "mean": 0.5,
+          "ci95": [
+            0.0,
+            1.0
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "wins": 0,
+        "losses": 1,
+        "ties": 3
+      }
+    }
+  }
+}

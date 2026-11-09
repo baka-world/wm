@@ -1,0 +1,527 @@
+{
+  "scope": "Offline candidate/event/latency counts are descriptive; paired effects cluster by layout/seed.",
+  "profile": "confirmation",
+  "decisions": 36,
+  "horizons": {
+    "3": {
+      "model_metrics_descriptive": {
+        "rule": {
+          "service_actual": 0,
+          "service_predicted": 0,
+          "service_correct": 0,
+          "service_recall": null,
+          "service_precision": null,
+          "joint_state_accuracy": 0.9322033898305084,
+          "candidate_rollout_cpu_mean_ms": 0.4155852033897898,
+          "candidate_rollout_cpu_p95_ms": 0.5058254000004148,
+          "original_score_cpu_mean_ms": 0.012682440677946319,
+          "workload_score_cpu_mean_ms": 0.029800864406733362
+        },
+        "hybrid": {
+          "service_actual": 0,
+          "service_predicted": 0,
+          "service_correct": 0,
+          "service_recall": null,
+          "service_precision": null,
+          "joint_state_accuracy": 0.9322033898305084,
+          "candidate_rollout_cpu_mean_ms": 1.2998937966101942,
+          "candidate_rollout_cpu_p95_ms": 1.6081582999998731,
+          "original_score_cpu_mean_ms": 0.005759457627111066,
+          "workload_score_cpu_mean_ms": 0.027500686440659006
+        },
+        "service_oracle": {
+          "service_actual": 0,
+          "service_predicted": 0,
+          "service_correct": 0,
+          "service_recall": null,
+          "service_precision": null,
+          "joint_state_accuracy": 0.9322033898305084,
+          "candidate_rollout_cpu_mean_ms": 0.449821652542344,
+          "candidate_rollout_cpu_p95_ms": 0.6118706499997899,
+          "original_score_cpu_mean_ms": 0.0072633898304977395,
+          "workload_score_cpu_mean_ms": 0.024082694915225775
+        }
+      },
+      "oracle_minus_rule_original_regret": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "oracle_minus_rule_workload_regret": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "workload_minus_original_regret": {
+        "rule": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "hybrid": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "service_oracle": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "actual_short_state": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        }
+      },
+      "new_score_vs_old_points": {
+        "rule": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "hybrid": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "service_oracle": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "actual_short_state": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        }
+      }
+    },
+    "5": {
+      "model_metrics_descriptive": {
+        "rule": {
+          "service_actual": 10,
+          "service_predicted": 9,
+          "service_correct": 8,
+          "service_recall": 0.8,
+          "service_precision": 0.8888888888888888,
+          "joint_state_accuracy": 0.8813559322033898,
+          "candidate_rollout_cpu_mean_ms": 0.6501353389830337,
+          "candidate_rollout_cpu_p95_ms": 0.7588315499999054,
+          "original_score_cpu_mean_ms": 0.0036247372882385596,
+          "workload_score_cpu_mean_ms": 0.0175147542373308
+        },
+        "hybrid": {
+          "service_actual": 10,
+          "service_predicted": 0,
+          "service_correct": 0,
+          "service_recall": 0.0,
+          "service_precision": null,
+          "joint_state_accuracy": 0.8220338983050848,
+          "candidate_rollout_cpu_mean_ms": 2.01685794915257,
+          "candidate_rollout_cpu_p95_ms": 2.563427350000013,
+          "original_score_cpu_mean_ms": 0.003975254237323978,
+          "workload_score_cpu_mean_ms": 0.016125711864501034
+        },
+        "service_oracle": {
+          "service_actual": 10,
+          "service_predicted": 10,
+          "service_correct": 10,
+          "service_recall": 1.0,
+          "service_precision": 1.0,
+          "joint_state_accuracy": 0.9067796610169492,
+          "candidate_rollout_cpu_mean_ms": 0.7027201186440404,
+          "candidate_rollout_cpu_p95_ms": 0.9392858000000448,
+          "original_score_cpu_mean_ms": 0.0035638050847203832,
+          "workload_score_cpu_mean_ms": 0.01653099152542439
+        }
+      },
+      "oracle_minus_rule_original_regret": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "oracle_minus_rule_workload_regret": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "workload_minus_original_regret": {
+        "rule": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "hybrid": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "service_oracle": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "actual_short_state": {
+          "clusters": 4,
+          "mean": 0.35763888888888806,
+          "ci95": [
+            -0.2847222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        }
+      },
+      "new_score_vs_old_points": {
+        "rule": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "hybrid": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "service_oracle": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        },
+        "actual_short_state": {
+          "better": 2,
+          "equal": 32,
+          "worse": 2
+        }
+      }
+    },
+    "10": {
+      "model_metrics_descriptive": {
+        "rule": {
+          "service_actual": 37,
+          "service_predicted": 28,
+          "service_correct": 18,
+          "service_recall": 0.4864864864864865,
+          "service_precision": 0.6428571428571429,
+          "joint_state_accuracy": 0.8135593220338984,
+          "candidate_rollout_cpu_mean_ms": 1.1663302288135224,
+          "candidate_rollout_cpu_p95_ms": 1.3731496500008595,
+          "original_score_cpu_mean_ms": 0.0032231355931548154,
+          "workload_score_cpu_mean_ms": 0.018446644067757343
+        },
+        "hybrid": {
+          "service_actual": 37,
+          "service_predicted": 20,
+          "service_correct": 0,
+          "service_recall": 0.0,
+          "service_precision": 0.0,
+          "joint_state_accuracy": 0.7288135593220338,
+          "candidate_rollout_cpu_mean_ms": 3.751740008474603,
+          "candidate_rollout_cpu_p95_ms": 4.722526450000152,
+          "original_score_cpu_mean_ms": 0.0030514406779617843,
+          "workload_score_cpu_mean_ms": 0.017875313559317457
+        },
+        "service_oracle": {
+          "service_actual": 37,
+          "service_predicted": 29,
+          "service_correct": 29,
+          "service_recall": 0.7837837837837838,
+          "service_precision": 1.0,
+          "joint_state_accuracy": 0.8983050847457628,
+          "candidate_rollout_cpu_mean_ms": 1.3148352033898003,
+          "candidate_rollout_cpu_p95_ms": 1.6846083000004783,
+          "original_score_cpu_mean_ms": 0.002914042372895024,
+          "workload_score_cpu_mean_ms": 0.018280711864384284
+        }
+      },
+      "oracle_minus_rule_original_regret": {
+        "clusters": 4,
+        "mean": -0.09375,
+        "ci95": [
+          -0.1875,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "oracle_minus_rule_workload_regret": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "workload_minus_original_regret": {
+        "rule": {
+          "clusters": 4,
+          "mean": 0.29513888888888806,
+          "ci95": [
+            -0.4097222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "hybrid": {
+          "clusters": 4,
+          "mean": 0.29513888888888806,
+          "ci95": [
+            -0.4097222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "service_oracle": {
+          "clusters": 4,
+          "mean": 0.38888888888888806,
+          "ci95": [
+            -0.2222222222222226,
+            0.9999999999999988
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "actual_short_state": {
+          "clusters": 4,
+          "mean": -0.21527777777777796,
+          "ci95": [
+            -0.4097222222222226,
+            -0.020833333333333332
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        }
+      },
+      "new_score_vs_old_points": {
+        "rule": {
+          "better": 3,
+          "equal": 31,
+          "worse": 2
+        },
+        "hybrid": {
+          "better": 3,
+          "equal": 31,
+          "worse": 2
+        },
+        "service_oracle": {
+          "better": 3,
+          "equal": 29,
+          "worse": 4
+        },
+        "actual_short_state": {
+          "better": 3,
+          "equal": 33,
+          "worse": 0
+        }
+      }
+    },
+    "20": {
+      "model_metrics_descriptive": {
+        "rule": {
+          "service_actual": 127,
+          "service_predicted": 100,
+          "service_correct": 34,
+          "service_recall": 0.2677165354330709,
+          "service_precision": 0.34,
+          "joint_state_accuracy": 0.3474576271186441,
+          "candidate_rollout_cpu_mean_ms": 2.182193322033892,
+          "candidate_rollout_cpu_p95_ms": 2.642325299999281,
+          "original_score_cpu_mean_ms": 0.0027879915253649665,
+          "workload_score_cpu_mean_ms": 0.02613008474574988
+        },
+        "hybrid": {
+          "service_actual": 127,
+          "service_predicted": 96,
+          "service_correct": 8,
+          "service_recall": 0.06299212598425197,
+          "service_precision": 0.08333333333333333,
+          "joint_state_accuracy": 0.2711864406779661,
+          "candidate_rollout_cpu_mean_ms": 7.312671000000006,
+          "candidate_rollout_cpu_p95_ms": 8.994748950001075,
+          "original_score_cpu_mean_ms": 0.002805271186424803,
+          "workload_score_cpu_mean_ms": 0.02543441525417594
+        },
+        "service_oracle": {
+          "service_actual": 127,
+          "service_predicted": 120,
+          "service_correct": 108,
+          "service_recall": 0.8503937007874016,
+          "service_precision": 0.9,
+          "joint_state_accuracy": 0.7033898305084746,
+          "candidate_rollout_cpu_mean_ms": 2.525773983050819,
+          "candidate_rollout_cpu_p95_ms": 3.0416064000002407,
+          "original_score_cpu_mean_ms": 0.0035012542373448405,
+          "workload_score_cpu_mean_ms": 0.024619669491528804
+        }
+      },
+      "oracle_minus_rule_original_regret": {
+        "clusters": 4,
+        "mean": -0.07638888888888956,
+        "ci95": [
+          -0.22916666666666724,
+          0.0763888888888881
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "oracle_minus_rule_workload_regret": {
+        "clusters": 4,
+        "mean": 0.14583333333333431,
+        "ci95": [
+          -0.03819444444444405,
+          0.32986111111111266
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "workload_minus_original_regret": {
+        "rule": {
+          "clusters": 4,
+          "mean": -0.26041666666666824,
+          "ci95": [
+            -0.6145833333333353,
+            0.09374999999999882
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "hybrid": {
+          "clusters": 4,
+          "mean": -0.15277777777777796,
+          "ci95": [
+            -0.2847222222222226,
+            -0.020833333333333332
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "service_oracle": {
+          "clusters": 4,
+          "mean": -0.03819444444444434,
+          "ci95": [
+            -0.2847222222222226,
+            0.2083333333333339
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "actual_short_state": {
+          "clusters": 4,
+          "mean": -0.20833333333333334,
+          "ci95": [
+            -0.39583333333333337,
+            -0.020833333333333332
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        }
+      },
+      "new_score_vs_old_points": {
+        "rule": {
+          "better": 7,
+          "equal": 28,
+          "worse": 1
+        },
+        "hybrid": {
+          "better": 2,
+          "equal": 34,
+          "worse": 0
+        },
+        "service_oracle": {
+          "better": 2,
+          "equal": 31,
+          "worse": 3
+        },
+        "actual_short_state": {
+          "better": 4,
+          "equal": 32,
+          "worse": 0
+        }
+      }
+    }
+  }
+}

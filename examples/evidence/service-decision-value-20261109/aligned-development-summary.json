@@ -1,0 +1,605 @@
+{
+  "cases": 16,
+  "decisions_total": 40,
+  "comparable_decisions": 40,
+  "candidate_branches": 129,
+  "candidate_budget_truncated_points": 0,
+  "gap_at_least_one": 31,
+  "wait_better_than_all_assignments": 1,
+  "horizons": {
+    "3": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.3038095238095238,
+        "best_tie_points": 25,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.3038095238095238,
+        "best_tie_points": 25,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.3038095238095238,
+        "best_tie_points": 25,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 0
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.3038095238095238,
+        "best_tie_points": 25,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 0
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2895238095238095,
+        "best_tie_points": 25,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2895238095238095,
+        "best_tie_points": 25,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2895238095238095,
+        "best_tie_points": 25,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 0
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.730034722222223,
+          "ci95": [
+            1.1406249999999996,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2895238095238095,
+        "best_tie_points": 25,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 0
+      }
+    },
+    "10": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.8446180555555565,
+          "ci95": [
+            0.8906249999999996,
+            2.7986111111111134
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.3,
+        "best_tie_points": 27,
+        "all_equal_points": 8,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.8446180555555565,
+          "ci95": [
+            0.8906249999999996,
+            2.7986111111111134
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.31142857142857144,
+        "best_tie_points": 27,
+        "all_equal_points": 7,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3689236111111118,
+          "ci95": [
+            0.8906249999999996,
+            1.847222222222224
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 26,
+        "mean_pairwise_error_descriptive": 0.2838095238095238,
+        "best_tie_points": 20,
+        "all_equal_points": 7,
+        "choice_differs_from_rule": 3
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3515625000000009,
+          "ci95": [
+            0.8906249999999996,
+            1.8125000000000022
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 26,
+        "mean_pairwise_error_descriptive": 0.2814285714285714,
+        "best_tie_points": 22,
+        "all_equal_points": 7,
+        "choice_differs_from_rule": 2
+      }
+    },
+    "20": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.7204861111111116,
+          "ci95": [
+            0.64236111111111,
+            2.7986111111111134
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2885714285714286,
+        "best_tie_points": 27,
+        "all_equal_points": 7,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.725694444444445,
+          "ci95": [
+            0.9444444444444435,
+            2.5069444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29619047619047617,
+        "best_tie_points": 29,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 3
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.224826388888889,
+          "ci95": [
+            0.4496527777777766,
+            2.0000000000000013
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 28,
+        "mean_pairwise_error_descriptive": 0.2914285714285714,
+        "best_tie_points": 23,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 6
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.2378472222222228,
+          "ci95": [
+            0.6979166666666661,
+            1.7777777777777795
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 27,
+        "mean_pairwise_error_descriptive": 0.2680952380952381,
+        "best_tie_points": 25,
+        "all_equal_points": 6,
+        "choice_differs_from_rule": 6
+      }
+    }
+  },
+  "workload_horizons": {
+    "3": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.960069444444445,
+          "ci95": [
+            1.0659722222222232,
+            2.854166666666667
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 21,
+        "mean_pairwise_error_descriptive": 0.3304761904761905,
+        "best_tie_points": 31,
+        "all_equal_points": 20,
+        "choice_differs_from_rule": 5
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 19,
+        "choice_differs_from_rule": 0
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.401041666666667,
+          "ci95": [
+            0.48263888888888756,
+            2.3194444444444464
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 24,
+        "mean_pairwise_error_descriptive": 0.29523809523809524,
+        "best_tie_points": 31,
+        "all_equal_points": 17,
+        "choice_differs_from_rule": 2
+      }
+    },
+    "10": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.259047619047619,
+        "best_tie_points": 30,
+        "all_equal_points": 12,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.3385416666666667,
+          "ci95": [
+            0.5451388888888876,
+            2.131944444444446
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.259047619047619,
+        "best_tie_points": 30,
+        "all_equal_points": 12,
+        "choice_differs_from_rule": 0
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.1805555555555558,
+          "ci95": [
+            0.8020833333333347,
+            1.559027777777777
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 24,
+        "mean_pairwise_error_descriptive": 0.2638095238095238,
+        "best_tie_points": 25,
+        "all_equal_points": 15,
+        "choice_differs_from_rule": 11
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 0.6006944444444449,
+          "ci95": [
+            0.2395833333333329,
+            0.9618055555555568
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 26,
+        "mean_pairwise_error_descriptive": 0.22952380952380952,
+        "best_tie_points": 22,
+        "all_equal_points": 10,
+        "choice_differs_from_rule": 8
+      }
+    },
+    "20": {
+      "rule": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.272569444444443,
+          "ci95": [
+            0.36805555555555397,
+            2.177083333333332
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 25,
+        "mean_pairwise_error_descriptive": 0.2823809523809524,
+        "best_tie_points": 27,
+        "all_equal_points": 8,
+        "choice_differs_from_rule": 0
+      },
+      "hybrid": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 1.8559027777777781,
+          "ci95": [
+            1.04513888888889,
+            2.666666666666666
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 23,
+        "mean_pairwise_error_descriptive": 0.2723809523809524,
+        "best_tie_points": 29,
+        "all_equal_points": 8,
+        "choice_differs_from_rule": 8
+      },
+      "service_oracle": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 0.6145833333333331,
+          "ci95": [
+            0.18402777777777637,
+            1.04513888888889
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 28,
+        "mean_pairwise_error_descriptive": 0.19428571428571428,
+        "best_tie_points": 20,
+        "all_equal_points": 7,
+        "choice_differs_from_rule": 11
+      },
+      "actual_short_state": {
+        "mean_regret": {
+          "clusters": 4,
+          "mean": 0.5659722222222221,
+          "ci95": [
+            0.14930555555555433,
+            0.98263888888889
+          ],
+          "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+          "resamples": 2000,
+          "seed": 20261109
+        },
+        "selected_flow_optimal": 28,
+        "mean_pairwise_error_descriptive": 0.1619047619047619,
+        "best_tie_points": 20,
+        "all_equal_points": 5,
+        "choice_differs_from_rule": 12
+      }
+    }
+  }
+}

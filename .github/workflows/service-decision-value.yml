@@ -1,0 +1,60 @@
+name: Service prediction decision value CPU
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'experiments/service_value/**'
+      - 'tools/run_service_value_cpu.sh'
+      - '.github/workflows/service-decision-value.yml'
+  pull_request:
+    paths:
+      - 'lab_transport/**'
+      - 'tests/**'
+      - 'experiments/service_value/**'
+      - 'tools/run_service_value_cpu.sh'
+      - '.github/workflows/service-decision-value.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  counterfactual-and-closed-loop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU PyTorch
+        run: python -m pip install -r requirements-torch-cpu.txt
+      - name: Check frozen PR 8 and PR 9 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd examples/evidence/pr8-a100-baseline-20261109 && sha256sum -c SHA256SUMS)
+          (cd examples/evidence/service-dynamics-20261109 && sha256sum -c SHA256SUMS)
+          (cd examples/evidence/service-decision-value-20261109 && sha256sum -c SHA256SUMS)
+      - name: Run all regression tests
+        run: |
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s experiments/service_value/tests -v
+      - name: Reproduce development and confirmation on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 720s bash tools/run_service_value_cpu.sh "$RUNNER_TEMP/service-value" 2>&1 | tee "$RUNNER_TEMP/service-value.log"
+      - name: Preserve metrics and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-decision-value-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/service-value.log
+            ${{ runner.temp }}/service-value/
+          if-no-files-found: warn
+          retention-days: 14

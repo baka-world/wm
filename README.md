@@ -25,6 +25,7 @@
 - [新版评分与最小模型 CPU 验收结果](docs/structured-world-model-results.md)
 - [PR #8 GPU 基线冻结说明](docs/pr8-baseline-provenance.md)
 - [服务动力学故障覆盖与 CPU 消融结果](docs/service-dynamics-results.md)
+- [服务预测的调度价值：方案与实验结果](docs/service-decision-results.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)

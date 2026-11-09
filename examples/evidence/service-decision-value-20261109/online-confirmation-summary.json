@@ -1,0 +1,592 @@
+{
+  "all": {
+    "rule_original": {
+      "cases": 16,
+      "completed": 16,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 104.5,
+      "mean_assignment_wait": 49.53125,
+      "total_station_unavailable_wait_ticks": 137,
+      "mean_max_released_unfinished": 5.75,
+      "mean_competing_robot_ticks": 18.9375,
+      "mean_decision_cpu_ms": 4.93916425,
+      "mean_case_p95_decision_cpu_ms": 8.263380328124871,
+      "pooled_decision_cpu_p95_ms": 9.030120749999648,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 16
+    },
+    "rule_workload": {
+      "cases": 16,
+      "completed": 16,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 104.23958333333333,
+      "mean_assignment_wait": 49.947916666666664,
+      "total_station_unavailable_wait_ticks": 137,
+      "mean_max_released_unfinished": 5.75,
+      "mean_competing_robot_ticks": 17.9375,
+      "mean_decision_cpu_ms": 5.075649208333292,
+      "mean_case_p95_decision_cpu_ms": 8.28756334374995,
+      "pooled_decision_cpu_p95_ms": 9.421865499999793,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": -0.2604166666666665,
+        "ci95": [
+          -0.41666666666666696,
+          -0.10416666666666607
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 4,
+      "losses": 0,
+      "ties": 12
+    },
+    "hybrid_original": {
+      "cases": 16,
+      "completed": 16,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 104.5,
+      "mean_assignment_wait": 49.53125,
+      "total_station_unavailable_wait_ticks": 137,
+      "mean_max_released_unfinished": 5.75,
+      "mean_competing_robot_ticks": 18.9375,
+      "mean_decision_cpu_ms": 18.204760197916684,
+      "mean_case_p95_decision_cpu_ms": 29.939478984375068,
+      "pooled_decision_cpu_p95_ms": 33.352880000000255,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 16
+    },
+    "hybrid_workload": {
+      "cases": 16,
+      "completed": 16,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 104.96875,
+      "mean_assignment_wait": 49.572916666666664,
+      "total_station_unavailable_wait_ticks": 137,
+      "mean_max_released_unfinished": 5.75,
+      "mean_competing_robot_ticks": 18,
+      "mean_decision_cpu_ms": 18.867344697916664,
+      "mean_case_p95_decision_cpu_ms": 31.31809224999993,
+      "pooled_decision_cpu_p95_ms": 35.480869499999514,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.46875,
+        "ci95": [
+          0.1875,
+          0.75
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 4,
+      "ties": 10
+    }
+  },
+  "normal": {
+    "rule_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 76.0,
+      "mean_assignment_wait": 27.083333333333332,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 5,
+      "mean_competing_robot_ticks": 5.25,
+      "mean_decision_cpu_ms": 3.903760875000014,
+      "mean_case_p95_decision_cpu_ms": 6.6424416874999865,
+      "pooled_decision_cpu_p95_ms": 6.956277099999619,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "rule_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 76.0,
+      "mean_assignment_wait": 27.083333333333332,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 5,
+      "mean_competing_robot_ticks": 5.25,
+      "mean_decision_cpu_ms": 4.00983087499988,
+      "mean_case_p95_decision_cpu_ms": 6.449743374999886,
+      "pooled_decision_cpu_p95_ms": 6.793836699999688,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "hybrid_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 76.0,
+      "mean_assignment_wait": 27.083333333333332,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 5,
+      "mean_competing_robot_ticks": 5.25,
+      "mean_decision_cpu_ms": 14.25586733333333,
+      "mean_case_p95_decision_cpu_ms": 23.740582500000286,
+      "pooled_decision_cpu_p95_ms": 25.57020109999961,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "hybrid_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 77.16666666666667,
+      "mean_assignment_wait": 27.5,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 5,
+      "mean_competing_robot_ticks": 4,
+      "mean_decision_cpu_ms": 16.367419916666627,
+      "mean_case_p95_decision_cpu_ms": 29.05009943749992,
+      "pooled_decision_cpu_p95_ms": 32.15451774999996,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 1.1666666666666679,
+        "ci95": [
+          -0.1666666666666643,
+          2.5
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 1,
+      "ties": 2
+    }
+  },
+  "burst": {
+    "rule_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 101.625,
+      "mean_assignment_wait": 48.625,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 13.75,
+      "mean_decision_cpu_ms": 5.889576708333353,
+      "mean_case_p95_decision_cpu_ms": 10.077714999999598,
+      "pooled_decision_cpu_p95_ms": 10.846656200000243,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "rule_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 101.33333333333334,
+      "mean_assignment_wait": 49.58333333333333,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 12,
+      "mean_decision_cpu_ms": 6.232850416666658,
+      "mean_case_p95_decision_cpu_ms": 10.361000374999998,
+      "pooled_decision_cpu_p95_ms": 11.925734300000364,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": -0.2916666666666661,
+        "ci95": [
+          -0.5833333333333321,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 0,
+      "ties": 3
+    },
+    "hybrid_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 101.625,
+      "mean_assignment_wait": 48.625,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 13.75,
+      "mean_decision_cpu_ms": 22.57428058333329,
+      "mean_case_p95_decision_cpu_ms": 37.001445624999796,
+      "pooled_decision_cpu_p95_ms": 46.4403251500002,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "hybrid_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 101.95833333333334,
+      "mean_assignment_wait": 48.625,
+      "total_station_unavailable_wait_ticks": 0,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 12.75,
+      "mean_decision_cpu_ms": 22.81054912499997,
+      "mean_case_p95_decision_cpu_ms": 38.34914068749995,
+      "pooled_decision_cpu_p95_ms": 51.6976517000005,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.33333333333333215,
+        "ci95": [
+          0.0,
+          0.6666666666666643
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 1,
+      "ties": 3
+    }
+  },
+  "outage_processing": {
+    "rule_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 129.66666666666666,
+      "mean_assignment_wait": 66.54166666666667,
+      "total_station_unavailable_wait_ticks": 80,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 34.5,
+      "mean_decision_cpu_ms": 5.163801333333384,
+      "mean_case_p95_decision_cpu_ms": 8.41916218749994,
+      "pooled_decision_cpu_p95_ms": 9.091623599999552,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "rule_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 129.375,
+      "mean_assignment_wait": 67.5,
+      "total_station_unavailable_wait_ticks": 80,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 32.75,
+      "mean_decision_cpu_ms": 5.100222958333123,
+      "mean_case_p95_decision_cpu_ms": 8.4455915624998,
+      "pooled_decision_cpu_p95_ms": 9.104573049999543,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": -0.29166666666666785,
+        "ci95": [
+          -0.5833333333333357,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 0,
+      "ties": 3
+    },
+    "hybrid_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 129.66666666666666,
+      "mean_assignment_wait": 66.54166666666667,
+      "total_station_unavailable_wait_ticks": 80,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 34.5,
+      "mean_decision_cpu_ms": 17.99090937500005,
+      "mean_case_p95_decision_cpu_ms": 30.27751643750004,
+      "pooled_decision_cpu_p95_ms": 32.65097365000027,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "hybrid_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 130.0,
+      "mean_assignment_wait": 66.54166666666667,
+      "total_station_unavailable_wait_ticks": 80,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 33.5,
+      "mean_decision_cpu_ms": 18.4498015416667,
+      "mean_case_p95_decision_cpu_ms": 30.097831687499937,
+      "pooled_decision_cpu_p95_ms": 31.537991049999523,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.33333333333333215,
+        "ci95": [
+          0.0,
+          0.6666666666666643
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 1,
+      "ties": 3
+    }
+  },
+  "outage_arrival": {
+    "rule_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 110.70833333333333,
+      "mean_assignment_wait": 55.875,
+      "total_station_unavailable_wait_ticks": 57,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 22.25,
+      "mean_decision_cpu_ms": 4.7995180833332505,
+      "mean_case_p95_decision_cpu_ms": 7.914202437499962,
+      "pooled_decision_cpu_p95_ms": 8.152459199999429,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "rule_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 110.25,
+      "mean_assignment_wait": 55.625,
+      "total_station_unavailable_wait_ticks": 57,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 21.75,
+      "mean_decision_cpu_ms": 4.959692583333508,
+      "mean_case_p95_decision_cpu_ms": 7.893918062500116,
+      "pooled_decision_cpu_p95_ms": 7.7684278500000925,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": -0.45833333333333215,
+        "ci95": [
+          -0.5,
+          -0.4166666666666643
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 2,
+      "losses": 0,
+      "ties": 2
+    },
+    "hybrid_original": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 110.70833333333333,
+      "mean_assignment_wait": 55.875,
+      "total_station_unavailable_wait_ticks": 57,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 22.25,
+      "mean_decision_cpu_ms": 17.997983500000075,
+      "mean_case_p95_decision_cpu_ms": 28.738371375000156,
+      "pooled_decision_cpu_p95_ms": 29.612025199999852,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 0,
+      "losses": 0,
+      "ties": 4
+    },
+    "hybrid_workload": {
+      "cases": 4,
+      "completed": 4,
+      "task_completion_rate": 1.0,
+      "mean_flow_completed_only": 110.75,
+      "mean_assignment_wait": 55.625,
+      "total_station_unavailable_wait_ticks": 57,
+      "mean_max_released_unfinished": 6,
+      "mean_competing_robot_ticks": 21.75,
+      "mean_decision_cpu_ms": 17.84160820833336,
+      "mean_case_p95_decision_cpu_ms": 27.77529718749991,
+      "pooled_decision_cpu_p95_ms": 28.96495085000017,
+      "fallbacks": 0,
+      "safety_violations": 0,
+      "paired_flow_minus_rule_original": {
+        "clusters": 4,
+        "mean": 0.04166666666666785,
+        "ci95": [
+          -0.4166666666666643,
+          0.5
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "wins": 1,
+      "losses": 1,
+      "ties": 2
+    }
+  }
+}

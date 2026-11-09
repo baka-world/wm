@@ -1,8 +1,10 @@
 // Thin process adapter: construct the upstream Graph/Instance and call solve().
 // The official joint-search implementation is not copied or changed.
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <set>
+#include <sstream>
 #include <sys/resource.h>
 #include <vector>
 
@@ -41,9 +43,15 @@ int main() {
   Deadline deadline(budget_ms);
   auto solution=solve(instance,0,&deadline,seed);
   struct rusage usage{};getrusage(RUSAGE_SELF,&usage);
-  if(solution.empty()) {std::cout<<"NO_SOLUTION "<<usage.ru_maxrss<<"\n";return 0;}
+  double cpu_ms=(usage.ru_utime.tv_sec+usage.ru_stime.tv_sec)*1000.0+
+                 (usage.ru_utime.tv_usec+usage.ru_stime.tv_usec)/1000.0;
+  long hwm_kb=0;std::ifstream proc("/proc/self/status");std::string line;
+  while(std::getline(proc,line)) {
+    if(line.rfind("VmHWM:",0)==0) {std::istringstream stream(line.substr(6));stream>>hwm_kb;break;}
+  }
+  if(solution.empty()) {std::cout<<"NO_SOLUTION "<<hwm_kb<<" "<<cpu_ms<<"\n";return 0;}
   if(!is_feasible_solution(instance,solution)) {std::cout<<"INVALID\n";return 6;}
-  std::cout<<"OK "<<solution.size()<<" "<<agents<<" "<<usage.ru_maxrss<<"\n";
+  std::cout<<"OK "<<solution.size()<<" "<<agents<<" "<<hwm_kb<<" "<<cpu_ms<<"\n";
   for(const auto& config:solution) {
     for(auto* v:config) std::cout<<v->id<<" ";
     std::cout<<"\n";

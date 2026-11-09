@@ -4,7 +4,6 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-import resource
 import subprocess
 import time
 
@@ -21,6 +20,8 @@ class JointPlanResult:
     temporary_goals: bool
     wall_ms: float
     peak_rss_kb: int | None
+    cpu_ms: float | None
+    worker_invoked: bool
     detail: str
 
 
@@ -37,9 +38,10 @@ class LaCAM3Planner:
     def plan(self,positions,goals,locked,priority):
         start=time.perf_counter();ids=tuple(sorted(positions));locked=frozenset(locked)
         duplicate=any(v>1 for v in Counter(goals.values()).values())
-        def finish(status,path=(),detail='',rss=None,temporary=False):
+        invoked=False
+        def finish(status,path=(),detail='',rss=None,cpu=None,temporary=False):
             return JointPlanResult(status,tuple(path),ids,priority,duplicate,temporary,
-                (time.perf_counter()-start)*1000,rss,detail)
+                (time.perf_counter()-start)*1000,rss,cpu,invoked,detail)
         if set(positions)!=set(goals) or not locked<=set(ids):
             raise ValueError('positions, goals and locked identities differ')
         if len(set(positions.values()))!=len(positions):raise ValueError('robots already share a vertex')
@@ -67,6 +69,7 @@ class LaCAM3Planner:
         lines=[f'{len(nodes)} {len(arcs)} {len(active)} {self.seed} {max(1,int(remaining))}']
         lines.extend(f'{a} {b}' for a,b in arcs)
         lines.extend(f'{index[positions[r]]} {index[effective[r]]}' for r in active)
+        invoked=True
         try:
             completed=subprocess.run([str(self.worker.resolve())],input='\n'.join(lines)+'\n',
                  text=True,capture_output=True,timeout=remaining/1000,check=False)
@@ -79,26 +82,29 @@ class LaCAM3Planner:
         header=output[0].split()
         if header[0]=='NO_SOLUTION':
             return finish('no_solution',detail='official solve returned an empty plan',
-                          rss=int(header[1]) if len(header)>1 else None,temporary=duplicate)
-        if len(header)!=4 or header[0]!='OK':return finish('worker_error',detail=output[0][:200],temporary=duplicate)
-        count,n,rss=map(int,header[1:])
+                          rss=int(header[1]) if len(header)>1 else None,
+                          cpu=float(header[2]) if len(header)>2 else None,temporary=duplicate)
+        if len(header)!=5 or header[0]!='OK':return finish('worker_error',detail=output[0][:200],temporary=duplicate)
+        count,n,rss=map(int,header[1:4]);cpu=float(header[4])
         if n!=len(active) or count!=len(output)-1 or count<1:
-            return finish('worker_error',detail='invalid complete-path dimensions',rss=rss,temporary=duplicate)
+            return finish('worker_error',detail='invalid complete-path dimensions',rss=rss,cpu=cpu,temporary=duplicate)
         path=[]
         for line in output[1:]:
             values=[int(v) for v in line.split()]
             if len(values)!=len(active) or any(v<0 or v>=len(nodes) for v in values):
-                return finish('worker_error',detail='invalid path vertex',rss=rss,temporary=duplicate)
+                return finish('worker_error',detail='invalid path vertex',rss=rss,cpu=cpu,temporary=duplicate)
             state=dict(positions)
             for rid,node_id in zip(active,values):state[rid]=nodes[node_id]
             path.append(tuple(state[r] for r in ids))
         expected=tuple(positions[r] for r in ids)
-        if path[0]!=expected:return finish('invalid_path',detail='initial state mismatch',rss=rss,temporary=duplicate)
-        for a,b in zip(path,path[1:]):
-            self.validate(ids,a,b,locked)
+        if path[0]!=expected:return finish('invalid_path',detail='initial state mismatch',rss=rss,cpu=cpu,temporary=duplicate)
+        try:
+            for a,b in zip(path,path[1:]):self.validate(ids,a,b,locked)
+        except ValueError as exc:
+            return finish('invalid_path',detail=str(exc),rss=rss,cpu=cpu,temporary=duplicate)
         if any(path[-1][ids.index(r)]!=effective[r] for r in active):
-            return finish('invalid_path',detail='final temporary or business goal mismatch',rss=rss,temporary=duplicate)
-        return finish('solved',path,rss=rss,temporary=duplicate)
+            return finish('invalid_path',detail='final temporary or business goal mismatch',rss=rss,cpu=cpu,temporary=duplicate)
+        return finish('solved',path,rss=rss,cpu=cpu,temporary=duplicate)
 
     def validate(self,ids,before,after,locked):
         if len(after)!=len(ids) or len(set(after))!=len(after):raise ValueError('vertex collision')

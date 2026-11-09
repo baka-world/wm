@@ -6,17 +6,10 @@ import json
 from pathlib import Path
 
 from business_transport.lacam3_motion import LaCAM3Planner
+from business_transport.lacam3_coordinator import priority_for
 from experiments.lacam3_recovery.clinic_states import frozen_states
 from lab_transport.domain import DirectedGraph
 from lab_transport.dynamics_model import Geometry
-
-
-def select_priority(robots):
-    eligible=[r for r in robots if not r['locked'] and r['task_id'] is not None]
-    if not eligible:return None
-    # Fixed observable tiebreaker when several robots carry samples.
-    return min(eligible,key=lambda r:(r['phase']!='to_dropoff',
-              r['release_tick'] if r['release_tick'] is not None else float('inf'),r['id']))['id']
 
 
 def run(worker,output):
@@ -29,7 +22,7 @@ def run(worker,output):
     for state in data['states']:
         robots=state['robots'];positions={r['id']:tuple(r['position']) for r in robots}
         goals={r['id']:tuple(r['target']) for r in robots};locked={r['id'] for r in robots if r['locked']}
-        result=planner.plan(positions,goals,locked,select_priority(robots))
+        result=planner.plan(positions,goals,locked,priority_for(robots))
         records.append({'state':state,'result':asdict(result)})
         print(state['label'],state['tick'],result.status,'steps',max(0,len(result.path)-1),
               'goal_conflict',result.duplicate_business_goals,flush=True)

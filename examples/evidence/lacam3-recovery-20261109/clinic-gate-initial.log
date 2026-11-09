@@ -1,0 +1,5 @@
+cycle_first 44 solved steps 6 goal_conflict True
+cycle_typical_1 45 solved steps 6 goal_conflict True
+cycle_typical_2 50 solved steps 6 goal_conflict True
+cycle_typical_3 44 solved steps 6 goal_conflict True
+legacy_final 799 solved steps 5 goal_conflict True

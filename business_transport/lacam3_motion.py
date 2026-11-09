@@ -66,7 +66,7 @@ class LaCAM3Planner:
         if remaining<=0:return finish('timeout',detail='mapping exhausted the wall budget',temporary=duplicate)
         lines=[f'{len(nodes)} {len(arcs)} {len(active)} {self.seed} {max(1,int(remaining))}']
         lines.extend(f'{a} {b}' for a,b in arcs)
-        lines.extend(f'{index[positions[r]} {index[effective[r]]}' for r in active)
+        lines.extend(f'{index[positions[r]]} {index[effective[r]]}' for r in active)
         try:
             completed=subprocess.run([str(self.worker.resolve())],input='\n'.join(lines)+'\n',
                  text=True,capture_output=True,timeout=remaining/1000,check=False)

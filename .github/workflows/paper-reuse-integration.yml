@@ -1,0 +1,70 @@
+name: CP-SAT and PETS source integration CPU
+
+on:
+  pull_request:
+    paths:
+      - 'lab_transport/paper_reuse/**'
+      - 'experiments/paper_reuse/**'
+      - 'tools/paper_reuse/**'
+      - 'requirements-paper-reuse.lock'
+      - 'examples/evidence/paper-reuse-integration-20261109/**'
+      - '.github/workflows/paper-reuse-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch:',torch.__version__)"
+      - name: Verify historical and new evidence checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in examples/evidence/pr8-a100-baseline-20261109 examples/evidence/service-dynamics-20261109 examples/evidence/service-decision-value-20261109 examples/evidence/paper-reuse-integration-20261109; do
+            (cd "$path" && sha256sum -c SHA256SUMS)
+          done
+      - name: Run unmodified upstream source examples and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s bash tools/paper_reuse/verify_upstreams.sh "$RUNNER_TEMP/upstream" 2>&1 | tee "$RUNNER_TEMP/upstream.log"
+      - name: Run existing and new regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s experiments/service_value/tests -v
+          python -m unittest discover -s experiments/paper_reuse/tests -v
+      - name: Train small CPU model and reproduce both scenario groups
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 900s bash tools/paper_reuse/run_acceptance.sh "$RUNNER_TEMP/paper-acceptance" 2>&1 | tee "$RUNNER_TEMP/acceptance.log"
+      - name: Preserve complete logs and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-reuse-integration-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/upstream.log
+            ${{ runner.temp }}/upstream/ortools-example.log
+            ${{ runner.temp }}/upstream/mbrl-pytest.log
+            ${{ runner.temp }}/upstream/mbrl-model-smoke.log
+            ${{ runner.temp }}/acceptance.log
+            ${{ runner.temp }}/paper-acceptance/
+          if-no-files-found: warn
+          retention-days: 14

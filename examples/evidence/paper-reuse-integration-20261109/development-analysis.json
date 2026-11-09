@@ -1,0 +1,218 @@
+{
+  "scope": "each scenario weighted equally; paired intervals resample layout/seed clusters, not individual ticks",
+  "independent_layout_seed_clusters": 4,
+  "scenarios": 16,
+  "closed_loop": {
+    "nearest_rule": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 103.05208333333333,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 0.901503642857272,
+      "neural_model_forward_calls": 0,
+      "neural_transition_calls": 0,
+      "neural_scoring_calls": 0,
+      "sampled_completion_events": 0,
+      "model_calls_per_decision": 0.0,
+      "rollout_steps": 420,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "solver_partial_truncations": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    },
+    "cpsat_rule": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 99.65625,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 9.288716686746952,
+      "neural_model_forward_calls": 0,
+      "neural_transition_calls": 0,
+      "neural_scoring_calls": 0,
+      "sampled_completion_events": 0,
+      "model_calls_per_decision": 0.0,
+      "rollout_steps": 2715,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "solver_partial_truncations": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    },
+    "cpsat_pets": {
+      "cases": 16,
+      "completed": 96,
+      "tasks": 96,
+      "cases_completed": 16,
+      "flow_mean": 99.76041666666667,
+      "deadline_defined": 0,
+      "late_count": null,
+      "decision_cpu_mean_ms": 21.882414301204783,
+      "neural_model_forward_calls": 4054,
+      "neural_transition_calls": 635,
+      "neural_scoring_calls": 3419,
+      "sampled_completion_events": 133,
+      "model_calls_per_decision": 48.8433734939759,
+      "rollout_steps": 2715,
+      "prediction_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "solver_partial_truncations": 0,
+      "duplicate_assignments": 0,
+      "discrete_safety_violations": 0
+    }
+  },
+  "paired_flow_differences": {
+    "cpsat_rule_minus_nearest_rule": {
+      "by_layout_seed_cluster": {
+        "clusters": 4,
+        "mean": -3.3958333333333317,
+        "ci95": [
+          -4.645833333333331,
+          -2.145833333333332
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 12,
+      "scenario_losses": 0,
+      "scenario_ties": 4
+    },
+    "cpsat_pets_minus_cpsat_rule": {
+      "by_layout_seed_cluster": {
+        "clusters": 4,
+        "mean": 0.10416666666666785,
+        "ci95": [
+          0.0,
+          0.2083333333333357
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_losses": 1,
+      "scenario_ties": 14
+    }
+  },
+  "per_regime_mean_flow": {
+    "burst": {
+      "nearest_rule": 97.41666666666666,
+      "cpsat_rule": 92.08333333333334,
+      "cpsat_pets": 92.08333333333334
+    },
+    "normal": {
+      "nearest_rule": 75.33333333333333,
+      "cpsat_rule": 74.75,
+      "cpsat_pets": 74.70833333333334
+    },
+    "outage_arrival": {
+      "nearest_rule": 113.08333333333333,
+      "cpsat_rule": 110.08333333333333,
+      "cpsat_pets": 110.54166666666667
+    },
+    "outage_processing": {
+      "nearest_rule": 126.375,
+      "cpsat_rule": 121.70833333333333,
+      "cpsat_pets": 121.70833333333333
+    }
+  },
+  "mean_scenario_service_metrics": {
+    "duration_mae": {
+      "rule": 0.6067708333333334,
+      "pets": 0.49782539355977595,
+      "structured": null
+    },
+    "duration_nll": {
+      "rule": null,
+      "pets": 0.15731707025575428,
+      "structured": null
+    },
+    "interval90_coverage": {
+      "rule": null,
+      "pets": 0.9791666666666666,
+      "structured": null
+    },
+    "brier": {
+      "rule": 0.1604591249989732,
+      "structured": 0.13772035164206864,
+      "pets": 0.14160796881207938
+    }
+  },
+  "service_completed_sessions": 192,
+  "service_event_opportunities": 535,
+  "joint_state_prediction": {
+    "1": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.9002393495386545,
+        "correct_windows": 529,
+        "windows": 575
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.6885642252314744,
+        "correct_windows": 394,
+        "windows": 575
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.8912237933962711,
+        "correct_windows": 524,
+        "windows": 575
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.8780776858678649,
+        "correct_windows": 520,
+        "windows": 575
+      }
+    },
+    "3": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.8216726282135748,
+        "correct_windows": 448,
+        "windows": 518
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.5153415550416913,
+        "correct_windows": 277,
+        "windows": 518
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.7902442341660274,
+        "correct_windows": 434,
+        "windows": 518
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.8169874913478726,
+        "correct_windows": 442,
+        "windows": 518
+      }
+    },
+    "5": {
+      "rule": {
+        "mean_scenario_joint_accuracy": 0.7681372202632442,
+        "correct_windows": 388,
+        "windows": 469
+      },
+      "structured": {
+        "mean_scenario_joint_accuracy": 0.42809437258793637,
+        "correct_windows": 219,
+        "windows": 469
+      },
+      "structured_rule_motion": {
+        "mean_scenario_joint_accuracy": 0.7226299798457052,
+        "correct_windows": 372,
+        "windows": 469
+      },
+      "pets": {
+        "mean_scenario_joint_accuracy": 0.7670566711496616,
+        "correct_windows": 385,
+        "windows": 469
+      }
+    }
+  }
+}

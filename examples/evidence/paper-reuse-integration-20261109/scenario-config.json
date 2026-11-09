@@ -1,0 +1,3964 @@
+{
+  "scope": "fixed synthetic scenarios only; config contains offline future events and is never model input",
+  "seeds": {
+    "development": {
+      "tartu": [
+        41000,
+        41002
+      ],
+      "clinic": [
+        42000,
+        42001
+      ]
+    },
+    "confirmation": {
+      "tartu": [
+        49002,
+        49003
+      ],
+      "clinic": [
+        50000,
+        50001
+      ]
+    }
+  },
+  "previous_pilot": {
+    "tartu": [
+      45001,
+      45004
+    ],
+    "clinic": [
+      46000,
+      46002
+    ]
+  },
+  "regimes": [
+    "normal",
+    "burst",
+    "outage_processing",
+    "outage_arrival"
+  ],
+  "horizon": 5,
+  "particles": 3,
+  "solver_time_limit_seconds": 0.5,
+  "solver_deterministic_time_limit": 0.05,
+  "solver_candidates": 4,
+  "schedule_audit": {
+    "previous_unique_patterns": 68,
+    "new_unique_patterns": 16,
+    "cross_group_duplicates": 0,
+    "method": "layout plus pickup/dropoff/release task signature; before evaluation"
+  },
+  "source_sha256": {
+    "hospital_map": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058",
+    "tiago_config": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+    "clinic_map": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+    "clinic_config": "e63fd0f2e74eac14c4651ad6ee04d20d9e97b8a0a13cc415791ce013b6d9c316"
+  },
+  "cases": [
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41000,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 46,
+          "end": 66,
+          "probe_service_start": 47
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu synthetic multi-location / normal / 41000",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 20,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 24,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 40,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 56,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41000,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 46,
+          "end": 66,
+          "probe_service_start": 47
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu round2 burst seed=41000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41000,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 46,
+          "end": 66,
+          "probe_service_start": 47
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "ICU2_假设取样",
+        "start": 12,
+        "end": 32,
+        "probe_service_start": 11
+      },
+      "config": {
+        "name": "tartu outage_processing seed=41000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "ICU2_假设取样": [
+            [
+              12,
+              32
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41000,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 46,
+          "end": 66,
+          "probe_service_start": 47
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "实验室交付点",
+        "start": 46,
+        "end": 66,
+        "probe_service_start": 47
+      },
+      "config": {
+        "name": "tartu outage_arrival seed=41000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "实验室交付点": [
+            [
+              46,
+              66
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41002,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 48,
+          "end": 68,
+          "probe_service_start": 49
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu synthetic multi-location / normal / 41002",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 20,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 36,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 52,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 64,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41002,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 48,
+          "end": 68,
+          "probe_service_start": 49
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu round2 burst seed=41002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41002,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 48,
+          "end": 68,
+          "probe_service_start": 49
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "ICU2_假设取样",
+        "start": 12,
+        "end": 32,
+        "probe_service_start": 11
+      },
+      "config": {
+        "name": "tartu outage_processing seed=41002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "ICU2_假设取样": [
+            [
+              12,
+              32
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "tartu",
+      "seed": 41002,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 48,
+          "end": 68,
+          "probe_service_start": 49
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "实验室交付点",
+        "start": 48,
+        "end": 68,
+        "probe_service_start": 49
+      },
+      "config": {
+        "name": "tartu outage_arrival seed=41002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "实验室交付点": [
+            [
+              48,
+              68
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42000,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 15,
+          "end": 35,
+          "probe_service_start": 16
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic synthetic multi-location / normal / 42000",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 24,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 32,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 40,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 48,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42000,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 15,
+          "end": 35,
+          "probe_service_start": 16
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic round2 burst seed=42000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42000,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 15,
+          "end": 35,
+          "probe_service_start": 16
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "诊疗左_假设取样",
+        "start": 6,
+        "end": 26,
+        "probe_service_start": 5
+      },
+      "config": {
+        "name": "clinic outage_processing seed=42000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "诊疗左_假设取样": [
+            [
+              6,
+              26
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42000,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 15,
+          "end": 35,
+          "probe_service_start": 16
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "护理左_假设交接",
+        "start": 15,
+        "end": 35,
+        "probe_service_start": 16
+      },
+      "config": {
+        "name": "clinic outage_arrival seed=42000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "护理左_假设交接": [
+            [
+              15,
+              35
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42001,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 29,
+          "end": 49,
+          "probe_service_start": 30
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic synthetic multi-location / normal / 42001",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 28,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 40,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 56,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 72,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42001,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 29,
+          "end": 49,
+          "probe_service_start": 30
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic round2 burst seed=42001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42001,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 29,
+          "end": 49,
+          "probe_service_start": 30
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "诊疗右_假设取样",
+        "start": 17,
+        "end": 37,
+        "probe_service_start": 16
+      },
+      "config": {
+        "name": "clinic outage_processing seed=42001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "诊疗右_假设取样": [
+            [
+              17,
+              37
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "development",
+      "layout": "clinic",
+      "seed": 42001,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 29,
+          "end": 49,
+          "probe_service_start": 30
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "护理右_假设交接",
+        "start": 29,
+        "end": 49,
+        "probe_service_start": 30
+      },
+      "config": {
+        "name": "clinic outage_arrival seed=42001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "护理右_假设交接": [
+            [
+              29,
+              49
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49002,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 56,
+          "end": 76,
+          "probe_service_start": 57
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu synthetic multi-location / normal / 49002",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 16,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 20,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 32,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 44,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 60,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49002,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 56,
+          "end": 76,
+          "probe_service_start": 57
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu round2 burst seed=49002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49002,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 56,
+          "end": 76,
+          "probe_service_start": 57
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "ICU2_假设取样",
+        "start": 12,
+        "end": 32,
+        "probe_service_start": 11
+      },
+      "config": {
+        "name": "tartu outage_processing seed=49002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "ICU2_假设取样": [
+            [
+              12,
+              32
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49002,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "ICU2_假设取样",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 11
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 56,
+          "end": 76,
+          "probe_service_start": 57
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "实验室交付点",
+        "start": 56,
+        "end": 76,
+        "probe_service_start": 57
+      },
+      "config": {
+        "name": "tartu outage_arrival seed=49002 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "实验室交付点": [
+            [
+              56,
+              76
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49003,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "ICU取样点",
+          "start": 4,
+          "end": 24,
+          "probe_service_start": 3
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 39,
+          "end": 59,
+          "probe_service_start": 40
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 3,
+          "end": 13
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu synthetic multi-location / normal / 49003",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 24,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 32,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 40,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 44,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49003,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "ICU取样点",
+          "start": 4,
+          "end": 24,
+          "probe_service_start": 3
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 39,
+          "end": 59,
+          "probe_service_start": 40
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 3,
+          "end": 13
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "tartu round2 burst seed=49003 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49003,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "ICU取样点",
+          "start": 4,
+          "end": 24,
+          "probe_service_start": 3
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 39,
+          "end": 59,
+          "probe_service_start": 40
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 3,
+          "end": 13
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "ICU取样点",
+        "start": 4,
+        "end": 24,
+        "probe_service_start": 3
+      },
+      "config": {
+        "name": "tartu outage_processing seed=49003 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "ICU取样点": [
+            [
+              4,
+              24
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "tartu",
+      "seed": 49003,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "ICU取样点",
+          "start": 4,
+          "end": 24,
+          "probe_service_start": 3
+        },
+        "arrival": {
+          "station_id": "实验室交付点",
+          "start": 39,
+          "end": 59,
+          "probe_service_start": 40
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 3,
+          "end": 13
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "实验室交付点",
+        "start": 39,
+        "end": 59,
+        "probe_service_start": 40
+      },
+      "config": {
+        "name": "tartu outage_arrival seed=49003 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "ICU2_假设取样",
+            "dropoff": "实验室交付点",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "ICU取样点",
+            "dropoff": "实验室交付点",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "实验室交付点": [
+            [
+              39,
+              59
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "ICU取样点": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "实验室交付点": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "ICU2_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "reference_metres": 67.2,
+          "metres_per_pixel": 0.032140407,
+          "nominal_speed_m_per_s": 0.5,
+          "source_adapter_sha256": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+          "timing_assumption": "按公开比例尺与标称速度估算，不是实际路段耗时；取样借鉴另一医院模型，交付耗时为假设，未包含人群与门等待。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50000,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 28,
+          "end": 48,
+          "probe_service_start": 29
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic synthetic multi-location / normal / 50000",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 20,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 24,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 32,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 40,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50000,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 28,
+          "end": 48,
+          "probe_service_start": 29
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic round2 burst seed=50000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50000,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 28,
+          "end": 48,
+          "probe_service_start": 29
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "诊疗右_假设取样",
+        "start": 17,
+        "end": 37,
+        "probe_service_start": 16
+      },
+      "config": {
+        "name": "clinic outage_processing seed=50000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "诊疗右_假设取样": [
+            [
+              17,
+              37
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50000,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗右_假设取样",
+          "start": 17,
+          "end": 37,
+          "probe_service_start": 16
+        },
+        "arrival": {
+          "station_id": "护理右_假设交接",
+          "start": 28,
+          "end": 48,
+          "probe_service_start": 29
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "护理右_假设交接",
+        "start": 28,
+        "end": 48,
+        "probe_service_start": 29
+      },
+      "config": {
+        "name": "clinic outage_arrival seed=50000 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "护理右_假设交接": [
+            [
+              28,
+              48
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50001,
+      "regime": "normal",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 13
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic synthetic multi-location / normal / 50001",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 16,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 28,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 32,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 36,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 48,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50001,
+      "regime": "burst",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 13
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": null,
+      "config": {
+        "name": "clinic round2 burst seed=50001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {},
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50001,
+      "regime": "outage_processing",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 13
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "诊疗左_假设取样",
+        "start": 6,
+        "end": 26,
+        "probe_service_start": 5
+      },
+      "config": {
+        "name": "clinic outage_processing seed=50001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "诊疗左_假设取样": [
+            [
+              6,
+              26
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    },
+    {
+      "profile": "confirmation",
+      "layout": "clinic",
+      "seed": 50001,
+      "regime": "outage_arrival",
+      "design": {
+        "pickup": {
+          "station_id": "诊疗左_假设取样",
+          "start": 6,
+          "end": 26,
+          "probe_service_start": 5
+        },
+        "arrival": {
+          "station_id": "护理左_假设交接",
+          "start": 12,
+          "end": 32,
+          "probe_service_start": 13
+        },
+        "delay": {
+          "robot_id": "R1",
+          "start": 0,
+          "end": 10
+        },
+        "source": "no-incident nearest reference; predeclared timing rule, not clinical data"
+      },
+      "incident": {
+        "kind": "station_outage",
+        "station_id": "护理左_假设交接",
+        "start": 12,
+        "end": 32,
+        "probe_service_start": 13
+      },
+      "config": {
+        "name": "clinic outage_arrival seed=50001 (synthetic)",
+        "max_ticks": 350,
+        "robots": [
+          {
+            "id": "R1"
+          },
+          {
+            "id": "R2"
+          }
+        ],
+        "samples": [
+          {
+            "id": "S01",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S02",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 0,
+            "deadline_tick": null
+          },
+          {
+            "id": "S03",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 2,
+            "deadline_tick": null
+          },
+          {
+            "id": "S04",
+            "pickup": "诊疗右_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 4,
+            "deadline_tick": null
+          },
+          {
+            "id": "S05",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理右_假设交接",
+            "release_tick": 8,
+            "deadline_tick": null
+          },
+          {
+            "id": "S06",
+            "pickup": "诊疗左_假设取样",
+            "dropoff": "护理左_假设交接",
+            "release_tick": 12,
+            "deadline_tick": null
+          }
+        ],
+        "outages": {
+          "护理左_假设交接": [
+            [
+              12,
+              32
+            ]
+          ]
+        },
+        "motion_pauses": {},
+        "duration_jitter": 0,
+        "station_service": {
+          "诊疗左_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "诊疗右_假设取样": {
+            "service_ticks": 3,
+            "prior_ticks": 4.5,
+            "jitter_ticks": 3
+          },
+          "护理左_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          },
+          "护理右_假设交接": {
+            "service_ticks": 1,
+            "prior_ticks": 1.0,
+            "jitter_ticks": 0
+          }
+        },
+        "source": {
+          "time_model": "nominal_source_based",
+          "seconds_per_tick": 10,
+          "source_commit": "672a67a1643ac12d89fc21565fa92f33f5c2e0fc",
+          "source_map_sha256": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+          "metres_per_pixel": 0.026922041,
+          "nominal_speed_m_per_s": 0.7,
+          "timing_assumption": "公开诊所演示地图和标称速度；样本取送点是仿真假设，不是实测运输。"
+        },
+        "note": "workload, station roles and disruptions are simulation assumptions"
+      }
+    }
+  ]
+}

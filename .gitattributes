@@ -2,3 +2,4 @@
 /examples/evidence/pr8-a100-baseline-20261109/** -text whitespace=cr-at-eol,-blank-at-eof
 /examples/evidence/service-dynamics-20261109/** -text
 /examples/evidence/service-decision-value-20261109/** -text
+/examples/evidence/paper-reuse-integration-20261109/** -text

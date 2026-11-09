@@ -128,7 +128,7 @@ class CPSATDispatcher:
             plans = list(fallback)
         else:
             reason = None
-        truncated = bool(plans and statuses and statuses[-1] == 'UNKNOWN')
+        truncated = any(status in ('UNKNOWN','FEASIBLE') for status in statuses)
         self.truncated += int(truncated)
         self.log.append({'tick':observation.tick,'fallback':reason,'statuses':statuses,
                          'partial_truncation':truncated,'solutions':len(plans),

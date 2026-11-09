@@ -105,6 +105,7 @@ class IntegrationTests(unittest.TestCase):
             check_transition(state,x,Geometry(outage_case().grid))
             state=x
         self.assertGreater(d.forward_calls,1)
+        self.assertGreater(a.transition_model_calls,0)
 
     def test_station_outage_pauses_service_with_no_model_call(self):
         rows=rich_rows(outage_case())
@@ -145,6 +146,24 @@ class IntegrationTests(unittest.TestCase):
         self.assertTrue(all(a in candidates_for(self.state) for a in actions))
         self.assertEqual(policy.fallbacks,1)
         self.assertEqual(policy.log[-1]['fallback'],'ValueError')
+
+    def test_failed_service_model_records_call_and_falls_back(self):
+        class InvalidDistribution:
+            def __init__(self): self.forward_calls=0
+            def parameters(self,features):
+                self.forward_calls+=1
+                raise ValueError('invalid service distribution')
+        case=outage_case()
+        row=rich_rows(case)[0]
+        geo=Geometry(case.grid)
+        model=PETSRuleDynamics(geo,InvalidDistribution(),seed=9)
+        observer=ObservableHistory()
+        policy=RolloutDispatch(geo,model,observer,solver_seconds=.2)
+        actions=policy(row.observation,candidates_for(row.observation))
+        self.assertTrue(actions)
+        self.assertEqual(policy.fallbacks,1)
+        self.assertEqual(policy.model_calls,1)
+        self.assertEqual(policy.log[-1]['neural_transition_calls'],1)
 
     def test_injected_future_samples_do_not_affect_dataset_features(self):
         rows=rich_rows(outage_case())

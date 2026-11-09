@@ -1,0 +1,29 @@
+{
+  "ortools": {
+    "source_commit": "100f66e6242ab8bf8d32feb8f3bf086db66ae2b5",
+    "python_package": "9.14.6206",
+    "license": "Apache-2.0",
+    "example_sha256": "ed9484f61c0d8064204b3aad32958a0e4e6eaeb377abe58a3b85f8681034c44f",
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "mbrl_lib": {
+    "source_commit": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+    "version": "0.2.0",
+    "license": "MIT",
+    "license_sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85",
+    "source_sha256": {
+      "gaussian_mlp.py": "93d4ac53a80bad779c54298e34cc00fcdd702fee181fcc357a0a742d293cb1f6",
+      "model_trainer.py": "38db414fb45e70ef0b244c8d3ca9a01ec278e1ae914a7e01a884fc2203424216",
+      "replay_buffer.py": "f852b8e12f4db3f479abd37ecb9360a05870cfc627fb4081c0d38fe234e95435"
+    }
+  },
+  "python": "3.10.22",
+  "pytorch": "2.5.1+cpu",
+  "numpy": "1.26.4",
+  "hydra_core": "1.0.3",
+  "omegaconf": "2.0.6",
+  "gymnasium": "0.26.3",
+  "uv": "0.13.5",
+  "dependency_lock_sha256": "cd71545f8eed813cd1c788f3a40e95996f19d13129c14e9621d47d7409e81cb4",
+  "source_manifest_sha256": "ef95bc4e932217e18fb7a8acbd495a1ad9458f8dad9055b7b727a77f75a930c5"
+}

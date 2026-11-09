@@ -159,9 +159,23 @@ class PETSRuleDynamics:
         self.distribution = distribution
         self.rng = random.Random(seed)
         self.unknown_progress = 0
+        self.transition_model_calls = 0
+        self.scoring_model_calls = 0
+        self.sampled_completion_events = 0
 
     def reset_seed(self,seed):
         self.rng.seed(seed)
+
+    def _parameters(self,features,*,transition):
+        before = self.distribution.forward_calls
+        try:
+            return self.distribution.parameters(features)
+        finally:
+            used = self.distribution.forward_calls-before
+            if transition:
+                self.transition_model_calls += used
+            else:
+                self.scoring_model_calls += used
 
     def estimated_service_work(self, initial, terminal):
         """Expected remaining active service for known tasks, including arrivals.
@@ -186,7 +200,7 @@ class PETSRuleDynamics:
                 if (robot is not None and robot.position == station.position and
                         robot.phase == phase and robot.service_active_elapsed is not None):
                     elapsed = robot.service_active_elapsed
-                params = self.distribution.parameters(service_features(terminal,robot,sample,phase,station))
+                params = self._parameters(service_features(terminal,robot,sample,phase,station),transition=False)
                 total += self.distribution.expected_remaining_steps(params,elapsed)
         return total
 
@@ -211,8 +225,9 @@ class PETSRuleDynamics:
                 if robot.service_elapsed is not None:
                     self.unknown_progress += 1
                 progress = 0
-            params = self.distribution.parameters(service_features(observation,robot,sample,phase,station))
+            params = self._parameters(service_features(observation,robot,sample,phase,station),transition=True)
             advance = self.rng.random() < self.distribution.finish_probability(params,progress)
+            self.sampled_completion_events += int(advance)
             overrides[station.id] = progress + (1 if advance else 2)
         adjusted = replace(observation,stations=tuple(replace(s,
             expected_service_ticks=overrides[s.id],observed_effective_service_mean=float(overrides[s.id]))

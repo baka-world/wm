@@ -27,6 +27,9 @@ class RolloutDispatch:
         plans = self.solver.proposals(observation,candidates)
         records = []
         calls_before = getattr(getattr(self.dynamics,'distribution',None),'forward_calls',0)
+        transition_before = getattr(self.dynamics,'transition_model_calls',0)
+        scoring_before = getattr(self.dynamics,'scoring_model_calls',0)
+        completions_before = getattr(self.dynamics,'sampled_completion_events',0)
         steps_before = self.rollout_steps
         try:
             for plan in plans:
@@ -61,7 +64,11 @@ class RolloutDispatch:
         self.model_calls += calls_used
         self.log.append({'tick':observation.tick,'candidates':len(candidates),'proposals':records,
             'selected_index':choice,'fallback':fallback,'rollout_steps':self.rollout_steps-steps_before,
-            'neural_model_forward_calls':calls_used,'cpu_seconds':time.process_time()-started})
+            'neural_model_forward_calls':calls_used,
+            'neural_transition_calls':getattr(self.dynamics,'transition_model_calls',0)-transition_before,
+            'neural_scoring_calls':getattr(self.dynamics,'scoring_model_calls',0)-scoring_before,
+            'sampled_completion_events':getattr(self.dynamics,'sampled_completion_events',0)-completions_before,
+            'cpu_seconds':time.process_time()-started})
         return plans[choice]
 
 
@@ -91,5 +98,6 @@ class NearestRuleDispatch:
             fallback=type(exc).__name__
         self.log.append({'tick':observation.tick,'fallback':fallback,
             'rollout_steps':self.rollout_steps-steps_before,'neural_model_forward_calls':0,
+            'neural_transition_calls':0,'neural_scoring_calls':0,'sampled_completion_events':0,
             'cpu_seconds':time.process_time()-started})
         return plan

@@ -81,13 +81,21 @@ def encode_tokens(payload):
                   ("history_complete_since_start", 1), ("expected_service_ticks_public", 10)]
         tokens.append(_put(station, 2, fields))
     for action in payload["candidate_action"]:
-        fields = [("previous_task", 1)]
-        # Previous task is a categorical ID, not a numeric scalar.
-        fields = []
+        # Joins and categorical identifiers are resolved by the observable
+        # feature API. No arbitrary string-to-float conversion or hidden state.
+        fields = [("pickup_resource_capacity", 10),
+                  ("dropoff_resource_capacity", 10),
+                  ("pickup_resource_occupied", 10),
+                  ("dropoff_resource_occupied", 10),
+                  ("pickup_available", 1),
+                  ("dropoff_available", 1),
+                  ("task_stage", 5)]
         extra = [action["robot_to_pickup_distance"] / 30.,
                  action["pickup_to_dropoff_distance"] / 30.,
                  float(action["replaces_running_task"]),
                  float(action["competes_with_running_service"])]
+        extra += [float(action["robot_phase"] == p) for p in
+                  ("idle", "to_pickup", "to_dropoff")]
         tokens.append(_put(action, 3, fields, extra))
     if not tokens:
         raise ValueError("empty business observation")

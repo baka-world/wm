@@ -1,0 +1,1114 @@
+{
+  "comparison_scope": "Previously used maps; new synthetic task tables are not novel physical layouts.",
+  "cross_seed_duplicates": 0,
+  "duplicate_note": "The same seed has intentionally identical task tables across its three regimes.",
+  "frozen_config_sha256": "54d89951e3b3771b7421fc8d18cc445b5b1582615d5513d788208d2c0032ed7a",
+  "historical_config_sha256": "c51de67293a135a3dc3281400f8e1b1ed342f4df4b343de6d94e2c6b32c8d1cc",
+  "prior_duplicates": 0,
+  "scenes": [
+    {
+      "fingerprint": "ec9e14733478fa1ae58dd4503efaa213c490d8c19777004009af9a207140f48f",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81011
+    },
+    {
+      "fingerprint": "ec9e14733478fa1ae58dd4503efaa213c490d8c19777004009af9a207140f48f",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81011
+    },
+    {
+      "fingerprint": "ec9e14733478fa1ae58dd4503efaa213c490d8c19777004009af9a207140f48f",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81011
+    },
+    {
+      "fingerprint": "c0f703df708c68143bb1a111e077ebd6b7aed0a85688b4334c008f94cccf0239",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81012
+    },
+    {
+      "fingerprint": "c0f703df708c68143bb1a111e077ebd6b7aed0a85688b4334c008f94cccf0239",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81012
+    },
+    {
+      "fingerprint": "c0f703df708c68143bb1a111e077ebd6b7aed0a85688b4334c008f94cccf0239",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81012
+    },
+    {
+      "fingerprint": "3d67fc89fc6092d59604f3eae7d7211082c4fcb57e5ed5b6b09797a8092d007b",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81013
+    },
+    {
+      "fingerprint": "3d67fc89fc6092d59604f3eae7d7211082c4fcb57e5ed5b6b09797a8092d007b",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81013
+    },
+    {
+      "fingerprint": "3d67fc89fc6092d59604f3eae7d7211082c4fcb57e5ed5b6b09797a8092d007b",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81013
+    },
+    {
+      "fingerprint": "635d6d8049c41ffa383ef871cc8bb6d6e996bc102faf24c0139425d2913ac98c",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81014
+    },
+    {
+      "fingerprint": "635d6d8049c41ffa383ef871cc8bb6d6e996bc102faf24c0139425d2913ac98c",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81014
+    },
+    {
+      "fingerprint": "635d6d8049c41ffa383ef871cc8bb6d6e996bc102faf24c0139425d2913ac98c",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "empty8",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 81014
+    },
+    {
+      "fingerprint": "ba5f368c2dfcb6d3b27035ea9d2e25babcc5cda84e644db3ab399d7226b62846",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82011
+    },
+    {
+      "fingerprint": "ba5f368c2dfcb6d3b27035ea9d2e25babcc5cda84e644db3ab399d7226b62846",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82011
+    },
+    {
+      "fingerprint": "ba5f368c2dfcb6d3b27035ea9d2e25babcc5cda84e644db3ab399d7226b62846",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82011
+    },
+    {
+      "fingerprint": "b64f6b52017f92289a3b7e88b77c48ce6d48d614c991264dfeb18ab2cb2b4e53",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82012
+    },
+    {
+      "fingerprint": "b64f6b52017f92289a3b7e88b77c48ce6d48d614c991264dfeb18ab2cb2b4e53",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82012
+    },
+    {
+      "fingerprint": "b64f6b52017f92289a3b7e88b77c48ce6d48d614c991264dfeb18ab2cb2b4e53",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82012
+    },
+    {
+      "fingerprint": "ed9b52c329eba030fc04f1147cef6762b7a5a82c8975b5eb701a3f993ef38cd5",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82013
+    },
+    {
+      "fingerprint": "ed9b52c329eba030fc04f1147cef6762b7a5a82c8975b5eb701a3f993ef38cd5",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82013
+    },
+    {
+      "fingerprint": "ed9b52c329eba030fc04f1147cef6762b7a5a82c8975b5eb701a3f993ef38cd5",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "single_1"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82013
+    },
+    {
+      "fingerprint": "78fe9e947c6d3e6f9e5ca9e91855fe0d7c3dcd39b94620197fc2864c94d488ce",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_serial",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82014
+    },
+    {
+      "fingerprint": "78fe9e947c6d3e6f9e5ca9e91855fe0d7c3dcd39b94620197fc2864c94d488ce",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_parallel",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82014
+    },
+    {
+      "fingerprint": "78fe9e947c6d3e6f9e5ca9e91855fe0d7c3dcd39b94620197fc2864c94d488ce",
+      "jobs": [
+        {
+          "deadline_tick": null,
+          "id": "S01",
+          "release_tick": 0,
+          "workflow": "two_stage_0"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S02",
+          "release_tick": 0,
+          "workflow": "two_stage_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S03",
+          "release_tick": 2,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S04",
+          "release_tick": 4,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S05",
+          "release_tick": 6,
+          "workflow": "single_1"
+        },
+        {
+          "deadline_tick": null,
+          "id": "S06",
+          "release_tick": 8,
+          "workflow": "two_stage_0"
+        }
+      ],
+      "layout": "random32",
+      "overlaps_prior_task_table": false,
+      "regime": "workflow_outage",
+      "same_table_as_other_confirmed_clusters": false,
+      "seed": 82014
+    }
+  ]
+}

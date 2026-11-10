@@ -10,7 +10,7 @@ def f(x):
     return "undefined" if x is None else (f"{x:.4f}" if isinstance(x,(int,float)) else str(x))
 
 
-def report(summary_path, raw_path, out, robustness_summary=None):
+def report(summary_path, raw_path, out, robustness_summary=None, attribution_summary=None):
     s=json.loads(Path(summary_path).read_text())
     with gzip.open(raw_path,"rt",encoding="utf-8") as h:
         data=json.load(h)
@@ -116,6 +116,31 @@ def report(summary_path, raw_path, out, robustness_summary=None):
             f"PETS {f(m['PETS-5']['regret_steps'])}，"
             f"Structured {f(m['Structured-5']['regret_steps'])}。"
         )
+    if attribution_summary:
+        attribution=json.loads(Path(attribution_summary).read_text(encoding="utf-8"))
+        out_rows.extend([
+            "",
+            "## 五步窗口模型预测的决策相关误差（第一粒子，仅离线归因）",
+            "",
+            "| 模型 | 服务真/预测/匹配/漏报/误报 | 服务匹配事件绝对时间误差合计 | 后继释放真/预测/匹配/漏报/误报 | 机器人差异步 | 资源状态差异步 |",
+            "|---|---|---:|---|---:|---:|",
+        ])
+        for model,x in attribution['models'].items():
+            service="/".join(str(x.get('service_'+key+'_events',0))
+                             for key in ('true','predicted','matched','missed','spurious'))
+            successor="/".join(str(x.get('stage_release_'+key+'_events',0))
+                               for key in ('true','predicted','matched','missed','spurious'))
+            out_rows.append(f"| {model} | {service} | {x.get('service_timing_abs_error_ticks',0)} | "
+                            f"{successor} | {x.get('robot_position_task_disagreement',0)} | "
+                            f"{x.get('station_capacity_disagreement',0)} |")
+        out_rows.extend([
+            "",
+            "上述事件匹配绝对时间误差仅覆盖同时出现在五步窗内的事件；漏报单列，不将其强行转成时间误差。",
+            "后继释放也按相同规则处理，不能因服务完成事件不同就认定全部结果来自服务头。",
+            "完整反事实中发生在第 5 步之后、第 20 步以内的服务完成/后继释放/资源等待事件数量："+
+                json.dumps(attribution['outside_5_inside_20_events'],ensure_ascii=False),
+            "",
+        ])
     if robustness_summary:
         robust=json.loads(Path(robustness_summary).read_text(encoding="utf-8"))
         out_rows.extend([

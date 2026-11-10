@@ -28,6 +28,13 @@ jobs:
           python -m pip install 'uv==0.13.5'
           uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
           python -c "import torch; assert torch.version.cuda is None"
+      - name: Verify grouped factual dataset and train session model on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 120s python -m experiments.world_model_integration.build_dataset --output "$RUNNER_TEMP/session-dataset.json" 2>&1 | tee "$RUNNER_TEMP/session-dataset.log"
+          timeout 210s python -m lab_transport.business_state_learning --dataset "$RUNNER_TEMP/session-dataset.json" --checkpoint "$RUNNER_TEMP/session-v2.pt" --seed 1810 --epochs 10 --seconds 180 2>&1 | tee "$RUNNER_TEMP/session-training.log"
+          python -c 'import hashlib,os; p=os.environ["RUNNER_TEMP"]+"/session-v2.pt"; print("SESSION_CHECKPOINT_SHA256",hashlib.sha256(open(p,"rb").read()).hexdigest())' | tee "$RUNNER_TEMP/session-checkpoint-sha.log"
       - name: Test new scoring and state-model contracts
         shell: bash
         run: |
@@ -60,5 +67,10 @@ jobs:
             ${{ runner.temp }}/decision-pilot.json
             ${{ runner.temp }}/decision-confirmation.log
             ${{ runner.temp }}/decision-confirmation.json
+            ${{ runner.temp }}/session-dataset.log
+            ${{ runner.temp }}/session-dataset.json
+            ${{ runner.temp }}/session-training.log
+            ${{ runner.temp }}/session-checkpoint-sha.log
+            ${{ runner.temp }}/session-v2.pt
           if-no-files-found: warn
-          retention-days: 21
+          retention-days: 60

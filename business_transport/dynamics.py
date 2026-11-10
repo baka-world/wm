@@ -42,3 +42,11 @@ class CapacityDynamics:
         nxt=attach_prediction(observation,replace(nxt,robots=tuple(robots)))
         device={s.id:getattr(s,'device_available',s.available) for s in observation.stations}
         return capacity_view(nxt,(),self.rules,device)[0]
+
+
+class WorkflowDynamics(CapacityDynamics):
+    """Add only deterministic public successor release to existing models."""
+    def predict_next(self,observation,assignments):
+        from business_transport.workflow_transition import release_successors
+        predicted=super().predict_next(observation,assignments)
+        return release_successors(observation,predicted,self.rules)

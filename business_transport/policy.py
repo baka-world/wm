@@ -4,19 +4,24 @@ from __future__ import annotations
 import time
 from experiments.service_value.scoring import workload_score
 from business_transport.dispatch import BusinessCPSAT
-from business_transport.dynamics import CapacityDynamics
+from business_transport.dynamics import CapacityDynamics,WorkflowDynamics
+from business_transport.workflow_scoring import workflow_components,score_components
+from business_transport.workflow_transition import check_business_transition
 from lab_transport.decision_value import batch_candidates,candidates_for,nearest_batch
 from lab_transport.paper_reuse.contracts import check_transition
 
 
 class BusinessPolicy:
     def __init__(self,method,geometry,rules,observer,model=None,*,seed=0,horizon=5,
-                 particles=3,budget=4,solver_seconds=.5):
+                 particles=3,budget=4,solver_seconds=.5,workflow_prediction=False,scoring='legacy'):
         if method not in ('nearest','nearest_rollout','cpsat_rule','cpsat_pets','cpsat_structured'):
             raise ValueError('unknown business scheduling baseline')
         self.method,self.geometry,self.rules,self.observer=method,geometry,rules,observer
         self.seed,self.horizon,self.particles,self.budget=seed,horizon,particles,budget
-        self.model=CapacityDynamics(model,rules) if model is not None else None
+        if scoring not in ('legacy','workflow'):raise ValueError('unknown business score')
+        self.workflow_prediction,self.scoring=workflow_prediction,scoring
+        adapter=WorkflowDynamics if workflow_prediction else CapacityDynamics
+        self.model=adapter(model,rules) if model is not None else None
         self.solver=(BusinessCPSAT(geometry,rules,candidate_limit=budget,time_limit_seconds=solver_seconds,seed=seed)
                      if method.startswith('cpsat_') else None)
         self.log=[];self.fallbacks=0;self.rollout_steps=0
@@ -34,19 +39,26 @@ class BusinessPolicy:
     def evaluate(self,observation,plans):
         records=[]
         for plan in plans:
-            outcomes=[]
+            outcomes=[];components=[]
             for particle in range(self.particles):
                 self.model.reset_seed(self.seed+observation.tick*1009+particle)
                 state=observation;trace=[]
                 for step in range(self.horizon):
                     actions=plan if step==0 else nearest_batch(state,candidates_for(state),self.geometry)
                     nxt=self.model.predict_next(state,actions)
-                    check_transition(state,nxt,self.geometry)
+                    if self.workflow_prediction:check_business_transition(state,nxt,self.geometry,self.rules,actions)
+                    else:check_transition(state,nxt,self.geometry)
                     self.rollout_steps+=1;trace.append(nxt);state=nxt
-                outcomes.append(workload_score(observation,trace,self.geometry))
+                if self.scoring=='workflow':
+                    c=workflow_components(observation,trace,self.geometry,self.rules)
+                    outcomes.append(score_components(c));components.append(c)
+                else:
+                    outcomes.append(workload_score(observation,trace,self.geometry))
             score=tuple(sum(s[i] for s in outcomes)/len(outcomes) for i in range(3))
-            records.append({'assignments':[{'robot_id':a.robot_id,'sample_id':a.sample_id} for a in plan],
-                            'score':score})
+            record={'assignments':[{'robot_id':a.robot_id,'sample_id':a.sample_id} for a in plan],
+                    'score':score}
+            if self.scoring=='workflow':record['components']=components
+            records.append(record)
         return records
 
     def __call__(self,observation,candidates):

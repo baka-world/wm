@@ -84,7 +84,17 @@
       "p2_rank": [
         1,
         0
-      ]
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        0
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        77.5,
+        72.5
+      ],
+      "mean_flow_later_released_jobs_offline_only": null,
+      "tick0_visible_job_count": 2
     },
     {
       "seed": 43015,
@@ -188,7 +198,24 @@
         0,
         2,
         1
-      ]
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        2,
+        4,
+        10
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        33.375,
+        36.125,
+        36.125
+      ],
+      "mean_flow_later_released_jobs_offline_only": [
+        48.333333333333336,
+        50.166666666666664,
+        50.083333333333336
+      ],
+      "tick0_visible_job_count": 1
     },
     {
       "seed": 43019,
@@ -313,7 +340,27 @@
         3,
         0,
         1
-      ]
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        0,
+        5,
+        10
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        42.0625,
+        42.0625,
+        35.875,
+        37.6875
+      ],
+      "mean_flow_later_released_jobs_offline_only": [
+        56.3125,
+        56.3125,
+        51.1875,
+        53
+      ],
+      "tick0_visible_job_count": 2
     }
-  ]
+  ],
+  "partition_semantics": "offline descriptive decomposition: stage-final flow for jobs released at tick 0 versus later; later jobs' identities/times are NEVER model or continuation policy inputs"
 }

@@ -1,0 +1,57 @@
+name: World model decision integration CPU
+
+on:
+  pull_request:
+    paths:
+      - 'business_transport/**'
+      - 'lab_transport/business_state_learning.py'
+      - 'experiments/world_model_integration/**'
+      - '.github/workflows/world-model-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  model-decision-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None"
+      - name: Test new scoring and state-model contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/integration-tests.log"
+      - name: Test historical workflow compatibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/workflow-regression.log"
+      - name: Run fixed four-arm CPU development pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600s python -m experiments.world_model_integration.pilot --output "$RUNNER_TEMP/decision-pilot.json" 2>&1 | tee "$RUNNER_TEMP/decision-pilot.log"
+      - name: Preserve raw decision and test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-decision-integration-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/integration-tests.log
+            ${{ runner.temp }}/workflow-regression.log
+            ${{ runner.temp }}/decision-pilot.log
+            ${{ runner.temp }}/decision-pilot.json
+          if-no-files-found: warn
+          retention-days: 21

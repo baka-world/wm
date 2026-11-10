@@ -1,0 +1,677 @@
+{
+  "scenarios": 6,
+  "independent_layout_seed_clusters": 2,
+  "methods": {
+    "nearest": {
+      "scenarios": 6,
+      "jobs": 36,
+      "jobs_completed": 36,
+      "mean_scenario_flow_completed": 45.02777777777778,
+      "mean_scenario_restricted_flow": 45.02777777777778,
+      "mean_stage_wait_per_job": 12.36111111111111,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 36,
+          "mean_wait_assigned": 12.36111111111111,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 16,
+          "mean_wait_assigned": 0,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 61,
+      "resource_busy_slot_ticks": 324,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 0,
+      "model_prediction_calls": 0,
+      "model_prediction_total_wall_ms": 0.0,
+      "model_prediction_mean_wall_ms": null,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 0,
+      "decision_wall_mean_ms": 0.1722065000173891,
+      "decision_wall_p95_ms": 0.6619993998810972
+    },
+    "old_rule": {
+      "scenarios": 6,
+      "jobs": 36,
+      "jobs_completed": 36,
+      "mean_scenario_flow_completed": 45.5,
+      "mean_scenario_restricted_flow": 45.5,
+      "mean_stage_wait_per_job": 13.666666666666666,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 36,
+          "mean_wait_assigned": 12.722222222222221,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 16,
+          "mean_wait_assigned": 2.125,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 50,
+      "resource_busy_slot_ticks": 324,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 1710,
+      "model_prediction_calls": 1710,
+      "model_prediction_total_wall_ms": 2067.9768949876234,
+      "model_prediction_mean_wall_ms": 1.2093432134430546,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 1698,
+      "decision_wall_mean_ms": 54.32128630435846,
+      "decision_wall_p95_ms": 127.96331599986388
+    },
+    "workflow_rule": {
+      "scenarios": 6,
+      "jobs": 36,
+      "jobs_completed": 36,
+      "mean_scenario_flow_completed": 45.5,
+      "mean_scenario_restricted_flow": 45.5,
+      "mean_stage_wait_per_job": 13.666666666666666,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 36,
+          "mean_wait_assigned": 12.722222222222221,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 16,
+          "mean_wait_assigned": 2.125,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 50,
+      "resource_busy_slot_ticks": 324,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 1710,
+      "model_prediction_calls": 1710,
+      "model_prediction_total_wall_ms": 2356.464408001102,
+      "model_prediction_mean_wall_ms": 1.3780493614041534,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 1698,
+      "decision_wall_mean_ms": 67.5875056303895,
+      "decision_wall_p95_ms": 148.01954974973341
+    },
+    "workflow_pets": {
+      "scenarios": 6,
+      "jobs": 36,
+      "jobs_completed": 36,
+      "mean_scenario_flow_completed": 45.5,
+      "mean_scenario_restricted_flow": 45.5,
+      "mean_stage_wait_per_job": 13.666666666666666,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 36,
+          "mean_wait_assigned": 12.722222222222221,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 16,
+          "mean_wait_assigned": 2.125,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 50,
+      "resource_busy_slot_ticks": 324,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 1710,
+      "model_prediction_calls": 1710,
+      "model_prediction_total_wall_ms": 2716.1648199949013,
+      "model_prediction_mean_wall_ms": 1.5884004795291822,
+      "pets_forward_calls": 1273,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 1695,
+      "decision_wall_mean_ms": 75.30697545653113,
+      "decision_wall_p95_ms": 160.2451812500476
+    },
+    "workflow_structured": {
+      "scenarios": 6,
+      "jobs": 36,
+      "jobs_completed": 36,
+      "mean_scenario_flow_completed": 45.52777777777778,
+      "mean_scenario_restricted_flow": 45.52777777777778,
+      "mean_stage_wait_per_job": 13.86111111111111,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 36,
+          "mean_wait_assigned": 12.583333333333334,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 16,
+          "mean_wait_assigned": 2.875,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 46,
+      "resource_busy_slot_ticks": 324,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 1725,
+      "model_prediction_calls": 1725,
+      "model_prediction_total_wall_ms": 3495.9661629909533,
+      "model_prediction_mean_wall_ms": 2.0266470510092485,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 1233,
+      "prediction_motion_calls": 1710,
+      "decision_wall_mean_ms": 92.35467163049456,
+      "decision_wall_p95_ms": 190.80668800006606
+    }
+  },
+  "paired": {
+    "workflow_rule_minus_old_rule": {
+      "clusters": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "scenario_wins": 0,
+      "scenario_ties": 6,
+      "scenario_losses": 0
+    },
+    "workflow_pets_minus_old_rule": {
+      "clusters": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "scenario_wins": 0,
+      "scenario_ties": 6,
+      "scenario_losses": 0
+    },
+    "workflow_pets_minus_workflow_rule": {
+      "clusters": {
+        "clusters": 2,
+        "mean": 0.0,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "scenario_wins": 0,
+      "scenario_ties": 6,
+      "scenario_losses": 0
+    },
+    "workflow_structured_minus_old_rule": {
+      "clusters": {
+        "clusters": 2,
+        "mean": 0.027777777777778567,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 1
+    },
+    "workflow_structured_minus_workflow_rule": {
+      "clusters": {
+        "clusters": 2,
+        "mean": 0.027777777777778567,
+        "ci95": null,
+        "reason": "fewer than two seed clusters in a map stratum"
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 1
+    }
+  },
+  "same_state_decisions": 12,
+  "decision_contrasts": {
+    "old_transition_new_score_vs_old_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 12
+    },
+    "new_transition_old_score_vs_old_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 12
+    },
+    "new_transition_new_score_vs_old_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 12
+    },
+    "new_transition_new_score_vs_new_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 12
+    },
+    "new_transition_new_score_vs_old_transition_new_score": {
+      "ranking_changed": 0,
+      "same_choice": 12
+    },
+    "pets_new_vs_new_transition_new_score": {
+      "ranking_changed": 4,
+      "same_choice": 11,
+      "different_choice": 1,
+      "branch_worse": 1
+    },
+    "structured_new_vs_new_transition_new_score": {
+      "ranking_changed": 5,
+      "same_choice": 10,
+      "different_choice": 2,
+      "branch_improved": 1,
+      "branch_worse": 1
+    }
+  },
+  "actual_successors": 16,
+  "old_missing_successors": 16,
+  "old_model_successor_audit": {
+    "rule": {
+      "missed": 16,
+      "predecessor_predicted_completed": 12
+    },
+    "pets": {
+      "missed": 16,
+      "predecessor_predicted_completed": 16
+    },
+    "structured": {
+      "missed": 16,
+      "predecessor_predicted_completed": 16
+    }
+  },
+  "state_prediction": {
+    "1": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 83,
+          "windows": 94,
+          "sample_identity_status_correct": 83,
+          "robot_position_task_correct": 83,
+          "station_capacity_correct": 83,
+          "job_final_state_correct": 92,
+          "service_actual": 35,
+          "service_predicted": 30,
+          "service_true_positive": 27,
+          "successor_actual": 16,
+          "successor_predicted": 14,
+          "successor_exact_tick": 12,
+          "service_mismatch_steps": 11,
+          "successor_release_disagreement_steps": 6,
+          "conditional_service_matching_steps": 83,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 83,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.8829787234042553,
+          "service_event_recall": 0.7714285714285715,
+          "service_event_precision": 0.9,
+          "successor_exact_tick_recall": 0.75
+        },
+        "pets": {
+          "joint_correct": 81,
+          "windows": 94,
+          "sample_identity_status_correct": 81,
+          "robot_position_task_correct": 81,
+          "station_capacity_correct": 81,
+          "job_final_state_correct": 91,
+          "service_actual": 35,
+          "service_predicted": 36,
+          "service_true_positive": 28,
+          "successor_actual": 16,
+          "successor_predicted": 19,
+          "successor_exact_tick": 16,
+          "service_mismatch_steps": 13,
+          "successor_release_disagreement_steps": 3,
+          "conditional_service_matching_steps": 81,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 81,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.8617021276595744,
+          "service_event_recall": 0.8,
+          "service_event_precision": 0.7777777777777778,
+          "successor_exact_tick_recall": 1.0
+        },
+        "structured": {
+          "joint_correct": 77,
+          "windows": 94,
+          "sample_identity_status_correct": 77,
+          "robot_position_task_correct": 77,
+          "station_capacity_correct": 77,
+          "job_final_state_correct": 87,
+          "service_actual": 35,
+          "service_predicted": 41,
+          "service_true_positive": 28,
+          "successor_actual": 16,
+          "successor_predicted": 21,
+          "successor_exact_tick": 16,
+          "service_mismatch_steps": 17,
+          "successor_release_disagreement_steps": 5,
+          "conditional_service_matching_steps": 77,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 77,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.8191489361702128,
+          "service_event_recall": 0.8,
+          "service_event_precision": 0.6829268292682927,
+          "successor_exact_tick_recall": 1.0
+        }
+      },
+      "coverage": {
+        "candidate_windows": 434,
+        "eligible": 406,
+        "selected": 94,
+        "external_arrival": 24,
+        "selected_with_successor": 16,
+        "device_change": 4
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 48,
+            "total": 54
+          },
+          "workflow": {
+            "correct": 48,
+            "total": 54
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 47,
+            "total": 54
+          },
+          "workflow": {
+            "correct": 47,
+            "total": 54
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 45,
+            "total": 54
+          },
+          "workflow": {
+            "correct": 45,
+            "total": 54
+          }
+        }
+      }
+    },
+    "3": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 51,
+          "windows": 71,
+          "sample_identity_status_correct": 55,
+          "robot_position_task_correct": 51,
+          "station_capacity_correct": 53,
+          "job_final_state_correct": 67,
+          "service_actual": 48,
+          "service_predicted": 46,
+          "service_true_positive": 29,
+          "successor_actual": 14,
+          "successor_predicted": 12,
+          "successor_exact_tick": 5,
+          "service_mismatch_steps": 34,
+          "successor_release_disagreement_steps": 16,
+          "conditional_service_matching_steps": 177,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 177,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.7183098591549296,
+          "service_event_recall": 0.6041666666666666,
+          "service_event_precision": 0.6304347826086957,
+          "successor_exact_tick_recall": 0.35714285714285715
+        },
+        "pets": {
+          "joint_correct": 41,
+          "windows": 71,
+          "sample_identity_status_correct": 51,
+          "robot_position_task_correct": 41,
+          "station_capacity_correct": 42,
+          "job_final_state_correct": 67,
+          "service_actual": 48,
+          "service_predicted": 47,
+          "service_true_positive": 15,
+          "successor_actual": 14,
+          "successor_predicted": 13,
+          "successor_exact_tick": 2,
+          "service_mismatch_steps": 57,
+          "successor_release_disagreement_steps": 22,
+          "conditional_service_matching_steps": 149,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 149,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.5774647887323944,
+          "service_event_recall": 0.3125,
+          "service_event_precision": 0.3191489361702128,
+          "successor_exact_tick_recall": 0.14285714285714285
+        },
+        "structured": {
+          "joint_correct": 31,
+          "windows": 71,
+          "sample_identity_status_correct": 41,
+          "robot_position_task_correct": 31,
+          "station_capacity_correct": 32,
+          "job_final_state_correct": 64,
+          "service_actual": 48,
+          "service_predicted": 50,
+          "service_true_positive": 9,
+          "successor_actual": 14,
+          "successor_predicted": 18,
+          "successor_exact_tick": 1,
+          "service_mismatch_steps": 71,
+          "successor_release_disagreement_steps": 29,
+          "conditional_service_matching_steps": 122,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 122,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.43661971830985913,
+          "service_event_recall": 0.1875,
+          "service_event_precision": 0.18,
+          "successor_exact_tick_recall": 0.07142857142857142
+        }
+      },
+      "coverage": {
+        "candidate_windows": 422,
+        "future_assignments": 76,
+        "external_arrival": 36,
+        "eligible": 301,
+        "selected": 71,
+        "selected_with_successor": 14,
+        "device_change": 9
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 27,
+            "total": 28
+          },
+          "workflow": {
+            "correct": 27,
+            "total": 28
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 26,
+            "total": 28
+          },
+          "workflow": {
+            "correct": 26,
+            "total": 28
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 25,
+            "total": 28
+          },
+          "workflow": {
+            "correct": 25,
+            "total": 28
+          }
+        }
+      }
+    },
+    "5": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 36,
+          "windows": 57,
+          "sample_identity_status_correct": 45,
+          "robot_position_task_correct": 36,
+          "station_capacity_correct": 41,
+          "job_final_state_correct": 55,
+          "service_actual": 50,
+          "service_predicted": 48,
+          "service_true_positive": 24,
+          "successor_actual": 11,
+          "successor_predicted": 9,
+          "successor_exact_tick": 3,
+          "service_mismatch_steps": 48,
+          "successor_release_disagreement_steps": 14,
+          "conditional_service_matching_steps": 227,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 227,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.631578947368421,
+          "service_event_recall": 0.48,
+          "service_event_precision": 0.5,
+          "successor_exact_tick_recall": 0.2727272727272727
+        },
+        "pets": {
+          "joint_correct": 26,
+          "windows": 57,
+          "sample_identity_status_correct": 35,
+          "robot_position_task_correct": 26,
+          "station_capacity_correct": 30,
+          "job_final_state_correct": 50,
+          "service_actual": 50,
+          "service_predicted": 52,
+          "service_true_positive": 14,
+          "successor_actual": 11,
+          "successor_predicted": 10,
+          "successor_exact_tick": 2,
+          "service_mismatch_steps": 65,
+          "successor_release_disagreement_steps": 17,
+          "conditional_service_matching_steps": 199,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 199,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.45614035087719296,
+          "service_event_recall": 0.28,
+          "service_event_precision": 0.2692307692307692,
+          "successor_exact_tick_recall": 0.18181818181818182
+        },
+        "structured": {
+          "joint_correct": 21,
+          "windows": 57,
+          "sample_identity_status_correct": 29,
+          "robot_position_task_correct": 21,
+          "station_capacity_correct": 27,
+          "job_final_state_correct": 48,
+          "service_actual": 50,
+          "service_predicted": 56,
+          "service_true_positive": 9,
+          "successor_actual": 11,
+          "successor_predicted": 15,
+          "successor_exact_tick": 2,
+          "service_mismatch_steps": 74,
+          "successor_release_disagreement_steps": 21,
+          "conditional_service_matching_steps": 176,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 176,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.3684210526315789,
+          "service_event_recall": 0.18,
+          "service_event_precision": 0.16071428571428573,
+          "successor_exact_tick_recall": 0.18181818181818182
+        }
+      },
+      "coverage": {
+        "candidate_windows": 410,
+        "future_assignments": 131,
+        "external_arrival": 35,
+        "eligible": 234,
+        "selected": 57,
+        "selected_with_successor": 11,
+        "device_change": 10
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 17,
+            "total": 19
+          },
+          "workflow": {
+            "correct": 17,
+            "total": 19
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 18,
+            "total": 19
+          },
+          "workflow": {
+            "correct": 18,
+            "total": 19
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 16,
+            "total": 19
+          },
+          "workflow": {
+            "correct": 16,
+            "total": 19
+          }
+        }
+      }
+    }
+  }
+}

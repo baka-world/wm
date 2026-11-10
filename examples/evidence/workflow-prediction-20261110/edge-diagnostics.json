@@ -1,0 +1,843 @@
+{
+  "scope": "synthetic deterministic engineering control; not learned-model accuracy",
+  "three_stage_steps": 16,
+  "three_stage_trajectory": [
+    {
+      "tick": 0,
+      "actions": [
+        {
+          "robot_id": "R1",
+          "sample_id": "J1::stage1"
+        }
+      ],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            1,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            1,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 1,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            2,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            2,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 2,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            3,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            3,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 3,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            4,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            4,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 4,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "in_transit",
+          0
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          "J1::stage1",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 5,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "waiting",
+          6
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "waiting",
+          6
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          null,
+          "idle"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          null,
+          "idle"
+        ]
+      ]
+    },
+    {
+      "tick": 6,
+      "actions": [
+        {
+          "robot_id": "R1",
+          "sample_id": "J1::stage2"
+        }
+      ],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            1
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 7,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 8,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            4,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            4,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 9,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "in_transit",
+          6
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          "J1::stage2",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 10,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "waiting",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "waiting",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          null,
+          "idle"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          null,
+          "idle"
+        ]
+      ]
+    },
+    {
+      "tick": 11,
+      "actions": [
+        {
+          "robot_id": "R1",
+          "sample_id": "J1::stage3"
+        }
+      ],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            3,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 12,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            4,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            4,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 13,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            2
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 14,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "in_transit",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            3
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            3
+          ],
+          "J1::stage3",
+          "to_dropoff"
+        ]
+      ]
+    },
+    {
+      "tick": 15,
+      "actions": [],
+      "predicted_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "completed",
+          11
+        ]
+      ],
+      "factual_samples": [
+        [
+          "J1::stage1",
+          "completed",
+          0
+        ],
+        [
+          "J1::stage2",
+          "completed",
+          6
+        ],
+        [
+          "J1::stage3",
+          "completed",
+          11
+        ]
+      ],
+      "predicted_robots": [
+        [
+          "R1",
+          [
+            5,
+            3
+          ],
+          null,
+          "idle"
+        ]
+      ],
+      "factual_robots": [
+        [
+          "R1",
+          [
+            5,
+            3
+          ],
+          null,
+          "idle"
+        ]
+      ]
+    }
+  ],
+  "capacity_corrections": [
+    {
+      "tick": 0,
+      "station_id": "A1",
+      "robot_id": "R2",
+      "robot_service_elapsed": null,
+      "old_service_task_id": "J2::stage1",
+      "old_service_session_active": true,
+      "new_service_task_id": null,
+      "new_service_session_active": false
+    }
+  ]
+}

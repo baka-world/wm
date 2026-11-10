@@ -1,0 +1,24 @@
+{
+  "base_pr14": "419f4a21fd462ce3ab8952b86df4675494c40aa4",
+  "evaluation_commit": "e8e46e0",
+  "post_evaluation_code_commit": "02d33aa90834f7c8ec9d5d656f600ee56b06710b",
+  "post_evaluation_note": "Added configured optional sample attributes, immutable priority check, coverage diagnostics and tests; fixed evaluation jobs did not specify these attributes. Latest commit rechecked separately.",
+  "protocol_commit": "a3b13ca",
+  "config_sha256": "c51de67293a135a3dc3281400f8e1b1ed342f4df4b343de6d94e2c6b32c8d1cc",
+  "pets_checkpoint_sha256": "3748a5b96af507c1708355b6b33c25d1ecb56813a57b8469fc9144650bf35e38",
+  "structured_checkpoint": {
+    "checkpoint_sha256": "a3f5d5c3bae54d2889b8a92414c3763998a9a139006fc01b8df6be25b234a95e",
+    "dataset_manifest_sha256": "ef95bc4e932217e18fb7a8acbd495a1ad9458f8dad9055b7b727a77f75a930c5",
+    "threshold": 0.6,
+    "best_epoch": 5
+  },
+  "map_sha256": {
+    "empty8": "42776e4904ec90689dd034fbd84524d671dc554472cc4221432b0c523d51f152",
+    "random32": "8c5a83498ab92a2579aeef91c5f42d9ecf9019ef038cf98e623061a15beb6f56"
+  },
+  "python": "Python 3.10.22",
+  "pibt_sha": "faab5b916649549f1cd563df8dbf6e4f6382f631",
+  "lacam3_sha": "1c3ecf8ade40298f16047544634e9c0c1cf3b93c",
+  "compute": "CPU only; no model training, no GPU, no paid model API",
+  "scope": "synthetic tasks, public seen maps, new audited task patterns; factual future is offline label only"
+}

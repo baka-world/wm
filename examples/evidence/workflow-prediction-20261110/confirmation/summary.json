@@ -1,0 +1,703 @@
+{
+  "scenarios": 8,
+  "independent_layout_seed_clusters": 4,
+  "methods": {
+    "nearest": {
+      "scenarios": 8,
+      "jobs": 48,
+      "jobs_completed": 48,
+      "mean_scenario_flow_completed": 44.854166666666664,
+      "mean_scenario_restricted_flow": 44.854166666666664,
+      "mean_stage_wait_per_job": 11.8125,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 48,
+          "mean_wait_assigned": 11.8125,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 27,
+          "mean_wait_assigned": 0,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 57,
+      "resource_busy_slot_ticks": 456,
+      "station_unavailable_wait_ticks": 24,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 0,
+      "model_prediction_calls": 0,
+      "model_prediction_total_wall_ms": 0.0,
+      "model_prediction_mean_wall_ms": null,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 0,
+      "decision_wall_mean_ms": 0.17201441792099442,
+      "decision_wall_p95_ms": 0.6456357000843123
+    },
+    "old_rule": {
+      "scenarios": 8,
+      "jobs": 48,
+      "jobs_completed": 48,
+      "mean_scenario_flow_completed": 43.125,
+      "mean_scenario_restricted_flow": 43.125,
+      "mean_stage_wait_per_job": 12.333333333333332,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 48,
+          "mean_wait_assigned": 10.916666666666666,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 27,
+          "mean_wait_assigned": 2.5185185185185186,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 36,
+      "resource_busy_slot_ticks": 443,
+      "station_unavailable_wait_ticks": 11,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 2520,
+      "model_prediction_calls": 2520,
+      "model_prediction_total_wall_ms": 2928.159452007094,
+      "model_prediction_mean_wall_ms": 1.1619680365107516,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 2502,
+      "decision_wall_mean_ms": 52.701101417926054,
+      "decision_wall_p95_ms": 123.37496530008139
+    },
+    "workflow_rule": {
+      "scenarios": 8,
+      "jobs": 48,
+      "jobs_completed": 48,
+      "mean_scenario_flow_completed": 42.979166666666664,
+      "mean_scenario_restricted_flow": 42.979166666666664,
+      "mean_stage_wait_per_job": 12.1875,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 48,
+          "mean_wait_assigned": 10.875,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 27,
+          "mean_wait_assigned": 2.3333333333333335,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 36,
+      "resource_busy_slot_ticks": 443,
+      "station_unavailable_wait_ticks": 11,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 2505,
+      "model_prediction_calls": 2505,
+      "model_prediction_total_wall_ms": 3373.599911997644,
+      "model_prediction_mean_wall_ms": 1.346746471855347,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 2487,
+      "decision_wall_mean_ms": 67.70584831823808,
+      "decision_wall_p95_ms": 146.0919335000881
+    },
+    "workflow_pets": {
+      "scenarios": 8,
+      "jobs": 48,
+      "jobs_completed": 48,
+      "mean_scenario_flow_completed": 43.541666666666664,
+      "mean_scenario_restricted_flow": 43.541666666666664,
+      "mean_stage_wait_per_job": 12.1875,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 48,
+          "mean_wait_assigned": 11.083333333333334,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 27,
+          "mean_wait_assigned": 1.962962962962963,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 38,
+      "resource_busy_slot_ticks": 443,
+      "station_unavailable_wait_ticks": 11,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 2535,
+      "model_prediction_calls": 2535,
+      "model_prediction_total_wall_ms": 3940.448397990167,
+      "model_prediction_mean_wall_ms": 1.5544175140000658,
+      "pets_forward_calls": 2038,
+      "structured_service_calls": 0,
+      "prediction_motion_calls": 2507,
+      "decision_wall_mean_ms": 76.80861248486232,
+      "decision_wall_p95_ms": 160.5690777498694
+    },
+    "workflow_structured": {
+      "scenarios": 8,
+      "jobs": 48,
+      "jobs_completed": 48,
+      "mean_scenario_flow_completed": 43.625,
+      "mean_scenario_restricted_flow": 43.625,
+      "mean_stage_wait_per_job": 12.208333333333332,
+      "stage_wait_by_index": {
+        "1": {
+          "assigned_count": 48,
+          "mean_wait_assigned": 10.895833333333334,
+          "released_unassigned": 0,
+          "unreleased": 0
+        },
+        "2": {
+          "assigned_count": 27,
+          "mean_wait_assigned": 2.3333333333333335,
+          "released_unassigned": 0,
+          "unreleased": 0
+        }
+      },
+      "capacity_wait_ticks": 36,
+      "resource_busy_slot_ticks": 443,
+      "station_unavailable_wait_ticks": 11,
+      "resource_violations": 0,
+      "safety_violations": 0,
+      "invalid_edge_violations": 0,
+      "locked_move_violations": 0,
+      "lifecycle_violations": 0,
+      "duplicate_assignments": 0,
+      "model_fallbacks": 0,
+      "solver_fallbacks": 0,
+      "rollout_steps": 2535,
+      "model_prediction_calls": 2535,
+      "model_prediction_total_wall_ms": 4989.271973008272,
+      "model_prediction_mean_wall_ms": 1.9681546244608568,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 2082,
+      "prediction_motion_calls": 2502,
+      "decision_wall_mean_ms": 91.21565497016762,
+      "decision_wall_p95_ms": 185.02488620001714
+    }
+  },
+  "paired": {
+    "workflow_rule_minus_old_rule": {
+      "clusters": {
+        "clusters": 4,
+        "mean": -0.09722222222222261,
+        "ci95": [
+          -0.19444444444444522,
+          0.0
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 7,
+      "scenario_losses": 0
+    },
+    "workflow_pets_minus_old_rule": {
+      "clusters": {
+        "clusters": 4,
+        "mean": 0.27777777777777796,
+        "ci95": [
+          -0.22222222222222263,
+          0.7777777777777786
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 3
+    },
+    "workflow_pets_minus_workflow_rule": {
+      "clusters": {
+        "clusters": 4,
+        "mean": 0.3750000000000006,
+        "ci95": [
+          -0.027777777777777384,
+          0.7777777777777786
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 3
+    },
+    "workflow_structured_minus_old_rule": {
+      "clusters": {
+        "clusters": 4,
+        "mean": 0.3333333333333333,
+        "ci95": [
+          -0.22222222222222263,
+          0.8888888888888893
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 3
+    },
+    "workflow_structured_minus_workflow_rule": {
+      "clusters": {
+        "clusters": 4,
+        "mean": 0.43055555555555597,
+        "ci95": [
+          -0.027777777777777384,
+          0.8888888888888893
+        ],
+        "method": "stratified bootstrap of layout/seed clusters; episodes and decision points kept together",
+        "resamples": 2000,
+        "seed": 20261109
+      },
+      "scenario_wins": 1,
+      "scenario_ties": 4,
+      "scenario_losses": 3
+    }
+  },
+  "same_state_decisions": 16,
+  "decision_contrasts": {
+    "old_transition_new_score_vs_old_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 16
+    },
+    "new_transition_old_score_vs_old_transition_old_score": {
+      "ranking_changed": 1,
+      "same_choice": 15,
+      "different_choice": 1,
+      "branch_equal": 1
+    },
+    "new_transition_new_score_vs_old_transition_old_score": {
+      "ranking_changed": 1,
+      "same_choice": 15,
+      "different_choice": 1,
+      "branch_equal": 1
+    },
+    "new_transition_new_score_vs_new_transition_old_score": {
+      "ranking_changed": 0,
+      "same_choice": 16
+    },
+    "new_transition_new_score_vs_old_transition_new_score": {
+      "ranking_changed": 1,
+      "same_choice": 15,
+      "different_choice": 1,
+      "branch_equal": 1
+    },
+    "pets_new_vs_new_transition_new_score": {
+      "ranking_changed": 3,
+      "same_choice": 16
+    },
+    "structured_new_vs_new_transition_new_score": {
+      "ranking_changed": 3,
+      "same_choice": 16
+    }
+  },
+  "actual_successors": 27,
+  "old_missing_successors": 27,
+  "old_model_successor_audit": {
+    "rule": {
+      "missed": 27,
+      "predecessor_predicted_completed": 21
+    },
+    "pets": {
+      "missed": 27,
+      "predecessor_predicted_completed": 26
+    },
+    "structured": {
+      "missed": 27,
+      "predecessor_predicted_completed": 27
+    }
+  },
+  "state_prediction": {
+    "1": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 121,
+          "windows": 137,
+          "sample_identity_status_correct": 121,
+          "robot_position_task_correct": 121,
+          "station_capacity_correct": 121,
+          "job_final_state_correct": 134,
+          "service_actual": 50,
+          "service_predicted": 42,
+          "service_true_positive": 38,
+          "successor_actual": 26,
+          "successor_predicted": 21,
+          "successor_exact_tick": 20,
+          "service_mismatch_steps": 16,
+          "successor_release_disagreement_steps": 7,
+          "conditional_service_matching_steps": 121,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 121,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.8832116788321168,
+          "service_event_recall": 0.76,
+          "service_event_precision": 0.9047619047619048,
+          "successor_exact_tick_recall": 0.7692307692307693
+        },
+        "pets": {
+          "joint_correct": 116,
+          "windows": 137,
+          "sample_identity_status_correct": 116,
+          "robot_position_task_correct": 116,
+          "station_capacity_correct": 116,
+          "job_final_state_correct": 128,
+          "service_actual": 50,
+          "service_predicted": 53,
+          "service_true_positive": 40,
+          "successor_actual": 26,
+          "successor_predicted": 29,
+          "successor_exact_tick": 26,
+          "service_mismatch_steps": 21,
+          "successor_release_disagreement_steps": 3,
+          "conditional_service_matching_steps": 116,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 116,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.8467153284671532,
+          "service_event_recall": 0.8,
+          "service_event_precision": 0.7547169811320755,
+          "successor_exact_tick_recall": 1.0
+        },
+        "structured": {
+          "joint_correct": 104,
+          "windows": 137,
+          "sample_identity_status_correct": 104,
+          "robot_position_task_correct": 104,
+          "station_capacity_correct": 104,
+          "job_final_state_correct": 120,
+          "service_actual": 50,
+          "service_predicted": 58,
+          "service_true_positive": 36,
+          "successor_actual": 26,
+          "successor_predicted": 31,
+          "successor_exact_tick": 26,
+          "service_mismatch_steps": 33,
+          "successor_release_disagreement_steps": 5,
+          "conditional_service_matching_steps": 104,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 104,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.7591240875912408,
+          "service_event_recall": 0.72,
+          "service_event_precision": 0.6206896551724138,
+          "successor_exact_tick_recall": 1.0
+        }
+      },
+      "coverage": {
+        "candidate_windows": 614,
+        "eligible": 578,
+        "selected": 137,
+        "selected_with_successor": 26,
+        "external_arrival": 32,
+        "device_change": 4
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 78,
+            "total": 86
+          },
+          "workflow": {
+            "correct": 78,
+            "total": 86
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 73,
+            "total": 86
+          },
+          "workflow": {
+            "correct": 73,
+            "total": 86
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 71,
+            "total": 86
+          },
+          "workflow": {
+            "correct": 71,
+            "total": 86
+          }
+        }
+      }
+    },
+    "3": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 72,
+          "windows": 103,
+          "sample_identity_status_correct": 85,
+          "robot_position_task_correct": 72,
+          "station_capacity_correct": 76,
+          "job_final_state_correct": 98,
+          "service_actual": 67,
+          "service_predicted": 60,
+          "service_true_positive": 36,
+          "successor_actual": 20,
+          "successor_predicted": 15,
+          "successor_exact_tick": 9,
+          "service_mismatch_steps": 53,
+          "successor_release_disagreement_steps": 17,
+          "conditional_service_matching_steps": 251,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 251,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.6990291262135923,
+          "service_event_recall": 0.5373134328358209,
+          "service_event_precision": 0.6,
+          "successor_exact_tick_recall": 0.45
+        },
+        "pets": {
+          "joint_correct": 49,
+          "windows": 103,
+          "sample_identity_status_correct": 67,
+          "robot_position_task_correct": 49,
+          "station_capacity_correct": 53,
+          "job_final_state_correct": 94,
+          "service_actual": 67,
+          "service_predicted": 67,
+          "service_true_positive": 18,
+          "successor_actual": 20,
+          "successor_predicted": 22,
+          "successor_exact_tick": 4,
+          "service_mismatch_steps": 91,
+          "successor_release_disagreement_steps": 33,
+          "conditional_service_matching_steps": 193,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 193,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.47572815533980584,
+          "service_event_recall": 0.26865671641791045,
+          "service_event_precision": 0.26865671641791045,
+          "successor_exact_tick_recall": 0.2
+        },
+        "structured": {
+          "joint_correct": 34,
+          "windows": 103,
+          "sample_identity_status_correct": 47,
+          "robot_position_task_correct": 34,
+          "station_capacity_correct": 35,
+          "job_final_state_correct": 88,
+          "service_actual": 67,
+          "service_predicted": 70,
+          "service_true_positive": 7,
+          "successor_actual": 20,
+          "successor_predicted": 28,
+          "successor_exact_tick": 0,
+          "service_mismatch_steps": 114,
+          "successor_release_disagreement_steps": 48,
+          "conditional_service_matching_steps": 151,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 151,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.3300970873786408,
+          "service_event_recall": 0.1044776119402985,
+          "service_event_precision": 0.1,
+          "successor_exact_tick_recall": 0.0
+        }
+      },
+      "coverage": {
+        "candidate_windows": 598,
+        "future_assignments": 113,
+        "external_arrival": 48,
+        "eligible": 429,
+        "selected": 103,
+        "selected_with_successor": 20,
+        "device_change": 8
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 45,
+            "total": 50
+          },
+          "workflow": {
+            "correct": 45,
+            "total": 50
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 36,
+            "total": 50
+          },
+          "workflow": {
+            "correct": 36,
+            "total": 50
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 34,
+            "total": 50
+          },
+          "workflow": {
+            "correct": 34,
+            "total": 50
+          }
+        }
+      }
+    },
+    "5": {
+      "dynamic": {
+        "rule": {
+          "joint_correct": 55,
+          "windows": 83,
+          "sample_identity_status_correct": 67,
+          "robot_position_task_correct": 55,
+          "station_capacity_correct": 64,
+          "job_final_state_correct": 79,
+          "service_actual": 75,
+          "service_predicted": 67,
+          "service_true_positive": 43,
+          "successor_actual": 17,
+          "successor_predicted": 13,
+          "successor_exact_tick": 8,
+          "service_mismatch_steps": 55,
+          "successor_release_disagreement_steps": 14,
+          "conditional_service_matching_steps": 336,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 336,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.6626506024096386,
+          "service_event_recall": 0.5733333333333334,
+          "service_event_precision": 0.6417910447761194,
+          "successor_exact_tick_recall": 0.47058823529411764
+        },
+        "pets": {
+          "joint_correct": 32,
+          "windows": 83,
+          "sample_identity_status_correct": 57,
+          "robot_position_task_correct": 32,
+          "station_capacity_correct": 44,
+          "job_final_state_correct": 76,
+          "service_actual": 75,
+          "service_predicted": 80,
+          "service_true_positive": 17,
+          "successor_actual": 17,
+          "successor_predicted": 18,
+          "successor_exact_tick": 5,
+          "service_mismatch_steps": 117,
+          "successor_release_disagreement_steps": 25,
+          "conditional_service_matching_steps": 243,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 243,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.3855421686746988,
+          "service_event_recall": 0.22666666666666666,
+          "service_event_precision": 0.2125,
+          "successor_exact_tick_recall": 0.29411764705882354
+        },
+        "structured": {
+          "joint_correct": 23,
+          "windows": 83,
+          "sample_identity_status_correct": 45,
+          "robot_position_task_correct": 23,
+          "station_capacity_correct": 33,
+          "job_final_state_correct": 71,
+          "service_actual": 75,
+          "service_predicted": 88,
+          "service_true_positive": 5,
+          "successor_actual": 17,
+          "successor_predicted": 24,
+          "successor_exact_tick": 0,
+          "service_mismatch_steps": 135,
+          "successor_release_disagreement_steps": 41,
+          "conditional_service_matching_steps": 205,
+          "conditional_release_logic_errors": 0,
+          "conditional_resource_checks": 205,
+          "conditional_resource_errors": 0,
+          "joint_accuracy": 0.27710843373493976,
+          "service_event_recall": 0.06666666666666667,
+          "service_event_precision": 0.056818181818181816,
+          "successor_exact_tick_recall": 0.0
+        }
+      },
+      "coverage": {
+        "candidate_windows": 582,
+        "future_assignments": 189,
+        "external_arrival": 42,
+        "eligible": 340,
+        "selected": 83,
+        "selected_with_successor": 17,
+        "device_change": 11
+      },
+      "fixed_entity": {
+        "rule": {
+          "legacy": {
+            "correct": 28,
+            "total": 34
+          },
+          "workflow": {
+            "correct": 28,
+            "total": 34
+          }
+        },
+        "pets": {
+          "legacy": {
+            "correct": 22,
+            "total": 34
+          },
+          "workflow": {
+            "correct": 22,
+            "total": 34
+          }
+        },
+        "structured": {
+          "legacy": {
+            "correct": 20,
+            "total": 34
+          },
+          "workflow": {
+            "correct": 20,
+            "total": 34
+          }
+        }
+      }
+    }
+  }
+}

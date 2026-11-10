@@ -1,0 +1,340 @@
+{
+  "profile": "development",
+  "counts": {
+    "decision_states": 12,
+    "score_primary_shift_constant_across_candidates": 12,
+    "score_primary_shift_varies_across_candidates": 0,
+    "new_transition_changes_any_candidate_score": 0
+  },
+  "states": [
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "single_compatible",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        29,
+        30.333333333333332,
+        27.333333333333332,
+        34.833333333333336
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "single_compatible",
+      "tick": 16,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        30.333333333333332,
+        30.833333333333332,
+        30.833333333333332
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        35.5,
+        35.5,
+        34.666666666666664,
+        39.5
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_serial",
+      "tick": 20,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        35.666666666666664,
+        35.5,
+        35.5
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        48.166666666666664,
+        49,
+        41.666666666666664,
+        43.166666666666664
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_outage",
+      "tick": 33,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        49,
+        49,
+        49.333333333333336
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "single_compatible",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        40.166666666666664,
+        45.333333333333336,
+        41.833333333333336,
+        43.333333333333336
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "single_compatible",
+      "tick": 19,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        40.166666666666664,
+        41.166666666666664,
+        41.5
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        21.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        51.833333333333336,
+        52.666666666666664,
+        55.666666666666664,
+        54.166666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_serial",
+      "tick": 22,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        22.5,
+        22.5,
+        22.5,
+        22.5
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 1,
+        "old_transition_new_score": 1,
+        "new_transition_old_score": 1,
+        "new_transition_new_score": 1,
+        "pets_new": 1,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        51.833333333333336,
+        52,
+        52.666666666666664,
+        51.166666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        21.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        63.333333333333336,
+        64,
+        64.83333333333333,
+        62.666666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_outage",
+      "tick": 31,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        22.5,
+        22.5,
+        22.5,
+        22.5
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 1,
+        "old_transition_new_score": 1,
+        "new_transition_old_score": 1,
+        "new_transition_new_score": 1,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        63.333333333333336,
+        60.833333333333336,
+        62.833333333333336,
+        60.5
+      ]
+    }
+  ],
+  "note": "decision states are nested within scenarios and are not independent statistical samples"
+}

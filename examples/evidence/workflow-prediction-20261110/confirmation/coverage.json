@@ -1,0 +1,307 @@
+{
+  "profile": "confirmation",
+  "scope": "window counts overlap; not independent samples",
+  "totals": {
+    "1": {
+      "candidate_windows": 614,
+      "eligible": 578,
+      "eligible_active_multistage": 461,
+      "eligible_with_successor": 26,
+      "selected": 137,
+      "selected_active_multistage": 113,
+      "selected_with_successor": 26
+    },
+    "3": {
+      "candidate_windows": 598,
+      "eligible": 429,
+      "eligible_active_multistage": 336,
+      "eligible_with_successor": 20,
+      "selected": 103,
+      "selected_active_multistage": 85,
+      "selected_with_successor": 20
+    },
+    "5": {
+      "candidate_windows": 582,
+      "eligible": 340,
+      "eligible_active_multistage": 261,
+      "eligible_with_successor": 17,
+      "selected": 83,
+      "selected_active_multistage": 67,
+      "selected_with_successor": 17
+    }
+  },
+  "scenarios": [
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_serial",
+      "horizons": {
+        "1": {
+          "candidate_windows": 63,
+          "eligible": 59,
+          "eligible_active_multistage": 59,
+          "eligible_with_successor": 5,
+          "selected": 15,
+          "selected_active_multistage": 15,
+          "selected_with_successor": 5
+        },
+        "3": {
+          "candidate_windows": 61,
+          "eligible": 38,
+          "eligible_active_multistage": 38,
+          "eligible_with_successor": 3,
+          "selected": 11,
+          "selected_active_multistage": 11,
+          "selected_with_successor": 3
+        },
+        "5": {
+          "candidate_windows": 59,
+          "eligible": 26,
+          "eligible_active_multistage": 26,
+          "eligible_with_successor": 3,
+          "selected": 7,
+          "selected_active_multistage": 7,
+          "selected_with_successor": 3
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_parallel",
+      "horizons": {
+        "1": {
+          "candidate_windows": 55,
+          "eligible": 51,
+          "eligible_active_multistage": 51,
+          "eligible_with_successor": 5,
+          "selected": 12,
+          "selected_active_multistage": 12,
+          "selected_with_successor": 5
+        },
+        "3": {
+          "candidate_windows": 53,
+          "eligible": 30,
+          "eligible_active_multistage": 30,
+          "eligible_with_successor": 2,
+          "selected": 7,
+          "selected_active_multistage": 7,
+          "selected_with_successor": 2
+        },
+        "5": {
+          "candidate_windows": 51,
+          "eligible": 20,
+          "eligible_active_multistage": 20,
+          "eligible_with_successor": 2,
+          "selected": 7,
+          "selected_active_multistage": 7,
+          "selected_with_successor": 2
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_outage",
+      "horizons": {
+        "1": {
+          "candidate_windows": 72,
+          "eligible": 66,
+          "eligible_active_multistage": 66,
+          "eligible_with_successor": 4,
+          "selected": 18,
+          "selected_active_multistage": 18,
+          "selected_with_successor": 4
+        },
+        "3": {
+          "candidate_windows": 70,
+          "eligible": 44,
+          "eligible_active_multistage": 44,
+          "eligible_with_successor": 3,
+          "selected": 11,
+          "selected_active_multistage": 11,
+          "selected_with_successor": 3
+        },
+        "5": {
+          "candidate_windows": 68,
+          "eligible": 30,
+          "eligible_active_multistage": 30,
+          "eligible_with_successor": 3,
+          "selected": 9,
+          "selected_active_multistage": 9,
+          "selected_with_successor": 3
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 71004,
+      "regime": "single_compatible",
+      "horizons": {
+        "1": {
+          "candidate_windows": 53,
+          "eligible": 49,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 10,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        },
+        "3": {
+          "candidate_windows": 51,
+          "eligible": 37,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 8,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        },
+        "5": {
+          "candidate_windows": 49,
+          "eligible": 29,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 6,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_serial",
+      "horizons": {
+        "1": {
+          "candidate_windows": 106,
+          "eligible": 102,
+          "eligible_active_multistage": 102,
+          "eligible_with_successor": 4,
+          "selected": 25,
+          "selected_active_multistage": 25,
+          "selected_with_successor": 4
+        },
+        "3": {
+          "candidate_windows": 104,
+          "eligible": 83,
+          "eligible_active_multistage": 83,
+          "eligible_with_successor": 4,
+          "selected": 20,
+          "selected_active_multistage": 20,
+          "selected_with_successor": 4
+        },
+        "5": {
+          "candidate_windows": 102,
+          "eligible": 70,
+          "eligible_active_multistage": 70,
+          "eligible_with_successor": 4,
+          "selected": 17,
+          "selected_active_multistage": 17,
+          "selected_with_successor": 4
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_parallel",
+      "horizons": {
+        "1": {
+          "candidate_windows": 90,
+          "eligible": 86,
+          "eligible_active_multistage": 86,
+          "eligible_with_successor": 4,
+          "selected": 20,
+          "selected_active_multistage": 20,
+          "selected_with_successor": 4
+        },
+        "3": {
+          "candidate_windows": 88,
+          "eligible": 67,
+          "eligible_active_multistage": 67,
+          "eligible_with_successor": 4,
+          "selected": 17,
+          "selected_active_multistage": 17,
+          "selected_with_successor": 4
+        },
+        "5": {
+          "candidate_windows": 86,
+          "eligible": 54,
+          "eligible_active_multistage": 54,
+          "eligible_with_successor": 3,
+          "selected": 13,
+          "selected_active_multistage": 13,
+          "selected_with_successor": 3
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_outage",
+      "horizons": {
+        "1": {
+          "candidate_windows": 103,
+          "eligible": 97,
+          "eligible_active_multistage": 97,
+          "eligible_with_successor": 4,
+          "selected": 23,
+          "selected_active_multistage": 23,
+          "selected_with_successor": 4
+        },
+        "3": {
+          "candidate_windows": 101,
+          "eligible": 74,
+          "eligible_active_multistage": 74,
+          "eligible_with_successor": 4,
+          "selected": 19,
+          "selected_active_multistage": 19,
+          "selected_with_successor": 4
+        },
+        "5": {
+          "candidate_windows": 99,
+          "eligible": 61,
+          "eligible_active_multistage": 61,
+          "eligible_with_successor": 2,
+          "selected": 14,
+          "selected_active_multistage": 14,
+          "selected_with_successor": 2
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 71001,
+      "regime": "single_compatible",
+      "horizons": {
+        "1": {
+          "candidate_windows": 72,
+          "eligible": 68,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 14,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        },
+        "3": {
+          "candidate_windows": 70,
+          "eligible": 56,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 10,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        },
+        "5": {
+          "candidate_windows": 68,
+          "eligible": 50,
+          "eligible_active_multistage": 0,
+          "eligible_with_successor": 0,
+          "selected": 10,
+          "selected_active_multistage": 0,
+          "selected_with_successor": 0
+        }
+      }
+    }
+  ]
+}

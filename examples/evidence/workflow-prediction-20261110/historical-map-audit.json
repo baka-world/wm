@@ -1,0 +1,8 @@
+{
+  "unique_layout_job_patterns": 28,
+  "cross_seed_duplicates": 0,
+  "previous_source_hash_overlap": 0,
+  "planner_seed": 20261109,
+  "planner_seed_equals_environment": false,
+  "old_pr8_pr11_note": "PR #8–#11 used hospital/clinic maps; these exact benchmark maps differ."
+}

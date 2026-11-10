@@ -1,0 +1,471 @@
+{
+  "config_sha256": "c51de67293a135a3dc3281400f8e1b1ed342f4df4b343de6d94e2c6b32c8d1cc",
+  "historic_scene_entries_checked": 56,
+  "scenes": [
+    {
+      "profile": "development",
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "single_compatible",
+      "signature": [
+        [
+          "single_0",
+          0
+        ],
+        [
+          "single_1",
+          0
+        ],
+        [
+          "single_1",
+          2
+        ],
+        [
+          "single_0",
+          4
+        ],
+        [
+          "single_0",
+          6
+        ],
+        [
+          "single_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "development",
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_serial",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_1",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "two_stage_1",
+          6
+        ],
+        [
+          "single_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "development",
+      "layout": "empty8",
+      "seed": 61000,
+      "regime": "workflow_outage",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_1",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "two_stage_1",
+          6
+        ],
+        [
+          "single_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "development",
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "single_compatible",
+      "signature": [
+        [
+          "single_0",
+          0
+        ],
+        [
+          "single_1",
+          0
+        ],
+        [
+          "single_1",
+          2
+        ],
+        [
+          "single_0",
+          4
+        ],
+        [
+          "single_0",
+          6
+        ],
+        [
+          "single_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "development",
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_serial",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "two_stage_0",
+          6
+        ],
+        [
+          "single_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "development",
+      "layout": "random32",
+      "seed": 62000,
+      "regime": "workflow_outage",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "two_stage_0",
+          6
+        ],
+        [
+          "single_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": true
+    },
+    {
+      "profile": "confirmation",
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_serial",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "two_stage_1",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "single_0",
+          6
+        ],
+        [
+          "two_stage_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_parallel",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "two_stage_1",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "single_0",
+          6
+        ],
+        [
+          "two_stage_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_outage",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "two_stage_1",
+          2
+        ],
+        [
+          "two_stage_1",
+          4
+        ],
+        [
+          "single_0",
+          6
+        ],
+        [
+          "two_stage_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "empty8",
+      "seed": 71004,
+      "regime": "single_compatible",
+      "signature": [
+        [
+          "single_0",
+          0
+        ],
+        [
+          "single_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "single_1",
+          4
+        ],
+        [
+          "single_1",
+          6
+        ],
+        [
+          "single_1",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_serial",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "two_stage_0",
+          4
+        ],
+        [
+          "single_1",
+          6
+        ],
+        [
+          "two_stage_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_parallel",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "two_stage_0",
+          4
+        ],
+        [
+          "single_1",
+          6
+        ],
+        [
+          "two_stage_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_outage",
+      "signature": [
+        [
+          "two_stage_0",
+          0
+        ],
+        [
+          "two_stage_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "two_stage_0",
+          4
+        ],
+        [
+          "single_1",
+          6
+        ],
+        [
+          "two_stage_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    },
+    {
+      "profile": "confirmation",
+      "layout": "random32",
+      "seed": 71001,
+      "regime": "single_compatible",
+      "signature": [
+        [
+          "single_0",
+          0
+        ],
+        [
+          "single_1",
+          0
+        ],
+        [
+          "single_0",
+          2
+        ],
+        [
+          "single_0",
+          4
+        ],
+        [
+          "single_1",
+          6
+        ],
+        [
+          "single_0",
+          8
+        ]
+      ],
+      "overlaps_pr12_history": false
+    }
+  ],
+  "confirmation_cross_seed_task_overlap_with_pr12": 0,
+  "map_note": "both public maps were used before; this is new workload/seed confirmation, not unseen-map validation",
+  "prior_pr8_pr11_note": "PR12 benchmark audit records these map hashes differ from PR8–11 hospital/clinic source maps"
+}

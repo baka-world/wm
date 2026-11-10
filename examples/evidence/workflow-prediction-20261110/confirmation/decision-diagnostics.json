@@ -1,0 +1,444 @@
+{
+  "profile": "confirmation",
+  "counts": {
+    "decision_states": 16,
+    "score_primary_shift_constant_across_candidates": 16,
+    "score_primary_shift_varies_across_candidates": 0,
+    "new_transition_changes_any_candidate_score": 1
+  },
+  "states": [
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        36.833333333333336,
+        36.5,
+        36.5,
+        40.5
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_serial",
+      "tick": 20,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        28.5,
+        28.5,
+        28.5
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 1,
+        "old_transition_new_score": 1,
+        "new_transition_old_score": 1,
+        "new_transition_new_score": 1,
+        "pets_new": 1,
+        "structured_new": 1
+      },
+      "counterfactual_restricted_mean_flows": [
+        36.333333333333336,
+        37.5,
+        36.5
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        34.666666666666664,
+        36.333333333333336,
+        35.833333333333336,
+        39.333333333333336
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_parallel",
+      "tick": 20,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        35.5,
+        35.5,
+        35.5
+      ],
+      "new_transition_changes_any_score": true,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 2,
+        "new_transition_new_score": 2,
+        "pets_new": 2,
+        "structured_new": 2
+      },
+      "counterfactual_restricted_mean_flows": [
+        34.666666666666664,
+        35.166666666666664,
+        34.666666666666664
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        49.5,
+        49.833333333333336,
+        42.166666666666664,
+        42.833333333333336
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71003,
+      "regime": "workflow_outage",
+      "tick": 33,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        28.5,
+        28.5,
+        28.5
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 1,
+        "old_transition_new_score": 1,
+        "new_transition_old_score": 1,
+        "new_transition_new_score": 1,
+        "pets_new": 1,
+        "structured_new": 1
+      },
+      "counterfactual_restricted_mean_flows": [
+        49.666666666666664,
+        50.5,
+        49.833333333333336
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71004,
+      "regime": "single_compatible",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        29.333333333333332,
+        30.166666666666668,
+        30.5,
+        33.833333333333336
+      ]
+    },
+    {
+      "layout": "empty8",
+      "seed": 71004,
+      "regime": "single_compatible",
+      "tick": 15,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        29.833333333333332,
+        29.833333333333332,
+        30.166666666666668
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        21.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        57.833333333333336,
+        52.833333333333336,
+        53.666666666666664,
+        55.666666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_serial",
+      "tick": 29,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        29.0,
+        29.0,
+        29.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        57.833333333333336,
+        53.166666666666664,
+        53.333333333333336
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        21.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        49.5,
+        51.333333333333336,
+        52.833333333333336,
+        55.666666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_parallel",
+      "tick": 27,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        27.0,
+        27.0,
+        27.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        49.5,
+        50.833333333333336,
+        50.666666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        21.0,
+        21.0,
+        21.0,
+        21.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        61.166666666666664,
+        62.166666666666664,
+        60.666666666666664,
+        60.666666666666664
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 72007,
+      "regime": "workflow_outage",
+      "tick": 38,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        27.0,
+        27.0,
+        27.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        61.166666666666664,
+        62,
+        62
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 71001,
+      "regime": "single_compatible",
+      "tick": 0,
+      "candidate_count": 4,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        39.166666666666664,
+        42.833333333333336,
+        39.166666666666664,
+        42
+      ]
+    },
+    {
+      "layout": "random32",
+      "seed": 71001,
+      "regime": "single_compatible",
+      "tick": 21,
+      "candidate_count": 3,
+      "scoring_primary_deltas": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_transition_changes_any_score": false,
+      "choices": {
+        "old_transition_old_score": 0,
+        "old_transition_new_score": 0,
+        "new_transition_old_score": 0,
+        "new_transition_new_score": 0,
+        "pets_new": 0,
+        "structured_new": 0
+      },
+      "counterfactual_restricted_mean_flows": [
+        39.166666666666664,
+        38.833333333333336,
+        38.833333333333336
+      ]
+    }
+  ],
+  "note": "decision states are nested within scenarios and are not independent statistical samples"
+}

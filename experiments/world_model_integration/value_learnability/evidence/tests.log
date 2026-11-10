@@ -1,0 +1,9 @@
+test_group_centered_fit_recover_ordering (test_protocol.Tests) ... ok
+test_groups_and_zero_old_seeds (test_protocol.Tests) ... ok
+test_public_feature_does_not_consult_simulator (test_protocol.Tests) ... ok
+test_validation_selection_accepts_integer_ridge_alpha_keys (test_protocol.Tests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+OK

@@ -1,0 +1,13 @@
+{
+  "protocol_sha256": "0726627fb0a18a906acc84bb51d8bb5e2e8ae4811159572349548c66f4ce4cbc",
+  "v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "environment": {
+    "python": "3.10.22",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cpu",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39"
+  },
+  "initial_head": "e2447fd3e7c2ada069c151e604f072ab149a43cb",
+  "mode": "full",
+  "cpu_only": true
+}

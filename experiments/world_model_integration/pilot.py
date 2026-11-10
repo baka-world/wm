@@ -119,7 +119,7 @@ def run(output: Path):
                     "prediction_seconds": policy.prediction_wall_seconds,
                     "wall_seconds": time.perf_counter()-start,
                     "fallbacks": policy.fallbacks,
-                    "particle_spreads": [r["cost_distribution"] for r in records],
+                    "particle_spreads": [r.get("cost_distribution") for r in records],
                 }
         sampled.append({"tick": observation.tick,
                         "candidates": [[asdict(a) for a in plan] for plan in plans],

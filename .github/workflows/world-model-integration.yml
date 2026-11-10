@@ -35,6 +35,11 @@ jobs:
           timeout 120s python -m experiments.world_model_integration.build_dataset --output "$RUNNER_TEMP/session-dataset.json" 2>&1 | tee "$RUNNER_TEMP/session-dataset.log"
           timeout 210s python -m lab_transport.business_state_learning --dataset "$RUNNER_TEMP/session-dataset.json" --checkpoint "$RUNNER_TEMP/session-v2.pt" --seed 1810 --epochs 10 --seconds 180 2>&1 | tee "$RUNNER_TEMP/session-training.log"
           python -c 'import hashlib,os; p=os.environ["RUNNER_TEMP"]+"/session-v2.pt"; print("SESSION_CHECKPOINT_SHA256",hashlib.sha256(open(p,"rb").read()).hexdigest())' | tee "$RUNNER_TEMP/session-checkpoint-sha.log"
+      - name: Compare same factual service events against old models
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s python -m experiments.world_model_integration.compare_event_models --checkpoint "$RUNNER_TEMP/session-v2.pt" --dataset "$RUNNER_TEMP/session-dataset.json" --output "$RUNNER_TEMP/session-event-comparison.json" 2>&1 | tee "$RUNNER_TEMP/session-event-comparison.log"
       - name: Test new scoring and state-model contracts
         shell: bash
         run: |
@@ -55,6 +60,11 @@ jobs:
         run: |
           set -euo pipefail
           timeout 900s python -m experiments.world_model_integration.confirmation --output "$RUNNER_TEMP/decision-confirmation.json" 2>&1 | tee "$RUNNER_TEMP/decision-confirmation.log"
+      - name: Run frozen six-arm business confirmation with experimental F
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 900s python -m experiments.world_model_integration.session_confirmation --checkpoint "$RUNNER_TEMP/session-v2.pt" --output "$RUNNER_TEMP/session-confirmation.json" 2>&1 | tee "$RUNNER_TEMP/session-confirmation.log"
       - name: Preserve raw decision and test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,5 +82,9 @@ jobs:
             ${{ runner.temp }}/session-training.log
             ${{ runner.temp }}/session-checkpoint-sha.log
             ${{ runner.temp }}/session-v2.pt
+            ${{ runner.temp }}/session-event-comparison.json
+            ${{ runner.temp }}/session-event-comparison.log
+            ${{ runner.temp }}/session-confirmation.json
+            ${{ runner.temp }}/session-confirmation.log
           if-no-files-found: warn
           retention-days: 60

@@ -53,8 +53,40 @@ class BusinessPolicy:
             return plans or ((),)
         return self.solver.proposals(observation,candidates)
 
+    def _evaluate_legacy(self,observation,plans):
+        """Frozen PR15/16 behavior, including their original log schema."""
+        records=[]
+        for plan in plans:
+            outcomes=[];components=[]
+            for particle in range(self.particles):
+                self.model.reset_seed(self.seed+observation.tick*1009+particle)
+                state=observation;trace=[]
+                for step in range(self.horizon):
+                    actions=plan if step==0 else nearest_batch(state,candidates_for(state),self.geometry)
+                    started=time.perf_counter()
+                    try:
+                        nxt=self.model.predict_next(state,actions)
+                    finally:
+                        self.prediction_calls+=1;self.prediction_wall_seconds+=time.perf_counter()-started
+                    if self.workflow_prediction:check_business_transition(state,nxt,self.geometry,self.rules,actions)
+                    else:check_transition(state,nxt,self.geometry)
+                    self.rollout_steps+=1;trace.append(nxt);state=nxt
+                if self.scoring=='workflow':
+                    c=workflow_components(observation,trace,self.geometry,self.rules)
+                    outcomes.append(score_components(c));components.append(c)
+                else:
+                    outcomes.append(workload_score(observation,trace,self.geometry))
+            score=tuple(sum(row[i] for row in outcomes)/len(outcomes) for i in range(3))
+            record={'assignments':[{'robot_id':a.robot_id,'sample_id':a.sample_id} for a in plan],
+                    'score':score}
+            if self.scoring=='workflow':record['components']=components
+            records.append(record)
+        return records
+
     def evaluate(self,observation,plans):
         """Candidate forecasts are independent; no simulator future is consulted."""
+        if self.scoring!='workflow_model':
+            return self._evaluate_legacy(observation,plans)
         records=[]
         started_batch=time.perf_counter()
         for index,plan in enumerate(plans):
@@ -126,21 +158,27 @@ class BusinessPolicy:
             else:
                 records=self.evaluate(obs,plans)
                 choice=min(range(len(plans)),key=lambda i:(records[i]['score'],i))
-                for i,record in enumerate(records):
-                    record['selected']=i==choice
-                    record['selection_reason']=('minimum_expected_business_cost' if i==choice else
-                        'higher_expected_business_cost_or_lexicographic_tie')
+                if self.scoring=='workflow_model':
+                    for i,record in enumerate(records):
+                        record['selected']=i==choice
+                        record['selection_reason']=('minimum_expected_business_cost' if i==choice else
+                            'higher_expected_business_cost_or_lexicographic_tie')
         except (ValueError,RuntimeError,TypeError,KeyError,StopIteration,OverflowError,TimeoutError) as exc:
-            self.fallbacks+=1;reason=type(exc).__name__+':'+str(exc)[:120];choice=0
+            self.fallbacks+=1
+            reason=(type(exc).__name__+':'+str(exc)[:120]
+                    if self.scoring=='workflow_model' else type(exc).__name__)
+            choice=0
         after=getattr(getattr(self.model,'distribution',None),'forward_calls',0)
-        self.log.append({'tick':obs.tick,'candidate_count':len(candidates),'plans':records,
+        entry={'tick':obs.tick,'candidate_count':len(candidates),'plans':records,
             'selected':[{'robot_id':a.robot_id,'sample_id':a.sample_id} for a in plans[choice]],
-            'fallback':reason,'selected_candidate_index':choice,
-            'horizon':self.horizon,'particles':self.particles,'scoring':self.scoring,
-            'prediction_wall_seconds':self.prediction_wall_seconds,
-            'model_forward_calls':after-before,
+            'fallback':reason,'model_forward_calls':after-before,
             'structured_service_calls':getattr(getattr(self.model,'model',None),'service_calls',0)-service_before,
-            'wall_seconds':time.perf_counter()-started})
+            'wall_seconds':time.perf_counter()-started}
+        if self.scoring=='workflow_model':
+            entry.update(selected_candidate_index=choice,horizon=self.horizon,
+                         particles=self.particles,scoring=self.scoring,
+                         prediction_wall_seconds=self.prediction_wall_seconds)
+        self.log.append(entry)
         return plans[choice]
 
 

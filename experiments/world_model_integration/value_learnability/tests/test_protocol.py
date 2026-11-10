@@ -43,4 +43,28 @@ class Tests(unittest.TestCase):
         p=exp.model_predict(groups[0],m)
         self.assertEqual(exp.score_order(p),[0,1,2])
 
+    def test_validation_selection_accepts_integer_ridge_alpha_keys(self):
+        # Mixed JSON alpha keys (0.0, 1, 10, 100) must not be reconstructed as 1.0.
+        groups=[]
+        for group_index in range(3):
+            rows=[]
+            for candidate in range(2):
+                x=[0.]*len(exp.BASE_KEYS)
+                x[exp.BASE_KEYS.index('sum_approach')]=float(candidate)
+                rows.append({'base_features':x,'label_centered':float(candidate)-.5,
+                    'rule_rollout':[float(candidate)]*5,'v4_rollout':[float(candidate)]*5,
+                    'full_future':{'mean':float(candidate+1)},
+                    'heuristic_score':float(candidate),
+                    'rule_score':[float(candidate),0.,0.],
+                    'v4_score':[float(candidate),0.,0.]})
+            groups.append({'seed':group_index,'layout':0,'candidate_count':2,
+                'oracle_cost_spread':1.,'resource_contested':False,
+                'spec':{'workflow_depth':'multiple'},'v4_effective_queries':0,
+                'model_cpu_seconds':{'Rule':0.,'V4':0.},
+                'base_feature_cpu_seconds':0.,'rows':rows})
+        models,tuning=exp.select_models(groups,groups,{'ridge_alphas':[1,10,100]})
+        self.assertEqual(set(models),{'current','rule','v4'})
+        self.assertIn(tuning['current']['selected_alpha'],(0.,1.,10.,100.))
+        self.assertIn('1',tuning['current']['candidates'])
+
 if __name__=='__main__':unittest.main()

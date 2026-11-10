@@ -289,8 +289,9 @@ def select_models(train,validation,p):
             metric=validated['summary'][name]
             candidates[str(a)]={'mean_regret':metric['mean_regret'],'gap_mae':metric['relative_gap_mae'],
                                 'cpu_fit_seconds':m['cpu_fit_seconds']}
-        selected=min((float(a) for a in candidates),key=lambda a:(candidates[str(a)]['mean_regret'],
-            candidates[str(a)]['gap_mae'] if candidates[str(a)]['gap_mae'] is not None else float('inf'),a))
+        selected_key=min(candidates,key=lambda key:(candidates[key]['mean_regret'],
+            candidates[key]['gap_mae'] if candidates[key]['gap_mae'] is not None else float('inf'),float(key)))
+        selected=float(selected_key)
         models[variant]=fit(train,variant,selected)
         tuning[variant]={'candidates':candidates,'selected_alpha':selected}
     return models,tuning

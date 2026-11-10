@@ -69,6 +69,8 @@
 
 可复现的完整原始 JSON 以 `experiments/world_model_integration/decision_sensitivity/evidence/v4-decision-sensitivity-replay.json.gz` 归档（解压为 JSON）；摘要为同目录 `v4-decision-sensitivity-summary.json`，原始调度归档、`provenance.json`、CPU 日志及自动测试日志均在该目录。权重仍从历史训练归档读取，不复制或改写。原始完整 JSON SHA-256：`fc7aa63eff18c9f33d14201f81d0a280c3687335770d98d6079e55ff50f68d36`。
 
+**执行边界与非预期 CI 说明：** 专门的冻结重放工作流 #42851381047、#42853051044 仅使用 CPU 推理、规则预测、纯数据后处理和单元测试，**未调用模型训练**。但第一次新增工作流的提交 `9f120d2c143c34dca9ca1d61e74e819d1ff66664` 引发 GitHub 对原有 PR 检查的自动重新执行，包括 [World model decision integration CPU #42851675182](https://github.com/lieuyimo/wm/actions/runs/42851675182) 中的旧会话模型 CPU 训练步骤，以及其他已有 PR 检查；这些运行是本轮不期望发生的额外 CI，未用于本次 V4 决策诊断、未改动 V4 checkpoint，也不应被报告成“全过程零训练”。其后结果/文档提交采用 `[skip ci]` 避免继续触发既有检查。此项必须如实区分诊断工作流的 0 训练与仓库其他自动检查的副作用。
+
 **最终分类**：43011 五步为 F3；43015、43019 五步为 F2；三案例十步和二十步均为 F4。F1 被有效调用证据排除；F5 从未触发（没有排序变化）；F6 不应仅由预测评分并列判定成立，因为已归档事实反事实显示合法候选的真实业务后果确有差异。**目前不批准直接修改评分、窗口或候选生成器。下一步若要研究评分设计，须先预注册评价协议并取得新的真正独立确认。**
 
 ---

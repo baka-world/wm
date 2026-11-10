@@ -67,6 +67,40 @@ def report(summary_path, raw_path, out, robustness_summary=None, attribution_sum
         "先比较 Rule-5 与 Perfect-State-5，再比较 Perfect-State-5 与 Perfect-State-20；",
         "真实 20 步依然无法排序时，必须讨论评分函数对最终业务流转目标的偏差。",
     ])
+    # Stratify by predeclared business regime. This is essential because
+    # Perfect-State sees actual future outages that are hidden from deployable
+    # predictors; its improvement is NOT a pure horizon effect.
+    regimes=("workflow_serial","workflow_parallel","workflow_outage")
+    group={}
+    for regime in regimes:
+        current=[d for d in valid if d["regime"]==regime]
+        means={m:sum(d["methods"][m]["regret_steps"] for d in current)/len(current)
+               if current else None
+               for m in ("Rule-5","Perfect-State-5","Perfect-State-20")}
+        group[regime]=(len(current),means)
+    out_rows.extend([
+        "",
+        "### 按预先固定的业务场景拆分（相同种子内配对）",
+        "",
+        "| 场景 | 决策点 | Rule-5 | Perfect-State-5 | Perfect-State-20 |",
+        "|---|---:|---:|---:|---:|",
+    ])
+    for name in regimes:
+        n,means=group[name]
+        out_rows.append(f"| {name} | {n} | {f(means['Rule-5'])} | "
+                        f"{f(means['Perfect-State-5'])} | {f(means['Perfect-State-20'])} |")
+    gains=[group[r][1]["Rule-5"]-group[r][1]["Perfect-State-20"] for r in regimes]
+    gain_sum=sum(gains)
+    outage_fraction=gains[2]/gain_sum if gain_sum>0 else None
+    out_rows.extend([
+        "",
+        f"- 故障场景贡献了约 {f(100*outage_fraction) if outage_fraction is not None else 'undefined'}% "
+        "的 Rule-5 到 Perfect-State-20 总损失下降（按三类场景等权计算）。",
+        "- 故障在发生之前不向线上规则/PETS/结构化模型公开；Perfect-State-20 "
+        "直接观察到各候选未来的故障影响、服务与排队结果，具有在线不可获得的后见信息。",
+        "- 因此不能把这种提升单独归因于更长预测窗口，更不能据此预言部署 20 步世界模型会达到同样损失。",
+        "- 非故障场景的改善应单独解释；准确 20 步尚未总是选对，也不能证明评分误差是唯一原因。",
+    ])
     error_counts=Counter()
     events=Counter()
     errors=[]
@@ -181,13 +215,14 @@ def report(summary_path, raw_path, out, robustness_summary=None, attribution_sum
         f"{f(s['methods']['Rule-5']['regret']['mean_of_cluster_means'])} 降到 "
         f"{f(s['methods']['Perfect-State-5']['regret']['mean_of_cluster_means'])} 步；"
         "但 PETS 的 48 次选择全部与规则相同，结构化头仅 1 次改善。",
-        f"- C 窗口/评分：更突出的瓶颈，准确 20 步将损失继续降至 "
+        f"- C 短窗口/评分/未来外生信息：准确 20 步将损失继续降至 "
         f"{f(s['methods']['Perfect-State-20']['regret']['mean_of_cluster_means'])} 步，"
-        "仍有非零残余和错误排序。预测窗口与评分终端估计的贡献不能仅凭此次数据完全分离。",
+        "但故障场景贡献了大部分改善；Perfect-State-20 得到未来故障的实际影响，"
+        "而线上模型不能读到未来故障，故无法仅据此分离窗口长度、评分偏差与外生信息的贡献。",
         "- D 候选集：存在未覆盖的单条合法 robot-task 配对，但没有补充完整可行批次的更优反事实证据，不能定为 D。",
-        "**最终选择 E（多瓶颈，当前以预测窗口/评分转换为主，预测误差亦存在）。**",
+        "**最终选择 E（多瓶颈：有限预测窗口、评分与未知外生事件相互交织，亦存在模型预测误差）。**",
         "**研究建议：不要在当前 5 步 workflow_score 不变的条件下继续盲目训练 PETS/结构化模型；"
-        "优先研究如何把更长时域的可信信息转化成更好决策。**",
+        "目前缺乏支持直接训练新世界模型的证据；先确认可在线获得的远期信息及其决策价值。**",
         "该建议不构成开发下一代模型、重设评分或扩大候选搜索的自动授权。",
         "本轮停止后不自动训练、改架构、改候选算法或合并 PR。",
         "",

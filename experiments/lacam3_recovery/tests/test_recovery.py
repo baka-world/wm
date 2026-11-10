@@ -67,6 +67,9 @@ class RecoveryLogicTests(unittest.TestCase):
         fake=_FakePlanner('timeout');c=RecoveryCoordinator(fake,_Stay());state=RecoverySnapshot()
         for tick in range(50):state,_,_=c.step(state,inputs(),(('station',True),),0,False,tick)
         self.assertEqual(fake.calls,1)
+        new_task=inputs();new_task[0]['task_id']='S2'
+        state,_,event=c.step(state,new_task,(('station',False),),0,False,50)
+        self.assertFalse(event['triggered']);self.assertEqual(fake.calls,1)
         state,_,event=c.step(state,inputs(goal=(1,0)),(('station',True),),0,False,51)
         self.assertTrue(event['triggered']);self.assertEqual(fake.calls,2)
 
@@ -101,6 +104,17 @@ class OfficialLaCAMTests(unittest.TestCase):
         result=LaCAM3Planner(graph,LACAM).plan({'A':(0,0),'B':(2,0)},
                                                 {'A':(2,0),'B':(2,0)},{'B'},'A')
         self.assertEqual(result.status,'locked_goal')
+
+    def test_malformed_worker_and_fixed_temporary_goal_conflict_are_safe(self):
+        graph=Geometry(Grid(3,2,frozenset()))
+        with tempfile.TemporaryDirectory() as tmp:
+            worker=Path(tmp)/'bad';worker.write_text('#!/bin/sh\necho "OK bad 1 2 3"\n');worker.chmod(0o755)
+            result=LaCAM3Planner(graph,worker).plan({'A':(0,0)},{'A':(2,0)},set(),'A')
+            self.assertEqual(result.status,'worker_error')
+        result=LaCAM3Planner(graph,LACAM).plan({'A':(0,0),'B':(1,0)},
+                                               {'A':(1,0),'B':(1,0)},set(),'A')
+        self.assertEqual(result.status,'temporary_goal_conflict')
+        self.assertFalse(result.worker_invoked)
 
 
 @unittest.skipUnless(LACAM and PIBT and SOURCES and Path(LACAM).is_file() and Path(PIBT).is_file(),

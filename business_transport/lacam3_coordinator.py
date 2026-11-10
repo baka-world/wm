@@ -34,8 +34,11 @@ class RecoveryCoordinator:
         locked={rid for rid in ids if by_id[rid]['locked']}
         current=tuple(positions[rid] for rid in ids)
         task_key=tuple((rid,by_id[rid]['task_id'],by_id[rid]['phase'],goals[rid]) for rid in ids)
-        attempt_key=(task_key,tuple(sorted(locked)))
-        cache_key=(attempt_key,tuple(sorted(stations)))
+        # Replanning after an attempt is allowed only for a changed business
+        # goal or locked set. Task/phase changes still invalidate an existing
+        # cached path even if they leave the physical goal unchanged.
+        attempt_key=(tuple((rid,goals[rid]) for rid in ids),tuple(sorted(locked)))
+        cache_key=(task_key,attempt_key,tuple(sorted(stations)))
         attempted=snapshot.attempted_key
         if attempted and attempted!=attempt_key:attempted=()
         cache=snapshot.cached_path;old_key=snapshot.cached_key

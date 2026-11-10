@@ -75,22 +75,29 @@ class LaCAM3Planner:
                  text=True,capture_output=True,timeout=remaining/1000,check=False)
         except subprocess.TimeoutExpired:
             return finish('timeout',detail='hard 500 ms wall limit',temporary=duplicate)
+        except OSError as exc:
+            return finish('worker_error',detail=f'worker launch failed: {type(exc).__name__}',temporary=duplicate)
         if completed.returncode:
             return finish('worker_error',detail=f'exit {completed.returncode}: {completed.stderr[:300]}',temporary=duplicate)
         output=completed.stdout.splitlines()
         if not output:return finish('worker_error',detail='empty worker output',temporary=duplicate)
         header=output[0].split()
         if header[0]=='NO_SOLUTION':
-            return finish('no_solution',detail='official solve returned an empty plan',
-                          rss=int(header[1]) if len(header)>1 else None,
-                          cpu=float(header[2]) if len(header)>2 else None,temporary=duplicate)
+            try:
+                rss=int(header[1]) if len(header)>1 else None
+                cpu=float(header[2]) if len(header)>2 else None
+            except ValueError:return finish('worker_error',detail='malformed failure telemetry',temporary=duplicate)
+            return finish('no_solution',detail='official solve returned an empty plan',rss=rss,cpu=cpu,temporary=duplicate)
         if len(header)!=5 or header[0]!='OK':return finish('worker_error',detail=output[0][:200],temporary=duplicate)
-        count,n,rss=map(int,header[1:4]);cpu=float(header[4])
+        try:
+            count,n,rss=map(int,header[1:4]);cpu=float(header[4])
+        except ValueError:return finish('worker_error',detail='malformed solver telemetry',temporary=duplicate)
         if n!=len(active) or count!=len(output)-1 or count<1:
             return finish('worker_error',detail='invalid complete-path dimensions',rss=rss,cpu=cpu,temporary=duplicate)
         path=[]
         for line in output[1:]:
-            values=[int(v) for v in line.split()]
+            try:values=[int(v) for v in line.split()]
+            except ValueError:return finish('worker_error',detail='malformed path vertex',rss=rss,cpu=cpu,temporary=duplicate)
             if len(values)!=len(active) or any(v<0 or v>=len(nodes) for v in values):
                 return finish('worker_error',detail='invalid path vertex',rss=rss,cpu=cpu,temporary=duplicate)
             state=dict(positions)
@@ -104,6 +111,8 @@ class LaCAM3Planner:
             return finish('invalid_path',detail=str(exc),rss=rss,cpu=cpu,temporary=duplicate)
         if any(path[-1][ids.index(r)]!=effective[r] for r in active):
             return finish('invalid_path',detail='final temporary or business goal mismatch',rss=rss,cpu=cpu,temporary=duplicate)
+        if (time.perf_counter()-start)*1000>self.budget_ms:
+            return finish('timeout',detail='mapping, solve and validation exceeded 500 ms',rss=rss,cpu=cpu,temporary=duplicate)
         return finish('solved',path,rss=rss,cpu=cpu,temporary=duplicate)
 
     def validate(self,ids,before,after,locked):

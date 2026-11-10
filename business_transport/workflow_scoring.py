@@ -58,7 +58,7 @@ def workflow_components(initial,trace,geometry,rules,*,estimator=None):
         amount=baseline
         if estimator is not None:
             result=estimator.estimate(end,station,sample=sample,
-                                      robot=robot if active else None,phase=phase)
+                                      robot=robot if station_id== (sample.pickup if phase=='to_pickup' else sample.dropoff) else None,phase=phase)
             if result.usable:amount=result.estimated_steps
             service_diagnostics.append({**result.record(),
                 'sample_id':sample.id,'station_id':station_id,

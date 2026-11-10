@@ -17,8 +17,8 @@ from lab_transport.paper_reuse.contracts import check_transition
 class BusinessPolicy:
     def __init__(self,method,geometry,rules,observer,model=None,*,seed=0,horizon=5,
                  particles=3,budget=4,solver_seconds=.5,workflow_prediction=False,scoring='legacy',
-                 max_prediction_seconds=None,risk_weight=0.0):
-        if method not in ('nearest','nearest_rollout','cpsat_rule','cpsat_pets','cpsat_structured'):
+                 max_prediction_seconds=None,risk_weight=0.0,future_pets_starts=False):
+        if method not in ('nearest','nearest_rollout','cpsat_rule','cpsat_pets','cpsat_structured','cpsat_session'):
             raise ValueError('unknown business scheduling baseline')
         self.method,self.geometry,self.rules,self.observer=method,geometry,rules,observer
         self.seed,self.horizon,self.particles,self.budget=seed,horizon,particles,budget
@@ -32,6 +32,7 @@ class BusinessPolicy:
             raise ValueError('prediction timeout must be positive')
         if not math.isfinite(risk_weight) or risk_weight < 0:
             raise ValueError('invalid risk weight')
+        self.future_pets_starts=bool(future_pets_starts)
         self.max_prediction_seconds=max_prediction_seconds
         self.risk_weight=float(risk_weight)
         self.workflow_prediction,self.scoring=workflow_prediction,scoring
@@ -39,7 +40,7 @@ class BusinessPolicy:
         self.model=adapter(model,rules) if model is not None else None
         self.solver=(BusinessCPSAT(geometry,rules,candidate_limit=budget,time_limit_seconds=solver_seconds,seed=seed)
                      if method.startswith('cpsat_') else None)
-        self.estimator=ServiceWorkEstimator(self.model) if scoring=='workflow_model' else None
+        self.estimator=ServiceWorkEstimator(self.model,allow_predicted_start=self.future_pets_starts) if scoring=='workflow_model' else None
         self.log=[];self.fallbacks=0;self.rollout_steps=0
         self.prediction_calls=0;self.prediction_wall_seconds=0.0
 
@@ -177,6 +178,7 @@ class BusinessPolicy:
         if self.scoring=='workflow_model':
             entry.update(selected_candidate_index=choice,horizon=self.horizon,
                          particles=self.particles,scoring=self.scoring,
+                         future_pets_starts=self.future_pets_starts,
                          prediction_wall_seconds=self.prediction_wall_seconds)
         self.log.append(entry)
         return plans[choice]

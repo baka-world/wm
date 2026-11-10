@@ -26,17 +26,17 @@ CONFIG = {"seed":1810,"epochs":10,"lr":0.001,"budget_seconds":180,
 
 
 class BusinessSessionEventModel(nn.Module):
-    def __init__(self):
+    def __init__(self,query_width=QUERY_WIDTH):
         super().__init__()
         self.entity = nn.Sequential(nn.Linear(TOKEN_WIDTH,32),nn.ReLU(),
                                     nn.Linear(32,32),nn.ReLU())
-        self.target = nn.Sequential(nn.Linear(QUERY_WIDTH,32),nn.ReLU())
+        self.target = nn.Sequential(nn.Linear(query_width,32),nn.ReLU())
         self.service_event = nn.Sequential(nn.Linear(96,32),nn.ReLU(),nn.Linear(32,1))
 
     def forward(self,tokens,mask,query):
         if tokens.ndim!=3 or tokens.shape[-1]!=TOKEN_WIDTH or mask.shape!=tokens.shape[:2]:
             raise ValueError("invalid entity tensor/mask")
-        if query.ndim!=2 or query.shape[-1]!=QUERY_WIDTH or query.shape[0]!=tokens.shape[0]:
+        if query.ndim!=2 or query.shape[-1]!=self.target[0].in_features or query.shape[0]!=tokens.shape[0]:
             raise ValueError("invalid per-session query tensor")
         context=(self.entity(tokens)*mask.unsqueeze(-1)).sum(1)/mask.sum(1,keepdim=True).clamp_min(1)
         target=self.target(query)

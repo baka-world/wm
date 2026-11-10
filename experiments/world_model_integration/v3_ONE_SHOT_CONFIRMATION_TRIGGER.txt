@@ -1,0 +1,5 @@
+PR18-V3 frozen independent verification
+Protocol: pr18-v3-independent-first-use
+V3-C SHA256: 65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696
+Initial validation selection: GitHub Actions 42798391472
+This file is a one-time immutable push trigger; never edit or re-trigger.

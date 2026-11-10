@@ -157,6 +157,28 @@ class InterfaceIntegrationTests(unittest.TestCase):
                 self.assertIn("model_minus_prior", plan["component_means"])
                 self.assertEqual(plan["component_means"]["model_minus_prior"], 0.)
 
+    def test_pets_candidate_order_does_not_share_random_state(self):
+        from experiments.business_constraints.run import make_model
+        from experiments.service_value.counterfactual import load_pr9_model
+        from lab_transport.transition_schema import Assignment
+        business, geometry, rows = trajectory()
+        network, info = load_pr9_model()
+        observation = rows[0].observation
+        first = (Assignment("R1", "J1::stage1"),)
+        second = (Assignment("R2", "J2::stage1"),)
+        legal = candidates_for(observation)
+        self.assertTrue(all(action in legal for action in first+second))
+        model = make_model("pets", geometry, network, info["threshold"], 37)
+        policy = WorkflowPolicy("cpsat_pets", geometry, business.rules,
+                                BusinessObserver(), model, model_aware=True,
+                                seed=37, horizon=5, particles=3, budget=2)
+        ab = policy.evaluate(observation, (first,second))
+        ba = policy.evaluate(observation, (second,first))
+        self.assertEqual(ab[0]["score"], ba[1]["score"])
+        self.assertEqual(ab[1]["score"], ba[0]["score"])
+        self.assertEqual(ab[0]["particle_business_costs"], ba[1]["particle_business_costs"])
+        self.assertEqual(ab[1]["particle_business_costs"], ba[0]["particle_business_costs"])
+
     def test_new_model_is_not_silently_deployed(self):
         with tempfile.TemporaryDirectory() as folder:
             checkpoint = Path(folder) / "unverified.pt"

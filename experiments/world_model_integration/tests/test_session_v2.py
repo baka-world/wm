@@ -1,6 +1,7 @@
 """Service query correspondence, factual labeling and v2 rollout safeguards."""
 from dataclasses import replace
 import json
+import os
 import tempfile
 from pathlib import Path
 import unittest
@@ -102,6 +103,41 @@ class SessionEventV2Tests(unittest.TestCase):
         bad["test"][0]["trajectory_group"]=bad["train"][0]["trajectory_group"]
         with self.assertRaisesRegex(ValueError,"leaked"):
             verify_dataset(bad)
+
+    @unittest.skipUnless(os.environ.get("WM_SESSION_CHECKPOINT"),
+                         "CI supplies a freshly trained, offline-only checkpoint")
+    def test_trained_session_events_drive_legal_workflow_rollout(self):
+        from experiments.business_constraints.run import rich_rows
+        from business_transport.dynamics import WorkflowDynamics
+        from business_transport.workflow_transition import check_business_transition
+        from business_transport.policy import WorkflowPolicy
+        from business_transport.observation import BusinessObserver
+        from lab_transport.decision_value import candidates_for, nearest_batch
+        from lab_transport.dynamics_model import Geometry
+        from business_transport.simulation import BusinessSimulator
+        base,cfg,business=fixture(1)
+        geo=Geometry(base.grid)
+        raw=[]
+        BusinessSimulator(business,"world",1).run(
+            on_transition=raw.append,
+            dispatch_policy=lambda o,c:nearest_batch(o,c,geo))
+        obs=rich_rows(raw)[0].observation
+        model=WorkflowDynamics(SessionRuleDynamics(geo,business.rules,
+            os.environ["WM_SESSION_CHECKPOINT"],experimental=True,seed=1810),business.rules)
+        state=obs
+        for tick in range(20):
+            actions=nearest_batch(state,candidates_for(state),geo)
+            predicted=model.predict_next(state,actions)
+            self.assertTrue(check_business_transition(state,predicted,geo,business.rules,actions))
+            state=predicted
+        self.assertGreater(model.model.query_calls,0)
+        policy=WorkflowPolicy("cpsat_session",geo,business.rules,
+                              BusinessObserver(),SessionRuleDynamics(geo,business.rules,
+                              os.environ["WM_SESSION_CHECKPOINT"],experimental=True),
+                              seed=1810,model_aware=True,horizon=10,particles=2,budget=2)
+        selected=policy(obs,candidates_for(obs))
+        self.assertEqual(policy.fallbacks,0,policy.log[-1]["fallback"])
+        self.assertTrue(all(a in candidates_for(obs) for a in selected))
 
     def test_uncertified_checkpoint_cannot_be_deployed(self):
         with tempfile.TemporaryDirectory() as folder:

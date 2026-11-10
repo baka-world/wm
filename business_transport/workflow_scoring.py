@@ -60,10 +60,11 @@ def workflow_components(initial,trace,geometry,rules,*,estimator=None):
             result=estimator.estimate(end,station,sample=sample,
                                       robot=robot if active else None,phase=phase)
             if result.usable:amount=result.estimated_steps
-            service_diagnostics.append({'sample_id':sample.id,'station_id':station_id,
+            service_diagnostics.append({**result.record(),
+                'sample_id':sample.id,'station_id':station_id,
                 'phase':phase,'observed_active_session':active,
                 'rule_prior_steps':baseline,'estimated_steps':amount,
-                'model_delta_steps':amount-baseline,**result.record()})
+                'model_delta_steps':amount-baseline})
         service+=amount
 
     demand={resource.id:[] for resource in rules.resources}

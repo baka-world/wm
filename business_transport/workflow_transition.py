@@ -15,7 +15,7 @@ from lab_transport.paper_reuse.contracts import check_transition
 from lab_transport.state_v2 import SampleV2, rebuild
 
 IMMUTABLE = ('pickup', 'dropoff', 'release_tick', 'deadline_tick', 'specimen_type',
-             'packaging', 'temperature_condition', 'rule_profile', 'workflow', 'stage_index', 'job_id')
+             'packaging', 'temperature_condition', 'rule_profile', 'priority', 'workflow', 'stage_index', 'job_id')
 INHERITED = ('deadline_tick', 'specimen_type', 'packaging', 'temperature_condition', 'rule_profile', 'priority')
 
 

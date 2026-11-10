@@ -19,4 +19,6 @@ for profile in development confirmation; do
   done
   python tools/workflow_prediction/compare.py "$WM_OUT/$profile/raw.json" "$WM_OUT/$profile-repeat/raw.json"
   python -m experiments.workflow_prediction.verify "$WM_OUT/$profile" "$profile"
+  python -m experiments.workflow_prediction.coverage_report "$WM_OUT/$profile/raw.json" "$WM_OUT/$profile/coverage.json"
+  python -m experiments.workflow_prediction.decision_diagnostics "$WM_OUT/$profile/raw.json" "$WM_OUT/$profile/decision-diagnostics.json"
 done

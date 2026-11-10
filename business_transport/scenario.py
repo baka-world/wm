@@ -99,7 +99,10 @@ def compile_scenario(base: Scenario, config: dict) -> BusinessScenario:
             sid=stage_id(jid,index)
             ids.append(sid)
             samples.append(Sample(sid,pickup,dropoff,release if index==0 else max_ticks+1,due,
-                                  specimen_type=job.get('specimen_type')))
+                                  specimen_type=job.get('specimen_type'),
+                                  packaging=job.get('packaging'),
+                                  temperature_condition=job.get('temperature_condition'),
+                                  rule_profile=job.get('rule_profile')))
             metadata[sid]=(name,index,jid)
         for left,right in zip(ids,ids[1:]):next_stage[left]=right
         normalized.append({'id':jid,'workflow':name,'release_tick':release,'deadline_tick':due,'stages':ids})

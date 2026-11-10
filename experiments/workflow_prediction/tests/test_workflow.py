@@ -1,4 +1,4 @@
-from dataclasses import replace
+from dataclasses import asdict,replace
 import os
 from pathlib import Path
 import unittest
@@ -79,6 +79,28 @@ class WorkflowTransitionTests(unittest.TestCase):
                 self.assertEqual(len(releases),stages-1)
                 self.assertEqual([s.id for s in releases],[f'J1::stage{i}' for i in range(2,stages+1)])
 
+    def test_recursive_prediction_completes_all_three_stages_without_factual_future(self):
+        from lab_transport.decision_value import candidates_for
+        business=case(3);_,rows,geo=factual(business)
+        state=rows[0].observation;model=WorkflowDynamics(ProgressAwareRule(geo),business.rules)
+        released=[]
+        for tick in range(80):
+            actions=nearest_batch(state,candidates_for(state),geo)
+            predicted=model.predict_next(state,actions)
+            check_business_transition(state,predicted,geo,business.rules,actions)
+            self.assertEqual(actions,rows[tick].assignments)
+            actual=rows[tick].next_observation
+            self.assertEqual([(s.id,s.status,s.release_tick) for s in predicted.samples],
+                             [(s.id,s.status,s.release_tick) for s in actual.samples])
+            self.assertEqual([(r.position,r.task_id,r.phase) for r in predicted.robots],
+                             [(r.position,r.task_id,r.phase) for r in actual.robots])
+            released.extend(s.id for s in predicted.samples if s.id not in {x.id for x in state.samples})
+            state=predicted
+            if any(s.id=='J1::stage3' and s.status=='completed' for s in state.samples):break
+        self.assertEqual(released,['J1::stage2','J1::stage3'])
+        self.assertEqual({s.id:s.status for s in state.samples},
+                         {'J1::stage1':'completed','J1::stage2':'completed','J1::stage3':'completed'})
+
     def test_capacity_one_and_two_and_multiple_jobs(self):
         for cap in (1,2):
             business=case(2,cap,2);result,rows,geo=factual(business)
@@ -134,6 +156,7 @@ class WorkflowTransitionTests(unittest.TestCase):
              replace(predicted,samples=tuple(replace(s,job_id='stranger') if s.id==created.id else s for s in predicted.samples)),
              replace(predicted,samples=tuple(replace(s,status='assigned',robot_id='R1') if s.id==created.id else s for s in predicted.samples)),
              replace(predicted,samples=tuple(replace(s,deadline_tick=999) if s.id!=created.id else s for s in predicted.samples)),
+             replace(predicted,samples=tuple(replace(s,priority=9) if s.id!=created.id else s for s in predicted.samples)),
              replace(predicted,samples=tuple(s for s in predicted.samples if s.id!=old.samples[0].id)),
              replace(predicted,stations=(replace(predicted.stations[0],resource_occupied=99),)+predicted.stations[1:]),
              replace(predicted,robots=(replace(predicted.robots[0],position=(999,999)),)+predicted.robots[1:])]
@@ -161,6 +184,21 @@ class WorkflowTransitionTests(unittest.TestCase):
         self.assertEqual((successor.deadline_tick,successor.specimen_type,successor.packaging,
                           successor.temperature_condition,successor.rule_profile,successor.priority),
                          (50,'public-type','sealed','cool','visible',2))
+
+    def test_configured_properties_match_real_successor_observation(self):
+        base,cfg,_=fixture(1)
+        job={**cfg['jobs'][0],'specimen_type':'example','packaging':'sealed',
+             'temperature_condition':'cool','rule_profile':'visible','deadline_tick':80}
+        business=compile_scenario(base,{**cfg,'jobs':[job]})
+        _,rows,geo=factual(business);model=WorkflowDynamics(ProgressAwareRule(geo),business.rules)
+        row=next(row for row in rows if any(s.id=='J1::stage2' for s in row.next_observation.samples) and
+                 not any(s.id=='J1::stage2' for s in row.observation.samples))
+        predicted=model.predict_next(row.observation,row.assignments)
+        check_business_transition(row.observation,predicted,geo,business.rules,row.assignments)
+        actual=next(s for s in row.next_observation.samples if s.id=='J1::stage2')
+        estimate=next(s for s in predicted.samples if s.id=='J1::stage2')
+        fields=('deadline_tick','specimen_type','packaging','temperature_condition','rule_profile')
+        self.assertEqual(tuple(getattr(estimate,k) for k in fields),tuple(getattr(actual,k) for k in fields))
 
     def test_new_score_counts_one_unfinished_job_after_stage_one(self):
         business=case(2);_,rows,geo=factual(business)
@@ -282,13 +320,21 @@ class WorkflowRecoveryIntegrationTests(unittest.TestCase):
         rows=[];sim.run(dispatch_policy=policy,on_observation=observer.observe,on_transition=rows.append)
         network,info=load_pr9_model()
         config={'prediction_window_stride':5,'prediction_horizons':[1,3,5],'planner_seed':20261109}
-        result=evaluate_state_windows(rich_rows(rows),business,geo,network,info['threshold'],
+        observed=rich_rows(rows)
+        result=evaluate_state_windows(observed,business,geo,network,info['threshold'],
                         Path(os.environ['WM_PIBT_LIBRARY']),Path(os.environ['WM_LACAM3_WORKER']),config)
         self.assertGreater(result['old_fixed_entity_model_missing_successors'],0)
         for horizon in ('1','3','5'):
             for model in result['horizons'][horizon]['dynamic'].values():
                 self.assertEqual(model.get('conditional_release_logic_errors',0),0)
                 self.assertEqual(model.get('conditional_resource_errors',0),0)
+        from experiments.workflow_prediction.coverage_report import report_case
+        case_data={'layout':'unit','seed':1,'assumptions':{'workflows':business.rules.workflows},
+                   'state_prediction':result,'factual_visible_transitions':[
+                       {'observation':asdict(r.observation),'assignments':[asdict(a) for a in r.assignments],
+                        'next_observation':asdict(r.next_observation)} for r in observed]}
+        coverage=report_case(case_data,1)
+        self.assertGreater(coverage['eligible_active_multistage'],0)
 
     def test_all_three_models_preserve_isolated_recovery_snapshot_across_stage_release(self):
         from business_transport.lacam3_integration import HybridBusinessSimulator,RecoveryMovementModel,RecoveryObserver

@@ -62,6 +62,23 @@ def progress(result):
             'longest_no_stage_progress':longest,'repeated_joint_state_visits':cycles}
 
 
+def plan_sessions(events):
+    """Associate each complete plan with the actual cached steps executed."""
+    sessions=[];active=None
+    def close():
+        nonlocal active
+        if active is not None:
+            active['executed_over_planned']=active['executed_steps']/active['planned_steps']
+            sessions.append(active);active=None
+    for event in events:
+        if active is not None and (event['cache_invalidated'] or not event['cache_used']):close()
+        if event['triggered'] and event['status']=='solved' and event['plan_steps']>0:
+            close();active={'tick':event['tick'],'planned_steps':event['plan_steps'],'executed_steps':0}
+        if active is not None and event['cache_used']:active['executed_steps']+=1
+    close()
+    return sessions
+
+
 def run_one(business,seed,backend,pibt_library,lacam_worker,*,first_step_only=False):
     geometry=Geometry(business.scenario.grid)
     observer=RecoveryObserver() if backend=='hybrid' else MotionObserver()
@@ -89,6 +106,7 @@ def run_one(business,seed,backend,pibt_library,lacam_worker,*,first_step_only=Fa
         if not outcome['completed']:
             unfinished.append({'job_id':job['id'],'restricted_flow':max(0,result['summary']['ticks']-job['release_tick'])})
     successful=[e for e in attempts if e['status']=='solved'];used=sum(bool(e['cache_used']) for e in sim.recovery_log)
+    sessions=plan_sessions(sim.recovery_log)
     return {'backend':backend,'jobs':metrics['jobs'],'jobs_completed':metrics['jobs_completed'],
       'jobs_unfinished':metrics['jobs']-metrics['jobs_completed'],'job_completion_rate':metrics['completion_rate'],
       'stages':result['summary']['sample_count'],'stages_completed':result['summary']['completed_count'],
@@ -103,8 +121,10 @@ def run_one(business,seed,backend,pibt_library,lacam_worker,*,first_step_only=Fa
       'capacity_wait_ticks':metrics['resource']['capacity_wait_ticks'],
       'recovery_triggers':len(attempts),'recovery_status_counts':dict(Counter(e['status'] for e in attempts)),
       'official_solver_calls':len(invoked),'full_plan_successes':len(successful),
+      'official_replanning_calls':max(0,len(invoked)-1),'recovery_retriggers':max(0,len(attempts)-1),
       'full_plan_lengths':[e['plan_steps'] for e in successful],
       'cache_steps_executed':used,'cache_invalidations':sum(e['cache_invalidated'] for e in sim.recovery_log),
+      'plan_execution_sessions':sessions,
       'plan_steps_per_success':statistics.mean(e['plan_steps'] for e in successful) if successful else None,
       'executed_steps_per_success':used/len(successful) if successful else None,
       'planning_wall_mean_ms':statistics.mean(timing) if timing else None,

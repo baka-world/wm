@@ -11,6 +11,7 @@ from business_transport.lacam3_motion import JointPlanResult,LaCAM3Planner
 from business_transport.dynamics import CapacityDynamics
 from business_transport.policy import BusinessPolicy
 from experiments.lacam3_recovery.clinic_states import frozen_states
+from experiments.lacam3_recovery.benchmark import plan_sessions
 from experiments.pibt_motion.hospital_reproduction import load_bases,pilot_case
 from lab_transport.domain import DirectedGraph,Grid
 from lab_transport.dynamics_model import Geometry
@@ -41,6 +42,16 @@ def inputs(goal=(2,0),locked=False):
 
 
 class RecoveryLogicTests(unittest.TestCase):
+    def test_plan_execution_accounting_handles_invalidation(self):
+        def event(triggered=False, status='idle', steps=0, used=False, invalidated=False):
+            return {'tick': 0, 'triggered': triggered, 'status': status,
+                    'plan_steps': steps, 'cache_used': used, 'cache_invalidated': invalidated}
+        events=[event(True,'solved',4,True),event(used=True),event(invalidated=True),
+                event(True,'solved',2,True),event(used=True),event()]
+        sessions=plan_sessions(events)
+        self.assertEqual([(s['planned_steps'],s['executed_steps']) for s in sessions],[(4,2),(2,2)])
+        self.assertEqual([s['executed_over_planned'] for s in sessions],[.5,1.0])
+
     def test_normal_service_never_triggers_on_repeated_positions(self):
         fake=_FakePlanner();coordinator=RecoveryCoordinator(fake,_Stay());state=RecoverySnapshot()
         for tick in range(40):state,_,event=coordinator.step(state,inputs(),(('station',True),),0,True,tick)

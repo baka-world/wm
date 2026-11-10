@@ -2,6 +2,23 @@
   "by_20_step_fault_visibility": {
     "1_currently_unavailable": {
       "clusters_with_group": 0,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      },
       "decisions": 0,
       "mean_candidate_spread": {
         "cluster_count": 0,
@@ -38,6 +55,23 @@
     },
     "2_future_fault_from_currently_normal": {
       "clusters_with_group": 8,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0,
+          "state_mean_descriptive": 0
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0,
+          "state_mean_descriptive": 0
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0,
+          "state_mean_descriptive": 0
+        }
+      },
       "decisions": 8,
       "mean_candidate_spread": {
         "cluster_count": 8,
@@ -74,6 +108,23 @@
     },
     "3_currently_normal_no_fault_within_horizon": {
       "clusters_with_group": 8,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.175,
+          "state_mean_descriptive": 0.175
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 4.725,
+          "state_mean_descriptive": 4.725
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.275,
+          "state_mean_descriptive": 0.275
+        }
+      },
       "decisions": 40,
       "mean_candidate_spread": {
         "cluster_count": 8,
@@ -112,6 +163,23 @@
   "by_5_step_fault_visibility": {
     "1_currently_unavailable": {
       "clusters_with_group": 0,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      },
       "decisions": 0,
       "mean_candidate_spread": {
         "cluster_count": 0,
@@ -148,6 +216,23 @@
     },
     "2_future_fault_from_currently_normal": {
       "clusters_with_group": 0,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      },
       "decisions": 0,
       "mean_candidate_spread": {
         "cluster_count": 0,
@@ -184,6 +269,23 @@
     },
     "3_currently_normal_no_fault_within_horizon": {
       "clusters_with_group": 8,
+      "current_observation_descriptive": {
+        "mean_active_service_robots": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.14583333333333331,
+          "state_mean_descriptive": 0.14583333333333334
+        },
+        "mean_historical_effective_service_count": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 3.9375,
+          "state_mean_descriptive": 3.9375
+        },
+        "mean_occupied_capacity": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.22916666666666666,
+          "state_mean_descriptive": 0.22916666666666666
+        }
+      },
       "decisions": 48,
       "mean_candidate_spread": {
         "cluster_count": 8,
@@ -227,6 +329,72 @@
     "onset_within_20": 8,
     "onset_within_5": 0,
     "outage_timeline_consistent_across_all_candidates": true,
+    "pre_fault_20_states": [
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "empty8/81011/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "empty8/81012/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "empty8/81013/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "empty8/81014/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "random32/82011/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "random32/82012/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "random32/82013/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      },
+      {
+        "active_service_robots": 0,
+        "first_fault_offset": 10,
+        "id": "random32/82014/workflow_outage/0",
+        "observed_effective_service_count_total": 0,
+        "occupied_capacity_total": 0,
+        "tick": 0
+      }
+    ],
     "robustness_overlap": 25,
     "scenes": 24
   },
@@ -239,6 +407,14 @@
     "schema_version",
     "stations",
     "tick"
+  ],
+  "recovery_snapshot_fields": [
+    "attempted_key",
+    "cached_key",
+    "cached_path",
+    "completed_count",
+    "no_stage_steps",
+    "recent_positions"
   ],
   "robot_fields": [
     "home",

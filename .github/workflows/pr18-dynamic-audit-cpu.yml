@@ -45,7 +45,7 @@ jobs:
           PY
       - name: Restore unchanged V4 checkpoint with checksum
         env:
-          GITHUB_TOKEN: {{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -126,10 +126,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pr18-dynamic-value-audit-{{ github.run_id }}
+          name: pr18-dynamic-value-audit-${{ github.run_id }}
           path: |
-            {{ runner.temp }}/pr18-dynamic/data/*.json
-            {{ runner.temp }}/pr18-dynamic/*.log
-            {{ runner.temp }}/pr18-dynamic/*-sha.txt
+            ${{ runner.temp }}/pr18-dynamic/data/*.json
+            ${{ runner.temp }}/pr18-dynamic/*.log
+            ${{ runner.temp }}/pr18-dynamic/*-sha.txt
           if-no-files-found: warn
           retention-days: 90

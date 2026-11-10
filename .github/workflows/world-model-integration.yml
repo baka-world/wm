@@ -15,7 +15,7 @@ permissions:
 jobs:
   model-decision-integration:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,6 +35,7 @@ jobs:
           timeout 120s python -m experiments.world_model_integration.build_dataset --output "$RUNNER_TEMP/session-dataset.json" 2>&1 | tee "$RUNNER_TEMP/session-dataset.log"
           timeout 210s python -m lab_transport.business_state_learning --dataset "$RUNNER_TEMP/session-dataset.json" --checkpoint "$RUNNER_TEMP/session-v2.pt" --seed 1810 --epochs 10 --seconds 180 2>&1 | tee "$RUNNER_TEMP/session-training.log"
           python -c 'import hashlib,os; p=os.environ["RUNNER_TEMP"]+"/session-v2.pt"; print("SESSION_CHECKPOINT_SHA256",hashlib.sha256(open(p,"rb").read()).hexdigest())' | tee "$RUNNER_TEMP/session-checkpoint-sha.log"
+          echo "WM_SESSION_CHECKPOINT=$RUNNER_TEMP/session-v2.pt" >> "$GITHUB_ENV"
       - name: Compare same factual service events against old models
         shell: bash
         run: |
@@ -50,6 +51,22 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/workflow-regression.log"
+      - name: Build pinned official PIBT and LaCAM3 backends
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/v2-pibt" 2>&1 | tee "$RUNNER_TEMP/v2-pibt.log"
+          timeout 450s bash tools/lacam3_recovery/prepare_upstream.sh "$RUNNER_TEMP/v2-lacam" 2>&1 | tee "$RUNNER_TEMP/v2-lacam.log"
+          python -m tools.pibt_motion.prepare_sources --output "$RUNNER_TEMP/v2-hospital-sources"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/v2-pibt/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
+          echo "WM_LACAM3_WORKER=$RUNNER_TEMP/v2-lacam/bridge/wm_lacam3_worker" >> "$GITHUB_ENV"
+          echo "WM_HOSPITAL_SOURCES=$RUNNER_TEMP/v2-hospital-sources" >> "$GITHUB_ENV"
+      - name: Run genuine fixed motion backend and session-branch regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 420s python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/v2-motion-old-tests.log"
+          timeout 420s python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/v2-motion-new-tests.log"
       - name: Run fixed four-arm CPU development pilot
         shell: bash
         run: |
@@ -86,5 +103,9 @@ jobs:
             ${{ runner.temp }}/session-event-comparison.log
             ${{ runner.temp }}/session-confirmation.json
             ${{ runner.temp }}/session-confirmation.log
+            ${{ runner.temp }}/v2-pibt.log
+            ${{ runner.temp }}/v2-lacam.log
+            ${{ runner.temp }}/v2-motion-old-tests.log
+            ${{ runner.temp }}/v2-motion-new-tests.log
           if-no-files-found: warn
           retention-days: 60

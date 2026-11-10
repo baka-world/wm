@@ -153,6 +153,60 @@ class InterfaceIntegrationTests(unittest.TestCase):
                 train_cpu(Path(folder) / "missing-factual-transitions.json",
                           Path(folder) / "nonexistent.pt")
 
+    def test_controlled_same_state_service_estimate_flips_real_policy_choice(self):
+        """Causal wiring only: replace predictions, not simulator future truth."""
+        from business_transport.policy import BusinessPolicy
+        from business_transport.service_work import ServiceWorkEstimate
+        from business_transport.scenario import compile_scenario
+        from lab_transport.transition_schema import Assignment
+        base, cfg, _ = fixture(1)
+        stations = {sid: replace(station, service_ticks=30, prior_ticks=30,
+                                 jitter_ticks=0) if sid in ("A0", "A1") else station
+                    for sid, station in base.stations.items()}
+        business = compile_scenario(replace(base, stations=stations), cfg)
+        geometry = Geometry(base.grid)
+        traces = []
+        BusinessSimulator(business, "world", 1).run(
+            on_transition=traces.append,
+            dispatch_policy=lambda obs, candidates: nearest_batch(obs, candidates, geometry))
+        observation = rich_rows(traces)[0].observation
+        candidates = candidates_for(observation)
+        plans = ((Assignment("R1", "J1::stage1"),),
+                 (Assignment("R2", "J2::stage1"),))
+        self.assertTrue(all(a in candidates for p in plans for a in p))
+
+        class ControlledEstimator:
+            def __init__(self, favoured):
+                self.favoured = favoured
+
+            def estimate(self, observation, station, *, sample=None, robot=None, phase=None):
+                prior = float(station.expected_service_ticks)
+                if robot is None:
+                    return ServiceWorkEstimate(prior, prior, False, "rule_prior",
+                                               fallback_reason="unstarted")
+                amount = 1. if sample.id.startswith(self.favoured) else 1000.
+                return ServiceWorkEstimate(prior, amount, True, "controlled_test_only")
+
+        class FixedPlans(BusinessPolicy):
+            def candidates(self, observation, candidates):
+                return plans
+
+        choices = []
+        records = []
+        for favoured in ("J1", "J2"):
+            policy = FixedPlans("cpsat_rule", geometry, business.rules,
+                                BusinessObserver(), ProgressAwareRule(geometry),
+                                scoring="workflow_model", workflow_prediction=True,
+                                horizon=5, particles=1, budget=2)
+            policy.estimator = ControlledEstimator(favoured)
+            selected = policy(observation, candidates)
+            self.assertEqual(policy.fallbacks, 0, policy.log[-1]["fallback"])
+            self.assertIn(selected, plans)
+            choices.append(selected)
+            records.append([p["score"] for p in policy.log[-1]["plans"]])
+        self.assertNotEqual(choices[0], choices[1])
+        self.assertNotEqual(records[0], records[1])
+
 
 if __name__ == "__main__":
     unittest.main()

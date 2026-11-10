@@ -122,7 +122,7 @@ def visible_summary(observation):
     }
 
 
-def inspect_state(case, decision, summary_state, robust_keys):
+def inspect_state(case, decision, summary_state, robust_map):
     if not summary_state["valid"]:
         raise ValueError("invalid previous decision included; cannot silently omit")
     observed = decision["observable_state"]
@@ -198,7 +198,8 @@ def inspect_state(case, decision, summary_state, robust_keys):
         "candidate_flow_spread": summary_state["flow_spread"],
         "candidate_outcome_tied": summary_state["outcome_tied"],
         "candidate_all_completed": summary_state["all_candidates_complete"],
-        "robustness_additional_service_seeds_available": id_key in robust_keys,
+        "robustness_additional_service_seeds_available": id_key in robust_map,
+        "robustness_original_pr16_if_available": robust_map.get(id_key),
         "audit_note": "Future fault labels and per-candidate true traces are never online predictors.",
     }
 
@@ -248,15 +249,15 @@ def load_and_analyze(raw, previous, robustness):
            for s in previous["states"]}
     if len(old) != 48:
         raise ValueError("duplicate or missing PR16 summary identities")
-    robust_keys = {(x["layout"], x["seed"], x["regime"], x["tick"])
-                   for x in robustness["states"]}
+    robust_map = {(x["layout"], x["seed"], x["regime"], x["tick"]): x["result"]
+                  for x in robustness["states"]}
     records = []
     for case in cases:
         for decision in case["decisions"]:
             key = case["layout"], case["seed"], case["regime"], decision["tick"]
             if key not in old:
                 raise ValueError(f"no PR16 summary row for {key}")
-            records.append(inspect_state(case, decision, old[key], robust_keys))
+            records.append(inspect_state(case, decision, old[key], robust_map))
     if len(records) != 48 or len({r["id"] for r in records}) != 48:
         raise ValueError("48 unique decisions required")
     if {tuple(r[k] for k in ("layout", "seed", "regime", "tick"))
@@ -289,6 +290,34 @@ def load_and_analyze(raw, previous, robustness):
                                for r in records),
         "currently_device_unavailable": sum(bool(r["future_offline_label_only"]["current_down_stations"])
                                              for r in records),
+        "share_of_rule_to_perfect20_improvement_from_real_pre_fault_onset_20": (
+            sum(r["method_regrets"]["Rule-5"]["regret_steps"] -
+                r["method_regrets"]["Perfect-State-20"]["regret_steps"]
+                for r in records if r["future_offline_label_only"]["20"]["group"] ==
+                    "2_future_fault_from_currently_normal") /
+            sum(r["method_regrets"]["Rule-5"]["regret_steps"] -
+                r["method_regrets"]["Perfect-State-20"]["regret_steps"]
+                for r in records)
+        ),
+        "pre_fault_robustness": {
+            "count": sum(r["robustness_original_pr16_if_available"] is not None
+                         for r in records if r["future_offline_label_only"]["20"]["group"] ==
+                             "2_future_fault_from_currently_normal"),
+            "nominal_best_stays_best": sum(
+                r["robustness_original_pr16_if_available"]["nominal_best_still_robust_best"]
+                for r in records if r["future_offline_label_only"]["20"]["group"] ==
+                    "2_future_fault_from_currently_normal"
+                and r["robustness_original_pr16_if_available"] is not None),
+            "mean_robust_rule_opportunity": mean([
+                r["robustness_original_pr16_if_available"]["robust_rule_opportunity"]
+                for r in records if r["future_offline_label_only"]["20"]["group"] ==
+                    "2_future_fault_from_currently_normal"
+                and r["robustness_original_pr16_if_available"] is not None
+            ]) if any(r["future_offline_label_only"]["20"]["group"] ==
+                     "2_future_fault_from_currently_normal"
+                     and r["robustness_original_pr16_if_available"] is not None
+                     for r in records) else None,
+        },
     }
     if totals["candidates"] != 174:
         raise ValueError("candidate count diverges from PR16")
@@ -380,6 +409,22 @@ def build_report(records, summary):
             "Full-outcome Oracle 的决策损失按定义为 0，"
             "表中 Oracle 机会空间是 Rule-5 减去该 Oracle 的损失。"
         ]
+    headings += [
+        "", "## 事后机会由哪些真实事件贡献", "",
+        f"按实际故障跃迁而不是场景标签分层，20 步内将发生故障的 8 个状态贡献了 "
+        f"{counts['share_of_rule_to_perfect20_improvement_from_real_pre_fault_onset_20']*100:.2f}% "
+        "的 Rule-5 到 Perfect-State-20 总损失下降。"
+        "这个贡献说明事后未来故障信息对候选排序影响大，"
+        "绝不能把该百分比解读为可提前预测的模型收益。",
+        f"这些状态在原 PR #16 三个额外未来服务扰动种子的稳健性记录中覆盖 "
+        f"{counts['pre_fault_robustness']['count']} 个，"
+        f"事后最优候选保持最优 "
+        f"{counts['pre_fault_robustness']['nominal_best_stays_best']} 个；"
+        "条件子集的平均可得机会为 "
+        f"{fmt(counts['pre_fault_robustness']['mean_robust_rule_opportunity'])} 步。"
+        "该稳健性仅改变后续服务随机数，不改变外生故障日程；"
+        "因此既不验证故障预测能力，也不代表全 48 个状态的随机重复均值。",
+    ]
     observed_histories = sorted({f for r in records for f in
                                  r["available_online"]["explicit_history_fields"]})
     station_history_names = [

@@ -301,7 +301,7 @@ def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config,*,trace
             station=sim.scenario.stations[station_id]
             limit=(sim.scenario.duration_jitter if station.jitter_ticks is None
                    else station.jitter_ticks)
-            key=f"{future_service_seed}\\0{sample_id}\\0{phase}\\0{station_id}".encode('utf-8')
+            key=f"{future_service_seed}\0{sample_id}\0{phase}\0{station_id}".encode('utf-8')
             draw=int.from_bytes(hashlib.sha256(key).digest()[:8],'big')
             return station.service_ticks + draw%(limit+1)
         sim._handle_station=handle_with_clock

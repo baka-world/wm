@@ -95,6 +95,21 @@ def visible_summary(observation):
             for s in sorted(stations, key=lambda x: x["id"])
         },
         "active_service_robots": sum(r.get("service_elapsed") is not None for r in robots),
+        "observed_effective_service_count_total": sum(
+            s.get("observed_effective_service_count", 0) or 0 for s in stations),
+        "station_service_history": [
+            {"station_id": s["id"],
+             "observed_effective_service_count": s.get("observed_effective_service_count"),
+             "observed_effective_service_mean": s.get("observed_effective_service_mean"),
+             "expected_service_ticks": s.get("expected_service_ticks"),
+             "history_complete_since_start": s.get("history_complete_since_start"),
+             "service_session_active": s.get("service_session_active"),
+             "service_in_progress": s.get("service_in_progress")}
+            for s in sorted(stations, key=lambda x: x["id"])
+        ],
+        "recovery_snapshot_fields": sorted(
+            (observation.get("recovery_snapshot") or {}).keys())
+            if isinstance(observation.get("recovery_snapshot"), dict) else [],
         "service_elapsed": [{"robot_id": r["id"], "service_elapsed": r.get("service_elapsed"),
                              "phase": r.get("phase"), "task_id": r.get("task_id")}
                             for r in robots if r.get("service_elapsed") is not None],
@@ -204,6 +219,14 @@ def cluster_group_statistics(records, horizon):
                     "cluster_count": len(cm)}
         output[name] = {
             "decisions": len(chosen),
+            "current_observation_descriptive": {
+                "mean_occupied_capacity": stats(
+                    lambda r: r["available_online"]["occupied_capacity_total"]),
+                "mean_active_service_robots": stats(
+                    lambda r: r["available_online"]["active_service_robots"]),
+                "mean_historical_effective_service_count": stats(
+                    lambda r: r["available_online"]["observed_effective_service_count_total"]),
+            },
             "clusters_with_group": len(by_cluster),
             "mean_candidate_spread": stats(lambda r: r["candidate_flow_spread"]),
             "mean_oracle_opportunity_vs_rule": stats(lambda r: r["oracle_opportunity_vs_rule"]),
@@ -246,6 +269,17 @@ def load_and_analyze(raw, previous, robustness):
         "candidates": sum(r["candidate_count"] for r in records),
         "robustness_overlap": sum(r["robustness_additional_service_seeds_available"]
                                   for r in records),
+        "pre_fault_20_states": [
+            {"id": r["id"], "tick": r["tick"],
+             "first_fault_offset": r["future_offline_label_only"]["20"]["first_onset_offset"],
+             "occupied_capacity_total": r["available_online"]["occupied_capacity_total"],
+             "active_service_robots": r["available_online"]["active_service_robots"],
+             "observed_effective_service_count_total":
+                 r["available_online"]["observed_effective_service_count_total"]}
+            for r in records
+            if r["future_offline_label_only"]["20"]["group"] ==
+               "2_future_fault_from_currently_normal"
+        ],
         "outage_timeline_consistent_across_all_candidates": all(
             r["future_offline_label_only"]["identical_outage_timeline_across_all_fixed_candidates"]
             for r in records),
@@ -264,6 +298,7 @@ def load_and_analyze(raw, previous, robustness):
         "station_fields": records[0]["available_online"]["station_fields"],
         "robot_fields": records[0]["available_online"]["robot_fields"],
         "sample_fields": records[0]["available_online"]["sample_fields"],
+        "recovery_snapshot_fields": records[0]["available_online"]["recovery_snapshot_fields"],
         "counts": totals,
         "by_5_step_fault_visibility": cluster_group_statistics(records, 5),
         "by_20_step_fault_visibility": cluster_group_statistics(records, 20),
@@ -316,6 +351,11 @@ def build_report(records, summary):
         f"48 个状态中，决策时已有设备不可用 {counts['currently_device_unavailable']} 个；"
         f"未来 5 步内新发生故障 {counts['onset_within_5']} 个，"
         f"未来 20 步内新发生故障 {counts['onset_within_20']} 个。",
+        "这 8 个真实故障前决策均发生在 tick=0，故障在 tick=10 开始（距离决策 10 步）。"
+        if len(counts["pre_fault_20_states"]) == 8 and
+           all(x["tick"] == 0 and x["first_fault_offset"] == 10
+               for x in counts["pre_fault_20_states"])
+        else "故障时刻与决策距离详见逐决策记录。",
     ]
     for horizon in (5, 20):
         headings += [
@@ -342,6 +382,15 @@ def build_report(records, summary):
         ]
     observed_histories = sorted({f for r in records for f in
                                  r["available_online"]["explicit_history_fields"]})
+    station_history_names = [
+        "observed_effective_service_count", "observed_effective_service_mean",
+        "history_complete_since_start", "expected_service_ticks"
+    ]
+    pre_fault = counts["pre_fault_20_states"]
+    empty_pre_fault = bool(pre_fault) and all(
+        x["active_service_robots"] == 0 and x["occupied_capacity_total"] == 0 and
+        x["observed_effective_service_count_total"] == 0 for x in pre_fault
+    )
     headings += [
         "", "## 能否从现有在线信息预测未来设备故障？", "",
         "**故障发生前的设备状态变化：** 当前观察字段只有设备可用/不可用状态，"
@@ -349,13 +398,24 @@ def build_report(records, summary):
         "未来状态中出现的设备状态跃迁，只能在其真正发生时被识别，"
         "不能回填到之前的决策时刻。",
         "",
-        "**服务历史与进度：** 可见 service_elapsed 等当前会话进度；"
-        f"当前观测顶层含 history/event/log 字样的字段：{', '.join(observed_histories) if observed_histories else '未发现'}。"
-        "既有数据没有设备健康退化与故障的标注对应关系，"
-        "不能由服务时间变长直接推定未来故障。",
+        "**服务历史与进度：** 当前机器人可见 service_elapsed、service_active_elapsed"
+        "和 service_paused_elapsed；工作站还暴露 observed_effective_service_count、"
+        "observed_effective_service_mean、history_complete_since_start 与"
+        " expected_service_ticks。这些是历史服务统计/预期，**并非设备健康预警**。"
+        f"顶层含 history/event/log 字样的字段：{', '.join(observed_histories) if observed_histories else '无'}。",
+        ("8 个真正发生未来故障的决策均位于 tick=0，"
+         "此时服务历史计数、活动服务机器人、资源占用全为 0，"
+         "不能从已有服务历史推断十步后的设备故障。"
+         if empty_pre_fault else
+         "故障前观测包含的服务历史见逐决策记录；没有证据确认其可预测外生故障。"),
+        "当前状态中的服务历史统计可以帮助分析一般服务时间，但现有材料"
+        "没有设备健康退化与未来故障的标注对应关系，不能由服务时间变长"
+        "直接推定未来故障。",
         "",
         "**资源占用与负载：** resource_occupied 和 capacity_blocked"
         "表征当下调度/队列拥堵，与未来设备故障预兆不是同一变量。"
+        + ("8 个故障前 tick=0 的状态资源占用全部为 0。"
+           if empty_pre_fault else "")
         "即便有限样本出现相关性，也可能来自固定场景/时刻配置，"
         "不能称为可部署的故障风险模型证据。",
         "",

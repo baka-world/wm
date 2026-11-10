@@ -164,10 +164,18 @@ def analyze(cases):
     elif gap_summary["gap_lt_1"] > len(valid)/2:
         decision = "A-candidate: majority of fixed-candidate gaps are below one step"
     elif (perfect5 is not None and perfect20 is not None and
+          perfect20 < perfect5-EPS and perfect5 < rule_opportunity-EPS):
+        decision = ("E: multiple bottlenecks; 20-step true states outperform "
+                    "5-step true states, and 5-step truth also beats the predictors")
+    elif (perfect5 is not None and perfect20 is not None and
+          perfect5 >= rule_opportunity-EPS and perfect20 < rule_opportunity-EPS):
+        decision = ("C: short-window information or the workflow score limits decisions; "
+                    "20-step truth is substantially more useful")
+    elif (perfect5 is not None and perfect20 is not None and
           perfect5 >= rule_opportunity-EPS and perfect20 >= rule_opportunity-EPS):
-        decision = "C-candidate: even perfect short-state scores do not reduce regret"
+        decision = "C-candidate: even perfect 20-step states do not reduce regret; inspect scoring"
     elif perfect5 is not None and perfect5 < rule_opportunity-EPS:
-        decision = "B-candidate: perfect 5-step states reduce regret; check counterexamples"
+        decision = "B-candidate: 5-step truth reduces regret; inspect prediction disagreements"
     else:
         decision = "E: overlapping, unidentifiable or insufficient bottlenecks"
     return {

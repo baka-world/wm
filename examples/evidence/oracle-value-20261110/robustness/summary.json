@@ -64,6 +64,6 @@
     }
   ],
   "mean_of_qualifying_cluster_means": 2.381365740740741,
-  "wall_seconds": 49.946174746,
+  "wall_seconds": 45.52154443699999,
   "limitation": "post-decision perturbation excludes effects of altered past service draws; hindsight averages still not online-deployable, only gap>=3 selected; not comparable to all-48 main mean"
 }

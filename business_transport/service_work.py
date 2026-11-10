@@ -60,8 +60,8 @@ class ServiceWorkEstimator:
         samples=[row["features"] for row in data["examples"] if row["split"]=="train"]
         if not samples:
             return None
-        return list(zip(*[(min(row[i] for row in samples),max(row[i] for row in samples))
-                          for i in range(len(FEATURES))]))
+        return [(min(row[i] for row in samples),max(row[i] for row in samples))
+                for i in range(len(FEATURES))]
 
     def estimate(self, observation, station, *, sample=None, robot=None, phase=None):
         prior = float(_prior(station))

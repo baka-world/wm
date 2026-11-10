@@ -232,3 +232,147 @@ Structured precision/recall 均为0%。此小样本不能作为广义基准能�
 采样窗过少且确定性强，Rule 完全正确；学习模型在该采样上预测明显更差，
 这与两种子独立合成确认“调度没有改善”并不冲突。每种模型的指标和回退
 都保存在 CI 原始 JSON 中，不能以单个模型替身测试替代真实统计。
+
+
+---
+
+# PR #18 续实施：逐服务事件模型与合法事实训练（2026-11-10）
+
+## 8. 本轮新增可执行组件与责任边界
+
+- `business_transport/session_events.py`：目标查询
+  `(robot_id,sample_id,phase,station_id)` 与显式缺失/暂停/尚未开始检查；
+  对当前已经开始且有效进度已知的服务才输出合法预测查询。
+- `lab_transport/business_session_learning.py`：
+  `BusinessSessionEventModel` 保留 Deep Sets 40 维实体 token 全局均值上下文，
+  添加独立 48 维目标会话输入和服务完成概率头。
+  相同状态不同目标会话不是共享一个 logit；测试交换目标和标签，确认 ID 关联。
+  旧 `business_state_learning.py` / PR9 Structured / PR11 PETS 编码及权重**不变**。
+- `experiments/world_model_integration/build_dataset.py`：
+  仅用实际 BusinessSimulator 的 `(observable(t),executed_actions,observable(t+1))`；
+  下一真实状态仅生成完成/继续的监督标签。
+  服务尚未开始、暂停、缺失进度、异常中断等被剔除并计数；
+  **没有用服务未开始当负样本**。
+- `business_transport/session_dynamics.py`：
+  对合法逐会话查询执行新模型概率前向，以独立粒子随机数做 Bernoulli 采样，
+  已有 ProgressAwareRule 决定运动/服务状态合成，
+  已有 WorkflowDynamics 决定合法后继释放，
+  外层容量与运动检查器仍必须通过。
+  **不学习或伪造确定资源规则**。
+- `business_transport/service_work.py`：
+  增加可选 predicted-start PETS 受限模式，检查当前**预测状态**在目标站点的
+  开始条件与冻结 PR11 训练特征分量范围。超出范围显式回退规则先验。
+  该范围检查只是覆盖启发式，不代表概率已校准或真正多变量 OOD 检验。
+  未来未释放阶段没有已知机器人和服务进度，不能当成已开始会话估计。
+
+## 9. 固定数据合同与第一次 CPU 训练
+
+训练前预提交数据配置：
+[`dataset_config.json`](../experiments/world_model_integration/dataset_config.json)。
+配置 SHA-256：
+`e286c064edc4a11abe76ec394a3465b527907f034812b78b27f19eac8dbca3bb`。
+
+数据生成观察（16 个独立 seed / 任务轨迹组，按整个轨迹分组而非逐行随机）：
+
+| Split | 轨迹组 | 有效事件 | 完成 | 继续 | 明确排除 |
+|---|---:|---:|---:|---:|---|
+| Train | 8 | 338 | 96 | 242 | 未开始89，设备暂停12 |
+| Validation | 4 | 174 | 48 | 126 | 未开始44，设备暂停8 |
+| Test | 4 | 170 | 48 | 122 | 未开始44，设备暂停8 |
+
+事实来源是新生成的**合成** BusinessSimulator 轨迹，不是 PR15/16 冻结确认集。
+不同 seed / 完整任务轨迹没有交叉进入不同 split；
+但地图结构模板在各 split 之间仍有复用，因此不能称为“未见地图”泛化。
+
+训练唯一固定方案：`seed1810, Adam lr0.001, epochs10, CPU180秒`；
+只用 Train 更新，Validation Brier 选 epoch，Validation F1 选固定候选阈值，
+Test 单次评价且不选参。
+训练已于 [Actions #42789483227](https://github.com/lieuyimo/wm/actions/runs/42789483227)
+真实执行并保存模型：最佳 epoch10；选阈值0.4；
+验证 Brier约0.22856；测试 Brier约0.22925；
+测试 ECE5约0.16267。
+权重 SHA-256：
+`84f426a7acdb860b283cc7f19efdc930ab6073d191bd17366949d7b7c52bb68d`。
+数据集 SHA-256：
+`1b0268dd86bd4c360c29f05fbc97d9fb8263ecf6ded75e62b1ff4e4e50e34b02`。
+
+**重要失效：** 在 Validation 选择的0.4阈值下，新模型对170条 Test
+均判定完成，TP48/FP122/TN0/FN0，精确率28.24%、召回100%。
+不得以100%召回率暗示良好完成事件识别。
+权重元数据 `online_verified=False`，普通加载**拒绝**；
+F 仅允许 `experimental=True` 在受控离线研究中调用，不能宣称生产已验证。
+
+## 10. 同事实服务事件的模型比较（Test=170）
+
+| 方法 | Brier↓ | 精确率 | 召回率 | 评价解释 |
+|---|---:|---:|---:|---|
+| Rule | 0.14118 | 0.7222 | 0.8125 | 冻结确定规则 |
+| PETS 原权重 | 0.40526 | 0.3776 | 0.7708 | 原7特征条件完成概率 |
+| Structured 原权重 | 0.43779 | 0.3370 | 0.6458 | 原服务 logit + sigmoid |
+| Business Session v2 | 0.22925 | 0.2824 | 1.0000 | 新48维目标会话概率 |
+
+同一组有效事实事件、同一时间边界、仅事实标签用于评估。
+学习新 v2 的 Brier 好于两个旧学习基线，却明显落后 Rule；
+这不是预测改善的证据。
+
+详细的 `session-event-comparison.json`、`session-dataset.json`、
+`session-v2.pt` 及训练日志由 CI 作为 60 天保留期的
+Actions artifact 存档。**该 artifact 不是永久 Git 归档**，
+需要长期保存必须另行纳入机构制品库；不可声称二进制权重已提交 Git。
+
+## 11. 六组真实合成仿真闭环与模型作用
+
+第一次、在任何结果前提交的六组对照配置：
+[`session_confirmation_config.json` 初次提交](https://github.com/lieuyimo/wm/blob/d1eb751de016731a6ca7acba7ac8f03eeff765cf/experiments/world_model_integration/session_confirmation_config.json)。
+成功执行：[CI #42790810770](https://github.com/lieuyimo/wm/actions/runs/42790810770)。
+两执行 seed × 三模式，四任务/案例，共24任务；
+相同 CP-SAT 候选、运动、预算、外生配置，F 用离线实验加载。
+
+| 方案 | 总完成 | 平均限制流转时间（步） | 平均决策耗时（ms） | 安全违规 |
+|---|---:|---:|---:|---:|
+| A Rule+workflow | 24/24 | 43.667 | 16.58 | 0 |
+| B PETS+原完整工作流评分 | 24/24 | 44.000 | 19.68 | 0 |
+| C PETS+活动条件剩余服务评分 | 24/24 | 44.000 | 22.40 | 0 |
+| D PETS+受限 predicted-start 评分 | 24/24 | 44.000 | 22.93 | 0 |
+| E Structured+相同评分 | 24/24 | 44.000 | 26.16 | 0 |
+| F Session v2（仅离线实验） | 24/24 | 43.833 | 24.04 | 0 |
+
+六个同状态固定候选点：B–F 相对 A **选择改变0/6、排名改变0/6**；
+模型候选分数可以不同但没有越过排名边界。
+六组同选动作的完整事实反事实平均决策损失1.375步，
+且无需看到不可观测未来才完成选择。不能据此主张学习模型改善调度。
+
+后续发现原配置不能确保“同时服务”的充分覆盖，
+于是**在看到初次结果之后**额外改变了合成资源并行容量，
+并增加1/3/5/10/20步预测误差统计。
+该操作已不是预注册独立确认，**必须明确标为事后机制/鲁棒性诊断，
+不能取代或覆盖第一次对照**。
+[补充诊断 CI #42791585030](https://github.com/lieuyimo/wm/actions/runs/42791585030)
+6案例的结果：A平均42.500步，F平均41.750步，C/D均42.583步；
+F在新配置下略优于A，但这是事后修改配置的探索数据，**不算独立学习收益**。
+
+在这份补充诊断中，事实有18至23个并发服务观察步/案例、
+无故障模式0个设备故障观察步、有突发故障模式各6步。
+1/3/5/10/20步预测的完整联合状态 exact（不同步长分母不同）：
+Rule为16/24、7/24、5/24、4/24、3/20；
+F为10/24、2/24、0/24、0/24、0/20。
+所有模型的这些窗口均通过合法性检查，但**合法覆盖不等于预测正确率**。
+未知故障与不含外生事件窗口分别计入原始结果，不偷用 Oracle。
+在这种较长期场景，学习 F 的状态预测依然不优于规则。
+
+## 12. 官方运动分支与限制
+
+- [CI #42791585030](https://github.com/lieuyimo/wm/actions/runs/42791585030)
+  实际安装已有固定来源 PIBT 与 LaCAM3，完成旧工作流回归与
+  新的 `tests/test_session_motion.py` 运动集成测试。
+  新模型 query 确实被调用；预测分支重置随机种子，
+  与真实恢复快照对照重复计算，不修改事实恢复缓存和站点容量。
+  官方规划算法/源码未改。
+- 既有 PR15/16 结果和 PR9/PR11 检查点未改；
+  原 PR15/16 原始同状态数据在本阶段没有重新完整跑一遍，
+  新增事实轨迹与本次 CPU 对照是独立于这些旧数据的新合成证据。
+- 用户要求的“新模型超越 Rule”不是工程完成条件；
+  **本轮功能打通，但学习预测、决策排序、完整工作流价值均未验证优势**。
+  更可能同时存在有限数据/标签可预测性、跨轨迹泛化不足、
+  候选对短窗服务误差的排名不敏感、未知外生事件不可预测等瓶颈。
+  现阶段应停止在这些确认/测试样本上追求有利阈值。

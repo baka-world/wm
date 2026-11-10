@@ -167,14 +167,28 @@ def report(summary_path, raw_path, out, robustness_summary=None, attribution_sum
         f"- 历史机制验收结果：{len(data['history_validation_issues'])} 个不一致。",
         "- 每个状态第一个候选被再次独立重放；事实策略在全部分支后重新运行，检查完整历史和事件不变。",
         "- 每条分支的恢复快照/路径缓存重新构造；按样本、阶段、站点键控的服务随机扰动保证同次实现公平。",
-        "- 现有单次随机实现无法排除事后幸运分支的影响。若差距大，需要冻结并验证同事实前缀的额外随机性分析。",
+        ("- 已单独归档同事实前缀、3 个固定额外未来服务时长种子的初步稳健性检验；"\
+         "仍不能把事后候选均值最优视为可在线使用的策略。" if robustness_summary else\
+         "- 现有单次随机实现无法排除事后幸运分支的影响。"),
         "",
         "## 研究判断与停止条件",
         "",
         "**" + s["diagnostic_not_final_causal_judgement"] + "**。",
         "",
         "这个标签仅是基于明确数值的工作诊断，不自动证明某个瓶颈是唯一因果因素。",
-        "当前任务上是否继续训练学习预测器，必须以规则基线与真未来参考的实际差距为前提。",
+        f"- A 候选机会不足：不成立，38/48 个状态差距至少 1 步，25/48 个至少 3 步。",
+        f"- B 预测误差：存在次要证据，准确 5 步使决策损失从 "
+        f"{f(s['methods']['Rule-5']['regret']['mean_of_cluster_means'])} 降到 "
+        f"{f(s['methods']['Perfect-State-5']['regret']['mean_of_cluster_means'])} 步；"
+        "但 PETS 的 48 次选择全部与规则相同，结构化头仅 1 次改善。",
+        f"- C 窗口/评分：更突出的瓶颈，准确 20 步将损失继续降至 "
+        f"{f(s['methods']['Perfect-State-20']['regret']['mean_of_cluster_means'])} 步，"
+        "仍有非零残余和错误排序。预测窗口与评分终端估计的贡献不能仅凭此次数据完全分离。",
+        "- D 候选集：存在未覆盖的单条合法 robot-task 配对，但没有补充完整可行批次的更优反事实证据，不能定为 D。",
+        "**最终选择 E（多瓶颈，当前以预测窗口/评分转换为主，预测误差亦存在）。**",
+        "**研究建议：不要在当前 5 步 workflow_score 不变的条件下继续盲目训练 PETS/结构化模型；"
+        "优先研究如何把更长时域的可信信息转化成更好决策。**",
+        "该建议不构成开发下一代模型、重设评分或扩大候选搜索的自动授权。",
         "本轮停止后不自动训练、改架构、改候选算法或合并 PR。",
         "",
         "## 完整重现命令",
@@ -191,4 +205,4 @@ def report(summary_path, raw_path, out, robustness_summary=None, attribution_sum
 
 
 if __name__ == "__main__":
-    report(*sys.argv[1:4])
+    report(*sys.argv[1:])

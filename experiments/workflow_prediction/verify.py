@@ -54,7 +54,7 @@ def verify(root,profile):
                 assert all((a['robot_id'],a['sample_id']) in legal for a in plan)
             assert len(decision['branches'])==len(decision['plans'])
             for label,forecast in decision['forecasts'].items():
-                assert sorted(forecast['ranking'])==list(range(len(decision['plans'])),label
+                assert sorted(forecast['ranking'])==list(range(len(decision['plans']))),label
                 assert forecast['choice']==forecast['ranking'][0]
     print(f'{profile}: validated {len(data["cases"])} complete scenarios, dynamic workflow invariants, '
           'observability, fixed candidate replay and actual model calls')

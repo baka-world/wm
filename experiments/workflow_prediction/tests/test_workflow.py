@@ -15,6 +15,7 @@ from experiments.business_constraints.run import make_model,rich_rows
 from experiments.business_constraints.tests.test_business import fixture
 from experiments.service_value.counterfactual import load_pr9_model
 from experiments.service_value.scoring import workload_components
+from experiments.workflow_prediction.verify import contains_hidden
 from lab_transport.decision_value import nearest_batch
 from lab_transport.dynamics_model import Geometry
 from lab_transport.paper_reuse.contracts import check_transition
@@ -45,6 +46,10 @@ class WorkflowTransitionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         torch.set_num_threads(1)
+
+    def test_evidence_auditor_flags_hidden_fields(self):
+        self.assertTrue(contains_hidden({'robots':[{'service_remaining':3}]}))
+        self.assertFalse(contains_hidden({'robots':[{'service_elapsed':3}]}))
 
     def test_single_two_three_stage_releases_and_next_tick_dispatch(self):
         for stages in (1,2,3):

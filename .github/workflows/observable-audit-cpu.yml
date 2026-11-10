@@ -1,0 +1,66 @@
+name: PR17 Offline Observable Information Audit (CPU)
+
+on:
+  push:
+    branches:
+      - feature/observable-information-audit-20261110
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  frozen-evidence-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: CPU-only boundary tests
+        run: python -m unittest discover -s experiments/oracle_value/tests -p 'test_observable_audit.py' -v
+      - name: Read only archived PR16 data (no simulator or model)
+        run: python -m experiments.oracle_value.observable_audit
+      - name: Verify 48 rows and evidence fingerprints
+        run: |
+          python - <<'PY'
+          import gzip,hashlib,json
+          from pathlib import Path
+          root=Path('examples/evidence/oracle-value-20261110')
+          rows=[json.loads(s) for s in (root/'observability-audit.jsonl').read_text().splitlines()]
+          data=json.loads((root/'observability-audit-summary.json').read_text())
+          assert len(rows)==48
+          assert len({r['id'] for r in rows})==48
+          assert data['counts']['candidates']==174
+          assert data['counts']['clusters']==8
+          assert all(r['future_offline_label_only']['identical_outage_timeline_across_all_fixed_candidates'] for r in rows)
+          assert Path('docs/observable-information-audit.md').exists()
+          source=(root/'confirmation/raw.json.gz')
+          with gzip.open(source,'rt',encoding='utf-8') as f:
+              assert len(json.load(f)['cases'])==24
+          for name in ('confirmation/raw.json.gz','confirmation/summary.json','robustness/raw.json'):
+              p=root/name
+              print('IMMUTABLE_PR16_SOURCE',name,hashlib.sha256(p.read_bytes()).hexdigest())
+          print('AUDIT_CHECKED',len(rows))
+          PY
+      - name: Attach CPU evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr17-observability-audit
+          path: |
+            docs/observable-information-audit.md
+            examples/evidence/oracle-value-20261110/observability-audit.jsonl
+            examples/evidence/oracle-value-20261110/observability-audit-summary.json
+      - name: Commit generated audit evidence to PR branch
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/observable-information-audit.md examples/evidence/oracle-value-20261110/observability-audit.jsonl examples/evidence/oracle-value-20261110/observability-audit-summary.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs(audit): archive frozen PR16 observable evidence and decision labels'
+            git push
+          fi

@@ -29,18 +29,24 @@ def case_for(spec, config):
     effective={**config,**spec}
     base,cfg,_=fixture(effective.get('resource_capacity_A',1))
     layout=spec["layout"]
-    if layout not in (0,1,2,3,4):raise ValueError("unsupported frozen map layout")
+    if layout not in range(9):raise ValueError("unsupported frozen map layout")
     # Distinct map/group geometry with public station and robot positions.
     dx=layout
     obstacles=({1:{(4,2)},2:{(4,2),(4,3)},
-                3:{(5,2),(6,2),(5,5)},4:{(6,2),(7,4),(8,3)}}.get(layout,set()))
+                3:{(5,2),(6,2),(5,5)},4:{(6,2),(7,4),(8,3)},
+                5:{(9,2),(11,5)},6:{(10,2),(12,5)},
+                7:{(11,2),(13,5)},8:{(12,2),(14,5)}}.get(layout,set()))
     new_grid=Grid(7+layout,5+layout,frozenset(obstacles))
     stations={}
+    public_per_station=effective.get("station_service_ticks",{})
     for sid,s in base.stations.items():
+        public_ticks=public_per_station.get(sid,effective.get("station_service_base_ticks",s.service_ticks))
+        if type(public_ticks) is not int or public_ticks<1:
+            raise ValueError("invalid public station service duration")
         station=replace(s,
             position=(s.position[0]+dx,s.position[1]+(1 if layout else 0)),
-            service_ticks=effective["station_service_base_ticks"],
-            prior_ticks=effective["station_service_base_ticks"],
+            service_ticks=public_ticks,
+            prior_ticks=public_ticks,
             jitter_ticks=effective["jitter_ticks"],
             outages=(tuple(effective["outage_window"]),) if spec["outage"] and sid==effective["outage_station"] else ())
         if not new_grid.contains(station.position):
@@ -53,8 +59,27 @@ def case_for(spec, config):
     for r in robots:
         if not new_grid.contains(r.position) or not new_grid.contains(r.home):
             raise ValueError("configured robot outside map")
+    if "robot_count" in effective:
+        count=effective["robot_count"]
+        if type(count) is not int or not 1<=count<=len(robots):
+            raise ValueError("invalid declared robot count")
+        robots=robots[:count]
+    if effective.get("workflow_variant")=="three":
+        # Only public route topology changes, never the simulator's hidden state.
+        cfg["workflows"]={**cfg["workflows"],
+            "w0":cfg["workflows"]["w0"]+[{"pickup":"C","dropoff":"B1"}],
+            "w1":cfg["workflows"]["w1"]+[{"pickup":"C","dropoff":"B0"}]}
+    elif effective.get("workflow_variant","two")!="two":
+        raise ValueError("unknown workflow variant")
+    if "job_release_ticks" in effective:
+        releases=effective["job_release_ticks"]
+    else:
+        patterns=((0,0,2,6),(0,2,4,10),(0,0,5,10),(0,1,7,12))
+        releases=patterns[effective["release_pattern"]]
+    if len(effective["job_workflows"])>len(releases):
+        raise ValueError("missing public release timestamps for jobs")
     jobs=[{"id":f"F{spec['seed']}-{i}","workflow":flow,"release_tick":tick}
-          for i,(flow,tick) in enumerate(zip(effective["job_workflows"],effective["job_release_ticks"]))]
+          for i,(flow,tick) in enumerate(zip(effective["job_workflows"],releases))]
     cfg={**cfg,"jobs":jobs,"max_ticks":effective["max_ticks"]}
     business=compile_scenario(replace(base,grid=new_grid,stations=stations,robots=robots),cfg)
     return business,Geometry(new_grid)

@@ -1,0 +1,150 @@
+{
+  "evidence_version": "pr18-session-v3-frozen-conclusion-20261110",
+  "source_repo": "lieuyimo/wm",
+  "branch": "feature/world-model-decision-integration-20261110",
+  "no_gpu": true,
+  "pr": 18,
+  "pr_draft": true,
+  "pr19_unchanged": true,
+  "old_data_and_checkpoints_untouched": true,
+  "training_source": {
+    "dataset_sha256": "1b0268dd86bd4c360c29f05fbc97d9fb8263ecf6ded75e62b1ff4e4e50e34b02",
+    "v2_checkpoint_sha256": "84f426a7acdb860b283cc7f19efdc930ab6073d191bd17366949d7b7c52bb68d"
+  },
+  "trained_once": {
+    "github_run_id": 42798391472,
+    "artifact_id": 13753819654,
+    "selection_split": "validation",
+    "selected": "V3-C",
+    "fixed_threshold": 0.5,
+    "gradient_steps": {
+      "V2_frozen": 10,
+      "V3-A": {
+        "performed": 825,
+        "best_checkpoint_at": 715
+      },
+      "V3-B": {
+        "performed": 10,
+        "best_checkpoint_at": 10
+      },
+      "V3-C": {
+        "performed": 1100,
+        "best_checkpoint_at": 990
+      }
+    },
+    "checkpoints_sha256": {
+      "V3-A": "78de0b5f4f5b9c4d98d26fe22bdb985d38097349bc8f8ca223edf607e10de76d",
+      "V3-B": "386e99dc2308553e1f764bf0a229afe4c93ec99629295155c1b2f17b402ca5d5",
+      "V3-C": "65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696"
+    },
+    "validation_brier": {
+      "B0": 0.19982879958081273,
+      "B1": 0.06777283796131105,
+      "B2": 0.06790485173195097,
+      "Rule": 0.13218390804597702,
+      "frozen_V2": 0.2285560733034012,
+      "V3-A": 0.07837163331078811,
+      "V3-B": 0.2282599906336591,
+      "V3-C": 0.07247923049948096
+    },
+    "validation_v3c": {
+      "logloss": 0.21759737984530356,
+      "ece5": 0.04990718040133435,
+      "early_stop_note": "validation selected epoch90, capped100"
+    },
+    "inference_feature_version": "business-service-query-input-v3",
+    "old_v2_feature_version_preserved": true
+  },
+  "independent_test": {
+    "github_run_id": 42799403483,
+    "artifact_id": 13754758844,
+    "config_sha256": "4b36fdc497dc54a1a3ba158d2d675e0adf797a4951db49c1c0c237e6dca4abae",
+    "new_seeds": [
+      33101,
+      33103,
+      33107,
+      33109,
+      33113,
+      33117
+    ],
+    "new_map_layouts": [
+      3,
+      4
+    ],
+    "full_trajectory_groups": 6,
+    "eligible_event_records": 558,
+    "completed_events": 96,
+    "excluded_not_started": 85,
+    "event_prevalence": 0.17204301075268819,
+    "metrics": {
+      "B0": {
+        "brier": 0.15498388094449997,
+        "log_loss": 0.4931773365846266,
+        "ece5": 0.1119806578863663
+      },
+      "B1": {
+        "brier": 0.2611270460122062,
+        "log_loss": 0.7934181346473944,
+        "ece5": 0.2848036685919234
+      },
+      "B2": {
+        "brier": 0.26551626815169294,
+        "log_loss": 0.8812217348124649,
+        "ece5": 0.2846208868431016
+      },
+      "Rule": {
+        "brier": 0.10931899641577061,
+        "log_loss": 1.7620141297642478,
+        "ece5": 0.10931899641577061
+      },
+      "PETS": {
+        "brier": 0.47983543299103554,
+        "log_loss": 2.236503843280924,
+        "ece5": 0.5025397335673787
+      },
+      "Structured": {
+        "brier": 0.49195389108066007,
+        "log_loss": 1.7287025664387172,
+        "ece5": 0.5552785184007392
+      },
+      "frozen_V2": {
+        "brier": 0.21652900011252987,
+        "log_loss": 0.6259365317621514,
+        "ece5": 0.27193341908916346
+      },
+      "selected_V3_C": {
+        "brier": 0.17331429470442142,
+        "log_loss": 0.5949127414719421,
+        "ece5": 0.21245695597175535,
+        "precision": 0.44075829383886256,
+        "recall": 0.96875
+      }
+    },
+    "by_trajectory_v3_minus_rule_brier": {
+      "new-map3-seed33101": 0.0008834955122026533,
+      "new-map4-seed33103": 0.042724756966250804,
+      "new-map4-seed33107": -0.06566448951852322,
+      "new-map3-seed33109": 0.07107637491753402,
+      "new-map3-seed33113": 0.1484832122108563,
+      "new-map4-seed33117": 0.12219539372787339
+    },
+    "decision_gate_passed": false,
+    "reason": "holdout v3-C Brier exceeds both B0 and Rule; beats B2 only",
+    "further_decision_experiments": "stopped after one legal model-world transition smoke",
+    "decision_value_claim": "not established"
+  },
+  "interpretation": {
+    "original_training_updates_major_bottleneck": true,
+    "extra_public_target_features_independent_validation_improvement": true,
+    "neural_model_vs_empirical_validation": "V3-C below B0/Rule, above B1/B2 in Brier",
+    "neural_model_vs_independent_test": "V3-C above B1/B2 but below fixed B0 and Rule in Brier",
+    "new_total_duration_noise_and_prior_shift": "current observed progress can predict conditional completion; new unseen service-duration distributions shift the hazard, future surprise faults remain unknowable",
+    "evidence_classification": "C - no independent superiority over fixed-probability baseline; stop blind training",
+    "significance_caveat": "events within same trajectory correlated; only six independent trajectory groups"
+  },
+  "raw_evidence": {
+    "training": "https://github.com/lieuyimo/wm/actions/runs/42798391472",
+    "independent": "https://github.com/lieuyimo/wm/actions/runs/42799403483",
+    "binary_artifacts_expire": "90 days after upload; permanent checkpoint storage separate from git"
+  }
+}

@@ -80,10 +80,10 @@ def initial_state(business,geo,seed):
     obs=BusinessObserver(); captured=[]
     def on_observation(o):
         rich=obs.observe(o)
-        if o.tick==0:captured.append(rich)
+        if o.tick==0:captured.append((o,rich))
     BusinessSimulator(business,'world',seed,collect_metrics=False).run(
         dispatch_policy=lambda o,c:nearest_batch(o,c,geo),on_observation=on_observation)
-    if len(captured)!=1 or captured[0].tick!=0:
+    if len(captured)!=1 or captured[0][0].tick!=0 or captured[0][1].tick!=0:
         raise AssertionError('tick0 observation capture failed')
     return captured[0]
 
@@ -150,7 +150,7 @@ def predict_features(business,geo,obs,plans,v4_path):
 def collect_group(split,spec,p,v4_path,deadline):
     start=time.monotonic()
     business,geo=scenario_for(spec)
-    obs=initial_state(business,geo,spec['seed'])
+    raw_initial,obs=initial_state(business,geo,spec['seed'])
     batches,total=batch_candidates(obs,candidates_for(obs),geo,budget=p['candidate_limit']+1)
     plans=list(dict.fromkeys(tuple(plan) for plan in batches if plan))[:p['candidate_limit']]
     if not plans: raise AssertionError('no legal dispatch candidate')
@@ -165,7 +165,7 @@ def collect_group(split,spec,p,v4_path,deadline):
         flows=[];visible_flows=[];runtime=[]
         for offset in offsets:
             if time.monotonic()>deadline:raise TimeoutError('30-minute CPU budget exhausted before test')
-            result=run_branch(business,geo,spec['seed']+offset,plan,'P1_nearest',obs)
+            result=run_branch(business,geo,spec['seed']+offset,plan,'P1_nearest',raw_initial)
             flows.append(float(result['restricted_mean_flow']))
             visible_jobs={getattr(x,'job_id','') for x in obs.samples}
             visible=[flow for job,flow in zip(business.jobs,result['per_job_flow']) if job['id'] in visible_jobs]
@@ -173,7 +173,7 @@ def collect_group(split,spec,p,v4_path,deadline):
             runtime.append(float(result['cpu_wall_seconds']))
             if result['safety_capacity_violations']:raise AssertionError('capacity violation')
             if ix==0 and offset==0:
-                duplicate=run_branch(business,geo,spec['seed'],plan,'P1_nearest',obs)
+                duplicate=run_branch(business,geo,spec['seed'],plan,'P1_nearest',raw_initial)
                 if any(result[k]!=duplicate[k] for k in ('history_sha256','events_sha256','restricted_mean_flow')):
                     raise AssertionError('same-seed replay not deterministic')
         outcomes.append({'values':flows,'mean':statistics.mean(flows),

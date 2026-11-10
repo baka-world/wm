@@ -395,8 +395,14 @@
         "tick": 0
       }
     ],
+    "pre_fault_robustness": {
+      "count": 8,
+      "mean_robust_rule_opportunity": 6.611111111111112,
+      "nominal_best_stays_best": 8
+    },
     "robustness_overlap": 25,
-    "scenes": 24
+    "scenes": 24,
+    "share_of_rule_to_perfect20_improvement_from_real_pre_fault_onset_20": 0.875878220140515
   },
   "input_protocol": "PR16 frozen 24 scenes / 8 map-seed clusters / 48 decisions",
   "observability_warning": "Fault onset labels derived solely from realized post-action state changes. Neither future fault schedule nor realized stochastic service times are inputs to the currently deployed models. Association is not prognosis.",

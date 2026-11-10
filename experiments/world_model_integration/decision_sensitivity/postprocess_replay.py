@@ -124,7 +124,7 @@ def main():
     report=summarize(json.loads(original))
     report["raw_replay_sha256"]=hashlib.sha256(original).hexdigest()
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\\n")
+    args.output.write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n")
     print(json.dumps({"parity":report["original_5step_parity_all"],"cases":[
       {"seed":c["seed"],"classes":{h:w["classification"] for h,w in c["windows"].items()}}
       for c in report["cases"]]}))

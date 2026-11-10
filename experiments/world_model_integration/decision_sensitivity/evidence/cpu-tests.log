@@ -1,0 +1,11 @@
+test_identical_input_events_and_recursive_differences_distinct (test_replay_cpu.FrozenCPUTraceTests) ... ok
+test_label_is_development_not_new_independent (test_replay_cpu.FrozenCPUTraceTests) ... ok
+test_network_forward_calls_only_when_eligible (test_replay_cpu.FrozenCPUTraceTests) ... ok
+test_original_five_step_scores_all_match (test_replay_cpu.FrozenCPUTraceTests) ... ok
+test_sampled_rng_stream_matches_unmodified_seed (test_replay_cpu.FrozenCPUTraceTests) ... ok
+test_trace_snapshots_are_not_retroactively_mutated (test_replay_cpu.FrozenCPUTraceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.104s
+
+OK

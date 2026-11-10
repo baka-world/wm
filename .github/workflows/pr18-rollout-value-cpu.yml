@@ -1,0 +1,78 @@
+name: PR18 offline rollout value development CPU (NO training)
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-rollout-value-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paired-future-value:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only environment - NO MODEL TRAINING
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, 'GPU-enabled PyTorch disallowed'
+          torch.set_num_threads(1)
+          print('CPU-only',torch.__version__)
+          PY
+      - name: Enforce archived immutable V4 source provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-rollout"
+          cd experiments/world_model_integration/decision_sensitivity/evidence
+          echo '4ccbc98c9ac9e0234f0e86edad533733212335e4102fa7db273b1c80d297d3a1  original-v4-dispatch.json' | sha256sum -c
+          echo '5c3b5c41f89395db6d6512cd2e35133dda7164ad6feb3ca626ee269f3c186fbb  v4-decision-sensitivity-replay.json.gz' | sha256sum -c
+          gzip -cd v4-decision-sensitivity-replay.json.gz | sha256sum | grep -F 'fc7aa63eff18c9f33d14201f81d0a280c3687335770d98d6079e55ff50f68d36'
+          cd "$GITHUB_WORKSPACE"
+          python -m unittest discover -s experiments/world_model_integration/rollout_value/tests -v 2>&1 | tee "$RUNNER_TEMP/pr18-rollout/tests.log"
+      - name: STOP-GATE -- real simulator restart and exact historical reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 550s python -m experiments.world_model_integration.rollout_value.evaluate \
+            --dispatch experiments/world_model_integration/decision_sensitivity/evidence/original-v4-dispatch.json \
+            --replay experiments/world_model_integration/decision_sensitivity/evidence/v4-decision-sensitivity-replay.json.gz \
+            --output "$RUNNER_TEMP/pr18-rollout/preflight.json" --phase preflight \
+            2>&1 | tee "$RUNNER_TEMP/pr18-rollout/preflight.log"
+      - name: Paired full-future P1/P2 evaluation (fixed offsets, no scenario search)
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 1450s python -m experiments.world_model_integration.rollout_value.evaluate \
+            --dispatch experiments/world_model_integration/decision_sensitivity/evidence/original-v4-dispatch.json \
+            --replay experiments/world_model_integration/decision_sensitivity/evidence/v4-decision-sensitivity-replay.json.gz \
+            --output "$RUNNER_TEMP/pr18-rollout/full-value.json" --phase full \
+            2>&1 | tee "$RUNNER_TEMP/pr18-rollout/full-value.log"
+      - name: Archive immutable original CPU analysis even if a gate fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-rollout-value-cpu-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-rollout/*.json
+            ${{ runner.temp }}/pr18-rollout/*.log
+          if-no-files-found: warn
+          retention-days: 90

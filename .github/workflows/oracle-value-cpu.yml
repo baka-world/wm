@@ -10,6 +10,10 @@ on:
       - '.github/workflows/oracle-value-cpu.yml'
   workflow_dispatch:
 
+concurrency:
+  group: oracle-value-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -85,6 +89,24 @@ jobs:
           print('Confirmation:',s['scenarios'],'scenes;',s['clusters'],'clusters;',
                 s['actual_decisions'],'decisions;',s['failed_decisions'],'invalid')
           PY
+      - name: Re-evaluate high-gap candidates with three FROZEN future-service random seeds
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 1500s python -m experiments.oracle_value.robustness \
+            --raw "$RUNNER_TEMP/oracle-out/confirmation/raw.json.gz" \
+            --output "$RUNNER_TEMP/oracle-out/robustness" \
+            --pibt-library "$WM_PIBT_LIBRARY" --lacam-worker "$WM_LACAM3_WORKER" \
+            2>&1 | tee "$RUNNER_TEMP/oracle-robustness.log"
+          python - "$RUNNER_TEMP/oracle-out/robustness" <<'PY'
+          import json,sys
+          from pathlib import Path
+          v=json.loads((Path(sys.argv[1])/'summary.json').read_text())
+          assert v['failed_replays']==0
+          assert v['qualifying_decisions']>0
+          assert v['valid_robust_decisions']==v['qualifying_decisions']
+          print('Robustness complete',v['candidate_replays'],'candidate replays')
+          PY
       - name: Archive raw results and generated report
         shell: bash
         run: |
@@ -93,9 +115,11 @@ jobs:
           mkdir -p "$target"/history "$target"/confirmation
           cp "$RUNNER_TEMP/oracle-out/history/"{raw.json.gz,summary.json,cpu.json,preflight.json} "$target/history/"
           cp "$RUNNER_TEMP/oracle-out/confirmation/"{raw.json.gz,summary.json,cpu.json,preflight.json} "$target/confirmation/"
+          mkdir -p "$target/robustness"
+          cp "$RUNNER_TEMP/oracle-out/robustness/"{raw.json,summary.json} "$target/robustness/"
           python -m experiments.oracle_value.report "$target/confirmation/summary.json" \
-            "$target/confirmation/raw.json.gz" docs/world-model-value-ceiling.md
-          (cd "$target" && find history confirmation -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+            "$target/confirmation/raw.json.gz" docs/world-model-value-ceiling.md "$target/robustness/summary.json"
+          (cd "$target" && find history confirmation robustness -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
           (cd "$target" && sha256sum -c SHA256SUMS)
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -116,6 +140,7 @@ jobs:
             ${{ runner.temp }}/oracle-pr15-regression.log
             ${{ runner.temp }}/oracle-history.log
             ${{ runner.temp }}/oracle-confirmation.log
+            ${{ runner.temp }}/oracle-robustness.log
             ${{ runner.temp }}/oracle-out/
           if-no-files-found: warn
           retention-days: 30

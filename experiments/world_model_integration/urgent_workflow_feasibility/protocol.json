@@ -1,0 +1,61 @@
+{
+  "protocol": "pr18-urgent-retest-synthetic-feasibility-v1-20261111",
+  "source_head": "4a3ca9edc10350d4fbe42538c00c3b19ad28fffb",
+  "source_class": "synthetic_business_mechanism_not_company_parameters",
+  "smoke_seeds": [
+    902001,
+    902074,
+    902147,
+    902220
+  ],
+  "development_seeds": [
+    903001,
+    903074,
+    903147,
+    903220,
+    903293,
+    903366,
+    903439,
+    903512,
+    903585,
+    903658,
+    903731,
+    903804,
+    903877,
+    903950,
+    904023,
+    904096,
+    904169,
+    904242,
+    904315,
+    904388
+  ],
+  "scenario_max_ticks": 165,
+  "max_jobs": 6,
+  "retest_probability_options_percent": [
+    0,
+    35,
+    65
+  ],
+  "max_legal_candidates": 4,
+  "cpsat_seconds": 0.12,
+  "deterministic_cpsat_seconds": 0.02,
+  "baselines": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "candidate_policy": "BusinessCPSAT unchanged, same legal candidates and objective, bounded distinct matching",
+  "factual_continuation": "P0",
+  "oracle_selected_max_states": 12,
+  "oracle_max_per_scenario": 1,
+  "oracle_candidate_max": 4,
+  "oracle_selection": "observed urgent and routine waiting, >=2 unique CP-SAT candidates, scenario seed asc, tick asc, before any true cost",
+  "paired_future": "same_original_seed_single_realization_only",
+  "cpu_timeout_seconds": 1740,
+  "no_old_holdout_reuse": true,
+  "job_metrics": "workflow-final-stage flow and right-censoring at max_ticks",
+  "public_duration_jitter_prior": true,
+  "P3_semantics": "analytic discrete nominal service duration with public jitter, workload dependencies approximate, not simulator oracle"
+}

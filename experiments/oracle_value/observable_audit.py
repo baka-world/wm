@@ -415,7 +415,7 @@ def build_report(records, summary):
         "**资源占用与负载：** resource_occupied 和 capacity_blocked"
         "表征当下调度/队列拥堵，与未来设备故障预兆不是同一变量。"
         + ("8 个故障前 tick=0 的状态资源占用全部为 0。"
-           if empty_pre_fault else "")
+           if empty_pre_fault else "") +
         "即便有限样本出现相关性，也可能来自固定场景/时刻配置，"
         "不能称为可部署的故障风险模型证据。",
         "",

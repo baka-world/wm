@@ -20,5 +20,18 @@
   "not_an_independent_confirmation": true,
   "model_training_in_this_diagnostic": false,
   "gpu_used_by_diagnostic": false,
-  "business_truth_used_as_online_model_input": false
+  "business_truth_used_as_online_model_input": false,
+  "unintended_existing_pr_ci_reruns": [
+    {
+      "run": 42851675182,
+      "workflow": "World model decision integration CPU",
+      "contains_legacy_cpu_model_training": true
+    },
+    {
+      "run": 42851675471,
+      "workflow": "PR18 frozen v3 CPU ablation",
+      "contains_legacy_cpu_model_training": true
+    }
+  ],
+  "execution_limit_qualification": "Dedicated V4 diagnostic jobs did not train; first workflow commit unexpectedly triggered existing PR CI with legacy CPU training; do not claim whole-turn zero training."
 }

@@ -18,5 +18,7 @@
   "python": "Python 3.10.22",
   "cmake": "cmake version 3.31.10",
   "cxx": "c++ (Debian 14.2.0-19) 14.2.0",
-  "limitations": "Hospital roles/tasks/station services are simulation assumptions; historical scenes are not independent confirmation of generalizability."
+  "limitations": "Hospital roles/tasks/station services are simulation assumptions; historical scenes are not independent confirmation of generalizability.",
+  "resource_profile_script_sha256": "dc94e0786a4d40c187e04e34994a27f73c9f2de216f9743948c61fee0bd7f973",
+  "resource_profile": "separate 20 ms process-tree sampling on same 66 executions; approximate CPU and aggregate RSS"
 }

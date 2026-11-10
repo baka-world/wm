@@ -23,3 +23,4 @@ for stem in clinic-gate paired ablation model-alignment; do
 done
 python -m experiments.lacam3_recovery.verify "$WM_OUT"
 python -m experiments.lacam3_recovery.summarize "$WM_OUT/paired.json" "$WM_OUT/summary.json"
+python -m experiments.lacam3_recovery.resource_profile --source-dir "$WM_SOURCES" --pibt-library "$WM_PIBT_LIBRARY" --lacam-worker "$WM_LACAM_WORKER" --paired "$WM_OUT/paired.json" --output "$WM_OUT/resource-profile.json"

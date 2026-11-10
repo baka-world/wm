@@ -1,0 +1,1042 @@
+{
+  "sampling_interval_seconds": 0.02,
+  "cpu_definition": "maximum sampled interval mean of whole child process tree, 100% = one core; quantization and short-lived processes can over- or underestimate",
+  "memory_definition": "maximum sampled sum of process RSS; shared pages may be counted more than once",
+  "purpose": "separate replay for resource sampling; timed paired.json is unmodified",
+  "cases": [
+    {
+      "layout": "tartu",
+      "seed": 61000,
+      "regime": "hospital_pilot",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 2,
+            "jobs": 5,
+            "stages_completed": 4,
+            "stages": 9,
+            "ticks": 800,
+            "status": "timed_out"
+          },
+          "sample_count": 30,
+          "peak_sampled_cpu_percent_one_core": 145.24827529749976,
+          "peak_sampled_process_tree_rss_kb": 262984.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 5,
+            "jobs": 5,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 175,
+            "status": "completed"
+          },
+          "sample_count": 6,
+          "peak_sampled_cpu_percent_one_core": 97.67818943649362,
+          "peak_sampled_process_tree_rss_kb": 261996.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 5,
+            "jobs": 5,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 175,
+            "status": "completed"
+          },
+          "sample_count": 6,
+          "peak_sampled_cpu_percent_one_core": 96.79801835085776,
+          "peak_sampled_process_tree_rss_kb": 262304.0
+        }
+      }
+    },
+    {
+      "layout": "clinic",
+      "seed": 61000,
+      "regime": "hospital_pilot",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 2,
+            "jobs": 5,
+            "stages_completed": 4,
+            "stages": 9,
+            "ticks": 800,
+            "status": "timed_out"
+          },
+          "sample_count": 22,
+          "peak_sampled_cpu_percent_one_core": 144.96655114240704,
+          "peak_sampled_process_tree_rss_kb": 263356.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 2,
+            "jobs": 5,
+            "stages_completed": 4,
+            "stages": 9,
+            "ticks": 800,
+            "status": "timed_out"
+          },
+          "sample_count": 18,
+          "peak_sampled_cpu_percent_one_core": 147.01500729245086,
+          "peak_sampled_process_tree_rss_kb": 267820.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 5,
+            "jobs": 5,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 115,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 96.83886003962634,
+          "peak_sampled_process_tree_rss_kb": 262048.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "single_compatible",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 53,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 48.32511669445437,
+          "peak_sampled_process_tree_rss_kb": 256280.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 61,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 47.01942014860042,
+          "peak_sampled_process_tree_rss_kb": 260968.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 61,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 96.95144894433336,
+          "peak_sampled_process_tree_rss_kb": 261368.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "workflow_serial",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 48,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 47.061556421961114,
+          "peak_sampled_process_tree_rss_kb": 256388.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 52,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 47.077523829764615,
+          "peak_sampled_process_tree_rss_kb": 261080.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 52,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 90.1783592686384,
+          "peak_sampled_process_tree_rss_kb": 261460.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "workflow_parallel",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 47,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 46.02873297664915,
+          "peak_sampled_process_tree_rss_kb": 256304.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 51,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 46.47968879426057,
+          "peak_sampled_process_tree_rss_kb": 260984.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 51,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 95.09231871300983,
+          "peak_sampled_process_tree_rss_kb": 261300.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "workflow_outage",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 61,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 46.76805825792267,
+          "peak_sampled_process_tree_rss_kb": 256308.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 68,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 145.05407664480958,
+          "peak_sampled_process_tree_rss_kb": 261512.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 68,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 96.73468679030977,
+          "peak_sampled_process_tree_rss_kb": 261500.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67005,
+      "regime": "single_compatible",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 47,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 45.74634266016565,
+          "peak_sampled_process_tree_rss_kb": 256344.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 50,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 46.8687393613885,
+          "peak_sampled_process_tree_rss_kb": 260944.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 50,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 97.89079117361243,
+          "peak_sampled_process_tree_rss_kb": 261448.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67005,
+      "regime": "workflow_serial",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 53,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 47.246877217676094,
+          "peak_sampled_process_tree_rss_kb": 256300.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 60,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 96.35399378193281,
+          "peak_sampled_process_tree_rss_kb": 261776.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 60,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 95.2923211069229,
+          "peak_sampled_process_tree_rss_kb": 261640.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67005,
+      "regime": "workflow_parallel",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 51,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 47.437769829334066,
+          "peak_sampled_process_tree_rss_kb": 256304.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 59,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 144.50617855460808,
+          "peak_sampled_process_tree_rss_kb": 261248.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 59,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 96.75735152766164,
+          "peak_sampled_process_tree_rss_kb": 261504.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67005,
+      "regime": "workflow_outage",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 66,
+            "status": "completed"
+          },
+          "sample_count": 2,
+          "peak_sampled_cpu_percent_one_core": 46.58546044480377,
+          "peak_sampled_process_tree_rss_kb": 256364.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 73,
+            "status": "completed"
+          },
+          "sample_count": 5,
+          "peak_sampled_cpu_percent_one_core": 128.80750143984264,
+          "peak_sampled_process_tree_rss_kb": 261964.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 73,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 97.32300424722092,
+          "peak_sampled_process_tree_rss_kb": 261932.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "single_compatible",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 61,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 97.56919521985182,
+          "peak_sampled_process_tree_rss_kb": 257004.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 72,
+            "status": "completed"
+          },
+          "sample_count": 9,
+          "peak_sampled_cpu_percent_one_core": 97.81633828194916,
+          "peak_sampled_process_tree_rss_kb": 266888.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 72,
+            "status": "completed"
+          },
+          "sample_count": 8,
+          "peak_sampled_cpu_percent_one_core": 97.7788555180571,
+          "peak_sampled_process_tree_rss_kb": 267808.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "workflow_serial",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 83,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 96.73724616211537,
+          "peak_sampled_process_tree_rss_kb": 257428.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 101,
+            "status": "completed"
+          },
+          "sample_count": 11,
+          "peak_sampled_cpu_percent_one_core": 145.81571595865947,
+          "peak_sampled_process_tree_rss_kb": 268852.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 101,
+            "status": "completed"
+          },
+          "sample_count": 12,
+          "peak_sampled_cpu_percent_one_core": 96.93344268750874,
+          "peak_sampled_process_tree_rss_kb": 269872.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "workflow_parallel",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 86,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 101.18798858550191,
+          "peak_sampled_process_tree_rss_kb": 257444.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 92,
+            "status": "completed"
+          },
+          "sample_count": 10,
+          "peak_sampled_cpu_percent_one_core": 145.67423986541226,
+          "peak_sampled_process_tree_rss_kb": 269512.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 92,
+            "status": "completed"
+          },
+          "sample_count": 11,
+          "peak_sampled_cpu_percent_one_core": 145.4860057012407,
+          "peak_sampled_process_tree_rss_kb": 270340.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "workflow_outage",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 100,
+            "status": "completed"
+          },
+          "sample_count": 5,
+          "peak_sampled_cpu_percent_one_core": 144.14802964662363,
+          "peak_sampled_process_tree_rss_kb": 257988.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 107,
+            "status": "completed"
+          },
+          "sample_count": 13,
+          "peak_sampled_cpu_percent_one_core": 144.71704633699358,
+          "peak_sampled_process_tree_rss_kb": 269060.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 107,
+            "status": "completed"
+          },
+          "sample_count": 21,
+          "peak_sampled_cpu_percent_one_core": 225.71296518470598,
+          "peak_sampled_process_tree_rss_kb": 270352.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68001,
+      "regime": "single_compatible",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 60,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 123.91718069661337,
+          "peak_sampled_process_tree_rss_kb": 257024.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 69,
+            "status": "completed"
+          },
+          "sample_count": 8,
+          "peak_sampled_cpu_percent_one_core": 303.12351022954107,
+          "peak_sampled_process_tree_rss_kb": 266864.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 69,
+            "status": "completed"
+          },
+          "sample_count": 9,
+          "peak_sampled_cpu_percent_one_core": 145.14900416146648,
+          "peak_sampled_process_tree_rss_kb": 267724.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68001,
+      "regime": "workflow_serial",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 73,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 143.87796386241408,
+          "peak_sampled_process_tree_rss_kb": 257576.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 82,
+            "status": "completed"
+          },
+          "sample_count": 13,
+          "peak_sampled_cpu_percent_one_core": 202.97642189304221,
+          "peak_sampled_process_tree_rss_kb": 267992.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 82,
+            "status": "completed"
+          },
+          "sample_count": 10,
+          "peak_sampled_cpu_percent_one_core": 146.97344924586682,
+          "peak_sampled_process_tree_rss_kb": 269168.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68001,
+      "regime": "workflow_parallel",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 68,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 89.35725194697724,
+          "peak_sampled_process_tree_rss_kb": 257260.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 78,
+            "status": "completed"
+          },
+          "sample_count": 12,
+          "peak_sampled_cpu_percent_one_core": 133.96400012244425,
+          "peak_sampled_process_tree_rss_kb": 268264.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 78,
+            "status": "completed"
+          },
+          "sample_count": 11,
+          "peak_sampled_cpu_percent_one_core": 145.3521963661672,
+          "peak_sampled_process_tree_rss_kb": 269148.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68001,
+      "regime": "workflow_outage",
+      "robots": 3,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 79,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 145.69051817903863,
+          "peak_sampled_process_tree_rss_kb": 257212.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 89,
+            "status": "completed"
+          },
+          "sample_count": 10,
+          "peak_sampled_cpu_percent_one_core": 146.1625177136268,
+          "peak_sampled_process_tree_rss_kb": 268960.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 9,
+            "stages": 9,
+            "ticks": 89,
+            "status": "completed"
+          },
+          "sample_count": 13,
+          "peak_sampled_cpu_percent_one_core": 141.99699941364824,
+          "peak_sampled_process_tree_rss_kb": 269860.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "single_compatible",
+      "robots": 5,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 43,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 95.7240314461638,
+          "peak_sampled_process_tree_rss_kb": 256248.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 48,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 136.23702262923598,
+          "peak_sampled_process_tree_rss_kb": 261056.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 48,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 97.75964705631812,
+          "peak_sampled_process_tree_rss_kb": 261428.0
+        }
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 67000,
+      "regime": "workflow_serial",
+      "robots": 5,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 41,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 90.94533676011865,
+          "peak_sampled_process_tree_rss_kb": 256272.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 47,
+            "status": "completed"
+          },
+          "sample_count": 3,
+          "peak_sampled_cpu_percent_one_core": 144.44433851790154,
+          "peak_sampled_process_tree_rss_kb": 261468.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 8,
+            "stages": 8,
+            "ticks": 47,
+            "status": "completed"
+          },
+          "sample_count": 6,
+          "peak_sampled_cpu_percent_one_core": 170.41044207033298,
+          "peak_sampled_process_tree_rss_kb": 261892.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "single_compatible",
+      "robots": 5,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 63,
+            "status": "completed"
+          },
+          "sample_count": 5,
+          "peak_sampled_cpu_percent_one_core": 124.78581554699241,
+          "peak_sampled_process_tree_rss_kb": 257028.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 66,
+            "status": "completed"
+          },
+          "sample_count": 13,
+          "peak_sampled_cpu_percent_one_core": 137.37472055143252,
+          "peak_sampled_process_tree_rss_kb": 268604.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 6,
+            "stages": 6,
+            "ticks": 66,
+            "status": "completed"
+          },
+          "sample_count": 12,
+          "peak_sampled_cpu_percent_one_core": 144.3698501469414,
+          "peak_sampled_process_tree_rss_kb": 269216.0
+        }
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 68000,
+      "regime": "workflow_serial",
+      "robots": 5,
+      "methods": {
+        "legacy": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 80,
+            "status": "completed"
+          },
+          "sample_count": 4,
+          "peak_sampled_cpu_percent_one_core": 97.50601551181775,
+          "peak_sampled_process_tree_rss_kb": 257488.0
+        },
+        "pibt": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 82,
+            "status": "completed"
+          },
+          "sample_count": 11,
+          "peak_sampled_cpu_percent_one_core": 146.08064177321273,
+          "peak_sampled_process_tree_rss_kb": 271276.0
+        },
+        "hybrid": {
+          "outcome": {
+            "jobs_completed": 6,
+            "jobs": 6,
+            "stages_completed": 10,
+            "stages": 10,
+            "ticks": 82,
+            "status": "completed"
+          },
+          "sample_count": 13,
+          "peak_sampled_cpu_percent_one_core": 146.26330173340827,
+          "peak_sampled_process_tree_rss_kb": 272140.0
+        }
+      }
+    }
+  ]
+}

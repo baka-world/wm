@@ -1,0 +1,10 @@
+test_categories (test_audit.AuditContracts) ... ok
+test_future_classification_is_single_realization (test_audit.AuditContracts) ... ok
+test_no_independent_groups (test_audit.AuditContracts) ... ok
+test_plan_matching_order_not_fake_choice (test_audit.AuditContracts) ... ok
+test_selection_no_true_cost (test_audit.AuditContracts) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

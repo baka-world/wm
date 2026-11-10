@@ -1,0 +1,13 @@
+{
+  "run_id": 42878438603,
+  "source_head": "1a14c5d8bbbf3fa3a5cab21f12a944cc2e94c58b",
+  "protocol_sha256": "4e32f6aebc99ac5847822036e0053bb5c15211809db72045ec23b1a090accec6",
+  "v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "cpu_only": true,
+  "trained_models": 0,
+  "new_checkpoints": 0,
+  "independent_test_reuse": false,
+  "state_selection_before_labels": true,
+  "single_realization_only": true,
+  "python_version": "Python 3.10.22"
+}

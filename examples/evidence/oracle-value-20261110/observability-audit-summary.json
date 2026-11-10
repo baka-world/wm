@@ -1,0 +1,293 @@
+{
+  "by_20_step_fault_visibility": {
+    "1_currently_unavailable": {
+      "clusters_with_group": 0,
+      "decisions": 0,
+      "mean_candidate_spread": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-20": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Rule-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      }
+    },
+    "2_future_fault_from_currently_normal": {
+      "clusters_with_group": 8,
+      "decisions": 8,
+      "mean_candidate_spread": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 8.479166666666668,
+        "state_mean_descriptive": 8.479166666666668
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 7.791666666666667,
+        "state_mean_descriptive": 7.791666666666667
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.0,
+          "state_mean_descriptive": 0.0
+        },
+        "Perfect-State-20": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.0,
+          "state_mean_descriptive": 0.0
+        },
+        "Perfect-State-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 4.520833333333333,
+          "state_mean_descriptive": 4.520833333333333
+        },
+        "Rule-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 7.791666666666667,
+          "state_mean_descriptive": 7.791666666666667
+        }
+      }
+    },
+    "3_currently_normal_no_fault_within_horizon": {
+      "clusters_with_group": 8,
+      "decisions": 40,
+      "mean_candidate_spread": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 2.704166666666666,
+        "state_mean_descriptive": 2.704166666666666
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 0.5583333333333336,
+        "state_mean_descriptive": 0.5583333333333336
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.0,
+          "state_mean_descriptive": 0.0
+        },
+        "Perfect-State-20": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.3374999999999998,
+          "state_mean_descriptive": 0.3374999999999998
+        },
+        "Perfect-State-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.5666666666666668,
+          "state_mean_descriptive": 0.5666666666666668
+        },
+        "Rule-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.5583333333333336,
+          "state_mean_descriptive": 0.5583333333333336
+        }
+      }
+    }
+  },
+  "by_5_step_fault_visibility": {
+    "1_currently_unavailable": {
+      "clusters_with_group": 0,
+      "decisions": 0,
+      "mean_candidate_spread": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-20": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Rule-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      }
+    },
+    "2_future_fault_from_currently_normal": {
+      "clusters_with_group": 0,
+      "decisions": 0,
+      "mean_candidate_spread": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 0,
+        "cluster_mean_equal_weight": null,
+        "state_mean_descriptive": null
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-20": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Perfect-State-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        },
+        "Rule-5": {
+          "cluster_count": 0,
+          "cluster_mean_equal_weight": null,
+          "state_mean_descriptive": null
+        }
+      }
+    },
+    "3_currently_normal_no_fault_within_horizon": {
+      "clusters_with_group": 8,
+      "decisions": 48,
+      "mean_candidate_spread": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 3.6666666666666665,
+        "state_mean_descriptive": 3.6666666666666665
+      },
+      "mean_oracle_opportunity_vs_rule": {
+        "cluster_count": 8,
+        "cluster_mean_equal_weight": 1.763888888888889,
+        "state_mean_descriptive": 1.763888888888889
+      },
+      "methods": {
+        "Full-outcome Oracle": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.0,
+          "state_mean_descriptive": 0.0
+        },
+        "Perfect-State-20": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 0.28124999999999983,
+          "state_mean_descriptive": 0.28124999999999983
+        },
+        "Perfect-State-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 1.2256944444444444,
+          "state_mean_descriptive": 1.2256944444444444
+        },
+        "Rule-5": {
+          "cluster_count": 8,
+          "cluster_mean_equal_weight": 1.763888888888889,
+          "state_mean_descriptive": 1.763888888888889
+        }
+      }
+    }
+  },
+  "counts": {
+    "candidates": 174,
+    "clusters": 8,
+    "currently_device_unavailable": 0,
+    "decisions": 48,
+    "onset_within_20": 8,
+    "onset_within_5": 0,
+    "outage_timeline_consistent_across_all_candidates": true,
+    "robustness_overlap": 25,
+    "scenes": 24
+  },
+  "input_protocol": "PR16 frozen 24 scenes / 8 map-seed clusters / 48 decisions",
+  "observability_warning": "Fault onset labels derived solely from realized post-action state changes. Neither future fault schedule nor realized stochastic service times are inputs to the currently deployed models. Association is not prognosis.",
+  "online_observable_fields": [
+    "recovery_snapshot",
+    "robots",
+    "samples",
+    "schema_version",
+    "stations",
+    "tick"
+  ],
+  "robot_fields": [
+    "home",
+    "id",
+    "operational_available",
+    "phase",
+    "position",
+    "service_active_elapsed",
+    "service_elapsed",
+    "service_paused_elapsed",
+    "task_id"
+  ],
+  "sample_fields": [
+    "deadline_tick",
+    "dropoff",
+    "id",
+    "job_id",
+    "packaging",
+    "pickup",
+    "priority",
+    "release_tick",
+    "robot_id",
+    "rule_profile",
+    "specimen_type",
+    "stage_index",
+    "status",
+    "temperature_condition",
+    "unassigned_wait_ticks",
+    "workflow"
+  ],
+  "station_fields": [
+    "approaching_dropoffs",
+    "approaching_pickups",
+    "available",
+    "capacity_blocked",
+    "device_available",
+    "expected_service_ticks",
+    "history_complete_since_start",
+    "id",
+    "observed_effective_service_count",
+    "observed_effective_service_mean",
+    "occupant_robot_id",
+    "position",
+    "resource_capacity",
+    "resource_id",
+    "resource_occupied",
+    "service_in_progress",
+    "service_session_active",
+    "service_task_id",
+    "waiting_pickups"
+  ]
+}

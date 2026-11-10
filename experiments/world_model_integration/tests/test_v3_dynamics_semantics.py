@@ -34,6 +34,7 @@ class SessionTransitionSemanticsTests(unittest.TestCase):
         model.geometry,model.rules = geo,business.rules
         model.rule = ProgressAwareRule(geo)
         model.rng = random.Random(1810)
+        model.query_input_schema = 'business-service-query-input-v2'
         model.service_calls = model.query_calls = 0
         model.fallback_reasons = {}
         wrapped = WorkflowDynamics(model,business.rules)

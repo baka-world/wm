@@ -426,7 +426,7 @@ def run_one(spec,protocol,arm,forced=None,prefix=None,target=None,collect_obs=Fa
        "resource_wait_ticks":capacity["capacity_wait_ticks"],
        "motion_blocked_attempts":result["summary"]["blocked_move_attempts"],
        "resource_violations":len(capacity["violations"]),
-       "motion_violations":len(motion),"lifecycle_violations":len(lifecycle),
+       "motion_violations":motion,"lifecycle_violations":len(lifecycle),
        "retest_results":sim.retest_results,
        "history_sha256":digest(result["history"]),
        "events_sha256":digest(result["events"]),

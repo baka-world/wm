@@ -1,0 +1,20 @@
+{
+  "protocol": "pr18-long-value-learnability-tick0-v1-20261111",
+  "source_head": "e2447fd3e7c2ada069c151e604f072ab149a43cb",
+  "split_counts": {"train": 48, "validation": 12, "test": 16},
+  "split_layouts": {"train": [0,1,2,3,4], "validation": [5,6], "test": [7,8]},
+  "split_seed_bases": {"train": 551000, "validation": 661000, "test": 771000},
+  "future_seed_offsets": [0,101,203,307],
+  "candidate_limit": 4,
+  "rollout_horizon": 5,
+  "rollout_particles": 3,
+  "continuation": "P1_nearest",
+  "ridge_alphas": [0.01,0.1,1,10,100],
+  "rank_tie_rule": "candidate_index_ascending",
+  "optimization_target": "candidate_centered_restricted_mean_flow_all_configured_jobs",
+  "clock_budget_seconds": 1800,
+  "v4_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "b2_status": "not_a_transition_rollout_adapter",
+  "nonzero_tick": "prohibited_without_prefix_and_conditional_seed_gate",
+  "independent_test_policy": "generate_and_evaluate_once_after_validation_model_freeze"
+}

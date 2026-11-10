@@ -1,0 +1,14 @@
+test_frozen_oracle_selection_and_public_tick_release (test_audit.OfflineAudit.test_frozen_oracle_selection_and_public_tick_release) ... ok
+test_local_runner_cannot_import_or_execute_simulator (test_audit.OfflineAudit.test_local_runner_cannot_import_or_execute_simulator) ... ok
+test_mismatch_cannot_be_paired_as_same_state (test_audit.OfflineAudit.test_mismatch_cannot_be_paired_as_same_state) ... ok
+test_output_contains_integrity_manifest (test_audit.OfflineAudit.test_output_contains_integrity_manifest) ... ok
+test_retest_cannot_be_observed_before_detection (test_audit.OfflineAudit.test_retest_cannot_be_observed_before_detection) ... ok
+test_score_classes_partition_and_tiebreak (test_audit.OfflineAudit.test_score_classes_partition_and_tiebreak) ... ok
+test_sha_reproduction_of_frozen_evidence (test_audit.OfflineAudit.test_sha_reproduction_of_frozen_evidence) ... ok
+test_strict_identical_p2_p3_state_and_candidates (test_audit.OfflineAudit.test_strict_identical_p2_p3_state_and_candidates) ... ok
+test_urgent_transitions_are_derived_per_job (test_audit.OfflineAudit.test_urgent_transitions_are_derived_per_job) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.146s
+
+OK

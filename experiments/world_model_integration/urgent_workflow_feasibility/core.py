@@ -398,6 +398,8 @@ def run_one(spec,protocol,arm,forced=None,prefix=None,target=None,collect_obs=Fa
         strategy.forced={target:tuple(forced)}
     captured=[]
     def on_observation(obs):
+        # Continuous public history is needed for valid active service progress.
+        strategy.observer.observe(obs)
         if collect_obs:
             captured.append({"tick":obs.tick,"sha":digest(asdict(obs))})
     def dispatch(o,c):

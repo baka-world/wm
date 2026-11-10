@@ -1,0 +1,4345 @@
+{
+  "config": {
+    "threshold_steps": 3,
+    "additional_simulation_seeds": [
+      91011,
+      91012,
+      91013
+    ],
+    "status": "manual-gated; only if a fair same-prefix noise-only rerun implementation is validated"
+  },
+  "states": [
+    {
+      "layout": "empty8",
+      "seed": 81011,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 4.0,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36,
+              "capacity_wait_ticks": 4,
+              "event_count": 88,
+              "wall_seconds": 0.04552433399999245
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.044818093999992925
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.166666666666664,
+              "capacity_wait_ticks": 2,
+              "event_count": 86,
+              "wall_seconds": 0.043997890000014195
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38.166666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.047117743000001155
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04192772999999761
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.166666666666664,
+              "capacity_wait_ticks": 3,
+              "event_count": 87,
+              "wall_seconds": 0.04163980100003073
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.166666666666664,
+              "capacity_wait_ticks": 4,
+              "event_count": 88,
+              "wall_seconds": 0.04396872600000279
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.166666666666664,
+              "capacity_wait_ticks": 8,
+              "event_count": 92,
+              "wall_seconds": 0.04623579399998334
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.5,
+              "capacity_wait_ticks": 3,
+              "event_count": 87,
+              "wall_seconds": 0.044612098000015976
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37,
+              "capacity_wait_ticks": 6,
+              "event_count": 90,
+              "wall_seconds": 0.044516349999980775
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.333333333333336,
+              "capacity_wait_ticks": 3,
+              "event_count": 87,
+              "wall_seconds": 0.04410470999999916
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.333333333333336,
+              "capacity_wait_ticks": 8,
+              "event_count": 92,
+              "wall_seconds": 0.04649487900002214
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          35.166666666666664,
+          35.5,
+          34.888888888888886,
+          38.888888888888886
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.27777777777777857,
+        "robust_nominal_oracle_gain_vs_rule": 0.27777777777777857,
+        "robust_flow_spread": 4.0
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81011,
+      "regime": "workflow_serial",
+      "tick": 22,
+      "nominal_flow_spread": 3.3333333333333286,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S04::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S05::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S06::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.044746630000020104
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.166666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04870273699998506
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.5,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04433638299997256
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04179431000000022
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04626738399997521
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.166666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04280096299999059
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04507602600000382
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.666666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04822729900001832
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 91,
+              "wall_seconds": 0.04406413400005249
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          37.111111111111114,
+          38.94444444444444,
+          40.333333333333336
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 3.2222222222222214
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81011,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 4.666666666666671,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.0423334779999891
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04220966700000872
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04313626999999087
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04498718100001042
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04071581400000923
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.0407528329999991
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04130542600000808
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04302141499999834
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04278702699997439
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.042901430000028995
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.2228249429999778
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38,
+              "capacity_wait_ticks": 0,
+              "event_count": 84,
+              "wall_seconds": 0.04443416600003047
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          33.44444444444444,
+          33.88888888888889,
+          34.22222222222222,
+          37.22222222222222
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 3.7777777777777786
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81011,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 8.333333333333336,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49,
+              "capacity_wait_ticks": 17,
+              "event_count": 101,
+              "wall_seconds": 0.05133097100002715
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49.333333333333336,
+              "capacity_wait_ticks": 20,
+              "event_count": 104,
+              "wall_seconds": 0.05071094200002335
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 42.166666666666664,
+              "capacity_wait_ticks": 14,
+              "event_count": 98,
+              "wall_seconds": 0.04822716799998261
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 43.166666666666664,
+              "capacity_wait_ticks": 15,
+              "event_count": 99,
+              "wall_seconds": 0.0498969999999872
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 45.833333333333336,
+              "capacity_wait_ticks": 13,
+              "event_count": 97,
+              "wall_seconds": 0.047958945999994285
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 46,
+              "capacity_wait_ticks": 16,
+              "event_count": 100,
+              "wall_seconds": 0.04799812999999631
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.833333333333336,
+              "capacity_wait_ticks": 13,
+              "event_count": 97,
+              "wall_seconds": 0.04594562199997654
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41.166666666666664,
+              "capacity_wait_ticks": 13,
+              "event_count": 97,
+              "wall_seconds": 0.0460479330000112
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49.5,
+              "capacity_wait_ticks": 16,
+              "event_count": 100,
+              "wall_seconds": 0.050383819999979096
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50,
+              "capacity_wait_ticks": 19,
+              "event_count": 103,
+              "wall_seconds": 0.05006089599999086
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 43.5,
+              "capacity_wait_ticks": 15,
+              "event_count": 99,
+              "wall_seconds": 0.04938111500001696
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 44.333333333333336,
+              "capacity_wait_ticks": 16,
+              "event_count": 100,
+              "wall_seconds": 0.0494978929999661
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          48.111111111111114,
+          48.44444444444444,
+          41.833333333333336,
+          42.888888888888886
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 6.277777777777779,
+        "robust_nominal_oracle_gain_vs_rule": 6.277777777777779,
+        "robust_flow_spread": 6.611111111111107
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81012,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 6.5,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.5,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.04140307800003029
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.5,
+              "capacity_wait_ticks": 7,
+              "event_count": 82,
+              "wall_seconds": 0.04109932200003641
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.666666666666664,
+              "capacity_wait_ticks": 1,
+              "event_count": 76,
+              "wall_seconds": 0.04008164799995484
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 42.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 82,
+              "wall_seconds": 0.044399580999993304
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03804047200003424
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.333333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 80,
+              "wall_seconds": 0.03779473299999836
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.166666666666664,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.04011873799998966
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.333333333333336,
+              "capacity_wait_ticks": 3,
+              "event_count": 78,
+              "wall_seconds": 0.04126887099999976
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.333333333333336,
+              "capacity_wait_ticks": 3,
+              "event_count": 78,
+              "wall_seconds": 0.04050123999996913
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 82,
+              "wall_seconds": 0.040898862999995345
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.03970160500000475
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.333333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 80,
+              "wall_seconds": 0.043546930999980304
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          34.38888888888889,
+          34.38888888888889,
+          34.94444444444444,
+          40.0
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": false,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": -0.55555555555555,
+        "robust_flow_spread": 5.611111111111107
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81012,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 5.5,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.039122995000013816
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03918452899995373
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.039409939999984545
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.04218686999996635
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03873106200001075
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03957210400000122
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03987264600004892
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.043028751999997894
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 32.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.03859070999999403
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.235236298000018
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.04079941700001655
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.042710527999986425
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          32.5,
+          33.27777777777778,
+          33.94444444444444,
+          38.111111111111114
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 5.611111111111114
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81012,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 9.666666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.5,
+              "capacity_wait_ticks": 17,
+              "event_count": 92,
+              "wall_seconds": 0.04884232600005589
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.5,
+              "capacity_wait_ticks": 20,
+              "event_count": 95,
+              "wall_seconds": 0.04929416099997752
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41.666666666666664,
+              "capacity_wait_ticks": 1,
+              "event_count": 76,
+              "wall_seconds": 0.04566147100001672
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.333333333333336,
+              "capacity_wait_ticks": 16,
+              "event_count": 91,
+              "wall_seconds": 0.05084644099997604
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 45.333333333333336,
+              "capacity_wait_ticks": 14,
+              "event_count": 89,
+              "wall_seconds": 0.04651354400004948
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 45.333333333333336,
+              "capacity_wait_ticks": 18,
+              "event_count": 93,
+              "wall_seconds": 0.04772139099998185
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.333333333333336,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.04397799599996688
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.5,
+              "capacity_wait_ticks": 17,
+              "event_count": 92,
+              "wall_seconds": 0.04896783999998888
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.333333333333336,
+              "capacity_wait_ticks": 16,
+              "event_count": 91,
+              "wall_seconds": 0.0485364449999679
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.333333333333336,
+              "capacity_wait_ticks": 20,
+              "event_count": 95,
+              "wall_seconds": 0.048717992999968374
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41.5,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.04605192200000374
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.166666666666664,
+              "capacity_wait_ticks": 16,
+              "event_count": 91,
+              "wall_seconds": 0.050501736000001074
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          47.38888888888889,
+          47.38888888888889,
+          41.166666666666664,
+          51.0
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 6.2222222222222285,
+        "robust_nominal_oracle_gain_vs_rule": 6.2222222222222285,
+        "robust_flow_spread": 9.833333333333336
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81013,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 7.5,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.044513246000008166
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.666666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.04315474800000629
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.5,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.041868814999986625
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 43.166666666666664,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.04612192199999754
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.041157256000019515
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.04070070300002726
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.5,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.04197675700004311
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39,
+              "capacity_wait_ticks": 2,
+              "event_count": 95,
+              "wall_seconds": 0.04348121800001081
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.666666666666664,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.04328983100003825
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.04220159800001966
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.041212910000012926
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.0448456479999777
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          36.0,
+          35.55555555555556,
+          35.0,
+          41.05555555555556
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 1.0,
+        "robust_nominal_oracle_gain_vs_rule": 1.0,
+        "robust_flow_spread": 6.055555555555557
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81013,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 5.833333333333336,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.041496038000047974
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.0412563210000485
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.041145513999993
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04528984699999228
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 33.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.0393766889999938
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04152818899996191
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04009356800003161
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.24111101599999074
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04167333000003737
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04182683699997369
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.0421460530000104
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.044270353000001705
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          33.94444444444444,
+          35.111111111111114,
+          34.666666666666664,
+          39.94444444444444
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": false,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": -0.7222222222222214,
+        "robust_flow_spread": 6.0
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81013,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 12.166666666666671,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.333333333333336,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05225818899998558
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49.666666666666664,
+              "capacity_wait_ticks": 20,
+              "event_count": 113,
+              "wall_seconds": 0.05109929299999294
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.333333333333336,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.04350947199998245
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.833333333333336,
+              "capacity_wait_ticks": 18,
+              "event_count": 111,
+              "wall_seconds": 0.05179848900002071
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 47.333333333333336,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.04910180000001674
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 47,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.04924492899999677
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.042910849000008966
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53,
+              "capacity_wait_ticks": 22,
+              "event_count": 115,
+              "wall_seconds": 0.052351762999990115
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50,
+              "capacity_wait_ticks": 16,
+              "event_count": 109,
+              "wall_seconds": 0.05098815499997045
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49,
+              "capacity_wait_ticks": 20,
+              "event_count": 113,
+              "wall_seconds": 0.048981926999999814
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.166666666666664,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.0433405650000509
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.5,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.04993819399999211
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          49.22222222222222,
+          48.55555555555556,
+          38.611111111111114,
+          52.44444444444444
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 10.611111111111107,
+        "robust_nominal_oracle_gain_vs_rule": 10.611111111111107,
+        "robust_flow_spread": 13.833333333333329
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81014,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 4,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.333333333333336,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.04641685399997186
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.666666666666664,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.0458263109999848
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.833333333333336,
+              "capacity_wait_ticks": 2,
+              "event_count": 95,
+              "wall_seconds": 0.044659139000032155
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.833333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.04722996299994975
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04296334099996102
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.04403308900003822
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.833333333333336,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.045720902999960344
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.833333333333336,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.047380405000012615
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.833333333333336,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.046013801000015064
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 37.833333333333336,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.04518725700000914
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.666666666666664,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.0453696769999965
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 40.666666666666664,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.047289433999992525
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          36.66666666666667,
+          36.833333333333336,
+          36.44444444444444,
+          40.44444444444444
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.22222222222222854,
+        "robust_nominal_oracle_gain_vs_rule": 0.22222222222222854,
+        "robust_flow_spread": 4.0
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81014,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 4.666666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04527212400000735
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04527968799999371
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04511658399997032
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2502259610000124
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.044622389999972256
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 34.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.043409491999966576
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04436960700002146
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 38.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.045778951999977835
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 35.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04333366999998134
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.045490893999954096
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 36.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.04486579399997481
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 39.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.046917210000003706
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          34.77777777777778,
+          35.72222222222222,
+          36.0,
+          39.388888888888886
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 4.611111111111107
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81014,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 7.166666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.333333333333336,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05277373000001262
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.333333333333336,
+              "capacity_wait_ticks": 20,
+              "event_count": 113,
+              "wall_seconds": 0.053494047000015144
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 43.5,
+              "capacity_wait_ticks": 14,
+              "event_count": 107,
+              "wall_seconds": 0.0503775399999995
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 44.166666666666664,
+              "capacity_wait_ticks": 15,
+              "event_count": 108,
+              "wall_seconds": 0.049336353000001054
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 47.833333333333336,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.04993817800004763
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.666666666666664,
+              "capacity_wait_ticks": 16,
+              "event_count": 109,
+              "wall_seconds": 0.05187533000002986
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 41.166666666666664,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.046793899000022066
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 42.5,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.04784644699998353
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.5,
+              "capacity_wait_ticks": 16,
+              "event_count": 109,
+              "wall_seconds": 0.051873737999983405
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.833333333333336,
+              "capacity_wait_ticks": 19,
+              "event_count": 112,
+              "wall_seconds": 0.05128456500000311
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 44.833333333333336,
+              "capacity_wait_ticks": 15,
+              "event_count": 108,
+              "wall_seconds": 0.0506790229999865
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 45.666666666666664,
+              "capacity_wait_ticks": 16,
+              "event_count": 109,
+              "wall_seconds": 0.05161564399998042
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          49.55555555555556,
+          50.27777777777778,
+          43.166666666666664,
+          44.11111111111111
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 6.388888888888893,
+        "robust_nominal_oracle_gain_vs_rule": 6.388888888888893,
+        "robust_flow_spread": 7.111111111111114
+      }
+    },
+    {
+      "layout": "empty8",
+      "seed": 81014,
+      "regime": "workflow_outage",
+      "tick": 37,
+      "nominal_flow_spread": 3.6666666666666643,
+      "plans": [
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "S03::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "S06::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "S05::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05121836199998597
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.166666666666664,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.053290546000027916
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.166666666666664,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05522418200001766
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.5,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05216305800001919
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.166666666666664,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05585620299996208
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.333333333333336,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05378381799999943
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05067128899997897
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.666666666666664,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05249701200000345
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.666666666666664,
+              "capacity_wait_ticks": 17,
+              "event_count": 110,
+              "wall_seconds": 0.05452363200004129
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          48.166666666666664,
+          50.666666666666664,
+          50.72222222222222
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 2.555555555555557
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82011,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 4.666666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.833333333333336,
+              "capacity_wait_ticks": 11,
+              "event_count": 104,
+              "wall_seconds": 0.24648572800003876
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.23420449700000745
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.333333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.2385136930000158
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.666666666666664,
+              "capacity_wait_ticks": 2,
+              "event_count": 95,
+              "wall_seconds": 0.24552207799996495
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.5,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.2408118420000278
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.40751084499999024
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.5,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.2512022559999991
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.24178657599998132
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.5,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.2527796859999967
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23465811200003373
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.333333333333336,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.42863602600004924
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.333333333333336,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.24993881399996098
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          55.94444444444444,
+          54.44444444444444,
+          57.05555555555556,
+          57.5
+        ],
+        "mean_seed_optimal_plan": 1,
+        "nominal_single_seed_oracle_plan": 1,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 1.5,
+        "robust_nominal_oracle_gain_vs_rule": 1.5,
+        "robust_flow_spread": 3.055555555555557
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82011,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 3.1666666666666643,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.230218318000027
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.235772666999992
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.4174436839999771
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.24592325300000084
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23206607399998802
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23068515099998876
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.22497106399998756
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23391517299995712
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.4295845510000049
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2544712010000012
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23784013400000958
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.24679615600001625
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          53.666666666666664,
+          54.94444444444444,
+          54.44444444444444,
+          57.22222222222222
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": false,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": -0.7777777777777786,
+        "robust_flow_spread": 3.555555555555557
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82011,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 6.166666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 67.5,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.44971384600000874
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 66,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.25794567999997753
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.333333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.24887768600001436
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.5,
+              "capacity_wait_ticks": 11,
+              "event_count": 104,
+              "wall_seconds": 0.25453465999999025
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.5,
+              "capacity_wait_ticks": 10,
+              "event_count": 103,
+              "wall_seconds": 0.2579035850000082
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 62.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.432881736000013
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64,
+              "capacity_wait_ticks": 15,
+              "event_count": 108,
+              "wall_seconds": 0.2554780639999876
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.5,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.27173290100000713
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 67.33333333333333,
+              "capacity_wait_ticks": 12,
+              "event_count": 105,
+              "wall_seconds": 0.2654194840000059
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.66666666666667,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.25711334600003966
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.333333333333336,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.24517993800003524
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.83333333333333,
+              "capacity_wait_ticks": 12,
+              "event_count": 105,
+              "wall_seconds": 0.4517430719999993
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          66.44444444444444,
+          64.66666666666667,
+          59.55555555555556,
+          65.27777777777777
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 6.888888888888886,
+        "robust_nominal_oracle_gain_vs_rule": 6.888888888888886,
+        "robust_flow_spread": 6.888888888888886
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82012,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 4.0,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.333333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.25578355699997246
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2630653569999595
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.2662791729999867
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.45209654399997135
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.333333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.2519318359999829
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.833333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.2527450589999489
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.5,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.2548840129999803
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.333333333333336,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.2549041699999748
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.5,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.2693089640000039
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.44753752899998744
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 58.166666666666664,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.2712283790000356
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.833333333333336,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.27542557700002135
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          55.05555555555556,
+          56.27777777777778,
+          57.55555555555556,
+          57.38888888888889
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 2.5
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82012,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 6.166666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.43214876499996535
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2556858199999965
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.26600738599995566
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.27046424899998556
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2548881400000482
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2538485559999799
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.442717612000024
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2528732519999721
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2570159499999818
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.25942206899998155
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2590749999999957
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2708847350000383
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          52.94444444444444,
+          54.27777777777778,
+          55.72222222222222,
+          57.94444444444444
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 5.0
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82012,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 8.666666666666671,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.33333333333333,
+              "capacity_wait_ticks": 14,
+              "event_count": 107,
+              "wall_seconds": 0.2842698979999909
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.33333333333333,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.2966536860000133
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.2718885830000204
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 66.33333333333333,
+              "capacity_wait_ticks": 10,
+              "event_count": 103,
+              "wall_seconds": 0.2990474529999574
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.16666666666667,
+              "capacity_wait_ticks": 12,
+              "event_count": 105,
+              "wall_seconds": 0.4515762190000032
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.5,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.28042205099995954
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.5,
+              "capacity_wait_ticks": 15,
+              "event_count": 108,
+              "wall_seconds": 0.27276448100002426
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.83333333333333,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.27833581999999524
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 66,
+              "capacity_wait_ticks": 14,
+              "event_count": 107,
+              "wall_seconds": 0.28123041300000295
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.83333333333333,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.291800821000038
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 58.5,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.4738086570000064
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 66.83333333333333,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.29659741099999337
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          65.16666666666667,
+          65.22222222222221,
+          60.22222222222222,
+          66.0
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 4.94444444444445,
+        "robust_nominal_oracle_gain_vs_rule": 4.94444444444445,
+        "robust_flow_spread": 5.777777777777779
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82013,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 3.1666666666666643,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.833333333333336,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.2372721059999776
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23314987999998493
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.4261391990000334
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 60.333333333333336,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.26422932100001617
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54,
+              "capacity_wait_ticks": 3,
+              "event_count": 96,
+              "wall_seconds": 0.2327372750000336
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2311093010000036
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.333333333333336,
+              "capacity_wait_ticks": 8,
+              "event_count": 101,
+              "wall_seconds": 0.24406472599997642
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.833333333333336,
+              "capacity_wait_ticks": 1,
+              "event_count": 94,
+              "wall_seconds": 0.23960855399997172
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.5,
+              "capacity_wait_ticks": 4,
+              "event_count": 97,
+              "wall_seconds": 0.43122580100003916
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23525438300003998
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.2469994839999572
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 58.166666666666664,
+              "capacity_wait_ticks": 2,
+              "event_count": 95,
+              "wall_seconds": 0.24752160899998898
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          55.44444444444444,
+          54.55555555555556,
+          57.0,
+          57.77777777777778
+        ],
+        "mean_seed_optimal_plan": 1,
+        "nominal_single_seed_oracle_plan": 1,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.8888888888888857,
+        "robust_nominal_oracle_gain_vs_rule": 0.8888888888888857,
+        "robust_flow_spread": 3.2222222222222214
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82013,
+      "regime": "workflow_parallel",
+      "tick": 0,
+      "nominal_flow_spread": 3.3333333333333357,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.41640040900000486
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23362575900000593
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.333333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.22972320900004206
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23834728500003166
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.22843051199998854
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23302614499999663
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.833333333333336,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.41621212799998375
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.24177554500005272
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 54.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.2282883860000311
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.243400414000007
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 55.5,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.23383219299995517
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 60.666666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 93,
+              "wall_seconds": 0.26269857900001625
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          53.611111111111114,
+          54.888888888888886,
+          54.55555555555556,
+          57.27777777777778
+        ],
+        "mean_seed_optimal_plan": 0,
+        "nominal_single_seed_oracle_plan": 0,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.0,
+        "robust_nominal_oracle_gain_vs_rule": 0.0,
+        "robust_flow_spread": 3.6666666666666643
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82013,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 9.666666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 66.66666666666667,
+              "capacity_wait_ticks": 13,
+              "event_count": 106,
+              "wall_seconds": 0.26387078099998007
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.16666666666667,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.24579758700002685
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.5,
+              "capacity_wait_ticks": 5,
+              "event_count": 98,
+              "wall_seconds": 0.2381818320000093
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65,
+              "capacity_wait_ticks": 12,
+              "event_count": 105,
+              "wall_seconds": 0.2614546969999765
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.5,
+              "capacity_wait_ticks": 10,
+              "event_count": 103,
+              "wall_seconds": 0.43790388600001506
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 60.833333333333336,
+              "capacity_wait_ticks": 7,
+              "event_count": 100,
+              "wall_seconds": 0.24484740000002603
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 64.33333333333333,
+              "capacity_wait_ticks": 15,
+              "event_count": 108,
+              "wall_seconds": 0.2577543090000063
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 62.666666666666664,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.26232090600001357
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 68.5,
+              "capacity_wait_ticks": 14,
+              "event_count": 107,
+              "wall_seconds": 0.2749887690000037
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 65.83333333333333,
+              "capacity_wait_ticks": 9,
+              "event_count": 102,
+              "wall_seconds": 0.25173130899997886
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 6,
+              "event_count": 99,
+              "wall_seconds": 0.43106904799998347
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 67.16666666666667,
+              "capacity_wait_ticks": 12,
+              "event_count": 105,
+              "wall_seconds": 0.2627611190000039
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          66.55555555555556,
+          63.94444444444444,
+          59.5,
+          64.94444444444444
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 7.055555555555557,
+        "robust_nominal_oracle_gain_vs_rule": 7.055555555555557,
+        "robust_flow_spread": 7.055555555555557
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82014,
+      "regime": "workflow_serial",
+      "tick": 0,
+      "nominal_flow_spread": 5.166666666666664,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.207867656000019
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.166666666666664,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.3935669090000147
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.833333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 80,
+              "wall_seconds": 0.21522649400003502
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 53.833333333333336,
+              "capacity_wait_ticks": 9,
+              "event_count": 84,
+              "wall_seconds": 0.224564450999992
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 47,
+              "capacity_wait_ticks": 3,
+              "event_count": 78,
+              "wall_seconds": 0.21239872699999296
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 46.166666666666664,
+              "capacity_wait_ticks": 0,
+              "event_count": 75,
+              "wall_seconds": 0.20935756199997968
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.833333333333336,
+              "capacity_wait_ticks": 10,
+              "event_count": 85,
+              "wall_seconds": 0.22703216399997928
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 48.333333333333336,
+              "capacity_wait_ticks": 1,
+              "event_count": 76,
+              "wall_seconds": 0.22847643400001516
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 49,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.39985229000001254
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 47.833333333333336,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.21665933199994925
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.166666666666664,
+              "capacity_wait_ticks": 6,
+              "event_count": 81,
+              "wall_seconds": 0.22480223500002694
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 50.333333333333336,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.22902142300000605
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          48.333333333333336,
+          47.388888888888886,
+          51.94444444444444,
+          50.833333333333336
+        ],
+        "mean_seed_optimal_plan": 1,
+        "nominal_single_seed_oracle_plan": 1,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 0.94444444444445,
+        "robust_nominal_oracle_gain_vs_rule": 0.94444444444445,
+        "robust_flow_spread": 4.555555555555557
+      }
+    },
+    {
+      "layout": "random32",
+      "seed": 82014,
+      "regime": "workflow_outage",
+      "tick": 0,
+      "nominal_flow_spread": 6.0,
+      "plans": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S01::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S02::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "S02::stage1"
+          },
+          {
+            "robot_id": "R3",
+            "sample_id": "S01::stage1"
+          }
+        ]
+      ],
+      "random_seeds": [
+        {
+          "future_service_seed": 91011,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.5,
+              "capacity_wait_ticks": 13,
+              "event_count": 88,
+              "wall_seconds": 0.411769167999978
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.5,
+              "capacity_wait_ticks": 5,
+              "event_count": 80,
+              "wall_seconds": 0.22793600400001424
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 51.833333333333336,
+              "capacity_wait_ticks": 5,
+              "event_count": 80,
+              "wall_seconds": 0.21722534000002724
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.666666666666664,
+              "capacity_wait_ticks": 3,
+              "event_count": 78,
+              "wall_seconds": 0.227358143999993
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91012,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 58.166666666666664,
+              "capacity_wait_ticks": 10,
+              "event_count": 85,
+              "wall_seconds": 0.23084586499999205
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56.5,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.22524310900001865
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.833333333333336,
+              "capacity_wait_ticks": 17,
+              "event_count": 92,
+              "wall_seconds": 0.4276751460000128
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 56,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.2327313789999721
+            }
+          ]
+        },
+        {
+          "future_service_seed": 91013,
+          "branches": [
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 59.833333333333336,
+              "capacity_wait_ticks": 12,
+              "event_count": 87,
+              "wall_seconds": 0.23168531400000347
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.5,
+              "capacity_wait_ticks": 4,
+              "event_count": 79,
+              "wall_seconds": 0.2321557590000225
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 52.333333333333336,
+              "capacity_wait_ticks": 6,
+              "event_count": 81,
+              "wall_seconds": 0.2239528129999826
+            },
+            {
+              "jobs_completed": 6,
+              "jobs": 6,
+              "restricted_mean_flow": 57.666666666666664,
+              "capacity_wait_ticks": 2,
+              "event_count": 77,
+              "wall_seconds": 0.2258278529999984
+            }
+          ]
+        }
+      ],
+      "result": {
+        "mean_flows_by_plan": [
+          59.166666666666664,
+          57.166666666666664,
+          54.66666666666667,
+          56.77777777777778
+        ],
+        "mean_seed_optimal_plan": 2,
+        "nominal_single_seed_oracle_plan": 2,
+        "rule_plan": 0,
+        "nominal_best_still_robust_best": true,
+        "robust_rule_opportunity": 4.499999999999993,
+        "robust_nominal_oracle_gain_vs_rule": 4.499999999999993,
+        "robust_flow_spread": 4.499999999999993
+      }
+    }
+  ],
+  "failures": []
+}

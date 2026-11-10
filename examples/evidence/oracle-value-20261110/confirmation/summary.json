@@ -64,7 +64,7 @@
   },
   "candidate_total": 174,
   "clusters": 8,
-  "diagnostic_not_final_causal_judgement": "B-candidate: perfect 5-step states reduce regret; check counterexamples",
+  "diagnostic_not_final_causal_judgement": "E: multiple bottlenecks; 20-step true states outperform 5-step true states, and 5-step truth also beats the predictors",
   "failed_decisions": 0,
   "finite_candidate_rule_opportunity": {
     "cluster_means": [

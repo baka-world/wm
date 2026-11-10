@@ -1,0 +1,69 @@
+{
+  "scope": "PREDECLARED gap>=3 only; three extra future service noise seeds with identical factual prefix",
+  "confirmation_decisions": 48,
+  "qualifying_decisions": 25,
+  "valid_robust_decisions": 25,
+  "failed_replays": 0,
+  "extra_noise_seeds": [
+    91011,
+    91012,
+    91013
+  ],
+  "candidate_replays": 294,
+  "nominal_oracle_remains_mean_best": 22,
+  "mean_robust_rule_opportunity_qualifying_states": 2.308888888888889,
+  "mean_robust_nominal_oracle_gain_qualifying_states": 2.2266666666666675,
+  "cluster_means": [
+    {
+      "layout": "empty8",
+      "seed": 81011,
+      "mean_robust_rule_opportunity": 1.6388888888888893,
+      "n_decisions": 4
+    },
+    {
+      "layout": "empty8",
+      "seed": 81012,
+      "mean_robust_rule_opportunity": 2.074074074074076,
+      "n_decisions": 3
+    },
+    {
+      "layout": "empty8",
+      "seed": 81013,
+      "mean_robust_rule_opportunity": 3.870370370370369,
+      "n_decisions": 3
+    },
+    {
+      "layout": "empty8",
+      "seed": 81014,
+      "mean_robust_rule_opportunity": 1.6527777777777803,
+      "n_decisions": 4
+    },
+    {
+      "layout": "random32",
+      "seed": 82011,
+      "mean_robust_rule_opportunity": 2.7962962962962954,
+      "n_decisions": 3
+    },
+    {
+      "layout": "random32",
+      "seed": 82012,
+      "mean_robust_rule_opportunity": 1.64814814814815,
+      "n_decisions": 3
+    },
+    {
+      "layout": "random32",
+      "seed": 82013,
+      "mean_robust_rule_opportunity": 2.6481481481481475,
+      "n_decisions": 3
+    },
+    {
+      "layout": "random32",
+      "seed": 82014,
+      "mean_robust_rule_opportunity": 2.7222222222222214,
+      "n_decisions": 2
+    }
+  ],
+  "mean_of_qualifying_cluster_means": 2.381365740740741,
+  "wall_seconds": 53.311265515,
+  "limitation": "post-decision perturbation excludes effects of altered past service draws; hindsight averages still not online-deployable, only gap>=3 selected; not comparable to all-48 main mean"
+}

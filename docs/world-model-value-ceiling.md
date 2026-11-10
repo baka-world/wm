@@ -10,7 +10,7 @@ Full-outcome Oracle 并不是可在线执行的世界模型，不存在算法优
 - 有效决策点 48，失败或不可比较点 0（不静默删除）。
 - 任务表与先前数据重复 0 次；跨新种子重复 0 次。
 - 同一地图/种子的 serial/parallel/outage 共用任务表是预先定义的配对控制，不是三次独立试验。
-- 进程 CPU 时间 80.0513 秒；墙钟时间 80.0607 秒（不含环境准备）。
+- 进程 CPU 时间 82.5218 秒；墙钟时间 82.5353 秒（不含环境准备）。
 
 ## 六种方法的有限候选决策损失
 
@@ -77,7 +77,7 @@ Perfect-State-5 和 Perfect-State-20 都直接取每条候选反事实轨迹的�
 
 ## 研究判断与停止条件
 
-**B-candidate: perfect 5-step states reduce regret; check counterexamples**。
+**E: multiple bottlenecks; 20-step true states outperform 5-step true states, and 5-step truth also beats the predictors**。
 
 这个标签仅是基于明确数值的工作诊断，不自动证明某个瓶颈是唯一因果因素。
 当前任务上是否继续训练学习预测器，必须以规则基线与真未来参考的实际差距为前提。

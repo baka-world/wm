@@ -40,7 +40,7 @@
   },
   "candidate_total": 56,
   "clusters": 4,
-  "diagnostic_not_final_causal_judgement": "E: overlapping, unidentifiable or insufficient bottlenecks",
+  "diagnostic_not_final_causal_judgement": "C: short-window information or the workflow score limits decisions; 20-step truth is substantially more useful",
   "failed_decisions": 0,
   "finite_candidate_rule_opportunity": {
     "cluster_means": [

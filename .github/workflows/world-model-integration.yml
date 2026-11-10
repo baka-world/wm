@@ -82,6 +82,11 @@ jobs:
         run: |
           set -euo pipefail
           timeout 900s python -m experiments.world_model_integration.session_confirmation --checkpoint "$RUNNER_TEMP/session-v2.pt" --output "$RUNNER_TEMP/session-confirmation.json" 2>&1 | tee "$RUNNER_TEMP/session-confirmation.log"
+      - name: Stress real workstation contention, never reuse as confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s python -m experiments.world_model_integration.capacity_stress --checkpoint "$RUNNER_TEMP/session-v2.pt" --output "$RUNNER_TEMP/capacity-stress.json" 2>&1 | tee "$RUNNER_TEMP/capacity-stress.log"
       - name: Preserve raw decision and test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -103,6 +108,8 @@ jobs:
             ${{ runner.temp }}/session-event-comparison.log
             ${{ runner.temp }}/session-confirmation.json
             ${{ runner.temp }}/session-confirmation.log
+            ${{ runner.temp }}/capacity-stress.log
+            ${{ runner.temp }}/capacity-stress.json
             ${{ runner.temp }}/v2-pibt.log
             ${{ runner.temp }}/v2-lacam.log
             ${{ runner.temp }}/v2-motion-old-tests.log

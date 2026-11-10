@@ -1,0 +1,121 @@
+name: PR16 finite candidate value oracle CPU
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/oracle_value/**'
+      - 'experiments/workflow_prediction/evaluate.py'
+      - 'docs/world-model-value-ceiling.md'
+      - 'examples/evidence/oracle-value-20261110/**'
+      - '.github/workflows/oracle-value-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  oracle-value:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; print('CPU-only torch',torch.__version__)"
+      - name: Build unmodified official PIBT and LaCAM3 backends
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/oracle-pibt" 2>&1 | tee "$RUNNER_TEMP/oracle-pibt.log"
+          timeout 450s bash tools/lacam3_recovery/prepare_upstream.sh "$RUNNER_TEMP/oracle-lacam" 2>&1 | tee "$RUNNER_TEMP/oracle-lacam.log"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/oracle-pibt/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
+          echo "WM_LACAM3_WORKER=$RUNNER_TEMP/oracle-lacam/bridge/wm_lacam3_worker" >> "$GITHUB_ENV"
+      - name: Test analysis invariants and PR15 regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/oracle_value/tests -v 2>&1 | tee "$RUNNER_TEMP/oracle-tests.log"
+          python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/oracle-pr15-regression.log"
+          python -m compileall -q experiments/oracle_value experiments/workflow_prediction/evaluate.py
+      - name: Historical 16 decisions - mechanism acceptance FIRST
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/oracle-out"
+          timeout 1200s python -m experiments.oracle_value.evaluate --profile history \
+            --pibt-library "$WM_PIBT_LIBRARY" --lacam-worker "$WM_LACAM3_WORKER" \
+            --output "$RUNNER_TEMP/oracle-out/history" 2>&1 | tee "$RUNNER_TEMP/oracle-history.log"
+          python - "$RUNNER_TEMP/oracle-out/history" <<'PY'
+          import json,sys
+          from pathlib import Path
+          root=Path(sys.argv[1]);s=json.loads((root/'summary.json').read_text())
+          cpu=json.loads((root/'cpu.json').read_text())
+          assert s['actual_decisions']==16,(s['actual_decisions'],'PR15 historical count')
+          assert s['failed_decisions']==0,(s['failed_decisions'],'historical mechanism incomplete')
+          assert not (root/'historical_validation_failures.json').exists()
+          print('History accepted:',s['actual_decisions'],'decisions; wall',cpu['wall_seconds'],'seconds')
+          if cpu['wall_seconds']>900:
+              raise SystemExit('History CPU cost >900 s; stop before confirmation')
+          PY
+      - name: New frozen 24-scene confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 3600s python -m experiments.oracle_value.evaluate --profile confirmation \
+            --pibt-library "$WM_PIBT_LIBRARY" --lacam-worker "$WM_LACAM3_WORKER" \
+            --output "$RUNNER_TEMP/oracle-out/confirmation" 2>&1 | tee "$RUNNER_TEMP/oracle-confirmation.log"
+          python - "$RUNNER_TEMP/oracle-out/confirmation" <<'PY'
+          import json,sys
+          from pathlib import Path
+          s=json.loads((Path(sys.argv[1])/'summary.json').read_text())
+          assert s['scenarios']==24,(s['scenarios'],'frozen scenes must not be dropped')
+          assert s['clusters']==8,(s['clusters'],'cluster by map/seed')
+          print('Confirmation:',s['scenarios'],'scenes;',s['clusters'],'clusters;',
+                s['actual_decisions'],'decisions;',s['failed_decisions'],'invalid')
+          PY
+      - name: Archive raw results and generated report
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="examples/evidence/oracle-value-20261110"
+          mkdir -p "$target"/history "$target"/confirmation
+          cp "$RUNNER_TEMP/oracle-out/history/"{raw.json.gz,summary.json,cpu.json,preflight.json} "$target/history/"
+          cp "$RUNNER_TEMP/oracle-out/confirmation/"{raw.json.gz,summary.json,cpu.json,preflight.json} "$target/confirmation/"
+          python -m experiments.oracle_value.report "$target/confirmation/summary.json" \
+            "$target/confirmation/raw.json.gz" docs/world-model-value-ceiling.md
+          (cd "$target" && find history confirmation -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+          (cd "$target" && sha256sum -c SHA256SUMS)
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$target" docs/world-model-value-ceiling.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive PR16 frozen CPU oracle confirmation and generated report"
+            git push origin "HEAD:${{ github.event.pull_request.head.ref || github.ref_name }}"
+          fi
+      - name: Upload full logs, CPU evidence, and failed pilot outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oracle-value-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/oracle-pibt.log
+            ${{ runner.temp }}/oracle-lacam.log
+            ${{ runner.temp }}/oracle-tests.log
+            ${{ runner.temp }}/oracle-pr15-regression.log
+            ${{ runner.temp }}/oracle-history.log
+            ${{ runner.temp }}/oracle-confirmation.log
+            ${{ runner.temp }}/oracle-out/
+          if-no-files-found: warn
+          retention-days: 30

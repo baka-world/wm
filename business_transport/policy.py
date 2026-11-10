@@ -87,3 +87,16 @@ class BusinessPolicy:
             'structured_service_calls':getattr(getattr(self.model,'model',None),'service_calls',0)-service_before,
             'wall_seconds':time.perf_counter()-started})
         return plans[choice]
+
+
+class WorkflowPolicy(BusinessPolicy):
+    """Business-facing entry point with full known-workflow rollout enabled.
+
+    BusinessPolicy's original defaults remain available for archived baselines.
+    Supply the same rule/PETS/structured movement adapter used by execution.
+    """
+    def __init__(self,method,geometry,rules,observer,model=None,**kwargs):
+        if 'workflow_prediction' in kwargs or 'scoring' in kwargs:
+            raise ValueError('WorkflowPolicy always uses workflow prediction and score')
+        super().__init__(method,geometry,rules,observer,model,
+                         workflow_prediction=True,scoring='workflow',**kwargs)

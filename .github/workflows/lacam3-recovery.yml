@@ -3,6 +3,8 @@ name: Official LaCAM3 recovery CPU
 on:
   pull_request:
     paths:
+      - 'business_transport/**'
+      - 'experiments/workflow_prediction/**'
       - 'business_transport/lacam3_*.py'
       - 'experiments/lacam3_recovery/**'
       - 'native/lacam3_bridge/**'

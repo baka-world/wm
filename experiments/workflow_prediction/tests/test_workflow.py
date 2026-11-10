@@ -176,6 +176,33 @@ class WorkflowTransitionTests(unittest.TestCase):
         self.assertEqual(old['known_unfinished_ticks'],0)
         self.assertGreater(new['terminal_work'],0)
 
+    def test_workflow_score_repeats_across_python_hash_seeds(self):
+        import subprocess
+        import sys
+        script='''
+from dataclasses import replace
+import json
+from experiments.business_constraints.tests.test_business import fixture
+from business_transport.scenario import compile_scenario
+from business_transport.observation import BusinessObserver
+from business_transport.simulation import BusinessSimulator
+from business_transport.workflow_scoring import workflow_components
+from lab_transport.decision_value import nearest_batch
+from lab_transport.dynamics_model import Geometry
+base,cfg,_=fixture(1)
+jobs=[{'id':f'J{i}', 'workflow':('w0' if i%2 else 'w1'), 'release_tick':0} for i in range(1,7)]
+business=compile_scenario(base,{**cfg,'jobs':jobs});geo=Geometry(base.grid);rows=[]
+BusinessSimulator(business,'world',1).run(on_transition=rows.append,dispatch_policy=lambda o,c:nearest_batch(o,c,geo))
+obs=BusinessObserver().observe(rows[0].observation)
+obs=replace(obs,stations=tuple(replace(s,observed_effective_service_mean=(i+1)*1.1) for i,s in enumerate(obs.stations)))
+print(json.dumps(workflow_components(obs,[obs],geo,business.rules),sort_keys=True))
+'''
+        outputs=[]
+        for seed in ('123','456'):
+            env={**os.environ,'PYTHONHASHSEED':seed}
+            outputs.append(subprocess.check_output([sys.executable,'-c',script],env=env,text=True))
+        self.assertEqual(outputs[0],outputs[1])
+
     def test_three_models_use_same_legal_release_mechanism(self):
         business=case(2);_,rows,geo=factual(business);network,info=load_pr9_model()
         for name in ('rule','pets','structured'):
@@ -212,6 +239,17 @@ class WorkflowTransitionTests(unittest.TestCase):
         self.assertEqual(policy.fallbacks,1)
         self.assertEqual(policy.log[-1]['fallback'],'RuntimeError')
         self.assertTrue(all(action in legal for action in chosen))
+
+    def test_public_workflow_policy_enables_business_prediction(self):
+        from business_transport.policy import WorkflowPolicy
+        business=case(2);_,rows,geo=factual(business)
+        policy=WorkflowPolicy('cpsat_rule',geo,business.rules,BusinessObserver(),ProgressAwareRule(geo))
+        self.assertTrue(policy.workflow_prediction)
+        self.assertEqual(policy.scoring,'workflow')
+        from lab_transport.decision_value import candidates_for
+        chosen=policy(rows[0].observation,candidates_for(rows[0].observation))
+        self.assertEqual(policy.fallbacks,0)
+        self.assertTrue(chosen)
 
     def test_stage_assignment_invalidates_cached_path_without_mutating_branch(self):
         from business_transport.lacam3_coordinator import RecoveryCoordinator,RecoverySnapshot

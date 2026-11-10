@@ -30,6 +30,7 @@
 - [多阶段转运、工作站容量与五组调度对照](docs/business-constraints-results.md)
 - [官方 PIBT 运动协调接入与医院阻塞复现](docs/pibt-motion-results.md)
 - [官方 LaCAM3 完整联合路径恢复与 clinic 配对验收](docs/lacam3-recovery-results.md)
+- [多阶段业务状态预测与完整工作流评分](docs/workflow-prediction-results.md)
 - [本地 GPU 训练接入准备和分工](docs/local-gpu-readiness.md)
 - [本地开发与交接指南](docs/local-development.md)
 - [可替换的 PyTorch 训练、评估与仿真入口](docs/pytorch-training.md)

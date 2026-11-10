@@ -15,7 +15,9 @@ def _key(sample):
 
 
 def _groups(state, known):
-    result={key:[] for key in known}
+    # Stable order matters for reproducible accumulation of service priors
+    # across processes with different Python hash seeds.
+    result={key:[] for key in sorted(known)}
     for sample in state.samples:
         key=_key(sample)
         if key in result:result[key].append(sample)

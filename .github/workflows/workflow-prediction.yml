@@ -1,0 +1,73 @@
+name: Multi-stage workflow prediction CPU
+
+on:
+  pull_request:
+    paths:
+      - 'business_transport/**'
+      - 'experiments/workflow_prediction/**'
+      - 'tools/workflow_prediction/**'
+      - 'examples/evidence/workflow-prediction-20261110/**'
+      - '.github/workflows/workflow-prediction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  workflow-prediction-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch', torch.__version__)"
+      - name: Build the existing official PIBT and LaCAM3 backends
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/workflow-pibt" 2>&1 | tee "$RUNNER_TEMP/workflow-pibt.log"
+          timeout 450s bash tools/lacam3_recovery/prepare_upstream.sh "$RUNNER_TEMP/workflow-lacam" 2>&1 | tee "$RUNNER_TEMP/workflow-lacam.log"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/workflow-pibt/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
+          echo "WM_LACAM3_WORKER=$RUNNER_TEMP/workflow-lacam/bridge/wm_lacam3_worker" >> "$GITHUB_ENV"
+      - name: Prepare source maps and verify frozen evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m tools.pibt_motion.prepare_sources --output "$RUNNER_TEMP/workflow-hospital-sources"
+          echo "WM_HOSPITAL_SOURCES=$RUNNER_TEMP/workflow-hospital-sources" >> "$GITHUB_ENV"
+          for path in examples/evidence/pibt-motion-20261109 examples/evidence/lacam3-recovery-20261109 examples/evidence/workflow-prediction-20261110; do
+            (cd "$path" && sha256sum -c SHA256SUMS)
+          done
+      - name: Run business workflow and motion-cache regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/workflow-tests.log"
+      - name: Reproduce development and confirmation scenarios twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 1800s bash tools/workflow_prediction/run_acceptance.sh "$WM_PIBT_LIBRARY" "$WM_LACAM3_WORKER" "$RUNNER_TEMP/workflow-acceptance" 2>&1 | tee "$RUNNER_TEMP/workflow-acceptance.log"
+      - name: Preserve full logs and raw paired outcomes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-prediction-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/workflow-pibt.log
+            ${{ runner.temp }}/workflow-pibt/*.log
+            ${{ runner.temp }}/workflow-lacam.log
+            ${{ runner.temp }}/workflow-lacam/*.log
+            ${{ runner.temp }}/workflow-tests.log
+            ${{ runner.temp }}/workflow-acceptance.log
+            ${{ runner.temp }}/workflow-acceptance/
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,6 @@
+PR18-V4 SINGLE TRAIN TRIGGER
+Config: experiments/world_model_integration/v4_frozen_config.json
+Counts: 32 Train, 8 Validation, 8 held-out in-range, 8 held-out 9-10-step OOD
+Model: original BusinessSessionEventModel V3 architecture; Adam32 LR0.001 seed1810 CPU1 thread max100 epochs early-stop10; hard180s
+Only development Train/Validation used by this workflow; both independent sets intentionally not generated or opened yet.
+No updates to this one-time trigger after successful training.

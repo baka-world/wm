@@ -1,6 +1,7 @@
 """Real official PIBT/LaCAM3 backend integration for v2 session predictions."""
 import os
 import unittest
+from dataclasses import replace
 
 from business_transport.dynamics import WorkflowDynamics
 from business_transport.lacam3_integration import (HybridBusinessSimulator,
@@ -18,6 +19,13 @@ from lab_transport.dynamics_model import Geometry
 class SessionMotionIntegrationTests(unittest.TestCase):
     def test_session_model_uses_real_motion_and_isolates_lacam_cache(self):
         business=case(2,1,2)
+        # The standard one-tick test services finish immediately. Make this
+        # synthetic integration fixture long enough for *observed active*
+        # sessions, otherwise a legitimate session predictor has no query.
+        scenario=business.scenario
+        stations={sid:replace(station,service_ticks=4,prior_ticks=4,jitter_ticks=0)
+                  for sid,station in scenario.stations.items()}
+        business=replace(business,scenario=replace(scenario,stations=stations))
         geometry=Geometry(business.scenario.grid)
         pibt=os.environ["WM_PIBT_LIBRARY"]
         lacam=os.environ["WM_LACAM3_WORKER"]

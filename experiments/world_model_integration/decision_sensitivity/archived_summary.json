@@ -1,0 +1,301 @@
+{
+  "protocol": "pr18-v4-decision-sensitivity-read-only-archive-diagnostic-20261110",
+  "status": "archive_verified_replay_not_executed",
+  "scientific_scope": "post-hoc development diagnosis of already viewed independent-in dispatch cases; not independent confirmation",
+  "source_head": "f9ba33515406ae077494e0cd9e5faf7c39708d3e",
+  "source_run": 42816481249,
+  "source_artifact": 13765795897,
+  "source_training_run": 42815634215,
+  "source_training_artifact": 13765135588,
+  "frozen_v4_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "constraints": {
+    "gpu": 0,
+    "new_training": 0,
+    "model_weights_modified": false,
+    "simulator_oracle_prediction_input": false,
+    "pr19_modified": false
+  },
+  "fixed_budget": {
+    "horizon": 5,
+    "particles": 3,
+    "candidate_budget": 4,
+    "seed": 1810
+  },
+  "archived_actual_fixed_state_summary": {
+    "states": 3,
+    "candidates": 9,
+    "v4_vs_rule_cost_different_candidates": 0,
+    "v4_vs_rule_rank_different_states": 0,
+    "v4_vs_rule_action_different_states": 0,
+    "v3c_vs_rule_cost_different_candidates": 1
+  },
+  "cases": [
+    {
+      "seed": 43011,
+      "tick": 0,
+      "candidates": 2,
+      "rule_scores": [
+        [
+          99,
+          0,
+          24
+        ],
+        [
+          99,
+          1,
+          24
+        ]
+      ],
+      "v4_scores": [
+        [
+          99,
+          0,
+          24
+        ],
+        [
+          99,
+          1,
+          24
+        ]
+      ],
+      "chosen_rule": 0,
+      "chosen_v4": 0,
+      "rank": [
+        0,
+        1
+      ],
+      "primary_gap": 0,
+      "lexicographic_first_gap": {
+        "component": "resource_contention_proxy",
+        "gap": 1
+      },
+      "factual_counterfactual_flow": [
+        77.5,
+        72.5
+      ],
+      "ex_post_best": 1,
+      "rule_regret": 5,
+      "v4_regret": 5,
+      "separate_nearest_batch_factual_only": {
+        "first_service_query_tick": 1,
+        "first_completed_service_tick": 2,
+        "windows": {
+          "5": {
+            "eligible": 2,
+            "completed": 1
+          },
+          "10": {
+            "eligible": 2,
+            "completed": 1
+          },
+          "20": {
+            "eligible": 5,
+            "completed": 1
+          }
+        }
+      }
+    },
+    {
+      "seed": 43015,
+      "tick": 0,
+      "candidates": 3,
+      "rule_scores": [
+        [
+          32,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ]
+      ],
+      "v4_scores": [
+        [
+          32,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ]
+      ],
+      "v3c_scores": [
+        [
+          31.666666666666668,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ],
+        [
+          34,
+          0,
+          7
+        ]
+      ],
+      "chosen_rule": 0,
+      "chosen_v4": 0,
+      "rank": [
+        0,
+        1,
+        2
+      ],
+      "primary_gap": 2,
+      "lexicographic_first_gap": {
+        "component": "business_main",
+        "gap": 2
+      },
+      "factual_counterfactual_flow": [
+        45.25,
+        47.25,
+        47.25
+      ],
+      "ex_post_best": 0,
+      "rule_regret": 0,
+      "v4_regret": 0,
+      "separate_nearest_batch_factual_only": {
+        "first_service_query_tick": 1,
+        "first_completed_service_tick": 5,
+        "windows": {
+          "5": {
+            "eligible": 4,
+            "completed": 0
+          },
+          "10": {
+            "eligible": 10,
+            "completed": 2
+          },
+          "20": {
+            "eligible": 27,
+            "completed": 4
+          }
+        }
+      }
+    },
+    {
+      "seed": 43019,
+      "tick": 0,
+      "candidates": 4,
+      "rule_scores": [
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          62,
+          1,
+          16
+        ]
+      ],
+      "v4_scores": [
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          60,
+          1,
+          16
+        ],
+        [
+          62,
+          1,
+          16
+        ]
+      ],
+      "chosen_rule": 0,
+      "chosen_v4": 0,
+      "rank": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "primary_gap": 0,
+      "lexicographic_first_gap": {
+        "component": "candidate_index_tie",
+        "gap": 0
+      },
+      "factual_counterfactual_flow": [
+        51,
+        51,
+        44.25,
+        46.25
+      ],
+      "ex_post_best": 2,
+      "rule_regret": 6.75,
+      "v4_regret": 6.75,
+      "separate_nearest_batch_factual_only": {
+        "first_service_query_tick": 1,
+        "first_completed_service_tick": 15,
+        "windows": {
+          "5": {
+            "eligible": 1,
+            "completed": 0
+          },
+          "10": {
+            "eligible": 2,
+            "completed": 0
+          },
+          "20": {
+            "eligible": 11,
+            "completed": 1
+          }
+        }
+      }
+    }
+  ],
+  "per_candidate_rollout_not_archived": {
+    "service_query_count": null,
+    "model_probability_differences": null,
+    "rand_draws": null,
+    "actual_sampled_event_differences": null,
+    "successor_release_differences": null,
+    "robot_sample_station_state_differences": null,
+    "component_means": null,
+    "cpu_5_10_20_ms": null
+  },
+  "F_categories": {
+    "F1": "not determined: missing per-step eligible-query and network-call logs",
+    "F2": "not determined: missing per-query probabilities and sampled events",
+    "F3": "not determined: missing states and component means",
+    "F4": "not observed in archived 5-step V4 vs Rule; scores identical",
+    "F5": "not applicable in archived V4 comparison; ranks identical",
+    "F6": "not proven; candidates tie in prediction but differ in factual counterfactual cost"
+  },
+  "replay_gate": "fixed original 5-step per-arm, per-candidate scores must match archived values before any 10/20-step development sensitivity is interpreted"
+}

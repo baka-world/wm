@@ -70,6 +70,22 @@ class InterfaceIntegrationTests(unittest.TestCase):
         x, mask = encode_batch([payload, payload])
         self.assertEqual(tuple(BusinessSetsServiceEvent()(x, mask).shape), (2,))
 
+    def test_new_feature_model_is_action_conditioned_and_masks_missing_history(self):
+        business, geometry, rows = trajectory()
+        observation = rows[0].observation
+        proposals = candidates_for(observation)
+        self.assertGreaterEqual(len(proposals), 2)
+        left = build_business_features(observation, (proposals[0],), geometry, business.rules)
+        right = build_business_features(observation, (proposals[1],), geometry, business.rules)
+        a,b = encode_tokens(left), encode_tokens(right)
+        self.assertFalse(torch.equal(a,b), "new model must not ignore candidate action")
+        self.assertTrue(any(not station["observed_effective_service_mean"]["known"]
+                            for station in left["observed_facts"]["stations"]))
+        self.assertEqual(left["observed_facts"]["stations"][0]["observed_effective_service_mean"]["value"], None)
+        action = left["candidate_action"][0]
+        self.assertTrue(action["pickup_resource_capacity"]["known"])
+        self.assertTrue(action["dropoff_resource_capacity"]["known"])
+
     def test_future_fields_not_read_from_hidden_truth(self):
         business, geometry, rows = trajectory()
         obs = rows[0].observation

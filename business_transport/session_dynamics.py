@@ -20,8 +20,17 @@ from lab_transport.dynamics_model import _intent
 
 
 class SessionRuleDynamics:
-    def __init__(self,geometry,rules,checkpoint,*,experimental=False,seed=1810):
-        self.network,self.metadata=load_session_model(checkpoint,experimental=experimental)
+    def __init__(self,geometry,rules,checkpoint,*,experimental=False,seed=1810,
+                 feature_version='v2'):
+        if feature_version=='v2':
+            self.network,self.metadata=load_session_model(checkpoint,experimental=experimental)
+            self.query_input_schema='business-service-query-input-v2'
+        elif feature_version=='v3':
+            from lab_transport.business_session_v3 import load_v3
+            self.network,self.metadata=load_v3(checkpoint,experimental=experimental)
+            self.query_input_schema=self.metadata['input_schema']
+        else:
+            raise ValueError('unknown frozen service-query feature version')
         self.network.eval()
         self.geometry,self.rules=geometry,rules
         self.rule=ProgressAwareRule(geometry)
@@ -48,7 +57,11 @@ class SessionRuleDynamics:
             features=build_business_features(observation,assignments,self.geometry,self.rules)
             rows=[{"features":features,"query":q} for q in viable]
             with torch.inference_mode():
-                tokens,masks,queries=encode_session_batch(rows)
+                if self.query_input_schema=='business-service-query-input-v2':
+                    tokens,masks,queries=encode_session_batch(rows)
+                else:
+                    from lab_transport.business_session_v3 import encode_rows
+                    tokens,masks,queries=encode_rows(rows,self.query_input_schema)
                 probabilities=torch.sigmoid(self.network(tokens,masks,queries)).tolist()
             self.service_calls+=1
             self.query_calls+=len(viable)

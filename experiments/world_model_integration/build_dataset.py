@@ -26,20 +26,23 @@ CONFIG=Path(__file__).with_name("dataset_config.json")
 
 
 def case_for(spec, config):
-    base,cfg,_=fixture(config.get('resource_capacity_A',1))
+    effective={**config,**spec}
+    base,cfg,_=fixture(effective.get('resource_capacity_A',1))
     layout=spec["layout"]
+    if layout not in (0,1,2,3,4):raise ValueError("unsupported frozen map layout")
     # Distinct map/group geometry with public station and robot positions.
     dx=layout
-    obstacles=({(4,2)} if layout==1 else {(4,2),(4,3)} if layout==2 else set())
+    obstacles=({1:{(4,2)},2:{(4,2),(4,3)},
+                3:{(5,2),(6,2),(5,5)},4:{(6,2),(7,4),(8,3)}}.get(layout,set()))
     new_grid=Grid(7+layout,5+layout,frozenset(obstacles))
     stations={}
     for sid,s in base.stations.items():
         station=replace(s,
             position=(s.position[0]+dx,s.position[1]+(1 if layout else 0)),
-            service_ticks=config["station_service_base_ticks"],
-            prior_ticks=config["station_service_base_ticks"],
-            jitter_ticks=config["jitter_ticks"],
-            outages=(tuple(config["outage_window"]),) if spec["outage"] and sid==config["outage_station"] else ())
+            service_ticks=effective["station_service_base_ticks"],
+            prior_ticks=effective["station_service_base_ticks"],
+            jitter_ticks=effective["jitter_ticks"],
+            outages=(tuple(effective["outage_window"]),) if spec["outage"] and sid==effective["outage_station"] else ())
         if not new_grid.contains(station.position):
             raise ValueError("configured station is blocked or outside map")
         stations[sid]=station
@@ -51,8 +54,8 @@ def case_for(spec, config):
         if not new_grid.contains(r.position) or not new_grid.contains(r.home):
             raise ValueError("configured robot outside map")
     jobs=[{"id":f"F{spec['seed']}-{i}","workflow":flow,"release_tick":tick}
-          for i,(flow,tick) in enumerate(zip(config["job_workflows"],config["job_release_ticks"]))]
-    cfg={**cfg,"jobs":jobs,"max_ticks":config["max_ticks"]}
+          for i,(flow,tick) in enumerate(zip(effective["job_workflows"],effective["job_release_ticks"]))]
+    cfg={**cfg,"jobs":jobs,"max_ticks":effective["max_ticks"]}
     business=compile_scenario(replace(base,grid=new_grid,stations=stations,robots=robots),cfg)
     return business,Geometry(new_grid)
 

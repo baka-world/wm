@@ -23,6 +23,7 @@ from business_transport.dispatch import BusinessCPSAT
 from experiments.business_constraints.run import (make_model, summarize_result,
     replay_branch, rich_rows)
 from experiments.business_constraints.tests.test_business import fixture
+from experiments.world_model_integration.prediction_metrics import evaluate_predictions
 from experiments.service_value.counterfactual import load_pr9_model
 from lab_transport.decision_value import candidates_for
 from lab_transport.dynamics_model import Geometry
@@ -125,7 +126,9 @@ def run(output: Path):
                         "candidates": [[asdict(a) for a in plan] for plan in plans],
                         "outcome_only_counterfactual_branches": branches,
                         "horizons": scored})
+    prediction_metrics=evaluate_predictions(rich,business,geometry,network,info["threshold"],seed=SEED)
     result = {
+        "prediction_accuracy_development":prediction_metrics,
         "status": "development_cpu_pilot_not_independent_confirmation",
         "seed": SEED, "simulation_seed": 1, "layout": "synthetic_fixture_7x5",
         "particles": PARTICLES, "candidate_budget": CANDIDATES,

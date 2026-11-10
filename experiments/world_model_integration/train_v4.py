@@ -48,7 +48,7 @@ def validate_development(data,config):
                 raise ValueError("invalid supervised event semantics")
     c=data["coverage"]["train"]
     for prior in range(3,9):
-        k=c["axes"]["prior"].get(str(prior),{})
+        k=c["axes"]["nominal"].get(str(prior),{})
         if k.get("positive",0)<config["data_gate"]["each_prior_train_min_complete"] or k.get("negative",0)<config["data_gate"]["each_prior_train_min_continue"]:
             raise ValueError("insufficient coverage for public prior "+str(prior))
     if c["observed_paused_session_ticks"]<1:raise ValueError("no genuine service pause recorded")
@@ -150,7 +150,8 @@ def train_v4(data_path,checkpoint,report):
       "train_records":len(train),"validation_records":len(validation),
       "train_groups":len(data["groups"]["train"]),"validation_groups":len(data["groups"]["validation"]),
       "validation":stats(validation,final),
-      "validation_by_prior":evaluate_group(validation,final,"prior"),
+      "validation_by_public_nominal":evaluate_group(validation,final,"nominal"),
+      "validation_by_observed_expectation":evaluate_group(validation,final,"prior"),
       "validation_by_elapsed":grouped(validation,final,"elapsed"),
       "preflight_seconds":preflight_seconds,"preflight_projected_seconds":projected_seconds,
       "train_elapsed_seconds":time.monotonic()-started,

@@ -1,0 +1,96 @@
+name: PR18 V4 data coverage and one frozen CPU training
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - 'experiments/world_model_integration/v4_TRAIN_ONE_SHOT_TRIGGER.txt'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  one-v4-training:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c 'import torch; assert torch.version.cuda is None;torch.set_num_threads(1)'
+      - name: Recover unchanged frozen V3-C baseline
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13753819654/zip" \
+            -o "$RUNNER_TEMP/frozen-v3-archive.zip"
+          unzip -p "$RUNNER_TEMP/frozen-v3-archive.zip" v3/v3-c.pt > "$RUNNER_TEMP/frozen-v3-c.pt"
+          echo "65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696  $RUNNER_TEMP/frozen-v3-c.pt" | sha256sum -c
+      - name: Run factual generator preflight and precommitted contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 120s python -m unittest discover -s experiments/world_model_integration/tests -p 'test_v4_generator.py' -v 2>&1 | tee "$RUNNER_TEMP/v4-preflight-tests.log"
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path('experiments/world_model_integration/v4_frozen_config.json')
+          config=json.loads(p.read_text())
+          assert config['protocol']=='pr18-v4-frozen-synthetic-mechanism-20261110'
+          print('FROZEN_V4_CONFIG_SHA256',hashlib.sha256(p.read_bytes()).hexdigest())
+          print('FROZEN_V4_SEED_GROUP_COUNTS',{k:len(v) for k,v in config['groups'].items()})
+          PY
+      - name: Generate grouped factual Train and Validation, enforce coverage BEFORE training
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python -m experiments.world_model_integration.build_dataset_v4 \
+            --part development --output "$RUNNER_TEMP/v4-development.json" \
+            --coverage "$RUNNER_TEMP/v4-development-coverage.json" 2>&1 | tee "$RUNNER_TEMP/v4-generation.log"
+      - name: Exactly one fixed V4 Adam CPU training run
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 200s python -m experiments.world_model_integration.train_v4 \
+            --dataset "$RUNNER_TEMP/v4-development.json" \
+            --checkpoint "$RUNNER_TEMP/v4-data.pt" \
+            --report "$RUNNER_TEMP/v4-training.json" 2>&1 | tee "$RUNNER_TEMP/v4-training.log"
+      - name: Compare six frozen predictors on development VALIDATION only
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 240s python -m experiments.world_model_integration.evaluate_v4 \
+            --development "$RUNNER_TEMP/v4-development.json" \
+            --v3-frozen "$RUNNER_TEMP/frozen-v3-c.pt" \
+            --v4 "$RUNNER_TEMP/v4-data.pt" --part validation \
+            --output "$RUNNER_TEMP/v4-validation-comparison.json" 2>&1 | tee "$RUNNER_TEMP/v4-validation.log"
+      - name: Preserve every V4 development artifact unchanged
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr18-v4-frozen-train-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/v4-preflight-tests.log
+            ${{ runner.temp }}/v4-generation.log
+            ${{ runner.temp }}/v4-development-coverage.json
+            ${{ runner.temp }}/v4-development.json
+            ${{ runner.temp }}/v4-data.pt
+            ${{ runner.temp }}/v4-training.log
+            ${{ runner.temp }}/v4-training.json
+            ${{ runner.temp }}/v4-validation-comparison.json
+            ${{ runner.temp }}/v4-validation.log
+          if-no-files-found: warn
+          retention-days: 90

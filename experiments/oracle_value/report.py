@@ -10,7 +10,7 @@ def f(x):
     return "undefined" if x is None else (f"{x:.4f}" if isinstance(x,(int,float)) else str(x))
 
 
-def report(summary_path, raw_path, out):
+def report(summary_path, raw_path, out, robustness_summary=None):
     s=json.loads(Path(summary_path).read_text())
     with gzip.open(raw_path,"rt",encoding="utf-8") as h:
         data=json.load(h)
@@ -116,6 +116,24 @@ def report(summary_path, raw_path, out):
             f"PETS {f(m['PETS-5']['regret_steps'])}，"
             f"Structured {f(m['Structured-5']['regret_steps'])}。"
         )
+    if robustness_summary:
+        robust=json.loads(Path(robustness_summary).read_text(encoding="utf-8"))
+        out_rows.extend([
+            "",
+            "## 预先冻结的多随机实现稳健性检验（仅候选差距 ≥3 步）",
+            "",
+            f"- 达标的状态 {robust['qualifying_decisions']}，成功 {robust['valid_robust_decisions']}，失败 {robust['failed_replays']}。",
+            f"- 固定额外服务扰动种子 {robust['extra_noise_seeds']}；额外反事实候选重放 {robust['candidate_replays']} 条。",
+            f"- 原单次 Oracle 的候选在额外实现平均后仍是最佳：{robust['nominal_oracle_remains_mean_best']}/{robust['valid_robust_decisions']}。",
+            f"- 达标状态的额外实现下平均 Rule 到均值最佳机会：{f(robust['mean_robust_rule_opportunity_qualifying_states'])} 步。",
+            f"- 原单次 Oracle 选中的候选在额外实现下对 Rule 的平均收益：{f(robust['mean_robust_nominal_oracle_gain_qualifying_states'])} 步。",
+            f"- 条件选中簇的等权均值最佳机会：{f(robust['mean_of_qualifying_cluster_means'])} 步。",
+            f"- 稳健性重放墙钟耗时 {f(robust['wall_seconds'])} 秒。",
+            "- **只对首轮大差距状态重放**，因此上述均值不能与全体 48 状态的 Rule 损失均值直接相减。",
+            "- 服务扰动仅改变决策时刻之后新开服务会话的按任务/阶段键控随机数，"
+            "事实前缀、未来故障/释放和运动算法保持不变。",
+            "- 额外种子用于事后稳健性，不向 Rule/PETS/Structured 的预测过程泄露。",
+        ])
     out_rows.extend([
         "",
         "## 失败与反事实公平",

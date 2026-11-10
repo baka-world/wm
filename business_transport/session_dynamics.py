@@ -29,6 +29,10 @@ class SessionRuleDynamics:
             from lab_transport.business_session_v3 import load_v3
             self.network,self.metadata=load_v3(checkpoint,experimental=experimental)
             self.query_input_schema=self.metadata['input_schema']
+        elif feature_version=='v4':
+            from experiments.world_model_integration.train_v4 import load_v4
+            self.network,self.metadata=load_v4(checkpoint,experimental=experimental)
+            self.query_input_schema=self.metadata['input_schema']
         else:
             raise ValueError('unknown frozen service-query feature version')
         self.network.eval()

@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 from lab_transport.domain import Grid,Station,RobotSpec,Scenario
+from lab_transport.dynamics_model import Geometry
 from lab_transport.simulation import SampleState
 from lab_transport.transition_schema import Assignment
 from lab_transport.paper_reuse.ortools_dispatch import cp_model
@@ -87,7 +88,7 @@ def scene_for(spec):
            "workflows":workflows,"jobs":jobs,"max_ticks":spec["max_ticks"],
            "name":"synthetic priority/retest "+str(seed)}
     business=compile_scenario(base,rules)
-    return business,base.grid
+    return business,Geometry(base.grid)
 
 
 def synthetic_retest(seed,job_id,rate):

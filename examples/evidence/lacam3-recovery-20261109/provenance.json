@@ -1,0 +1,22 @@
+{
+  "experiment_code_commit": "ce3e1592ae7490b4a957420769a314e1c0c1df99",
+  "base_pr13_head": "29fc99a89927660612d3289ca25333bf29927cdf",
+  "lacam3_upstream": "https://github.com/Kei18/lacam3",
+  "lacam3_commit": "1c3ecf8ade40298f16047544634e9c0c1cf3b93c",
+  "lacam3_license": "MIT",
+  "argparse_commit": "69dabd88a8e6680b1a1a18397eb3e165e4019ce6",
+  "argparse_license": "MIT",
+  "pibt_commit": "faab5b916649549f1cd563df8dbf6e4f6382f631",
+  "config_sha256": "27a830f8ec7960f0b2f6ede085210ffd1287f64a13dfc7a984ab7db793320797",
+  "hospital_source_sha256": {
+    "hospital_map": "8c2ebd01b49818f1d40f32e849b2c41ac800861f0b4ce82498d4298c6f2ad058",
+    "tiago_config": "5f2a4d5f7d75e2b5865d2bdc98842c37b2ccb97c822cb00189da75f922569530",
+    "clinic_map": "780bfabff950c4fb3132dd1933994255afe3b93cbc25a8265e0214adb62ff7f0",
+    "clinic_config": "e63fd0f2e74eac14c4651ad6ee04d20d9e97b8a0a13cc415791ce013b6d9c316"
+  },
+  "execution": "CPU only, no training; paired historical 22 scenarios repeated twice; default official first complete solution, single thread; 500 ms wall budget",
+  "python": "Python 3.10.22",
+  "cmake": "cmake version 3.31.10",
+  "cxx": "c++ (Debian 14.2.0-19) 14.2.0",
+  "limitations": "Hospital roles/tasks/station services are simulation assumptions; historical scenes are not independent confirmation of generalizability."
+}

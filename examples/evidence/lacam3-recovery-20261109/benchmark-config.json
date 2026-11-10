@@ -1,0 +1,15 @@
+{
+  "purpose": "Fixed paired comparison of legacy, stateless official PIBT, and PIBT plus official LaCAM3 full-path recovery.",
+  "hospital_scenarios": ["tartu", "clinic"],
+  "hospital_environment_seed": 61000,
+  "hospital_max_ticks": 800,
+  "grid_source": "experiments/pibt_motion/benchmark_config.json",
+  "grid_coverage": "all 16 PR12 three-robot cases plus all four PR13 five-robot cases",
+  "grid_max_ticks": 500,
+  "dispatcher": "nearest",
+  "planner_seed": 20261109,
+  "no_stage_threshold_steps": 16,
+  "repeated_position_window_steps": 16,
+  "max_planning_wall_ms": 500,
+  "source_assumptions": "Public maps; station roles, workflows and extra robot starts are documented simulation assumptions, not clinical data."
+}

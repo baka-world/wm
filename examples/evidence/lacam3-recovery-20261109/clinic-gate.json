@@ -1,0 +1,1107 @@
+{
+  "source": "frozen PR #13 archived trajectories",
+  "last_stage_completed_tick": 37,
+  "first_repeat_ticks": [
+    44,
+    46
+  ],
+  "terminal_state_counts_last_100": [
+    {
+      "positions": [
+        [
+          416,
+          0
+        ],
+        [
+          444,
+          0
+        ],
+        [
+          452,
+          0
+        ]
+      ],
+      "count": 50
+    },
+    {
+      "positions": [
+        [
+          421,
+          0
+        ],
+        [
+          416,
+          0
+        ],
+        [
+          444,
+          0
+        ]
+      ],
+      "count": 35
+    },
+    {
+      "positions": [
+        [
+          399,
+          0
+        ],
+        [
+          416,
+          0
+        ],
+        [
+          444,
+          0
+        ]
+      ],
+      "count": 15
+    }
+  ],
+  "solver": "official LaCAM3 solve(), first complete solution, single thread",
+  "budget_ms": 500,
+  "planner_seed": 20261109,
+  "states": [
+    {
+      "state": {
+        "label": "cycle_first",
+        "tick": 44,
+        "robots": [
+          {
+            "id": "R1",
+            "position": [
+              399,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J5::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 9,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R2",
+            "position": [
+              416,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J4::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 5,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R3",
+            "position": [
+              444,
+              0
+            ],
+            "target": [
+              403,
+              0
+            ],
+            "task_id": "J2::stage2",
+            "phase": "to_dropoff",
+            "release_tick": 37,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          }
+        ],
+        "resources": [
+          {
+            "id": "collection",
+            "stations": [
+              "诊疗左_假设取样",
+              "诊疗右_假设取样"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理左_假设交接",
+            "stations": [
+              "护理左_假设交接"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理右_假设交接",
+            "stations": [
+              "护理右_假设交接"
+            ],
+            "capacity": 1
+          }
+        ]
+      },
+      "result": {
+        "status": "solved",
+        "path": [
+          [
+            [
+              399,
+              0
+            ],
+            [
+              416,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              444,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              452,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              396,
+              0
+            ],
+            [
+              394,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              397,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ]
+        ],
+        "ids": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "primary": "R2",
+        "duplicate_business_goals": true,
+        "temporary_goals": true,
+        "wall_ms": 4.164080000009562,
+        "peak_rss_kb": 2156,
+        "cpu_ms": 3.435,
+        "worker_invoked": true,
+        "detail": ""
+      }
+    },
+    {
+      "state": {
+        "label": "cycle_typical_1",
+        "tick": 45,
+        "robots": [
+          {
+            "id": "R1",
+            "position": [
+              416,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J5::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 9,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R2",
+            "position": [
+              444,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J4::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 5,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R3",
+            "position": [
+              452,
+              0
+            ],
+            "target": [
+              403,
+              0
+            ],
+            "task_id": "J2::stage2",
+            "phase": "to_dropoff",
+            "release_tick": 37,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          }
+        ],
+        "resources": [
+          {
+            "id": "collection",
+            "stations": [
+              "诊疗左_假设取样",
+              "诊疗右_假设取样"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理左_假设交接",
+            "stations": [
+              "护理左_假设交接"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理右_假设交接",
+            "stations": [
+              "护理右_假设交接"
+            ],
+            "capacity": 1
+          }
+        ]
+      },
+      "result": {
+        "status": "solved",
+        "path": [
+          [
+            [
+              416,
+              0
+            ],
+            [
+              444,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              452,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              396,
+              0
+            ],
+            [
+              397,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              394,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              396,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              397,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              416,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ]
+        ],
+        "ids": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "primary": "R2",
+        "duplicate_business_goals": true,
+        "temporary_goals": true,
+        "wall_ms": 2.9557289999502245,
+        "peak_rss_kb": 2156,
+        "cpu_ms": 2.287,
+        "worker_invoked": true,
+        "detail": ""
+      }
+    },
+    {
+      "state": {
+        "label": "cycle_typical_2",
+        "tick": 50,
+        "robots": [
+          {
+            "id": "R1",
+            "position": [
+              421,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J5::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 9,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R2",
+            "position": [
+              416,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J4::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 5,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R3",
+            "position": [
+              444,
+              0
+            ],
+            "target": [
+              403,
+              0
+            ],
+            "task_id": "J2::stage2",
+            "phase": "to_dropoff",
+            "release_tick": 37,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          }
+        ],
+        "resources": [
+          {
+            "id": "collection",
+            "stations": [
+              "诊疗左_假设取样",
+              "诊疗右_假设取样"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理左_假设交接",
+            "stations": [
+              "护理左_假设交接"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理右_假设交接",
+            "stations": [
+              "护理右_假设交接"
+            ],
+            "capacity": 1
+          }
+        ]
+      },
+      "result": {
+        "status": "solved",
+        "path": [
+          [
+            [
+              421,
+              0
+            ],
+            [
+              416,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              444,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              452,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              396,
+              0
+            ],
+            [
+              394,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              397,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              421,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ]
+        ],
+        "ids": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "primary": "R2",
+        "duplicate_business_goals": true,
+        "temporary_goals": true,
+        "wall_ms": 3.2001269999000215,
+        "peak_rss_kb": 2156,
+        "cpu_ms": 2.442,
+        "worker_invoked": true,
+        "detail": ""
+      }
+    },
+    {
+      "state": {
+        "label": "cycle_typical_3",
+        "tick": 44,
+        "robots": [
+          {
+            "id": "R1",
+            "position": [
+              399,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J5::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 9,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R2",
+            "position": [
+              416,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J4::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 5,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R3",
+            "position": [
+              444,
+              0
+            ],
+            "target": [
+              403,
+              0
+            ],
+            "task_id": "J2::stage2",
+            "phase": "to_dropoff",
+            "release_tick": 37,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          }
+        ],
+        "resources": [
+          {
+            "id": "collection",
+            "stations": [
+              "诊疗左_假设取样",
+              "诊疗右_假设取样"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理左_假设交接",
+            "stations": [
+              "护理左_假设交接"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理右_假设交接",
+            "stations": [
+              "护理右_假设交接"
+            ],
+            "capacity": 1
+          }
+        ]
+      },
+      "result": {
+        "status": "solved",
+        "path": [
+          [
+            [
+              399,
+              0
+            ],
+            [
+              416,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              444,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              452,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              396,
+              0
+            ],
+            [
+              394,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              397,
+              0
+            ],
+            [
+              396,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              452,
+              0
+            ]
+          ],
+          [
+            [
+              399,
+              0
+            ],
+            [
+              398,
+              0
+            ],
+            [
+              444,
+              0
+            ]
+          ]
+        ],
+        "ids": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "primary": "R2",
+        "duplicate_business_goals": true,
+        "temporary_goals": true,
+        "wall_ms": 4.346333000057712,
+        "peak_rss_kb": 2156,
+        "cpu_ms": 3.695,
+        "worker_invoked": true,
+        "detail": ""
+      }
+    },
+    {
+      "state": {
+        "label": "legacy_final",
+        "tick": 799,
+        "robots": [
+          {
+            "id": "R1",
+            "position": [
+              384,
+              0
+            ],
+            "target": [
+              398,
+              0
+            ],
+            "task_id": "J1::stage1",
+            "phase": "to_dropoff",
+            "release_tick": 0,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": "诊疗左_假设取样",
+            "device_available": true,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R2",
+            "position": [
+              393,
+              0
+            ],
+            "target": [
+              384,
+              0
+            ],
+            "task_id": "J3::stage1",
+            "phase": "to_pickup",
+            "release_tick": 1,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": null,
+            "device_available": null,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          },
+          {
+            "id": "R3",
+            "position": [
+              403,
+              0
+            ],
+            "target": [
+              384,
+              0
+            ],
+            "task_id": "J4::stage1",
+            "phase": "to_pickup",
+            "release_tick": 5,
+            "locked": false,
+            "serviced": false,
+            "motion_paused": false,
+            "station_at_position": "护理右_假设交接",
+            "device_available": true,
+            "capacity_wait": false,
+            "device_unavailable_wait": false
+          }
+        ],
+        "resources": [
+          {
+            "id": "collection",
+            "stations": [
+              "诊疗左_假设取样",
+              "诊疗右_假设取样"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理左_假设交接",
+            "stations": [
+              "护理左_假设交接"
+            ],
+            "capacity": 1
+          },
+          {
+            "id": "station:护理右_假设交接",
+            "stations": [
+              "护理右_假设交接"
+            ],
+            "capacity": 1
+          }
+        ]
+      },
+      "result": {
+        "status": "solved",
+        "path": [
+          [
+            [
+              384,
+              0
+            ],
+            [
+              393,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ],
+          [
+            [
+              393,
+              0
+            ],
+            [
+              451,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ],
+          [
+            [
+              394,
+              0
+            ],
+            [
+              393,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ],
+          [
+            [
+              396,
+              0
+            ],
+            [
+              393,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ],
+          [
+            [
+              397,
+              0
+            ],
+            [
+              393,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ],
+          [
+            [
+              398,
+              0
+            ],
+            [
+              393,
+              0
+            ],
+            [
+              403,
+              0
+            ]
+          ]
+        ],
+        "ids": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "primary": "R1",
+        "duplicate_business_goals": true,
+        "temporary_goals": true,
+        "wall_ms": 2.8702930000008564,
+        "peak_rss_kb": 2152,
+        "cpu_ms": 2.205,
+        "worker_invoked": true,
+        "detail": ""
+      }
+    }
+  ]
+}

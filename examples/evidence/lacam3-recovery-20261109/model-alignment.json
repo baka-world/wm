@@ -1,0 +1,102 @@
+{
+  "scope": "factual clinic snapshots; cached-path multi-step check has no unseen future events",
+  "factual_status": "completed",
+  "first_recovery_tick": 52,
+  "actual_cache_invalidations": [
+    {
+      "tick": 57,
+      "reason": "context_changed"
+    }
+  ],
+  "models": {
+    "rule": {
+      "factual_transitions": 115,
+      "one_step_positions_match": 115,
+      "matching_service_state_transitions": 112,
+      "conditional_motion_match": 112,
+      "snapshot_match": 115,
+      "conditional_snapshot_match": 112,
+      "cached_multistep_start_tick": 53,
+      "cached_multistep_positions_match": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "branch_isolation": true,
+      "pibt_prediction_calls": 102,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0
+    },
+    "pets": {
+      "factual_transitions": 115,
+      "one_step_positions_match": 115,
+      "matching_service_state_transitions": 97,
+      "conditional_motion_match": 97,
+      "snapshot_match": 107,
+      "conditional_snapshot_match": 97,
+      "cached_multistep_start_tick": 53,
+      "cached_multistep_positions_match": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "branch_isolation": true,
+      "pibt_prediction_calls": 102,
+      "pets_forward_calls": 36,
+      "structured_service_calls": 0
+    },
+    "structured": {
+      "factual_transitions": 115,
+      "one_step_positions_match": 115,
+      "matching_service_state_transitions": 107,
+      "conditional_motion_match": 107,
+      "snapshot_match": 115,
+      "conditional_snapshot_match": 107,
+      "cached_multistep_start_tick": 53,
+      "cached_multistep_positions_match": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "branch_isolation": true,
+      "pibt_prediction_calls": 102,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 36
+    }
+  },
+  "cp_sat_closed_loop": {
+    "rule": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "prediction_pibt_calls": 120,
+      "execution_pibt_calls": 26,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 0
+    },
+    "pets": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "prediction_pibt_calls": 120,
+      "execution_pibt_calls": 26,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 93,
+      "structured_service_calls": 0
+    },
+    "structured": {
+      "status": "completed",
+      "stages_completed": 4,
+      "stages": 4,
+      "prediction_pibt_calls": 120,
+      "execution_pibt_calls": 26,
+      "model_fallbacks": 0,
+      "pets_forward_calls": 0,
+      "structured_service_calls": 87
+    }
+  }
+}

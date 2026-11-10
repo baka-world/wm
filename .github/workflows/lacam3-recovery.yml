@@ -1,0 +1,84 @@
+name: Official LaCAM3 recovery CPU
+
+on:
+  pull_request:
+    paths:
+      - 'business_transport/lacam3_*.py'
+      - 'experiments/lacam3_recovery/**'
+      - 'native/lacam3_bridge/**'
+      - 'tools/lacam3_recovery/**'
+      - 'examples/evidence/lacam3-recovery-20261109/**'
+      - '.github/workflows/lacam3-recovery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  official-lacam3-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; print('CPU PyTorch', torch.__version__)"
+      - name: Build the unchanged official PIBT and run native samples and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/pibt-upstream" 2>&1 | tee "$RUNNER_TEMP/pibt-upstream.log"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/pibt-upstream/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
+      - name: Build the unchanged official LaCAM3 and run its example and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/lacam3_recovery/prepare_upstream.sh "$RUNNER_TEMP/lacam3-upstream" 2>&1 | tee "$RUNNER_TEMP/lacam3-upstream.log"
+          echo "WM_LACAM3_WORKER=$RUNNER_TEMP/lacam3-upstream/bridge/wm_lacam3_worker" >> "$GITHUB_ENV"
+      - name: Download pinned hospital sources and verify prior evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in examples/evidence/pibt-motion-20261109 examples/evidence/business-capacity-20261109 examples/evidence/lacam3-recovery-20261109; do
+            (cd "$path" && sha256sum -c SHA256SUMS)
+          done
+          python -m tools.pibt_motion.prepare_sources --output "$RUNNER_TEMP/hospital-sources"
+          echo "WM_HOSPITAL_SOURCES=$RUNNER_TEMP/hospital-sources" >> "$GITHUB_ENV"
+      - name: Run previous and new regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s experiments/service_value/tests -v
+          python -m unittest discover -s experiments/paper_reuse/tests -v
+          python -m unittest discover -s experiments/business_constraints/tests -v
+          python -m unittest discover -s experiments/pibt_motion/tests -v
+          python -m unittest discover -s experiments/lacam3_recovery/tests -v
+      - name: Reproduce paired comparison twice without model training
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 900s bash tools/lacam3_recovery/run_acceptance.sh "$WM_LACAM3_WORKER" "$WM_PIBT_LIBRARY" "$WM_HOSPITAL_SOURCES" "$RUNNER_TEMP/lacam3-acceptance" 2>&1 | tee "$RUNNER_TEMP/lacam3-acceptance.log"
+      - name: Preserve build, integration, and experiment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacam3-recovery-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pibt-upstream.log
+            ${{ runner.temp }}/pibt-upstream/*.log
+            ${{ runner.temp }}/pibt-upstream/*status.txt
+            ${{ runner.temp }}/lacam3-upstream.log
+            ${{ runner.temp }}/lacam3-upstream/*.log
+            ${{ runner.temp }}/lacam3-upstream/*.txt
+            ${{ runner.temp }}/lacam3-acceptance.log
+            ${{ runner.temp }}/lacam3-acceptance/
+          if-no-files-found: warn
+          retention-days: 14

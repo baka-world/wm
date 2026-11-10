@@ -17,5 +17,8 @@
     20
   ],
   "hardware": "ubuntu GitHub Actions CPU only",
-  "not_an_independent_confirmation": true
-}\n
+  "not_an_independent_confirmation": true,
+  "model_training_in_this_diagnostic": false,
+  "gpu_used_by_diagnostic": false,
+  "business_truth_used_as_online_model_input": false
+}

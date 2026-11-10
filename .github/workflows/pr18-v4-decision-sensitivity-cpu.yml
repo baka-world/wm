@@ -135,7 +135,7 @@ jobs:
             'allowed_windows':[5,10,20], 'hardware':'ubuntu GitHub Actions CPU only',
             'not_an_independent_confirmation':True
           }
-          (root/'provenance.json').write_text(json.dumps(metadata,indent=2,ensure_ascii=False)+'\\n')
+          (root/'provenance.json').write_text(json.dumps(metadata,indent=2,ensure_ascii=False)+'\n')
           print('RAW_REPLAY_SHA256',metadata['raw_replay_sha256'])
           print('COMPRESSED_BYTES',(root/'v4-decision-sensitivity-replay.json.gz').stat().st_size)
           PY

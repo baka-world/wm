@@ -219,9 +219,9 @@ class InterfaceIntegrationTests(unittest.TestCase):
 
             def estimate(self, observation, station, *, sample=None, robot=None, phase=None):
                 prior = float(station.expected_service_ticks)
-                if robot is None:
+                if robot is None or robot.position != station.position or robot.service_elapsed is None:
                     return ServiceWorkEstimate(prior, prior, False, "rule_prior",
-                                               fallback_reason="unstarted")
+                                               fallback_reason="unstarted_or_not_observed_active")
                 amount = 1. if sample.id.startswith(self.favoured) else 1000.
                 return ServiceWorkEstimate(prior, amount, True, "controlled_test_only")
 

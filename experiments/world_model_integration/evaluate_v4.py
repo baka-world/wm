@@ -23,11 +23,11 @@ from experiments.world_model_integration.train_v4 import load_v4,sha
 from lab_transport.torch_structured_adapter import ProgressAwareRule
 
 
-def _conditional(records,probs):
+def _conditional(records,probs,dimension='prior'):
     groups=defaultdict(list)
     for row,p in zip(records,probs):
         a=record_attributes(row)
-        groups[(a["prior"],a["elapsed"])].append((row,p))
+        groups[(a[dimension],a["elapsed"])].append((row,p))
     return [{"public_ticks":d,"active_elapsed":e,"n":len(values),
              "finished":sum(r["label"] for r,p in values),
              "observed_rate":sum(r["label"] for r,p in values)/len(values),
@@ -135,7 +135,8 @@ def evaluate(dev_path,split_path,v3_path,v4_path,part,output):
           "per_station":_group(split,pp,"station"),
           "per_phase":_group(split,pp,"phase"),
           "per_capacity":_group(split,pp,"capacity"),
-          "conditional_curve":_conditional(split,pp)}
+          "conditional_curve_by_observed_expected":_conditional(split,pp,"prior"),
+          "conditional_curve_by_nominal":_conditional(split,pp,"nominal")}
     models=result["models"]
     b0=models["B0"]["overall"]["brier"]
     v4=models["V4"]["overall"]["brier"]

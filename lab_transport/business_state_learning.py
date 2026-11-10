@@ -219,5 +219,17 @@ def main():
                                epochs=args.epochs, seconds=args.seconds), indent=2))
 
 
+# v1 is retained only for archived PR18 tests/checkpoints. New training routes
+# explicitly to the per-session target v2 without reinterpreting old weights.
+_legacy_train_cpu = train_cpu
+
+def train_cpu(dataset_path, checkpoint_path, *, seed=1810, epochs=5, seconds=60.):
+    dataset = json.loads(Path(dataset_path).read_text(encoding="utf-8"))
+    from business_transport.session_events import QUERY_LABEL_VERSION
+    if dataset.get("label_version") == QUERY_LABEL_VERSION:
+        from lab_transport.business_session_learning import train_session_cpu
+        return train_session_cpu(dataset_path,checkpoint_path,seed=seed,epochs=epochs,seconds=seconds)
+    return _legacy_train_cpu(dataset_path,checkpoint_path,seed=seed,epochs=epochs,seconds=seconds)
+
 if __name__ == "__main__":
     main()

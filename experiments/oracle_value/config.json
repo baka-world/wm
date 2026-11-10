@@ -1,0 +1,64 @@
+{
+  "purpose": "PR16 offline fixed candidate full-workflow opportunity and attribution; no network training or tuning.",
+  "base_commit": "d7d29923c77a026ed3f4ec5fb3e2934bc4385200",
+  "historical_reference": "examples/evidence/workflow-prediction-20261110/confirmation/raw.json.gz",
+  "historical_profile": "experiments/workflow_prediction/config.json:confirmation",
+  "confirmation": [
+    {
+      "layout": "empty8",
+      "seeds": [
+        81011,
+        81012,
+        81013,
+        81014
+      ],
+      "regimes": [
+        "workflow_serial",
+        "workflow_parallel",
+        "workflow_outage"
+      ]
+    },
+    {
+      "layout": "random32",
+      "seeds": [
+        82011,
+        82012,
+        82013,
+        82014
+      ],
+      "regimes": [
+        "workflow_serial",
+        "workflow_parallel",
+        "workflow_outage"
+      ]
+    }
+  ],
+  "motion_backend": "hybrid",
+  "planner_seed": 20261109,
+  "horizon": 5,
+  "perfect_horizons": [
+    5,
+    20
+  ],
+  "particles": 3,
+  "candidate_budget": 4,
+  "cp_sat_time_limit_seconds": 0.5,
+  "selection": "First and middle eligible factual nearest-policy decisions with at least two CP-SAT plans; at most two per scene, no backfill.",
+  "replay": "Force a candidate at the factual decision tick, then nearest_batch. Key service noise by fixed simulation seed, sample ID, phase, station. Same public outage plan, task releases, PIBT and LaCAM3.",
+  "outcome": "Completion count descending, then restricted mean job flow ascending, then original candidate index. Step regret only when all candidates complete.",
+  "cluster": "Map and seed; three regimes form one dependent cluster.",
+  "robust_replays_if_large_gap": {
+    "threshold_steps": 3,
+    "additional_simulation_seeds": [
+      91011,
+      91012,
+      91013
+    ],
+    "status": "manual-gated; only if a fair same-prefix noise-only rerun implementation is validated"
+  },
+  "cpu_pilot_max_wall_seconds": 900,
+  "no_new_training": true,
+  "archive_is_dev_only": true,
+  "exclusion_rule": "Keep all states and failed candidates in raw results; never silently discard failures or zero opportunity.",
+  "note": "Perfect-State uses the true first N post-action observations only to score each candidate. No future data is exposed to Rule/PETS/Structured."
+}

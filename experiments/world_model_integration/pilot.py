@@ -150,7 +150,9 @@ def main():
     result = run(args.output)
     print(json.dumps({"arm_metrics": {k: {f: v for f, v in row.items() if
            f != "sample_decision_logs"} for k,row in result["arms"].items()},
-           "same_state": result["same_state_diagnostics"]}, ensure_ascii=False))
+           "same_state": result["same_state_diagnostics"],
+           "prediction_accuracy_development": result["prediction_accuracy_development"]},
+           ensure_ascii=False))
 
 
 if __name__ == "__main__":

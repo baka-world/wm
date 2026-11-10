@@ -1,0 +1,15 @@
+test_keyed_exogenous_does_not_depend_on_tick_policy (test_core.RetestContracts) ... ok
+test_metric_censoring_job_not_stage (test_core.RetestContracts) ... ok
+test_no_future_retest_in_policy_observations (test_core.RetestContracts) ... ok
+test_no_retest_never_creates_optional_stage (test_core.RetestContracts) ... ok
+test_priority_and_deadline_survive_retest (test_core.RetestContracts) ... ok
+test_priority_observable_after_current_release (test_core.RetestContracts) ... ok
+test_retest_is_created_only_after_detection_completion (test_core.RetestContracts) ... ok
+test_run_is_bitwise_reproducible (test_core.RetestContracts) ... ok
+test_same_matching_order_not_distinct (test_core.RetestContracts) ... ok
+test_two_policies_see_same_keyed_retest_truth (test_core.RetestContracts) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.236s
+
+OK

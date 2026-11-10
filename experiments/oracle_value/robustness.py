@@ -82,7 +82,7 @@ def run(raw_path,out,pibt,lacam):
         rich={r.observation.tick:r for r in rich_rows(rows)}
         for d in qualifying:
             obs=rich[d['tick']].observation
-            if asdict(obs)!=d['observable_state']:
+            if json.loads(json.dumps(asdict(obs),ensure_ascii=False))!=d['observable_state']:
                 raise ValueError('decision observation differs from primary run')
             plans=[tuple(Assignment(**p) for p in plan) for plan in d['plans']]
             series=[];all_noise=[]

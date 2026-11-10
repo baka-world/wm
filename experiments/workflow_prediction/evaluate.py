@@ -272,7 +272,7 @@ def evaluate_state_windows(rows,business,geometry,network,threshold,pibt,lacam,c
             'horizons':result}
 
 
-def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config):
+def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config,*,trace_limit=0):
     source={r.observation.tick:r for r in rows};geometry=Geometry(business.scenario.grid)
     def controller(obs,candidates):
         if obs.tick<=tick:
@@ -282,7 +282,8 @@ def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config):
         return nearest_batch(obs,candidates,geometry)
     sim=HybridBusinessSimulator(business,'world',seed,motion_backend=config['motion_backend'],
             pibt_library=pibt,lacam3_worker=lacam,planner_seed=config['planner_seed'],collect_metrics=True)
-    result=sim.run(dispatch_policy=controller)
+    captured=[]
+    result=sim.run(dispatch_policy=controller,on_transition=captured.append if trace_limit else None)
     if result['history'][:tick+1]!=factual['history'][:tick+1]:
         raise ValueError('counterfactual simulator prefix differs')
     samples={s['id']:s for s in result['samples']};flows=[];restricted=[]
@@ -296,11 +297,20 @@ def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config):
     duplicate=sum(n-1 for n in Counter(assignments).values() if n>1)
     if any(safety[k] for k in ('vertex_collisions','edge_swaps','invalid_edges')) or resources['violations'] or lifecycle or duplicate:
         raise ValueError('counterfactual execution violates safety or lifecycle')
-    return {'jobs':len(business.jobs),'jobs_completed':len(flows),'status':result['summary']['status'],
+    outcome={'jobs':len(business.jobs),'jobs_completed':len(flows),'status':result['summary']['status'],
         'mean_flow_completed':statistics.mean(flows) if flows else None,
         'restricted_mean_flow':statistics.mean(restricted),
         'capacity_wait_ticks':resources['capacity_wait_ticks'],'safety':safety,
         'events':result['events']}
+    if trace_limit:
+        future=[row.next_observation for row in rich_rows(captured)
+                if row.observation.tick>=tick][:trace_limit]
+        evidence={'recovery_triggers':sum(e['triggered'] for e in sim.recovery_log),
+                  'recovery_worker_calls':sum(bool(e.get('worker_invoked')) for e in sim.recovery_log),
+                  'history_sha256':hashlib.sha256(json.dumps(result['history'],sort_keys=True).encode()).hexdigest(),
+                  'complete_factual_prefix':result['history'][:tick+1]==factual['history'][:tick+1]}
+        return outcome,future,evidence
+    return outcome
 
 
 def same_state(rows,factual,business,seed,geometry,network,threshold,pibt,lacam,config):

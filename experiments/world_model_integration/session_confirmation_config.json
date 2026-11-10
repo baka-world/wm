@@ -1,29 +1,62 @@
 {
-  "status":"frozen_independent_seed_and_task_holdout",
-  "source":"synthetic_BusinessSimulator_factual_only",
-  "seeds":[21071,21073],
-  "regimes":[
-    {"name":"ordinary","layout":0,"outage":false},
-    {"name":"surprise_outage","layout":1,"outage":true},
-    {"name":"different_map_with_outage","layout":2,"outage":true}
+  "status": "frozen_independent_seed_and_task_holdout",
+  "source": "synthetic_BusinessSimulator_factual_only",
+  "seeds": [
+    21071,
+    21073
   ],
-  "job_workflows":["w0","w1","w0","w1"],
-  "job_release_ticks":[0,1,3,6],
-  "station_service_base_ticks":5,
-  "jitter_ticks":1,
-  "outage_station":"B0",
-  "outage_window":[10,16],
-  "max_ticks":120,
-  "planner_seed":1810,
-  "particles":3,
-  "budget":4,
-  "solver_seconds":0.5,
-  "horizon":5,
-  "max_prediction_seconds":120,
-  "risk_weight":0,
-  "candidate_sample_stride":13,
-  "per_case_max_fixed_states":2,
-  "confirmation_windows":[5,10,20],
-  "no_tuning_after_results":true,
-  "F_status":"experimental_unverified_not_production"
+  "regimes": [
+    {
+      "name": "ordinary",
+      "layout": 0,
+      "outage": false
+    },
+    {
+      "name": "surprise_outage",
+      "layout": 1,
+      "outage": true
+    },
+    {
+      "name": "different_map_with_outage",
+      "layout": 2,
+      "outage": true
+    }
+  ],
+  "job_workflows": [
+    "w0",
+    "w1",
+    "w0",
+    "w1"
+  ],
+  "job_release_ticks": [
+    0,
+    1,
+    3,
+    6
+  ],
+  "station_service_base_ticks": 5,
+  "jitter_ticks": 1,
+  "outage_station": "B0",
+  "outage_window": [
+    10,
+    16
+  ],
+  "max_ticks": 120,
+  "planner_seed": 1810,
+  "particles": 3,
+  "budget": 4,
+  "solver_seconds": 0.5,
+  "horizon": 5,
+  "max_prediction_seconds": 120,
+  "risk_weight": 0,
+  "candidate_sample_stride": 13,
+  "per_case_max_fixed_states": 2,
+  "confirmation_windows": [
+    5,
+    10,
+    20
+  ],
+  "no_tuning_after_results": true,
+  "F_status": "experimental_unverified_not_production",
+  "resource_capacity_A": 2
 }

@@ -26,7 +26,7 @@ CONFIG=Path(__file__).with_name("dataset_config.json")
 
 
 def case_for(spec, config):
-    base,cfg,_=fixture(1)
+    base,cfg,_=fixture(config.get('resource_capacity_A',1))
     layout=spec["layout"]
     # Distinct map/group geometry with public station and robot positions.
     dx=layout

@@ -25,8 +25,10 @@ from experiments.business_constraints.run import (make_model,summarize_result,
                                                    replay_branch,rich_rows)
 from experiments.service_value.counterfactual import load_pr9_model
 from experiments.world_model_integration.build_dataset import case_for,rows_from_factual
-from lab_transport.decision_value import candidates_for
+from lab_transport.decision_value import candidates_for,nearest_batch
 from lab_transport.dynamics_model import Geometry
+from business_transport.workflow_transition import check_business_transition
+from experiments.world_model_integration.prediction_metrics import (_joint,_events,_device_event,_external_release)
 
 CONFIG=Path(__file__).with_name("session_confirmation_config.json")
 ARMS=("A_rule","B_pets_original","C_pets_active","D_pets_guarded_future",
@@ -46,6 +48,53 @@ def _policy(arm,business,geometry,network,info,checkpoint,cfg):
         solver_seconds=cfg["solver_seconds"],max_prediction_seconds=cfg["max_prediction_seconds"],
         risk_weight=cfg["risk_weight"],model_aware=arm not in ("A_rule","B_pets_original"),
         future_pets_starts=(arm=="D_pets_guarded_future"))
+
+
+def _forecast_quality(policy, observed_rows, business, geometry, seed, stride):
+    """Conditional accuracy on factual t+h labels, including external-event windows."""
+    report={}
+    for horizon in (1,3,5,10,20):
+        stats=Counter()
+        picks=list(range(0,max(0,len(observed_rows)-horizon+1),stride))[:4]
+        stats["attempts"]=len(picks)
+        for index in picks:
+            slice_=observed_rows[index:index+horizon]
+            initial=slice_[0].observation
+            actual=slice_[-1].next_observation
+            ext=any(_device_event(row.observation,row.next_observation) or
+                    _external_release(row.observation,row.next_observation) for row in slice_)
+            stats["external_windows" if ext else "normal_windows"]+=1
+            state=initial
+            try:
+                policy.model.reset_seed(seed+index*1009+horizon)
+                for step in range(horizon):
+                    actions=(slice_[0].assignments if step==0 else
+                             nearest_batch(state,candidates_for(state),geometry))
+                    predicted=policy.model.predict_next(state,actions)
+                    check_business_transition(state,predicted,geometry,business.rules,actions)
+                    state=predicted
+                values=_joint(state,actual)
+                stats["valid"]+=1
+                stats["joint_exact"]+=values["joint_correct"]
+                stats["robot_position_errors"]+=values["robot_position_errors"]
+                stats["resource_errors"]+=values["resource_errors"]
+                initial_ids={s.id for s in initial.samples}
+                pred_released={s.id for s in state.samples}-initial_ids
+                actual_released={s.id for s in actual.samples}-initial_ids
+                stats["successor_release_errors"]+=len(pred_released ^ actual_released)
+                if horizon==1:
+                    truth=_events(initial,actual)
+                    predicted_events=_events(initial,state)
+                    stats["event_tp"]+=len(truth & predicted_events)
+                    stats["event_fp"]+=len(predicted_events-truth)
+                    stats["event_fn"]+=len(truth-predicted_events)
+            except (ValueError,RuntimeError,TypeError,KeyError,OverflowError) as exc:
+                stats["invalid"]+=1
+        report[str(horizon)]={**dict(stats),
+            "legal_coverage":stats["valid"]/stats["attempts"] if stats["attempts"] else None,
+            "joint_exact_accuracy":stats["joint_exact"]/stats["attempts"] if stats["attempts"] else None,
+            "note":"legal coverage and factual joint accuracy are different metrics"}
+    return report
 
 
 def evaluate(checkpoint,output):
@@ -85,6 +134,17 @@ def evaluate(checkpoint,output):
                 if arm=="A_rule":
                     fact,fact_rows=result,rows
             states=rich_rows(fact_rows)
+            prediction_quality={}
+            for arm in ARMS:
+                diagnostic_policy=_policy(arm,business,geo,network,info,checkpoint,cfg)
+                prediction_quality[arm]=_forecast_quality(diagnostic_policy,states,business,geo,seed,
+                                                          cfg["candidate_sample_stride"])
+            simultaneous=sum(sum(robot.service_elapsed is not None for robot in row.observation.robots)>=2
+                             for row in states)
+            observed_outage=sum(any(not getattr(s,"device_available",s.available)
+                                    for s in row.observation.stations) for row in states)
+            competition=sum(any(getattr(s,"capacity_blocked",False) for s in row.observation.stations)
+                            for row in states)
             eligible=[row for row in states
                       if len(candidates_for(row.observation))>=2]
             indices=list(range(0,len(eligible),cfg["candidate_sample_stride"]))
@@ -117,6 +177,11 @@ def evaluate(checkpoint,output):
             # schedule is never passed to a predictor.
             results.append({"regime":regime["name"],"seed":seed,
                             "arms":arms,"fixed_state_decisions":fixed,
+                            "prediction_quality":prediction_quality,
+                            "factual_scenario_audit":{
+                                "simultaneous_service_steps":simultaneous,
+                                "observed_device_outage_steps":observed_outage,
+                                "capacity_blocked_observations":competition},
                             "eligible_fact_states":len(eligible)})
     summary={}
     for arm in ARMS:

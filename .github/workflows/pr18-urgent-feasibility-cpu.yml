@@ -1,4 +1,5 @@
 name: PR18 urgent retest synthetic CPU feasibility
+# retry contract audit after correcting the int safety count
 
 on:
   push:

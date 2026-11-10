@@ -242,7 +242,7 @@ class InterfaceIntegrationTests(unittest.TestCase):
             self.assertIn(selected, plans)
             choices.append(selected)
             records.append([p["score"] for p in policy.log[-1]["plans"]])
-        self.assertNotEqual(choices[0], choices[1])
+        self.assertNotEqual(choices[0], choices[1], f'controlled scores={records} choices={choices}')
         self.assertNotEqual(records[0], records[1])
 
 

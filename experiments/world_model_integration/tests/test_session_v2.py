@@ -58,7 +58,7 @@ class SessionEventV2Tests(unittest.TestCase):
         self.assertFalse(torch.equal(vectors[2][0],vectors[2][1]))
         model=BusinessSessionEventModel()
         self.assertEqual(tuple(model(*vectors).shape),(2,))
-        finished=replace(before,samples=tuple(replace(s,status="in_transit") if s.id==q1["sample_id"]
+        finished=replace(before,tick=before.tick+1,samples=tuple(replace(s,status="in_transit") if s.id==q1["sample_id"]
                                           else s for s in before.samples))
         self.assertEqual(label_for(before,finished,q1),(1,"finished"))
         self.assertEqual(label_for(before,finished,q2),(0,"continues"))

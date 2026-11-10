@@ -1,0 +1,24 @@
+{
+  "contract": "business-service-query-v2",
+  "source": "BusinessSimulator factual synthetic transitions only",
+  "training_seed": 1810,
+  "training_epochs": 10,
+  "training_seconds": 180,
+  "positive_negative_rule": "started known-progress, device available, capacity admitted; completion=1, continuing=0",
+  "exclude": ["not_started", "missing_observed_progress", "observed_device_pause", "resource_or_admission_pause", "broken_session", "censored_terminal"],
+  "groups": {
+    "train": [{"seed":18011,"layout":0,"outage":false},{"seed":18013,"layout":1,"outage":true},{"seed":18017,"layout":2,"outage":false},{"seed":18019,"layout":0,"outage":true},{"seed":18023,"layout":1,"outage":false},{"seed":18029,"layout":2,"outage":true},{"seed":18031,"layout":0,"outage":false},{"seed":18037,"layout":1,"outage":false}],
+    "validation": [{"seed":19041,"layout":2,"outage":true},{"seed":19043,"layout":0,"outage":false},{"seed":19047,"layout":1,"outage":true},{"seed":19049,"layout":2,"outage":false}],
+    "test": [{"seed":20053,"layout":1,"outage":true},{"seed":20059,"layout":2,"outage":false},{"seed":20061,"layout":0,"outage":true},{"seed":20063,"layout":1,"outage":false}]
+  },
+  "job_workflows": ["w0","w1","w0"],
+  "job_release_ticks": [0,2,4],
+  "max_ticks": 100,
+  "jitter_ticks": 1,
+  "station_service_base_ticks": 4,
+  "outage_station": "B0",
+  "outage_window": [12,16],
+  "no_seed_overlap_with_pr18_confirmation": [941,947],
+  "test_access": "metrics once after validation-selected checkpoint and threshold",
+  "holdout_confirmations_reserved": [21071,21073]
+}

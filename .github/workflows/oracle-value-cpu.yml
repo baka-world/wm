@@ -120,6 +120,9 @@ jobs:
           python -m experiments.oracle_value.attribution "$target/confirmation/raw.json.gz" "$target/confirmation/attribution.json"
           python -m experiments.oracle_value.report "$target/confirmation/summary.json" \
             "$target/confirmation/raw.json.gz" docs/world-model-value-ceiling.md "$target/robustness/summary.json" "$target/confirmation/attribution.json"
+          grep -q '预先冻结的多随机实现稳健性检验' docs/world-model-value-ceiling.md
+          grep -q '五步窗口模型预测的决策相关误差' docs/world-model-value-ceiling.md
+          grep -q '最终选择 E' docs/world-model-value-ceiling.md
           (cd "$target" && find history confirmation robustness -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
           (cd "$target" && sha256sum -c SHA256SUMS)
           git config user.name 'github-actions[bot]'

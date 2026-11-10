@@ -25,6 +25,7 @@ class BusinessPolicy:
         self.solver=(BusinessCPSAT(geometry,rules,candidate_limit=budget,time_limit_seconds=solver_seconds,seed=seed)
                      if method.startswith('cpsat_') else None)
         self.log=[];self.fallbacks=0;self.rollout_steps=0
+        self.prediction_calls=0;self.prediction_wall_seconds=0.0
 
     def candidates(self,observation,candidates):
         if self.method=='nearest':return (nearest_batch(observation,candidates,self.geometry),)
@@ -45,7 +46,11 @@ class BusinessPolicy:
                 state=observation;trace=[]
                 for step in range(self.horizon):
                     actions=plan if step==0 else nearest_batch(state,candidates_for(state),self.geometry)
-                    nxt=self.model.predict_next(state,actions)
+                    started=time.perf_counter()
+                    try:
+                        nxt=self.model.predict_next(state,actions)
+                    finally:
+                        self.prediction_calls+=1;self.prediction_wall_seconds+=time.perf_counter()-started
                     if self.workflow_prediction:check_business_transition(state,nxt,self.geometry,self.rules,actions)
                     else:check_transition(state,nxt,self.geometry)
                     self.rollout_steps+=1;trace.append(nxt);state=nxt

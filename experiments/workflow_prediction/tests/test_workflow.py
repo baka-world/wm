@@ -64,6 +64,10 @@ class WorkflowTransitionTests(unittest.TestCase):
                         self.assertEqual(sample.status,'waiting')
                         self.assertIsNone(sample.robot_id)
                         self.assertTrue(all(r.task_id!=sample.id for r in predicted.robots))
+                        previous=next(s for s in row.observation.samples if s.job_id==sample.job_id and
+                                      s.stage_index==sample.stage_index-1)
+                        released_robot=next(r for r in predicted.robots if r.id==previous.robot_id)
+                        self.assertEqual((released_robot.task_id,released_robot.phase),(None,'idle'))
                         actual={s.id:s for s in row.next_observation.samples}
                         self.assertEqual((sample.id,sample.release_tick,sample.workflow,sample.stage_index),
                           (actual[sample.id].id,actual[sample.id].release_tick,actual[sample.id].workflow,actual[sample.id].stage_index))
@@ -81,6 +85,22 @@ class WorkflowTransitionTests(unittest.TestCase):
                 self.assertTrue(check_business_transition(row.observation,predicted,geo,business.rules,row.assignments))
                 for station in predicted.stations:
                     self.assertLessEqual(station.resource_occupied,station.resource_capacity)
+
+    def test_capacity_denial_clears_station_service_relationship(self):
+        business=case(2,1,2);_,rows,geo=factual(business)
+        model=WorkflowDynamics(ProgressAwareRule(geo),business.rules)
+        old_model=CapacityDynamics(ProgressAwareRule(geo),business.rules);corrected=0
+        for row in rows:
+            old=old_model.predict_next(row.observation,row.assignments)
+            predicted=model.predict_next(row.observation,row.assignments)
+            check_business_transition(row.observation,predicted,geo,business.rules,row.assignments)
+            for previous,station in zip(old.stations,predicted.stations):
+                if previous.service_session_active and not station.service_session_active:
+                    robot=next(r for r in predicted.robots if r.id==station.occupant_robot_id)
+                    self.assertIsNone(robot.service_elapsed)
+                    self.assertIsNone(station.service_task_id)
+                    corrected+=1
+        self.assertGreater(corrected,0)
 
     def test_observed_outage_pauses_service_and_does_not_release(self):
         business=case(2,outage=True);_,rows,geo=factual(business)
@@ -109,7 +129,9 @@ class WorkflowTransitionTests(unittest.TestCase):
              replace(predicted,samples=tuple(replace(s,job_id='stranger') if s.id==created.id else s for s in predicted.samples)),
              replace(predicted,samples=tuple(replace(s,status='assigned',robot_id='R1') if s.id==created.id else s for s in predicted.samples)),
              replace(predicted,samples=tuple(replace(s,deadline_tick=999) if s.id!=created.id else s for s in predicted.samples)),
-             replace(predicted,samples=tuple(s for s in predicted.samples if s.id!=old.samples[0].id))]
+             replace(predicted,samples=tuple(s for s in predicted.samples if s.id!=old.samples[0].id)),
+             replace(predicted,stations=(replace(predicted.stations[0],resource_occupied=99),)+predicted.stations[1:]),
+             replace(predicted,robots=(replace(predicted.robots[0],position=(999,999)),)+predicted.robots[1:])]
         for value in bad:
             with self.assertRaises(ValueError):check_business_transition(old,value,geo,business.rules,row.assignments)
         with self.assertRaises(ValueError):check_transition(old,predicted,geo)
@@ -118,6 +140,22 @@ class WorkflowTransitionTests(unittest.TestCase):
         false=replace(model.predict_next(early,rows[0].assignments),
                       samples=model.predict_next(early,rows[0].assignments).samples+(premature,))
         with self.assertRaises(ValueError):check_business_transition(early,false,geo,business.rules,rows[0].assignments)
+
+    def test_successor_inherits_public_sample_properties(self):
+        business=case(2);_,rows,geo=factual(business)
+        model=WorkflowDynamics(ProgressAwareRule(geo),business.rules)
+        row=next(row for row in rows if any(s.id=='J1::stage2' for s in row.next_observation.samples) and
+                 not any(s.id=='J1::stage2' for s in row.observation.samples))
+        updated=tuple(replace(s,deadline_tick=50,specimen_type='public-type',packaging='sealed',
+                              temperature_condition='cool',rule_profile='visible',priority=2)
+                      for s in row.observation.samples)
+        before=replace(row.observation,samples=updated)
+        after=model.predict_next(before,row.assignments)
+        check_business_transition(before,after,geo,business.rules,row.assignments)
+        successor=next(s for s in after.samples if s.id=='J1::stage2')
+        self.assertEqual((successor.deadline_tick,successor.specimen_type,successor.packaging,
+                          successor.temperature_condition,successor.rule_profile,successor.priority),
+                         (50,'public-type','sealed','cool','visible',2))
 
     def test_new_score_counts_one_unfinished_job_after_stage_one(self):
         business=case(2);_,rows,geo=factual(business)
@@ -154,6 +192,22 @@ class WorkflowTransitionTests(unittest.TestCase):
             forecasts.append(model.predict_next(row.observation,row.assignments))
         self.assertEqual(forecasts[0],forecasts[1])
 
+    def test_prediction_failure_records_fallback_to_legal_candidate(self):
+        from business_transport.policy import BusinessPolicy
+        from lab_transport.decision_value import candidates_for
+        class BrokenModel:
+            def reset_seed(self,seed):pass
+            def predict_next(self,observation,assignments):raise RuntimeError('injected test failure')
+        business=case(2);_,rows,geo=factual(business)
+        observer=BusinessObserver()
+        policy=BusinessPolicy('cpsat_rule',geo,business.rules,observer,BrokenModel(),
+                              workflow_prediction=True,scoring='workflow')
+        observation=rows[0].observation;legal=candidates_for(observation)
+        chosen=policy(observation,legal)
+        self.assertEqual(policy.fallbacks,1)
+        self.assertEqual(policy.log[-1]['fallback'],'RuntimeError')
+        self.assertTrue(all(action in legal for action in chosen))
+
     def test_stage_assignment_invalidates_cached_path_without_mutating_branch(self):
         from business_transport.lacam3_coordinator import RecoveryCoordinator,RecoverySnapshot
         from experiments.lacam3_recovery.tests.test_recovery import _FakePlanner,_Stay,inputs
@@ -173,6 +227,26 @@ class WorkflowTransitionTests(unittest.TestCase):
 @unittest.skipUnless(os.environ.get('WM_LACAM3_WORKER') and os.environ.get('WM_PIBT_LIBRARY') and
                      os.environ.get('WM_HOSPITAL_SOURCES'),'set the existing motion backends and sources')
 class WorkflowRecoveryIntegrationTests(unittest.TestCase):
+    def test_fact_window_metrics_run_and_conditional_logic_remains_consistent(self):
+        from business_transport.lacam3_integration import HybridBusinessSimulator,RecoveryObserver
+        from business_transport.policy import BusinessPolicy
+        from experiments.workflow_prediction.evaluate import evaluate_state_windows,rich_rows
+        torch.set_num_threads(1)
+        business=case(2,1,2);geo=Geometry(business.scenario.grid);observer=RecoveryObserver()
+        policy=BusinessPolicy('nearest',geo,business.rules,observer)
+        sim=HybridBusinessSimulator(business,'world',1,motion_backend='hybrid',
+              pibt_library=os.environ['WM_PIBT_LIBRARY'],lacam3_worker=os.environ['WM_LACAM3_WORKER'])
+        rows=[];sim.run(dispatch_policy=policy,on_observation=observer.observe,on_transition=rows.append)
+        network,info=load_pr9_model()
+        config={'prediction_window_stride':5,'prediction_horizons':[1,3,5],'planner_seed':20261109}
+        result=evaluate_state_windows(rich_rows(rows),business,geo,network,info['threshold'],
+                        Path(os.environ['WM_PIBT_LIBRARY']),Path(os.environ['WM_LACAM3_WORKER']),config)
+        self.assertGreater(result['old_fixed_entity_model_missing_successors'],0)
+        for horizon in ('1','3','5'):
+            for model in result['horizons'][horizon]['dynamic'].values():
+                self.assertEqual(model.get('conditional_release_logic_errors',0),0)
+                self.assertEqual(model.get('conditional_resource_errors',0),0)
+
     def test_all_three_models_preserve_isolated_recovery_snapshot_across_stage_release(self):
         from business_transport.lacam3_integration import HybridBusinessSimulator,RecoveryMovementModel,RecoveryObserver
         from business_transport.policy import BusinessPolicy

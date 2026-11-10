@@ -55,8 +55,6 @@ def release_successors(before, after, rules):
     if after.tick != before.tick + 1:
         raise ValueError('successor release requires the next observation boundary')
     expected = expected_successors(before, after, rules)
-    if not expected:
-        return after
     existing = {s.id for s in after.samples}
     if existing & set(expected):
         raise ValueError('model already emitted a workflow successor')
@@ -148,6 +146,12 @@ def check_business_transition(before, after, geometry, rules, assignments=()):
         for field in ('available','resource_occupied','capacity_blocked'):
             if getattr(actual,field,None) != getattr(checked,field,None):
                 raise ValueError(f'inconsistent workstation capacity field: {field}')
+    relationships=rebuild(after,after.robots)
+    for actual,checked in zip(after.stations,relationships.stations):
+        for field in ('occupant_robot_id','service_task_id','service_session_active','service_in_progress',
+                      'waiting_pickups','approaching_pickups','approaching_dropoffs'):
+            if getattr(actual,field,None)!=getattr(checked,field,None):
+                raise ValueError(f'inconsistent observable workstation relation: {field}')
     intents = _intent(before, tuple(assignments))
     robots = {r.id:r for r in after.robots}
     samples = {s.id:s for s in before.samples}

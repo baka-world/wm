@@ -129,7 +129,8 @@ def evaluate(dev_path,split_path,v3_path,v4_path,part,output):
         result["models"][name]={
           "overall":base_stats(split,pp),
           "per_trajectory":_group(split,pp,"trajectory"),
-          "per_public_prior":_group(split,pp,"prior"),
+          "per_public_nominal":_group(split,pp,"nominal"),
+          "per_observed_adaptive_expected":_group(split,pp,"prior"),
           "per_elapsed":_group(split,pp,"elapsed"),
           "per_station":_group(split,pp,"station"),
           "per_phase":_group(split,pp,"phase"),

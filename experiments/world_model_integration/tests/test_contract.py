@@ -28,7 +28,7 @@ def trajectory():
     geometry = Geometry(base.grid)
     transitions = []
     BusinessSimulator(business, "world", 1, collect_metrics=True).run(
-        on_transition=transitions,
+        on_transition=transitions.append,
         dispatch_policy=lambda obs, candidates: nearest_batch(obs, candidates, geometry))
     return business, geometry, rich_rows(transitions)
 

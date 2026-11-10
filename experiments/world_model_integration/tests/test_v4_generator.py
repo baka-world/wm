@@ -49,13 +49,13 @@ class V4GeneratorContractTests(unittest.TestCase):
              "forced early outage must actually pause a factual service")
         for row in rows:
             a=record_attributes(row)
-            self.assertEqual(a["prior"],s["station_service_ticks"][a["station"]])
+            self.assertEqual(a["nominal"],s["station_service_ticks"][a["station"]])
             self.assertEqual(row["label"],int(row["event"]=="finished"))
             self.assertEqual(len(encode_query_v3(row["features"],row["query"])),56)
             self.assertEqual(row["features"]["unknown"]["true_remaining_service_countdown"],
                              {"known":False,"value":None})
         report=coverage_of(rows,counts,[source])
-        self.assertGreater(report["axes"]["prior"][str(s["station_service_ticks"]["A0"])]["total"],0)
+        self.assertGreater(report["axes"]["nominal"][str(s["station_service_ticks"]["A0"])]["total"],0)
         self.assertTrue("prior_elapsed" in report["axes"])
 
     def test_novel_ood_layout_compiles_with_three_stage_workflow(self):

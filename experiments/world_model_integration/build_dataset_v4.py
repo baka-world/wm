@@ -39,20 +39,22 @@ def record_attributes(record):
     occupied=_field(s,"resource_occupied")
     if not isinstance(e,int) or not isinstance(d,(int,float)) or d<=0:
         raise ValueError("invalid observed effective progress or public prior")
-    return {"prior":int(d),"elapsed":e,"station":q["station_id"],
+    return {"prior":int(d),"nominal":int(record.get("nominal_public_prior",d)),
+            "elapsed":e,"station":q["station_id"],
             "phase":q["phase"],"capacity":int(cap),"occupied":int(occupied),
             "competing":bool(_field(s,"capacity_blocked")),
             "robot_count":len(facts["robots"])}
 
 
 def coverage_of(rows,counts,source):
-    axes=("prior","elapsed","station","phase","capacity","occupied","competing","robot_count")
-    hist={key:defaultdict(lambda:{"total":0,"positive":0,"negative":0}) for key in axes+("prior_elapsed",)}
+    axes=("prior","nominal","elapsed","station","phase","capacity","occupied","competing","robot_count")
+    hist={key:defaultdict(lambda:{"total":0,"positive":0,"negative":0}) for key in axes+("prior_elapsed","nominal_elapsed")}
     for row in rows:
         a=record_attributes(row)
         a["prior_elapsed"]=str(a["prior"])+"/"+str(a["elapsed"])
+        a["nominal_elapsed"]=str(a["nominal"])+"/"+str(a["elapsed"])
         y=int(row["label"])
-        for key in axes+("prior_elapsed",):
+        for key in axes+("prior_elapsed","nominal_elapsed"):
             b=hist[key][str(a[key])]
             b["total"]+=1
             b["positive"]+=y
@@ -119,6 +121,10 @@ def build_one(spec,config,split):
               "source":"BusinessSimulator_factual_transition",
               "seed":spec["seed"],"map_layout":spec["layout"],
               "tick":before.tick,"query":q,"features":features,
+              # Config-public nominal is provenance metadata, not an extra
+              # model input; v3 56-d query reads the currently observable
+              # (possibly adaptive) station expectation instead.
+              "nominal_public_prior":int(spec["station_service_ticks"][q["station_id"]]),
               "label":y,"event":event}
             kept.append(record)
             counter["completed" if y else "continued"]+=1
@@ -181,7 +187,7 @@ def build_part(part,config_path=CONFIG):
     if part=="development":
         train=dataset["coverage"]["train"]
         for prior in range(3,9):
-            group=train["axes"]["prior"].get(str(prior),{})
+            group=train["axes"]["nominal"].get(str(prior),{})
             if (group.get("positive",0)<c["data_gate"]["each_prior_train_min_complete"] or
                 group.get("negative",0)<c["data_gate"]["each_prior_train_min_continue"]):
                 raise ValueError("undercovered train prior "+str(prior))

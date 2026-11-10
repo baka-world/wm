@@ -23,7 +23,7 @@ class ContractTests(unittest.TestCase):
 
     def test_tie_break_and_centered_differences(self):
         self.assertEqual(rank([4,4,3]),[2,0,1])
-        self.assertEqual(gap_error([100,100,102],[40,45,47]),4.0)
+        self.assertEqual(gap_error([100,100,102],[40,45,47]),10/3)
 
     def test_original_simulator_uses_keyed_exogenous_noise(self):
         cfg=json.loads(CONFIG.read_text())

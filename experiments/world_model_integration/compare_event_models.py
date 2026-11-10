@@ -42,7 +42,8 @@ def structured_probability(network,observation,assignments,query):
         return float(torch.sigmoid(torch.tensor(logit)))
 
 
-def evaluate(checkpoint,dataset_path,output):
+def evaluate(checkpoint,dataset_path,output,*,split='test'):
+    if split not in ('validation','test'):raise ValueError('unsupported factual split')
     dataset=json.loads(Path(dataset_path).read_text(encoding="utf-8"))
     cfg=json.loads(CONFIG.read_text(encoding="utf-8"))
     if dataset["source_config_sha256"]!=__import__("hashlib").sha256(CONFIG.read_bytes()).hexdigest():
@@ -50,9 +51,9 @@ def evaluate(checkpoint,dataset_path,output):
     model,meta=load_session_model(checkpoint,experimental=True)
     network,info=load_pr9_model();network.eval()
     records={"rule":[],"pets":[],"structured":[],"session_v2":[]}
-    row_groups={r["id"]:r for r in dataset["test"]}
+    row_groups={r["id"]:r for r in dataset[split]}
     added=set()
-    for spec in cfg["groups"]["test"]:
+    for spec in cfg["groups"][split]:
         business,geo=case_for(spec,cfg)
         source,_=rows_from_factual(business,geo,spec["seed"])
         pets=make_model("pets",geo,network,info["threshold"],spec["seed"]).distribution
@@ -89,7 +90,7 @@ def evaluate(checkpoint,dataset_path,output):
                     records[name].append((lookup,p))
     if added!=set(row_groups):
         raise ValueError("not all eligible held-out service events were paired")
-    out={"status":"fixed_group_test_one_time","rows":len(added),
+    out={"status":"fixed_group_"+split+"_one_time","rows":len(added),
          "checkpoint_best_epoch":meta["best_validation_epoch"],
          "checkpoint_validation_threshold":meta["selected_validation_threshold"],
          "models":{}}
@@ -118,8 +119,9 @@ def main():
     p.add_argument("--checkpoint",type=Path,required=True)
     p.add_argument("--dataset",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--split",choices=("validation","test"),default="test")
     args=p.parse_args()
-    evaluate(args.checkpoint,args.dataset,args.output)
+    evaluate(args.checkpoint,args.dataset,args.output,split=args.split)
 
 
 if __name__=="__main__":

@@ -1,0 +1,23 @@
+{
+  "protocol": "pr18-v3-independent-first-use",
+  "not_previous_test_or_pr18_confirmation": true,
+  "one_time_evaluation": true,
+  "source": "BusinessSimulator factual t/action/t+1 only",
+  "groups": [
+    {"seed": 33101, "layout": 3, "outage": false, "station_service_base_ticks": 5, "jitter_ticks": 2, "resource_capacity_A": 1},
+    {"seed": 33103, "layout": 4, "outage": true, "station_service_base_ticks": 6, "jitter_ticks": 2, "resource_capacity_A": 1},
+    {"seed": 33107, "layout": 4, "outage": false, "station_service_base_ticks": 5, "jitter_ticks": 1, "resource_capacity_A": 2},
+    {"seed": 33109, "layout": 3, "outage": true, "station_service_base_ticks": 6, "jitter_ticks": 1, "resource_capacity_A": 2},
+    {"seed": 33113, "layout": 3, "outage": false, "station_service_base_ticks": 7, "jitter_ticks": 2, "resource_capacity_A": 1},
+    {"seed": 33117, "layout": 4, "outage": true, "station_service_base_ticks": 7, "jitter_ticks": 2, "resource_capacity_A": 2}
+  ],
+  "job_workflows": ["w1","w0","w1","w0"],
+  "job_release_ticks": [0,3,6,8],
+  "max_ticks": 140,
+  "outage_station": "B0",
+  "outage_window": [12,19],
+  "comparison": ["B0","B1","B2","Rule","PETS","Structured","V2 frozen","Validation-selected V3"],
+  "no_network_retraining_after_holdout": true,
+  "max_lightweight_decision_states_per_group_if_prediction_gate": 2,
+  "no_full_closed_loop_if_gate_fails": true
+}

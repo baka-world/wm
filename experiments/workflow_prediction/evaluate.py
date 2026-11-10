@@ -272,7 +272,7 @@ def evaluate_state_windows(rows,business,geometry,network,threshold,pibt,lacam,c
             'horizons':result}
 
 
-def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config,*,trace_limit=0):
+def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config,*,trace_limit=0,future_service_seed=None):
     source={r.observation.tick:r for r in rows};geometry=Geometry(business.scenario.grid)
     def controller(obs,candidates):
         if obs.tick<=tick:
@@ -283,6 +283,29 @@ def replay_branch(business,seed,rows,factual,tick,plan,pibt,lacam,config,*,trace
     sim=HybridBusinessSimulator(business,'world',seed,motion_backend=config['motion_backend'],
             pibt_library=pibt,lacam3_worker=lacam,planner_seed=config['planner_seed'],collect_metrics=True)
     captured=[]
+    # Offline robustness only: preserve the factual prefix's existing keyed
+    # service draws, while changing the independent draw for sessions STARTED
+    # at or after this decision. Never alter future task releases/outage plans.
+    if future_service_seed is not None:
+        if not isinstance(future_service_seed,int) or isinstance(future_service_seed,bool):
+            raise ValueError('future service seed must be an integer')
+        original_handle=sim._handle_station
+        original_duration=sim._service_duration
+        current_tick={'value':-1}
+        def handle_with_clock(current,robot):
+            current_tick['value']=current
+            return original_handle(current,robot)
+        def duration_with_future_noise(sample_id,phase,station_id):
+            if current_tick['value']<tick:
+                return original_duration(sample_id,phase,station_id)
+            station=sim.scenario.stations[station_id]
+            limit=(sim.scenario.duration_jitter if station.jitter_ticks is None
+                   else station.jitter_ticks)
+            key=f"{future_service_seed}\\0{sample_id}\\0{phase}\\0{station_id}".encode('utf-8')
+            draw=int.from_bytes(hashlib.sha256(key).digest()[:8],'big')
+            return station.service_ticks + draw%(limit+1)
+        sim._handle_station=handle_with_clock
+        sim._service_duration=duration_with_future_noise
     result=sim.run(dispatch_policy=controller,on_transition=captured.append if trace_limit else None)
     if result['history'][:tick+1]!=factual['history'][:tick+1]:
         raise ValueError('counterfactual simulator prefix differs')

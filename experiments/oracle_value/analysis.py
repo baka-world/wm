@@ -60,7 +60,9 @@ def analyze(cases):
             row = {"layout": case["layout"], "seed": case["seed"], "regime": case["regime"],
                    "tick": state["tick"], "candidate_count": len(state["plans"])}
             branches = state["branches"]
-            if len(branches) < 2 or any("error" in b for b in branches):
+            if (len(branches) < 2 or any("error" in b for b in branches) or
+                any(name not in state.get("methods", {}) or
+                    state["methods"][name].get("choice") is None for name in METHODS)):
                 row.update(valid=False, reason="insufficient candidates or failed replay",
                            failure_count=sum("error" in b for b in branches))
                 states.append(row)

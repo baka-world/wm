@@ -15,9 +15,11 @@ import torch
 
 from experiments.world_model_integration.train_v4 import load_v4
 from experiments.world_model_integration.urgent_workflow_feasibility.core import (
-    PROTOCOL, public_spec,
+    PROTOCOL, public_spec, run_one,
 )
 from .core import run_case
+
+CONFIRMATION_PROTOCOL=Path(__file__).resolve().parent/"budgeted_confirmation_protocol.json"
 
 EXPECTED_V4_SHA256="60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c"
 
@@ -85,9 +87,9 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--checkpoint",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
-    parser.add_argument("--group",choices=("smoke","development"),required=True)
+    parser.add_argument("--group",choices=("smoke","development","confirmation"),required=True)
     parser.add_argument("--random-coupling",choices=("stream","keyed"),default="stream")
-    parser.add_argument("--terminal-mode",choices=("optimistic","rule_continuation"),default="optimistic")
+    parser.add_argument("--terminal-mode",choices=("optimistic","rule_continuation","budgeted_queue"),default="optimistic")
     parser.add_argument("--seed-only",type=int,action="append",default=[])
     parser.add_argument("--cpu-budget-seconds",type=float,default=900.)
     args=parser.parse_args()
@@ -102,15 +104,24 @@ def main():
     if meta["model_version"]!="business-sets-session-v4-data":
         raise AssertionError("wrong frozen model version")
     p=json.loads(PROTOCOL.read_text())
-    seeds=(list(enumerate(p["smoke_seeds"])) if args.group=="smoke" else
-           list(enumerate(p["development_seeds"],start=len(p["smoke_seeds"]))))
+    confirm=None
+    if args.group=="confirmation":
+        if args.seed_only:
+            raise ValueError("confirmation group requires all frozen seeds without filtering")
+        if args.terminal_mode!="budgeted_queue" or args.random_coupling!="keyed":
+            raise ValueError("confirmation mode is fixed to keyed plus budgeted_queue")
+        confirm=json.loads(CONFIRMATION_PROTOCOL.read_text())
+        seeds=[(int(x["index"]),int(x["seed"])) for x in confirm["cases"]]
+    else:
+        seeds=(list(enumerate(p["smoke_seeds"])) if args.group=="smoke" else
+               list(enumerate(p["development_seeds"],start=len(p["smoke_seeds"]))))
     if args.seed_only:
         chosen=set(args.seed_only)
         seeds=[(i,seed) for i,seed in seeds if seed in chosen]
         if set(s for _,s in seeds)!=chosen:
             raise ValueError("seed filter contains seed outside selected frozen split")
     start=time.process_time()
-    cases=[];pairs=[]
+    cases=[];pairs=[];reference_cases=[]
     for index,seed in seeds:
         spec=public_spec(index,seed,p["scenario_max_ticks"])
         pair={}
@@ -130,6 +141,22 @@ def main():
                       "deltas":_numeric_pair(pair["P4"],pair["P5"]),
                       "same_state":differences})
         cases.extend(pair.values())
+        if confirm is not None:
+            # Real P0/P1/P2/P3 business baselines on the very same new
+            # frozen scene (not inherited aggregate from old development).
+            for arm in ("P0","P1","P2","P3"):
+                b=run_one(spec,p,arm)
+                reference_cases.append({"arm":arm,"seed":seed,"index":index,
+                                        "metrics":b["metrics"],"cpu_seconds":b["cpu_seconds"],
+                                        "history_sha256":b["history_sha256"],
+                                        "events_sha256":b["events_sha256"],
+                                        "resource_violations":b["resource_violations"],
+                                        "motion_violations":b["motion_violations"],
+                                        "lifecycle_violations":b["lifecycle_violations"]})
+                print("BASELINE",args.group,index,seed,arm,
+                      "urgent_ontime",b["metrics"]["urgent"]["on_time_rate"],flush=True)
+            if time.process_time()-start>args.cpu_budget_seconds:
+                raise TimeoutError("frozen confirmation CPU budget exceeded")
     if not any(x["query_calls"]>0 for x in cases if x["arm"]=="P5"):
         raise AssertionError("V4 never made a service-event inference")
     result={"source_class":"previously_examined_synthetic_smoke_development",
@@ -139,6 +166,8 @@ def main():
             "terminal_mode":args.terminal_mode,
             "seed_filter":args.seed_only,
             "protocol_sha256":sha(PROTOCOL),
+            "confirmation_protocol_sha256":sha(CONFIRMATION_PROTOCOL) if confirm else None,
+            "reference_case_count":len(reference_cases),
             "group":args.group,"scenarios":len(seeds),
             "case_count":len(cases),
             "cpu_process_seconds":time.process_time()-start,
@@ -163,10 +192,27 @@ def main():
             "motion_violations":sum(x["motion_violations"] for x in rows),
             "lifecycle_violations":sum(x["lifecycle_violations"] for x in rows),
         }
+    if reference_cases:
+        result["reference_metrics"]={
+            arm:{
+                "urgent_ontime_rate_mean":_mean([b["metrics"]["urgent"]["on_time_rate"] for b in reference_cases if b["arm"]==arm]),
+                "urgent_late_mean_lower_bound":_mean([b["metrics"]["urgent"]["late_mean_lower_bound"] for b in reference_cases if b["arm"]==arm]),
+                "urgent_unfinished_rate_mean":_mean([b["metrics"]["urgent"]["incomplete_rate"] for b in reference_cases if b["arm"]==arm]),
+                "routine_restricted_flow_mean":_mean([b["metrics"]["routine"]["restricted_mean_flow"] for b in reference_cases if b["arm"]==arm]),
+                "all_restricted_flow_mean":_mean([b["metrics"]["all"]["restricted_mean_flow"] for b in reference_cases if b["arm"]==arm]),
+                "cpu_seconds":sum(b["cpu_seconds"] for b in reference_cases if b["arm"]==arm),
+                "resource_violations":sum(b["resource_violations"] for b in reference_cases if b["arm"]==arm),
+                "motion_violations":sum(b["motion_violations"] for b in reference_cases if b["arm"]==arm),
+                "lifecycle_violations":sum(b["lifecycle_violations"] for b in reference_cases if b["arm"]==arm)
+            } for arm in ("P0","P1","P2","P3")
+        }
     args.out.mkdir(parents=True)
     (args.out/"summary.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
     with gzip.GzipFile(filename="",mode="wb",fileobj=(args.out/"cases.json.gz").open("wb"),mtime=0) as gz:
         gz.write(json.dumps(cases,ensure_ascii=False,sort_keys=True).encode())
+    if reference_cases:
+        with gzip.GzipFile(filename="",mode="wb",fileobj=(args.out/"reference_cases.json.gz").open("wb"),mtime=0) as gz:
+            gz.write(json.dumps(reference_cases,ensure_ascii=False,sort_keys=True).encode())
     digests={f.name:sha(f) for f in args.out.iterdir() if f.is_file()}
     (args.out/"sha256.json").write_text(json.dumps(digests,indent=2)+"\n")
     print("SUMMARY",args.group,json.dumps({"metric":result["metrics"],

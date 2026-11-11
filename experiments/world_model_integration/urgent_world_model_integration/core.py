@@ -177,7 +177,7 @@ class UrgentWorldPolicy:
         if random_coupling not in ("stream","keyed"):
             raise ValueError("unknown service sampling coupling")
         self.random_coupling=random_coupling
-        if terminal_mode not in ("optimistic","rule_continuation"):
+        if terminal_mode not in ("optimistic","rule_continuation","budgeted_queue"):
             raise ValueError("unknown terminal value estimator")
         self.terminal_mode=terminal_mode
         self.arm,self.geometry,self.config=arm,geometry,config
@@ -191,6 +191,7 @@ class UrgentWorldPolicy:
         # frozen Rule/V4 prefix. No hidden simulator events, no private retest.
         self.terminal_prediction=WorkflowDynamics(ProgressAwareRule(geometry),rules)
         self.terminal_steps=0
+        self.budgeted_queue_ticks=20
         self.solver=BusinessCPSAT(geometry,rules,
                   candidate_limit=config["max_legal_candidates"],
                   time_limit_seconds=config["cpsat_seconds"],
@@ -230,6 +231,11 @@ class UrgentWorldPolicy:
         """
         initial_jobs={s.job_id:s.workflow for s in initial.samples if s.job_id}
         horizon=self.config["scenario_max_ticks"]
+        if self.terminal_mode=="budgeted_queue":
+            # Fixed and shared budget: simulate twenty additional public
+            # transition ticks, never to an oracle future. The remaining
+            # cost is still the unchanged optimistic public proxy.
+            horizon=min(horizon,state.tick+self.budgeted_queue_ticks)
         while state.tick < horizon:
             # The same public default follow-up is used in both arms.
             actions=nearest_batch(state,candidates_for(state),self.geometry)
@@ -288,7 +294,7 @@ class UrgentWorldPolicy:
                 self.predict_steps+=1
                 trace.append(nxt)
                 state=nxt
-            if self.terminal_mode=="rule_continuation":
+            if self.terminal_mode in ("rule_continuation","budgeted_queue"):
                 state=self._continue_to_terminal(observation,state,trace,rules)
             cost,_=_projected_job_cost(observation,trace,rules,self.geometry)
             if not all(math.isfinite(v) for v in cost):

@@ -38,6 +38,15 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(case["lifecycle_violations"],0)
         self.assertEqual(case["metrics"]["job_count"],self.spec["jobs"])
 
+    def test_fixed_budgeted_public_queueing(self):
+        case=run_case(self.spec,self.protocol,"P4",None,terminal_mode="budgeted_queue")
+        self.assertGreater(case["terminal_continuation_steps"],0)
+        self.assertLessEqual(case["terminal_continuation_steps"],
+                             case["decision_count"]*4*3*20)
+        self.assertEqual(case["resource_violations"],0)
+        self.assertEqual(case["motion_violations"],0)
+        self.assertEqual(case["lifecycle_violations"],0)
+
     def test_rule_episode(self):
         case=run_case(self.spec,self.protocol,"P4",None)
         self.assertGreater(case["decision_count"],0)

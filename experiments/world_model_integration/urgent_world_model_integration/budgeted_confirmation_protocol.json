@@ -1,0 +1,108 @@
+{
+  "protocol": "pr18-budgeted-queue-continuation-confirmation-v1",
+  "frozen_before_first_run": true,
+  "model_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "regime": "12 new synthetic confirmation seeds; not enterprise field testing",
+  "cases": [
+    {
+      "index": 24,
+      "seed": 905001
+    },
+    {
+      "index": 25,
+      "seed": 905074
+    },
+    {
+      "index": 26,
+      "seed": 905147
+    },
+    {
+      "index": 27,
+      "seed": 905220
+    },
+    {
+      "index": 28,
+      "seed": 905293
+    },
+    {
+      "index": 29,
+      "seed": 905366
+    },
+    {
+      "index": 30,
+      "seed": 905439
+    },
+    {
+      "index": 31,
+      "seed": 905512
+    },
+    {
+      "index": 32,
+      "seed": 905585
+    },
+    {
+      "index": 33,
+      "seed": 905658
+    },
+    {
+      "index": 34,
+      "seed": 905731
+    },
+    {
+      "index": 35,
+      "seed": 905804
+    }
+  ],
+  "previously_seen_diagnostics": [
+    {
+      "index": 2,
+      "seed": 902147,
+      "split": "smoke"
+    },
+    {
+      "index": 19,
+      "seed": 904096,
+      "split": "development"
+    },
+    {
+      "index": 23,
+      "seed": 904388,
+      "split": "development"
+    }
+  ],
+  "arms": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5"
+  ],
+  "P4": "ProgressAwareRule H5 + public bounded 20-tick continuation",
+  "P5": "frozen V4 H5 + identical public bounded 20-tick continuation",
+  "random_coupling": "keyed",
+  "fixed_neural_horizon": 5,
+  "particles": 3,
+  "max_candidates": 4,
+  "bounded_terminal_ticks": 20,
+  "primary_metrics": [
+    "urgent_on_time_rate",
+    "urgent_late_mean_lower_bound",
+    "urgent_unfinished_rate",
+    "routine_restricted_flow_mean",
+    "all_restricted_flow_mean"
+  ],
+  "additional_metrics": [
+    "total_prediction_cpu_seconds",
+    "total_terminal_continuation_steps",
+    "V4_service_queries",
+    "candidate_ranking_and_action_differences",
+    "safety_and_retest_integrity"
+  ],
+  "comparison": "same legal candidates/score for P4/P5; P0-P3 separate end-to-end baselines",
+  "no_gpu": true,
+  "no_training": true,
+  "no_new_model": true,
+  "confirmation_not_independent_external_validation": true,
+  "stop": "CPU timeout or invariant failure is BLOCKED; do not select favorable seeds"
+}

@@ -84,3 +84,27 @@ reported as generalization.
 
     python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group smoke --seed-only 902147 --terminal-mode rule_continuation --random-coupling keyed --out /tmp/tail-smoke
     python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group development --seed-only 904096 --seed-only 904388 --terminal-mode rule_continuation --random-coupling keyed --out /tmp/tail-dev
+
+## Fixed 20-tick budgeted queue continuation
+
+A new terminal mode `budgeted_queue` is a bounded CPU alternative to
+the previous expensive `rule_continuation`. After the original H=5
+Rule/V4 forecast, it simulates **exactly at most 20 additional ticks** of
+the same existing public-rule workflow dynamics, using the same nearest
+legal continuation for both arms, then applies the original optimistic
+residual task cost to still-open public jobs. It captures queue
+formation and some stage releases without running to tick 165 at every
+candidate evaluation.
+
+The 20 tick choice is frozen before inspecting any new confirmation data.
+This is an engineering approximation with a fixed cost cap; it is not an
+analytic queue solver, a calibrated completion-time distribution or a
+newly trained world model.
+
+The fresh confirmation group covers 12 precommitted synthetic scenarios
+with public, deterministic indices/seeds and runs P0-P5 in one CPU job.
+Results are only a synthetic **development confirmation** for this
+single fixed implementation, not company-field generalization. P4/P5
+use identical scoring and resources; P0-P3 are additionally run as strong
+end-to-end operational references. A targeted three-scenario rerun
+revisits the previously inspected failures separately.

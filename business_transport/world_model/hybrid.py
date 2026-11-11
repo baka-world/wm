@@ -103,23 +103,30 @@ class HybridSystemWorldModel:
     MAX_PARTICLES = 8
 
     def __init__(self, geometry, rules, *, kind="rule", checkpoint=None,
-                 experimental=False):
-        if kind not in ("rule", "v4"):
-            raise ValueError("RHWM-v1 supports only rule and frozen v4")
+                 experimental=False, service_baseline=None):
+        if kind not in ("rule", "v4", "kaplan_meier"):
+            raise ValueError("unsupported RHWM world-model probability source")
         if kind == "v4":
             if checkpoint is None or not experimental:
                 raise ValueError("V4 requires frozen checkpoint and explicit research opt-in")
             core = SessionRuleDynamics(
                 geometry, rules, checkpoint, feature_version="v4",
                 experimental=True)
+        elif kind == "kaplan_meier":
+            if checkpoint is not None or service_baseline is None:
+                raise ValueError("Kaplan-Meier requires fitted library baseline, not a V4 checkpoint")
+            from .kaplan_meier import KaplanMeierRuleDynamics
+            core = KaplanMeierRuleDynamics(geometry, rules, service_baseline)
         else:
-            if checkpoint is not None:
-                raise ValueError("rule-only world model must not load a checkpoint")
+            if checkpoint is not None or service_baseline is not None:
+                raise ValueError("rule-only world model cannot load fitted service models")
             core = ProgressAwareRule(geometry)
         self.geometry = geometry
         self.rules = rules
         self.kind = kind
-        self.model_version = "rhwm-v1-hybrid-v4" if kind == "v4" else "rhwm-v1-rule"
+        self.model_version = {"v4":"rhwm-v1-hybrid-v4",
+                              "rule":"rhwm-v1-rule",
+                              "kaplan_meier":"rhwm-v1-km-reference"}[kind]
         self.transition = WorkflowDynamics(core, rules)
 
     def predict_next(self, public_state: ObservationV2,
@@ -136,8 +143,8 @@ class HybridSystemWorldModel:
         if predicted.tick != public_state.tick + 1:
             raise AssertionError("world model did not advance exactly one tick")
         evidence = ()
-        if self.kind == "v4":
-            # This trace is computed by the actual V4 inference call on the
+        if self.kind in ("v4", "kaplan_meier"):
+            # This trace is computed by the actual model inference call on the
             # capacity-prepared observation, not by an extra inconsistent pass.
             evidence = tuple(EventForecast(
                 robot_id=e["query"]["robot_id"],

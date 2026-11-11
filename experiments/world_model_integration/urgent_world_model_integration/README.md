@@ -32,3 +32,26 @@ Commands with CPU-only pinned dependencies:
 The Actions workflow uploads case results, per-candidate predictions and
 paired common-observation diagnostics. P0-P3 original outcomes are unchanged,
 see urgent_workflow_feasibility/evidence/summary.json.
+
+## Candidate-invariant V4 service randomness diagnostic
+
+The original experiment used the same random generator seed per candidate.
+But SessionRuleDynamics consumes random values in *query-list order*, so
+when candidate actions change which sessions are queried, the same active
+session can receive a different uniform variate. This creates a potential
+Monte-Carlo coupling confound, particularly with only three particles.
+
+A second protocol uses
+`--random-coupling keyed`. Each eligible service session is assigned a
+deterministic uniform based on (scenario seed, particle, forecast tick,
+robot, sample, phase, station); it is **not** based on the private true
+service duration. This couples equivalent public sessions across candidate
+plans while keeping the V4 model and objective fixed.
+
+Both methods remain stochastic finite-particle approximations. This is a
+**post-hoc diagnostic ablation on already examined seeds**, not a replacement
+for the original outcome or an independent performance claim. The original
+`--random-coupling stream` is unchanged and remains the default.
+
+    python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group smoke --random-coupling keyed --out /tmp/keyed-smoke
+    python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group development --random-coupling keyed --out /tmp/keyed-development

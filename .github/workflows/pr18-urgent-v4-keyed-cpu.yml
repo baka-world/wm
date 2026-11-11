@@ -1,0 +1,103 @@
+name: PR18 frozen V4 keyed-service randomness diagnostic CPU
+on:
+  push:
+    branches: [feature/world-model-decision-integration-20261110]
+    paths: ['.github/workflows/pr18-urgent-v4-keyed-cpu.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 32
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print('CPU-only torch:',torch.__version__)
+          PY
+      - name: Restore exact frozen V4 checkpoint
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/urgent-v4"
+          curl -fSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/urgent-v4/archive.zip"
+          unzip -p "$RUNNER_TEMP/urgent-v4/archive.zip" v4-data.pt > "$RUNNER_TEMP/urgent-v4/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/urgent-v4/v4-data.pt" | sha256sum -c
+          echo "V4_CHECKPOINT=$RUNNER_TEMP/urgent-v4/v4-data.pt" >> "$GITHUB_ENV"
+      - name: Integration tests with real frozen weights
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/urgent_world_model_integration
+          timeout 180s python -m unittest discover \
+            -s experiments/world_model_integration/urgent_world_model_integration/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/urgent-v4/tests.log"
+      - name: Run four existing smoke scenes
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python -m experiments.world_model_integration.urgent_world_model_integration.run \
+            --checkpoint "$V4_CHECKPOINT" --group smoke --random-coupling keyed \
+            --cpu-budget-seconds 420 --out "$RUNNER_TEMP/urgent-v4/keyed-smoke" \
+            2>&1 | tee "$RUNNER_TEMP/urgent-v4/keyed-smoke.log"
+      - name: Run twenty existing development scenes
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 980s python -m experiments.world_model_integration.urgent_world_model_integration.run \
+            --checkpoint "$V4_CHECKPOINT" --group development --random-coupling keyed \
+            --cpu-budget-seconds 900 --out "$RUNNER_TEMP/urgent-v4/keyed-development" \
+            2>&1 | tee "$RUNNER_TEMP/urgent-v4/keyed-development.log"
+      - name: Validate summary safety
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ['RUNNER_TEMP'])/'urgent-v4'
+          for cohort in ('keyed-smoke','keyed-development'):
+              d=json.loads((root/cohort/'summary.json').read_text())
+              for arm in ('P4','P5'):
+                  m=d['metrics'][arm]
+                  assert not (m['resource_violations'] or m['motion_violations'] or m['lifecycle_violations'])
+              print(cohort,json.dumps(d['metrics']))
+          PY
+      - name: Upload evidence including failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-urgent-v4-keyed-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/urgent-v4/tests.log
+            ${{ runner.temp }}/urgent-v4/keyed-smoke.log
+            ${{ runner.temp }}/urgent-v4/keyed-development.log
+            ${{ runner.temp }}/urgent-v4/keyed-smoke/*.json
+            ${{ runner.temp }}/urgent-v4/keyed-smoke/*.gz
+            ${{ runner.temp }}/urgent-v4/keyed-development/*.json
+            ${{ runner.temp }}/urgent-v4/keyed-development/*.gz
+          if-no-files-found: warn
+          retention-days: 90

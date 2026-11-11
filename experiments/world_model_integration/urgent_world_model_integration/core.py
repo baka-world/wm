@@ -7,12 +7,14 @@ detection; a rollout uses the currently public default route until disclosure.
 from __future__ import annotations
 from dataclasses import asdict
 from collections import defaultdict
+import hashlib
 import math
 import time
 
 from business_transport.dispatch import BusinessCPSAT
 from business_transport.dynamics import WorkflowDynamics
 from business_transport.session_dynamics import SessionRuleDynamics
+from business_transport.session_events import eligible_sessions
 from business_transport.workflow_transition import check_business_transition
 from lab_transport.torch_structured_adapter import ProgressAwareRule
 from lab_transport.decision_value import candidates_for, nearest_batch
@@ -137,12 +139,44 @@ def _projected_job_cost(initial,trace,rules,geometry):
     return (urgent_late,urgent_eta,routine_late,routine_eta),finished
 
 
+
+def _stable_service_uniform(seed, particle, observation_tick, query):
+    """Common uniform for the *same visible service query* across candidates.
+
+    Do not use the simulator's private seed as a future label. This is a
+    simulation-only Monte-Carlo coupling seed, not a learned feature.
+    The event query identity is action-independent once it is eligible.
+    """
+    fields=("pr18-keyed-crn-v1",int(seed),int(particle),int(observation_tick),
+            query["robot_id"],query["sample_id"],query["phase"],query["station_id"])
+    blob="|".join(map(str,fields)).encode("utf8")
+    value=int.from_bytes(hashlib.sha256(blob).digest()[:8],"big")
+    return value/(1<<64)
+
+
+class _OneStepUniforms:
+    """Supplies exactly one uniform per actual eligible service-session query."""
+    def __init__(self,values):
+        self.values=tuple(values)
+        self.calls=0
+
+    def random(self):
+        if self.calls >= len(self.values):
+            raise AssertionError("more service samples than current eligible queries")
+        value=self.values[self.calls]
+        self.calls+=1
+        return value
+
+
 class UrgentWorldPolicy:
-    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3):
+    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3,random_coupling="stream"):
         if arm not in ("P4","P5"):
             raise ValueError("expected P4 Rule or P5 frozen V4")
         if steps!=5 or particles!=3:
             raise ValueError("first adaptation uses fixed H5/P3 rollout budget")
+        if random_coupling not in ("stream","keyed"):
+            raise ValueError("unknown service sampling coupling")
+        self.random_coupling=random_coupling
         self.arm,self.geometry,self.config=arm,geometry,config
         self.seed,self.steps,self.particles=seed,steps,particles
         self.observer=PriorityObserver()
@@ -190,7 +224,28 @@ class UrgentWorldPolicy:
                 # The same fixed continuation is used for P4 and P5.
                 actions=plan if step==0 else nearest_batch(
                     state,candidates_for(state),self.geometry)
-                nxt=self.prediction.predict_next(state,actions)
+                if self.arm=="P5" and self.random_coupling=="keyed":
+                    # Legacy reset_seed() couples random positions, not
+                    # service identities. A candidate can insert a query
+                    # and thereby shift draws for all later sessions.
+                    # Stable service-keyed draws remove that confound without
+                    # changing the V4 network, scoring or legal action set.
+                    viable=[q for q,reason in eligible_sessions(state,actions)
+                            if reason is None]
+                    keyed=_OneStepUniforms([
+                        _stable_service_uniform(self.seed,particle,state.tick,q)
+                        for q in viable])
+                    model=self.prediction.model
+                    previous_rng=model.rng
+                    model.rng=keyed
+                    try:
+                        nxt=self.prediction.predict_next(state,actions)
+                    finally:
+                        model.rng=previous_rng
+                    if keyed.calls!=len(viable):
+                        raise AssertionError("V4 draw count != eligible query count")
+                else:
+                    nxt=self.prediction.predict_next(state,actions)
                 check_business_transition(state,nxt,self.geometry,rules,actions)
                 self.predict_steps+=1
                 trace.append(nxt)
@@ -236,16 +291,17 @@ class UrgentWorldPolicy:
             "selected":[asdict(a) for a in selected],
             "rank":sorted(range(len(plans)),key=lambda i:scores[i]["score"]),
             "predicted_retest_event":"not_modelled_until_disclosed",
+            "random_coupling":self.random_coupling,
             "urgent_waiting":sum(s.status=="waiting" and s.priority==2 for s in obs.samples),
         })
         return selected
 
 
-def run_case(spec,protocol,arm,checkpoint):
+def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream"):
     business,geo=scene_for(spec)
     sim=ConditionalRetestSimulator(
         business,spec["seed"],spec["retest_rate_percent"],collect_metrics=True)
-    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"])
+    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"],random_coupling=random_coupling)
     started=time.process_time()
     result=sim.run(dispatch_policy=lambda o,c:policy(o,c,sim),
                    on_observation=policy.observer.observe)
@@ -267,6 +323,7 @@ def run_case(spec,protocol,arm,checkpoint):
         raise AssertionError("V4 loaded but no genuine service-event queries were used")
     return {
         "seed":spec["seed"],"index":spec["index"],"arm":arm,"spec":spec,
+        "random_coupling":random_coupling,
         "metrics":metrics,"decision_count":len(policy.records),
         "decisions":policy.records,"query_calls":policy.query_calls,
         "fallback_reasons":policy.fallback_reasons,

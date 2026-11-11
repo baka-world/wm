@@ -1,0 +1,108 @@
+name: RHWM published KM reference method transfer CPU
+
+on:
+  push:
+    branches:
+      - feature/rhwm-reference-survival-transfer-20261111
+    paths:
+      - .github/workflows/rhwm-km-method-transfer-cpu.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  lifelines-reference-baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install existing pinned CPU env and official lifelines baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          uv pip install --system --python "$(command -v python)" -r requirements-rhwm-method-transfer.txt
+          python - <<'PY'
+          import torch,lifelines
+          assert torch.version.cuda is None
+          assert lifelines.__version__=="0.30.0"
+          torch.set_num_threads(1)
+          print("Official lifelines KM",lifelines.__version__,"CPU torch",torch.__version__)
+          PY
+      - name: Restore frozen V4 for independent published-method comparison
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/rhwm-transfer"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/rhwm-transfer/v4.zip"
+          unzip -p "$RUNNER_TEMP/rhwm-transfer/v4.zip" v4-data.pt > "$RUNNER_TEMP/rhwm-transfer/v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/rhwm-transfer/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/rhwm-transfer/v4.pt" >> "$GITHUB_ENV"
+      - name: Run upstream method and original RHWM regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q business_transport/world_model experiments/world_model_integration/method_transfer
+          timeout 120s python -m unittest discover \
+            -s experiments/world_model_integration/method_transfer/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/rhwm-transfer/transfer-tests.log"
+          timeout 120s python -m unittest discover \
+            -s experiments/world_model_integration/system_world_model/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/rhwm-transfer/earlier-contract-tests.log"
+      - name: Fit upstream Kaplan-Meier on training groups and compare blind heldout
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 420s python -m experiments.world_model_integration.method_transfer.compare_km_v4 \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --out "$RUNNER_TEMP/rhwm-transfer/heldout.json" \
+            --cpu-budget 300 \
+            2>&1 | tee "$RUNNER_TEMP/rhwm-transfer/heldout.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads((Path(os.environ["RUNNER_TEMP"])/"rhwm-transfer/heldout.json").read_text())
+          s=r["summary"]
+          assert s["train_groups"]==10 and s["test_groups"]==6
+          assert s["gpu"]==0 and s["new_neural_training"]==0
+          assert r["fitted_reference"]["number_of_train_sessions"]>0
+          assert set(s["group_summaries"])=={"same_mechanism_new_seed","synthetic_parameter_shift"}
+          for group in r["group_results"]:
+              for arm in ("rule","kaplan_meier","v4"):
+                  assert len(group["arms"][arm]["state_rows"])>0
+              for arm in ("kaplan_meier","v4"):
+                  assert group["arms"][arm]["service_event"]["eligible_queries"]>0
+          print("PUBLISHED_KM_METHOD_TRANSFER_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/rhwm-transfer" && \
+            sha256sum heldout.json heldout.log transfer-tests.log earlier-contract-tests.log > evidence_sha256.txt)
+      - name: Upload observed results and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhwm-reference-method-transfer-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/rhwm-transfer/transfer-tests.log
+            ${{ runner.temp }}/rhwm-transfer/earlier-contract-tests.log
+            ${{ runner.temp }}/rhwm-transfer/heldout.log
+            ${{ runner.temp }}/rhwm-transfer/heldout.json
+            ${{ runner.temp }}/rhwm-transfer/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

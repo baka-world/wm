@@ -1,0 +1,107 @@
+name: PR21 RHWM H1 H5 H10 independent synthetic forecast CPU
+
+on:
+  push:
+    branches:
+      - feature/rhwm-horizon-generalization-20261111
+    paths:
+      - .github/workflows/pr21-rhwm-horizon-cpu.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  system-forecast-evaluation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install previously locked CPU-only dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("RHWM forecast CPU",torch.__version__)
+          PY
+      - name: Restore immutable V4, no training
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/rhwm-horizons"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/rhwm-horizons/model.zip"
+          unzip -p "$RUNNER_TEMP/rhwm-horizons/model.zip" v4-data.pt > "$RUNNER_TEMP/rhwm-horizons/v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/rhwm-horizons/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/rhwm-horizons/v4.pt" >> "$GITHUB_ENV"
+      - name: Validate protocol and state error metrics against factual transitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q business_transport/world_model experiments/world_model_integration/system_world_model
+          timeout 90s python -m unittest discover \
+            -s experiments/world_model_integration/system_world_model/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/rhwm-horizons/tests.log"
+      - name: Run sealed independent synthetic six-group forecast evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 400s python -m experiments.world_model_integration.system_world_model.evaluate_horizons \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --out "$RUNNER_TEMP/rhwm-horizons/result.json" --cpu-budget 300 \
+            2>&1 | tee "$RUNNER_TEMP/rhwm-horizons/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"rhwm-horizons"
+          r=json.loads((root/"result.json").read_text())
+          s=r["summary"]
+          assert s["groups"]==6 and s["gpu"]==0 and s["trainings"]==0
+          assert set(s["by_horizon"])=={"1","5","10"}
+          assert set(s["splits"])=={"nominal","synthetic_load_shift"}
+          for horizon in s["by_horizon"].values():
+              assert horizon["rule"]["scenario_groups"]==6
+              assert horizon["v4"]["scenario_groups"]==6
+          for group in r["groups"]:
+              assert group["truth_status"]=="completed"
+              for arm in ("rule","v4"):
+                  assert group["arms"][arm]["rollout_steps"]>0
+          assert sum(g["arms"]["v4"]["query_calls"] for g in r["groups"])>0
+          print("RHWM_SYSTEM_STATE_INDEPENDENT_HORIZON_GATE_PASSED",json.dumps({
+              "groups":s["groups"],"forecasts":s["forecasts"],
+              "model_steps":s["model_steps"],"cpu_seconds":s["cpu_process_seconds"]
+          }))
+          PY
+          (cd "$RUNNER_TEMP/rhwm-horizons" &&
+            sha256sum result.json run.log tests.log > evidence_sha256.txt)
+      - name: Upload actual independent evaluation records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr21-rhwm-horizon-evidence-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/rhwm-horizons/tests.log
+            ${{ runner.temp }}/rhwm-horizons/run.log
+            ${{ runner.temp }}/rhwm-horizons/result.json
+            ${{ runner.temp }}/rhwm-horizons/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

@@ -1,0 +1,112 @@
+name: PR18 frozen-state V4 repeated sampling and paired future CPU
+
+on:
+  push:
+    branches: [feature/world-model-decision-integration-20261110]
+    paths:
+      - '.github/workflows/pr18-v4-fixed-state-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  fixed-state:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 23
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install exact CPU-only requirements
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, 'GPU wheels prohibited'
+          torch.set_num_threads(1)
+          print('torch CPU only',torch.__version__)
+          PY
+      - name: Restore frozen V4 weights and two sealed source archives
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-fixed"
+          for item in \
+             "13765135588 model" \
+             "13840027102 confirmation" \
+             "13842933799 new-full"; do
+            set -- $item
+            id="$1"
+            name="$2"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/pr18-fixed/$name.zip"
+          done
+          unzip -p "$RUNNER_TEMP/pr18-fixed/model.zip" v4-data.pt > "$RUNNER_TEMP/pr18-fixed/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-fixed/v4-data.pt" | sha256sum -c
+          echo "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233  $RUNNER_TEMP/pr18-fixed/confirmation.zip" | sha256sum -c
+          echo "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5  $RUNNER_TEMP/pr18-fixed/new-full.zip" | sha256sum -c
+      - name: Syntax tests and frozen-protocol unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/urgent_world_model_integration
+          python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/pr18-fixed/tests.log"
+          python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/fixed_state_tests -v \
+            2>&1 | tee "$RUNNER_TEMP/pr18-fixed/protocol_tests.log"
+      - name: Reconstruct five original states, independent V4 samples and paired actual futures
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 660s python -m experiments.world_model_integration.urgent_world_model_integration.fixed_state_experiment \
+            --archive-confirmation "$RUNNER_TEMP/pr18-fixed/confirmation.zip" \
+            --archive-new-full "$RUNNER_TEMP/pr18-fixed/new-full.zip" \
+            --checkpoint "$RUNNER_TEMP/pr18-fixed/v4-data.pt" \
+            --cpu-budget 600 \
+            --output "$RUNNER_TEMP/pr18-fixed/fixed_state_result.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-fixed/experiment.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'pr18-fixed'
+          data=json.loads((root/'fixed_state_result.json').read_text())
+          s=data['summary']
+          assert s['scenes']==5
+          assert s['prediction_seed_repetitions_per_state']==8
+          assert s['gpu']==0 and s['trainings']==0
+          assert all(x['original_prefix_observation_reproduction'] and x['candidate_identity_verified'] for x in data['states'])
+          assert all(len(x['real_futures_with_same_prefix_and_P1_continuation'])==x['frozen_candidates'] for x in data['states'])
+          print('FIXED_STATE_PROTOCOL_VERIFIED',json.dumps(s,ensure_ascii=False))
+          PY
+          (cd "$RUNNER_TEMP/pr18-fixed" &&
+            sha256sum fixed_state_result.json experiment.log tests.log protocol_tests.log > evidence_sha256.txt)
+      - name: Upload logs and immutable diagnostic evidence on both success and error
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-v4-fixed-state-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-fixed/tests.log
+            ${{ runner.temp }}/pr18-fixed/protocol_tests.log
+            ${{ runner.temp }}/pr18-fixed/experiment.log
+            ${{ runner.temp }}/pr18-fixed/fixed_state_result.json
+            ${{ runner.temp }}/pr18-fixed/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

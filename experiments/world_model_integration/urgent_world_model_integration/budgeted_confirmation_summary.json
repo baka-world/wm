@@ -1,0 +1,84 @@
+{
+  "protocol": "pr18-budgeted-queue-confirmation-v1",
+  "source_commit": "b87347deb231103ee4d66fba2ce66771cf6ec40f",
+  "run_id": 42986822400,
+  "artifact_id": 13840027102,
+  "artifact_sha256": "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233",
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "scope": "twelve_preregistered_new_synthetic_confirmation_scenes_not_real_company_data",
+  "number_of_scenes": 12,
+  "clinical_urgent_jobs": 24,
+  "resource_motion_lifecycle_violations": 0,
+  "actual_CPU_tests_passed": 5,
+  "metrics": {
+    "P0": {
+      "urgent_on_time": 0.5555555555555556,
+      "urgent_ontime_jobs": 10,
+      "urgent_late_lower_bound": 24.76388888888889,
+      "urgent_incomplete": 0.25,
+      "routine_restricted_flow": 136.11111111111111,
+      "all_restricted_flow": 119.91527777777777,
+      "cpu_seconds": 2.8862125640000116
+    },
+    "P1": {
+      "urgent_on_time": 0.5555555555555556,
+      "urgent_ontime_jobs": 10,
+      "urgent_late_lower_bound": 14.902777777777779,
+      "urgent_incomplete": 0.027777777777777776,
+      "routine_restricted_flow": 143.19444444444446,
+      "all_restricted_flow": 119.29583333333333,
+      "cpu_seconds": 2.96506909599999
+    },
+    "P2": {
+      "urgent_on_time": 0.5555555555555556,
+      "urgent_ontime_jobs": 10,
+      "urgent_late_lower_bound": 14.902777777777779,
+      "urgent_incomplete": 0.027777777777777776,
+      "routine_restricted_flow": 143.02777777777777,
+      "all_restricted_flow": 119.17083333333333,
+      "cpu_seconds": 2.870646550999993
+    },
+    "P3": {
+      "urgent_on_time": 0.5555555555555556,
+      "urgent_ontime_jobs": 10,
+      "urgent_late_lower_bound": 14.902777777777779,
+      "urgent_incomplete": 0.027777777777777776,
+      "routine_restricted_flow": 143.16666666666666,
+      "all_restricted_flow": 119.25416666666666,
+      "cpu_seconds": 2.9488978409999964
+    },
+    "P4": {
+      "urgent_on_time": 0.5277777777777778,
+      "urgent_ontime_jobs": 9,
+      "urgent_late_lower_bound": 15.930555555555555,
+      "urgent_incomplete": 0.05555555555555555,
+      "routine_restricted_flow": 150.36111111111111,
+      "all_restricted_flow": 125.00416666666666,
+      "cpu_seconds": 30.504
+    },
+    "P5": {
+      "urgent_on_time": 0.5833333333333334,
+      "urgent_ontime_jobs": 11,
+      "urgent_late_lower_bound": 15.180555555555555,
+      "urgent_incomplete": 0.027777777777777776,
+      "routine_restricted_flow": 149.55555555555554,
+      "all_restricted_flow": 123.59444444444445,
+      "cpu_seconds": 33.102,
+      "service_event_queries": 3972
+    }
+  },
+  "strict_shared_candidate_states": 115,
+  "score_differences": 98,
+  "rank_differences": 11,
+  "action_differences": 6,
+  "known_diagnostic_CPU_total_seconds": {
+    "h5_keyed": 5.966,
+    "budgeted_20": 19.976,
+    "full_rule_terminal": 71.972
+  },
+  "positive_urgent_seeds_vs_rule": [
+    905147,
+    905585
+  ],
+  "no_independent_generalization_claim": true
+}

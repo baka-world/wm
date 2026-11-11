@@ -67,6 +67,14 @@ class IntegrationTest(unittest.TestCase):
                     self.assertIsNone(projected["score"])
                     self.assertEqual(projected["particle_costs"],[])
 
+    def test_frozen_pruning_protocol_has_eight_new_cases(self):
+        from experiments.world_model_integration.urgent_world_model_integration.run import PRUNING_PROTOCOL
+        proto=json.loads(PRUNING_PROTOCOL.read_text())
+        scenes=proto["frozen_new_synthetic_cases"]
+        self.assertEqual(len(scenes),8)
+        self.assertEqual([s["index"] for s in scenes],list(range(36,44)))
+        self.assertEqual([s["seed"] for s in scenes],[906001+i*97 for i in range(8)])
+
     def test_rule_episode(self):
         case=run_case(self.spec,self.protocol,"P4",None)
         self.assertGreater(case["decision_count"],0)

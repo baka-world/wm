@@ -114,7 +114,12 @@ def main():
             raise ValueError("confirmation mode is fixed to keyed plus budgeted_queue")
         confirm_path=CONFIRMATION_PROTOCOL if args.group=="confirmation" else PRUNING_PROTOCOL
         confirm=json.loads(confirm_path.read_text())
-        seeds=[(int(x["index"]),int(x["seed"])) for x in confirm["cases"]]
+        case_key="cases" if args.group=="confirmation" else "frozen_new_synthetic_cases"
+        rows=confirm[case_key]
+        if args.group=="pruning_check":
+            if len(rows)!=8 or [int(x["index"]) for x in rows]!=list(range(36,44)):
+                raise AssertionError("frozen pruning regression protocol indices changed")
+        seeds=[(int(x["index"]),int(x["seed"])) for x in rows]
     else:
         seeds=(list(enumerate(p["smoke_seeds"])) if args.group=="smoke" else
                list(enumerate(p["development_seeds"],start=len(p["smoke_seeds"]))))

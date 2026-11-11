@@ -1,3 +1,4 @@
+# Retry: frozen protocol loader key corrected after first 12-scene run succeeded.
 name: PR18 frozen V4 exact dominance pruning CPU regression
 
 on:

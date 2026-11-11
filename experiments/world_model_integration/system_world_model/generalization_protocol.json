@@ -1,0 +1,100 @@
+{
+  "protocol": "RHWM_SYSTEM_STATE_H1_H5_H10_20261111_V1",
+  "purpose": "frozen prospective group-level synthetic holdout; no tuning",
+  "world_model_branches": [
+    "rule",
+    "v4"
+  ],
+  "continuation_policy": "nearest_batch_public_state_v1",
+  "horizons": [
+    1,
+    5,
+    10
+  ],
+  "particles": 3,
+  "sampling_seed": 1810,
+  "anchors": [
+    0,
+    5,
+    12,
+    20,
+    30
+  ],
+  "groups": [
+    {
+      "id": "N1",
+      "seed": 941001,
+      "split": "nominal",
+      "robot_count": 2,
+      "capacity": 1,
+      "jitter": 1,
+      "jobs": 2,
+      "service_add": 0
+    },
+    {
+      "id": "N2",
+      "seed": 941107,
+      "split": "nominal",
+      "robot_count": 3,
+      "capacity": 1,
+      "jitter": 1,
+      "jobs": 3,
+      "service_add": 0
+    },
+    {
+      "id": "N3",
+      "seed": 941223,
+      "split": "nominal",
+      "robot_count": 2,
+      "capacity": 2,
+      "jitter": 1,
+      "jobs": 3,
+      "service_add": 0
+    },
+    {
+      "id": "N4",
+      "seed": 941339,
+      "split": "nominal",
+      "robot_count": 3,
+      "capacity": 2,
+      "jitter": 1,
+      "jobs": 2,
+      "service_add": 0
+    },
+    {
+      "id": "S1",
+      "seed": 941447,
+      "split": "synthetic_load_shift",
+      "robot_count": 3,
+      "capacity": 1,
+      "jitter": 2,
+      "jobs": 3,
+      "service_add": 1
+    },
+    {
+      "id": "S2",
+      "seed": 941551,
+      "split": "synthetic_load_shift",
+      "robot_count": 2,
+      "capacity": 1,
+      "jitter": 2,
+      "jobs": 3,
+      "service_add": 1
+    }
+  ],
+  "max_ticks": 180,
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "factual_simulator_policy": "nearest_batch from public current observation",
+  "truth_future_policy": "same nearest_batch policy on factual state, never fed into forecasts",
+  "max_cpu_process_seconds": 300,
+  "max_total_rollout_steps": 4000,
+  "decision_research_training": false,
+  "warnings": [
+    "synthetic only, not real enterprise records",
+    "multiple anchors and particles within one group are dependent",
+    "stress is parameter shift not a proven held-out distribution shift",
+    "events under model are stochastic and single realized factual future is not probability ground truth",
+    "future unseen faults/retests/jobs excluded by protocol",
+    "protocol is immutable once test has been run"
+  ]
+}

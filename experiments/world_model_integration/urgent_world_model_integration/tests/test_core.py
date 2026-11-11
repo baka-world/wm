@@ -37,7 +37,8 @@ class IntegrationTest(unittest.TestCase):
         for name in ("resource_violations","motion_violations","lifecycle_violations"):
             self.assertEqual(case[name],0)
 
-    def test_v4_episode(self):        checkpoint=os.environ.get("V4_CHECKPOINT")
+    def test_v4_episode(self):
+        checkpoint=os.environ.get("V4_CHECKPOINT")
         if not checkpoint:self.skipTest("frozen V4 checkpoint not supplied")
         case=run_case(self.spec,self.protocol,"P5",Path(checkpoint),random_coupling="keyed")
         self.assertGreater(case["query_calls"],0)

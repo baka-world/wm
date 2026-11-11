@@ -1,3 +1,4 @@
+# Retry after correcting test file newline syntax; no experimental parameter changed.
 name: PR18 frozen V4 keyed-service randomness diagnostic CPU
 on:
   push:

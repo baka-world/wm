@@ -87,6 +87,8 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--group",choices=("smoke","development"),required=True)
     parser.add_argument("--random-coupling",choices=("stream","keyed"),default="stream")
+    parser.add_argument("--terminal-mode",choices=("optimistic","rule_continuation"),default="optimistic")
+    parser.add_argument("--seed-only",type=int,action="append",default=[])
     parser.add_argument("--cpu-budget-seconds",type=float,default=900.)
     args=parser.parse_args()
     if args.out.exists():
@@ -102,13 +104,18 @@ def main():
     p=json.loads(PROTOCOL.read_text())
     seeds=(list(enumerate(p["smoke_seeds"])) if args.group=="smoke" else
            list(enumerate(p["development_seeds"],start=len(p["smoke_seeds"]))))
+    if args.seed_only:
+        chosen=set(args.seed_only)
+        seeds=[(i,seed) for i,seed in seeds if seed in chosen]
+        if set(s for _,s in seeds)!=chosen:
+            raise ValueError("seed filter contains seed outside selected frozen split")
     start=time.process_time()
     cases=[];pairs=[]
     for index,seed in seeds:
         spec=public_spec(index,seed,p["scenario_max_ticks"])
         pair={}
         for arm in ("P4","P5"):
-            pair[arm]=run_case(spec,p,arm,args.checkpoint if arm=="P5" else None,random_coupling=args.random_coupling)
+            pair[arm]=run_case(spec,p,arm,args.checkpoint if arm=="P5" else None,random_coupling=args.random_coupling,terminal_mode=args.terminal_mode)
             print("CASE",args.group,index,seed,arm,
                   "urgent_ontime",pair[arm]["metrics"]["urgent"]["on_time_rate"],
                   "urgent_late",pair[arm]["metrics"]["urgent"]["late_mean_lower_bound"],
@@ -129,6 +136,8 @@ def main():
             "independent_test":False,"new_training":False,"gpu":0,
             "checkpoint_sha256":sha(args.checkpoint),
             "random_coupling":args.random_coupling,
+            "terminal_mode":args.terminal_mode,
+            "seed_filter":args.seed_only,
             "protocol_sha256":sha(PROTOCOL),
             "group":args.group,"scenarios":len(seeds),
             "case_count":len(cases),
@@ -144,6 +153,7 @@ def main():
             "all_restricted_flow_mean":_mean([x["metrics"]["all"]["restricted_mean_flow"] for x in rows]),
             "total_model_query_calls":sum(x["query_calls"] for x in rows),
             "total_rollout_steps":sum(x["rollout_steps"] for x in rows),
+            "total_terminal_continuation_steps":sum(x["terminal_continuation_steps"] for x in rows),
             "total_decisions":sum(x["decision_count"] for x in rows),
             "total_prediction_cpu_seconds":sum(x["prediction_cpu_seconds"] for x in rows),
             "fallback_reason_counts":{

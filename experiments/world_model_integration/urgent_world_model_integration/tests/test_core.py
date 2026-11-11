@@ -30,6 +30,14 @@ class IntegrationTest(unittest.TestCase):
         with self.assertRaises(AssertionError):
             stream1.random()
 
+    def test_rule_continuation_is_legal_and_executed(self):
+        case=run_case(self.spec,self.protocol,"P4",None,terminal_mode="rule_continuation")
+        self.assertGreater(case["terminal_continuation_steps"],0)
+        self.assertEqual(case["resource_violations"],0)
+        self.assertEqual(case["motion_violations"],0)
+        self.assertEqual(case["lifecycle_violations"],0)
+        self.assertEqual(case["metrics"]["job_count"],self.spec["jobs"])
+
     def test_rule_episode(self):
         case=run_case(self.spec,self.protocol,"P4",None)
         self.assertGreater(case["decision_count"],0)

@@ -55,3 +55,32 @@ for the original outcome or an independent performance claim. The original
 
     python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group smoke --random-coupling keyed --out /tmp/keyed-smoke
     python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group development --random-coupling keyed --out /tmp/keyed-development
+
+## Task-level terminal queueing diagnostic (post-hoc, previously viewed seeds)
+
+The previous 5-step estimator `_projected_job_cost` sums optimistic
+independent remaining-job work. For several genuine competing assignments,
+the sum is identical although actual single-robot service order and shared
+resource admission change full job completion times. A short model rollout
+is not itself a task deadline estimate.
+
+With `--terminal-mode rule_continuation`, P4 and P5 **still use exactly
+the same first H=5 steps** as their original frozen models (P5: V4 neural
+queries). From that state onward, both use the **same existing public
+ProgressAwareRule + WorkflowDynamics, nearest legal assignments, and
+capacity checks** until the synthetic cutoff or all then-visible jobs finish.
+Scoring uses the same task-level cost function on this longer trace.
+
+This is a diagnostic approximation, not a claim that true hidden future
+arrivals, retest decisions, or device outages are predicted. It does not
+retrain or change the V4 checkpoint, production CP-SAT, actual simulator,
+legal candidates, priorities, or metrics. It changes the terminal
+prediction/value approximation, **for both P4 and P5**.
+
+The targeted CPU protocol freezes three previously examined cases only:
+902147 (Smoke) and 904096/904388 (Development). These were selected due
+to *known failures*, so any improvements are exploratory and cannot be
+reported as generalization.
+
+    python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group smoke --seed-only 902147 --terminal-mode rule_continuation --random-coupling keyed --out /tmp/tail-smoke
+    python -m experiments.world_model_integration.urgent_world_model_integration.run --checkpoint /path/v4-data.pt --group development --seed-only 904096 --seed-only 904388 --terminal-mode rule_continuation --random-coupling keyed --out /tmp/tail-dev

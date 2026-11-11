@@ -169,7 +169,7 @@ class _OneStepUniforms:
 
 
 class UrgentWorldPolicy:
-    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3,random_coupling="stream"):
+    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3,random_coupling="stream",terminal_mode="optimistic"):
         if arm not in ("P4","P5"):
             raise ValueError("expected P4 Rule or P5 frozen V4")
         if steps!=5 or particles!=3:
@@ -177,6 +177,9 @@ class UrgentWorldPolicy:
         if random_coupling not in ("stream","keyed"):
             raise ValueError("unknown service sampling coupling")
         self.random_coupling=random_coupling
+        if terminal_mode not in ("optimistic","rule_continuation"):
+            raise ValueError("unknown terminal value estimator")
+        self.terminal_mode=terminal_mode
         self.arm,self.geometry,self.config=arm,geometry,config
         self.seed,self.steps,self.particles=seed,steps,particles
         self.observer=PriorityObserver()
@@ -184,6 +187,10 @@ class UrgentWorldPolicy:
                SessionRuleDynamics(geometry,rules,checkpoint,experimental=True,
                                    seed=1810,feature_version="v4"))
         self.prediction=WorkflowDynamics(model,rules)
+        # Optional public-rule-only continuation, *after* the same 5-step
+        # frozen Rule/V4 prefix. No hidden simulator events, no private retest.
+        self.terminal_prediction=WorkflowDynamics(ProgressAwareRule(geometry),rules)
+        self.terminal_steps=0
         self.solver=BusinessCPSAT(geometry,rules,
                   candidate_limit=config["max_legal_candidates"],
                   time_limit_seconds=config["cpsat_seconds"],
@@ -207,8 +214,39 @@ class UrgentWorldPolicy:
     def _synchronize_public_rules(self,rules):
         self.solver.rules=rules
         self.prediction.rules=rules
+        self.terminal_prediction.rules=rules
         if hasattr(self.prediction.model,"rules"):
             self.prediction.model.rules=rules
+
+
+    def _continue_to_terminal(self,initial,state,trace,rules):
+        """Deterministic public-workflow continuation to the synthetic limit.
+
+        This models robot sequencing and resource admission via the existing
+        legal transition model rather than summing independent optimistic
+        job durations. Future retest outcomes, unobserved job arrivals and
+        outage calendars remain unknown. It is a post-hoc diagnostic, not a
+        calibrated prediction of a real clinical completion time.
+        """
+        initial_jobs={s.job_id:s.workflow for s in initial.samples if s.job_id}
+        horizon=self.config["scenario_max_ticks"]
+        while state.tick < horizon:
+            # The same public default follow-up is used in both arms.
+            actions=nearest_batch(state,candidates_for(state),self.geometry)
+            nxt=self.terminal_prediction.predict_next(state,actions)
+            check_business_transition(state,nxt,self.geometry,rules,actions)
+            if nxt.tick != state.tick+1:
+                raise AssertionError("terminal continuation skipped a clock tick")
+            self.terminal_steps+=1
+            trace.append(nxt)
+            state=nxt
+            if initial_jobs:
+                done={(s.job_id,s.workflow) for s in state.samples
+                      if s.job_id and s.status=="completed"
+                      and s.stage_index==len(rules.workflows[s.workflow])-1}
+                if all((job,flow) in done for job,flow in initial_jobs.items()):
+                    break
+        return state
 
     def _score(self,observation,plan,rules,index):
         missed=sum(s.status=="waiting" and s.priority==2 and
@@ -250,6 +288,8 @@ class UrgentWorldPolicy:
                 self.predict_steps+=1
                 trace.append(nxt)
                 state=nxt
+            if self.terminal_mode=="rule_continuation":
+                state=self._continue_to_terminal(observation,state,trace,rules)
             cost,_=_projected_job_cost(observation,trace,rules,self.geometry)
             if not all(math.isfinite(v) for v in cost):
                 raise ValueError("non-finite urgent rollout cost")
@@ -292,16 +332,17 @@ class UrgentWorldPolicy:
             "rank":sorted(range(len(plans)),key=lambda i:scores[i]["score"]),
             "predicted_retest_event":"not_modelled_until_disclosed",
             "random_coupling":self.random_coupling,
+            "terminal_mode":self.terminal_mode,
             "urgent_waiting":sum(s.status=="waiting" and s.priority==2 for s in obs.samples),
         })
         return selected
 
 
-def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream"):
+def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream",terminal_mode="optimistic"):
     business,geo=scene_for(spec)
     sim=ConditionalRetestSimulator(
         business,spec["seed"],spec["retest_rate_percent"],collect_metrics=True)
-    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"],random_coupling=random_coupling)
+    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"],random_coupling=random_coupling,terminal_mode=terminal_mode)
     started=time.process_time()
     result=sim.run(dispatch_policy=lambda o,c:policy(o,c,sim),
                    on_observation=policy.observer.observe)
@@ -324,6 +365,8 @@ def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream"):
     return {
         "seed":spec["seed"],"index":spec["index"],"arm":arm,"spec":spec,
         "random_coupling":random_coupling,
+        "terminal_mode":terminal_mode,
+        "terminal_continuation_steps":policy.terminal_steps,
         "metrics":metrics,"decision_count":len(policy.records),
         "decisions":policy.records,"query_calls":policy.query_calls,
         "fallback_reasons":policy.fallback_reasons,

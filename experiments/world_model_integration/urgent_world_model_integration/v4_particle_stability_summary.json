@@ -1,0 +1,164 @@
+{
+  "audit": "PR18 Frozen V4 decision-particle sensitivity (read-only; source ZIP SHA verified)",
+  "source_archives": [
+    {
+      "cohort": "confirmation12",
+      "run_id": 42986822400,
+      "artifact_id": 13840027102,
+      "sha256": "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233"
+    },
+    {
+      "cohort": "later8",
+      "run_id": 42995397402,
+      "artifact_id": 13842933799,
+      "sha256": "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5"
+    }
+  ],
+  "method": "For each candidate, resample the already archived 3 particle cost vectors, using a SHARED triple of indices across candidates, enumerate 3^3=27 with replacement and re-rank lexicographic scores (urgent coverage, mean urgent late, urgent remaining, routine late, routine remaining, candidate index). No new model inference.",
+  "limitations": "Not 27 new trials, not uncertainty calibration, not ex-ante prediction accuracy, not per-action causality.",
+  "conditions": {
+    "new_simulation": false,
+    "new_trajectories": false,
+    "training": false,
+    "GPU": 0,
+    "V4_loaded": false
+  },
+  "groups": {
+    "confirmation12": {
+      "scenes": 12,
+      "strict_shared_multi": 115,
+      "rule_multi": 178,
+      "rule_sensitive": 0,
+      "v4_multi": 179,
+      "v4_all_particle_identical": 46,
+      "v4_sensitive": 19,
+      "actual_rule_v4_flips": 6,
+      "actual_flip_sensitive": 5,
+      "urgent_ontime_rule": 0.5277777777777778,
+      "urgent_ontime_v4": 0.5833333333333334,
+      "urgent_ontime_P1": 0.5555555555555556
+    },
+    "later8": {
+      "scenes": 8,
+      "strict_shared_multi": 97,
+      "rule_multi": 117,
+      "rule_sensitive": 0,
+      "v4_multi": 119,
+      "v4_all_particle_identical": 34,
+      "v4_sensitive": 10,
+      "actual_rule_v4_flips": 4,
+      "actual_flip_sensitive": 3,
+      "urgent_ontime_rule": 0.6458333333333334,
+      "urgent_ontime_v4": 0.6458333333333334,
+      "urgent_ontime_P1": 0.6458333333333334
+    }
+  },
+  "combined": {
+    "scenes": 20,
+    "v4_multi": 298,
+    "v4_sensitive": 29,
+    "rule_sensitive": 0,
+    "strict_matched_multi": 212,
+    "rule_v4_flips": 10,
+    "flips_sensitive": 8
+  },
+  "deciding_score_component_labels": [
+    "missed_urgent",
+    "urgent_lateness",
+    "urgent_remaining_time",
+    "routine_lateness",
+    "routine_remaining_time",
+    "tie_break_index"
+  ],
+  "actual_flips": [
+    {
+      "seed": 905074,
+      "tick": 126,
+      "component": 5,
+      "margin": 1,
+      "selected_support_of_27": 17,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 905147,
+      "tick": 0,
+      "component": 2,
+      "margin": 0.3333333333333333,
+      "selected_support_of_27": 19,
+      "urgency_ontime_improved": true,
+      "detail": "The two candidates' costs tie for particle 0 and 1; only particle 2 favors V4. Urgent U905147-1 90->61 ticks; deadline 75."
+    },
+    {
+      "seed": 905220,
+      "tick": 41,
+      "component": 4,
+      "margin": 0.3333333333333333,
+      "selected_support_of_27": 16,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 905585,
+      "tick": 0,
+      "component": 1,
+      "margin": 0.3333333333333333,
+      "selected_support_of_27": 20,
+      "urgency_ontime_improved": true,
+      "detail": "Two archived particles favor V4 over Rule candidate; one favors Rule. U905585-1 censored->tick58, but P1 saves a different urgent job instead."
+    },
+    {
+      "seed": 905658,
+      "tick": 105,
+      "component": 3,
+      "margin": 1.1,
+      "selected_support_of_27": 27,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 905804,
+      "tick": 0,
+      "component": 2,
+      "margin": 1.3333333333333333,
+      "selected_support_of_27": 19,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 906001,
+      "tick": 42,
+      "component": 4,
+      "margin": 0.3333333333333333,
+      "selected_support_of_27": 16,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 906098,
+      "tick": 110,
+      "component": 3,
+      "margin": 0.3333333333333333,
+      "selected_support_of_27": 19,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 906195,
+      "tick": 138,
+      "component": 3,
+      "margin": 3.126984126984148,
+      "selected_support_of_27": 27,
+      "urgency_ontime_improved": false
+    },
+    {
+      "seed": 906680,
+      "tick": 66,
+      "component": 5,
+      "margin": 1,
+      "selected_support_of_27": 19,
+      "urgency_ontime_improved": false
+    }
+  ],
+  "verdict": {
+    "particle_sensitive_rollout_ranking": "CONFIRMED",
+    "terminal_value_proxy_limitation": "SUPPORTED_BY_PRIOR_H5_VS_BUDGETED_VS_FULL_COMPARISONS",
+    "business_incremental_advantage_over_rule": "NOT_REPLICATED_ON_LATER8",
+    "conditional_predictive_information_advantage_over_analytical_B2": "NOT_IDENTIFIED",
+    "individual_action_causal_impact": "NOT_IDENTIFIED_WITH_FACTUAL_ROLLOUTS_ONLY"
+  }
+}

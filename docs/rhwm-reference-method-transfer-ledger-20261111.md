@@ -8,7 +8,7 @@
 
 | 原论文及方法 | 可复用现成实现 | 许可证、版本/环境 | 本项目迁移对象 | 不迁移的东西 | 当前状态 |
 |---|---|---|---|---|---|
-| Kaplan & Meier, *Nonparametric Estimation from Incomplete Observations*, JASA (1958), DOI [10.1080/01621459.1958.10501452](https://doi.org/10.1080/01621459.1958.10501452)；product-limit 生存估计 | [lifelines.KaplanMeierFitter](https://lifelines.readthedocs.io/en/latest/fitters/univariate/KaplanMeierFitter.html), [上游源代码](https://github.com/CamDavidsonPilon/lifelines/blob/master/lifelines/fitters/kaplan_meier_fitter.py) | **MIT；锁定 0.30.0**（支持项目 Python 3.10；0.30.3 已要求 Python ≥3.11） | 以服务开始/完成日志拟合各站点生存曲线 S(t)，从 `S(t+1)/S(t)` 形成**当前已服务 t 步后下一步完成的条件概率**，调用既有合法状态转移模块生成完整未来状态 | 不重写 KM 拟合器，不声称它是神经网络、GNN、原创世界模型，不反复调学习目标选成绩 | **已接入代码，独立 CPU 验证工作流待完成** |
+| Kaplan & Meier, *Nonparametric Estimation from Incomplete Observations*, JASA (1958), DOI [10.1080/01621459.1958.10501452](https://doi.org/10.1080/01621459.1958.10501452)；product-limit 生存估计 | [lifelines.KaplanMeierFitter](https://lifelines.readthedocs.io/en/latest/fitters/univariate/KaplanMeierFitter.html), [上游源代码](https://github.com/CamDavidsonPilon/lifelines/blob/master/lifelines/fitters/kaplan_meier_fitter.py) | **MIT；锁定 0.30.0**（支持项目 Python 3.10；0.30.3 已要求 Python ≥3.11） | 以服务开始/完成日志拟合各站点生存曲线 S(t)，从 `S(t+1)/S(t)` 形成**当前已服务 t 步后下一步完成的条件概率**，调用既有合法状态转移模块生成完整未来状态 | 不重写 KM 拟合器，不声称它是神经网络、GNN、原创世界模型，不反复调学习目标选成绩 | **已接入并通过独立 CPU 对照；结果见下方** |
 | Reed, Löfstrand & Andrews, *Modelling stochastic behaviour in simulation digital twins through neural nets*, J Simulation (2021), DOI [10.1080/17477778.2021.1874844](https://doi.org/10.1080/17477778.2021.1874844) | 论文描述 ANN/MDN 条件随机事件分布耦合 DES，未确认论文官方可直接运行的代码包 | **论文方法引用，不宣称已获得官方代码** | “学习随机业务事件 → 显式转移系统状态”的概念依据；V4 + 规则及外部 KM 都遵循其范式 | 不复制论文网络、自创 MDN 或声称直接复现原实验 | 概念迁移，现有 RHWM-v1 已涵盖 |
 | Kvamme et al. 相关离散时间生存预测模型、Logistic-Hazard | [pycox LogisticHazard](https://github.com/havakv/pycox/blob/master/pycox/models/logistic_hazard.py)，[pycox](https://github.com/havakv/pycox) | **BSD-2-Clause，PyPI 0.3.0**；依赖 Torch、torchtuples | 当 KM 作为严格外部基线建立后，使用上游 Logistic-Hazard 进行公开特征条件化的服务时长预测，对照同一独立数据的 V4/Rule/KM | 不自定义“新 hazard loss”；不在当前已用的 test group 上调参 | **候选，未安装或训练** |
 | Tang & Wang, *Data-driven automated job shop scheduling optimization considering AGV obstacle avoidance*, Sci Reports (2025), DOI [10.1038/s41598-024-82870-1](https://doi.org/10.1038/s41598-024-82870-1) | 论文给出 Bayesian 网络/障碍风险建模；**未确认其官方可运行代码仓库** | 论文开放阅读；未经作者允许不直接复制图表或内容 | 将**运输延误/障碍风险**作为已有研究支持的预测目标，数据来自实际运输事件记录或明确假设的仿真事实 | 不复制粒子群调度器；已有 CP-SAT/MAPF 保持不变；不能把“随机阻塞”编造为已发生的企业事件 | 下一方法迁移候选，缺实际 AGV 障碍标注时不得训练或宣称验证 |
@@ -37,6 +37,15 @@ p_finish_next = 1 - S(active_elapsed + 1) / S(active_elapsed)
 - `experiments/world_model_integration/method_transfer/compare_km_v4.py`：真正由模拟器生成事实事件，按组拟合、按组验证；
 - `experiments/world_model_integration/method_transfer/tests/test_km_reference.py`：验证实际使用上游类、右删失、事实状态完整性；
 - `.github/workflows/rhwm-km-method-transfer-cpu.yml`：0 GPU / 0 新神经训练 CPU 验收。
+
+## 已完成的真实验证（不是计划）
+
+- [GitHub Actions CPU run #43034598148](https://github.com/lieuyimo/wm/actions/runs/43034598148)：**success**。
+- [原始日志/heldout.json/校验和 artifact #13862252791](https://github.com/lieuyimo/wm/actions/runs/43034598148/artifacts/13862252791)：保留 90 天。全套 5 项方法迁移测试 + 9 项 RHWM 合约及历史评测测试 **PASS**。
+- **10 个训练合成场景组，6 个新测试场景组**（4 个常规参数，2 个预先冻结的合成服务参数变化）；0 GPU，0 新神经训练。
+- 四组新种子场景的事件级 Brier（越低越好）：KM 0.18206，冻结 V4 0.18487，差距仅 -0.00281；**不能当作显著优势**。H10 样本状态误差 Rule 0.19514、KM 0.24907、V4 0.18889。
+- 两组服务机制参数变化场景的事件级 Brier：KM 0.28021、V4 0.14819；H10 样本状态误差 Rule 0.19792、KM 0.45833、V4 0.07986。该例明确否定了按站点 KM 在当前环境的跨参数稳健性。
+- **裁决：KM 保留为参考方法基线，不晋升默认预测器。** 只有真实/有依据的条件特征具有信息量时，才迁移上游 pycox Logistic-Hazard，再用另一个事先冻结的分组验证条件时间预测能否改善系统状态误差。
 
 ## 怎样解读结果
 

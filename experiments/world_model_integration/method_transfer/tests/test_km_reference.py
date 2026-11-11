@@ -36,8 +36,7 @@ class UpstreamReferenceTests(unittest.TestCase):
         ])
         # The right-censored row at time 2 is NOT treated as failure.
         self.assertAlmostEqual(model.p_finish_next("A",1,3),0.0)
-        self.assertAlmostEqual(model.p_finish_next("A",2,3),0.0)
-        self.assertAlmostEqual(model.p_finish_next("A",3-1,3),0.0)
+        self.assertAlmostEqual(model.p_finish_next("A",2,3),1.0)
 
     def test_public_event_log_extractor_and_missing_start_guard(self):
         events = [

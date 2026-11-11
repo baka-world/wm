@@ -1,0 +1,60 @@
+{
+  "protocol": "pr18-v4-keyed-service-coupling-diagnostic-v1",
+  "independent": false,
+  "synthetic": true,
+  "scenarios": 24,
+  "original": {
+    "run_id": 42915514192,
+    "artifact_id": 13810225052,
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "v4_query_count": 7808,
+    "shared_multi_candidate_states": 297,
+    "action_changes_vs_rule": 10
+  },
+  "keyed": {
+    "run_id": 42979455192,
+    "artifact_id": 13837360333,
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "v4_query_count": 7321,
+    "shared_multi_candidate_states": 164,
+    "action_changes_vs_rule": 21,
+    "tests_passed": 3,
+    "resource_motion_lifecycle_violations": 0
+  },
+  "validation": {
+    "rule_same_history_groups": 24,
+    "rule_same_events_groups": 24,
+    "rule_same_job_outcomes_groups": 24,
+    "v4_same_history_groups": 4,
+    "v4_stream_vs_keyed_shared_decision_states": 173,
+    "v4_stream_vs_keyed_action_differences": 20
+  },
+  "metrics": {
+    "urgent_on_time_rate": {
+      "rule": 0.5277777777777778,
+      "stream": 0.5277777777777778,
+      "keyed": 0.5277777777777778
+    },
+    "urgent_late_mean_lower_bound": {
+      "rule": 15.86111111111111,
+      "stream": 15.86111111111111,
+      "keyed": 15.875
+    },
+    "urgent_unfinished_rate": {
+      "rule": 0.06944444444444445,
+      "stream": 0.05555555555555555,
+      "keyed": 0.06944444444444445
+    },
+    "routine_restricted_flow_mean": {
+      "rule": 149.09722222222223,
+      "stream": 150.27777777777777,
+      "keyed": 148.90277777777777
+    },
+    "all_restricted_flow_mean": {
+      "rule": 124.16319444444444,
+      "stream": 124.92847222222223,
+      "keyed": 123.96319444444444
+    }
+  },
+  "verdict": "real_model_used_changes_actions_but_no_urgent_on_time_improvement_sampling_sensitive_not_independent"
+}

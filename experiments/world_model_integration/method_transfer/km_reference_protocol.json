@@ -1,0 +1,211 @@
+{
+  "protocol": "RHWM_REFERENCE_KM_TRANSFER_20261111_V1",
+  "purpose": "read published method code and migrate as one independently testable nonparametric service-time baseline",
+  "method": "Kaplan-Meier product-limit survival estimator as implemented in lifelines 0.30.0",
+  "method_original_doi": "10.1080/01621459.1958.10501452",
+  "source_repo": "https://github.com/CamDavidsonPilon/lifelines",
+  "source_license": "MIT",
+  "comparison": [
+    "rule",
+    "frozen_v4",
+    "lifelines_km"
+  ],
+  "frozen_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "group_defining_unit": "one independent synthetic scenario seed",
+  "factual_policy": "nearest_batch on current public observation",
+  "forecast_continuation": "nearest_batch recalculated on each predicted state",
+  "histories": "actual publicly logged service_started and service_finished events only",
+  "km_features": [
+    "station_id",
+    "effective_service_elapsed"
+  ],
+  "event_time": "service_finished.tick - service_started.tick; no outage events allowed in this pilot",
+  "censoring": "unfinished sessions on terminal tick are right-censored; training only",
+  "fixed_anchors": [
+    0,
+    6,
+    15,
+    30,
+    45
+  ],
+  "fixed_horizons": [
+    1,
+    5,
+    10
+  ],
+  "particles": 3,
+  "max_ticks": 250,
+  "train_groups": [
+    {
+      "id": "TR1",
+      "seed": 151000,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR2",
+      "seed": 151173,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR3",
+      "seed": 151346,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR4",
+      "seed": 151519,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR5",
+      "seed": 151692,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR6",
+      "seed": 151865,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR7",
+      "seed": 152038,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR8",
+      "seed": 152211,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR9",
+      "seed": 152384,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR10",
+      "seed": 152557,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    }
+  ],
+  "test_groups": [
+    {
+      "id": "HO1",
+      "seed": 170100,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0,
+      "split": "same_mechanism_new_seed"
+    },
+    {
+      "id": "HO2",
+      "seed": 170291,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0,
+      "split": "same_mechanism_new_seed"
+    },
+    {
+      "id": "HO3",
+      "seed": 170482,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1,
+      "split": "same_mechanism_new_seed"
+    },
+    {
+      "id": "HO4",
+      "seed": 170673,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1,
+      "split": "same_mechanism_new_seed"
+    },
+    {
+      "id": "HO5",
+      "seed": 170864,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 2,
+      "split": "synthetic_parameter_shift"
+    },
+    {
+      "id": "HO6",
+      "seed": 171055,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 3,
+      "service_add": 2,
+      "split": "synthetic_parameter_shift"
+    }
+  ],
+  "model_selection": "no hyperparameter tuning on test; run fit exactly once",
+  "required_reports": [
+    "holdout session event Brier",
+    "holdout H1/H5/H10 complete system-state errors",
+    "per-group stats and sample counts",
+    "service completion survival table and source/license"
+  ],
+  "resource_budget": {
+    "gpu": 0,
+    "new_neural_training": 0,
+    "cpu_process_seconds": 300
+  },
+  "limitations": [
+    "synthetic assumption, no company business log",
+    "KM is per-station not graph-conditioned and not a new architecture",
+    "station services are duration-jitter samples; training/test data group independent only",
+    "not a test of AGV obstruction / future station faults",
+    "cannot claim novel method or real business gains"
+  ]
+}

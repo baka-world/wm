@@ -108,3 +108,26 @@ single fixed implementation, not company-field generalization. P4/P5
 use identical scoring and resources; P0-P3 are additionally run as strong
 end-to-end operational references. A targeted three-scenario rerun
 revisits the previously inspected failures separately.
+
+
+## Strict urgency dominance filter (lossless candidate rollout elimination)
+
+`--evaluation-mode dominance` first computes the number of
+currently waiting urgent samples not assigned by each legal candidate.
+Because this is the **first lexicographic score component**, all
+candidates strictly worse on this component cannot win, regardless of
+their future world prediction. The integration skips their entire H5 +
+budgeted terminal simulation, for **both** Rule and frozen V4.
+
+The original full mode is retained as default and is the exact reference.
+Pruned candidate records have `evaluated=false`, an explicit
+`pruned_reason` and `score=null`; no invented forecast or
+fake business score. Their downstream ranking is deliberately undefined.
+The chosen candidate, full scores of surviving plans, actual future
+simulator trajectory, model weights, legal observation and deterministic
+tie-breaking should be identical, verified by per-case SHA-256 and tests.
+
+Frozen new synthetic scenarios in `pruning_check_protocol.json`
+are a CPU regression/efficiency check, not a new claim that V4 outperforms
+strong baseline policies. The previous 12-scene confirmation archive is
+the pre-optimization truth reference.

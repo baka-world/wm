@@ -20,6 +20,7 @@ from experiments.world_model_integration.urgent_workflow_feasibility.core import
 from .core import run_case
 
 CONFIRMATION_PROTOCOL=Path(__file__).resolve().parent/"budgeted_confirmation_protocol.json"
+PRUNING_PROTOCOL=Path(__file__).resolve().parent/"pruning_check_protocol.json"
 
 EXPECTED_V4_SHA256="60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c"
 
@@ -87,9 +88,10 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--checkpoint",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
-    parser.add_argument("--group",choices=("smoke","development","confirmation"),required=True)
+    parser.add_argument("--group",choices=("smoke","development","confirmation","pruning_check"),required=True)
     parser.add_argument("--random-coupling",choices=("stream","keyed"),default="stream")
     parser.add_argument("--terminal-mode",choices=("optimistic","rule_continuation","budgeted_queue"),default="optimistic")
+    parser.add_argument("--evaluation-mode",choices=("full","dominance"),default="full")
     parser.add_argument("--seed-only",type=int,action="append",default=[])
     parser.add_argument("--cpu-budget-seconds",type=float,default=900.)
     args=parser.parse_args()
@@ -105,12 +107,13 @@ def main():
         raise AssertionError("wrong frozen model version")
     p=json.loads(PROTOCOL.read_text())
     confirm=None
-    if args.group=="confirmation":
+    if args.group in ("confirmation","pruning_check"):
         if args.seed_only:
             raise ValueError("confirmation group requires all frozen seeds without filtering")
         if args.terminal_mode!="budgeted_queue" or args.random_coupling!="keyed":
             raise ValueError("confirmation mode is fixed to keyed plus budgeted_queue")
-        confirm=json.loads(CONFIRMATION_PROTOCOL.read_text())
+        confirm_path=CONFIRMATION_PROTOCOL if args.group=="confirmation" else PRUNING_PROTOCOL
+        confirm=json.loads(confirm_path.read_text())
         seeds=[(int(x["index"]),int(x["seed"])) for x in confirm["cases"]]
     else:
         seeds=(list(enumerate(p["smoke_seeds"])) if args.group=="smoke" else
@@ -126,7 +129,7 @@ def main():
         spec=public_spec(index,seed,p["scenario_max_ticks"])
         pair={}
         for arm in ("P4","P5"):
-            pair[arm]=run_case(spec,p,arm,args.checkpoint if arm=="P5" else None,random_coupling=args.random_coupling,terminal_mode=args.terminal_mode)
+            pair[arm]=run_case(spec,p,arm,args.checkpoint if arm=="P5" else None,random_coupling=args.random_coupling,terminal_mode=args.terminal_mode,evaluation_mode=args.evaluation_mode)
             print("CASE",args.group,index,seed,arm,
                   "urgent_ontime",pair[arm]["metrics"]["urgent"]["on_time_rate"],
                   "urgent_late",pair[arm]["metrics"]["urgent"]["late_mean_lower_bound"],
@@ -164,9 +167,10 @@ def main():
             "checkpoint_sha256":sha(args.checkpoint),
             "random_coupling":args.random_coupling,
             "terminal_mode":args.terminal_mode,
+            "evaluation_mode":args.evaluation_mode,
             "seed_filter":args.seed_only,
             "protocol_sha256":sha(PROTOCOL),
-            "confirmation_protocol_sha256":sha(CONFIRMATION_PROTOCOL) if confirm else None,
+            "confirmation_protocol_sha256":sha(confirm_path) if confirm else None,
             "reference_case_count":len(reference_cases),
             "group":args.group,"scenarios":len(seeds),
             "case_count":len(cases),
@@ -181,6 +185,8 @@ def main():
             "routine_restricted_flow_mean":_mean([x["metrics"]["routine"]["restricted_mean_flow"] for x in rows]),
             "all_restricted_flow_mean":_mean([x["metrics"]["all"]["restricted_mean_flow"] for x in rows]),
             "total_model_query_calls":sum(x["query_calls"] for x in rows),
+            "total_candidates_pruned":sum(x["candidates_pruned"] for x in rows),
+            "total_candidates_evaluated":sum(x["candidates_evaluated"] for x in rows),
             "total_rollout_steps":sum(x["rollout_steps"] for x in rows),
             "total_terminal_continuation_steps":sum(x["terminal_continuation_steps"] for x in rows),
             "total_decisions":sum(x["decision_count"] for x in rows),

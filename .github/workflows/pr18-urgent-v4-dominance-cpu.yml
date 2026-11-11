@@ -1,0 +1,140 @@
+name: PR18 frozen V4 exact dominance pruning CPU regression
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-urgent-v4-dominance-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  exact-pruning:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only requirements
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print('CPU_ONLY', torch.__version__)
+          PY
+      - name: Restore exact frozen V4 model and original pre-optimization evidence
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/v4" "$RUNNER_TEMP/reference" "$RUNNER_TEMP/results"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/v4/model.zip"
+          unzip -p "$RUNNER_TEMP/v4/model.zip" v4-data.pt > "$RUNNER_TEMP/v4/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/v4/v4-data.pt" | sha256sum -c
+          echo "V4_CHECKPOINT=$RUNNER_TEMP/v4/v4-data.pt" >> "$GITHUB_ENV"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13840027102/zip" \
+            -o "$RUNNER_TEMP/reference/original.zip"
+          echo "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233  $RUNNER_TEMP/reference/original.zip" | sha256sum -c
+          unzip -q "$RUNNER_TEMP/reference/original.zip" -d "$RUNNER_TEMP/reference"
+          test -s "$RUNNER_TEMP/reference/confirmation/cases.json.gz"
+      - name: Run actual model, legal simulator, and exact invariance unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/urgent_world_model_integration
+          timeout 200s python -m unittest discover \
+            -s experiments/world_model_integration/urgent_world_model_integration/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/results/tests.log"
+      - name: Original twelve frozen cases under exact dominance pruning
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 380s python -m experiments.world_model_integration.urgent_world_model_integration.run \
+            --checkpoint "$V4_CHECKPOINT" --group confirmation \
+            --evaluation-mode dominance --terminal-mode budgeted_queue --random-coupling keyed \
+            --cpu-budget-seconds 340 --out "$RUNNER_TEMP/results/historical-pruned" \
+            2>&1 | tee "$RUNNER_TEMP/results/historical-pruned.log"
+      - name: Eight frozen new synthetic cases without pruning
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 340s python -m experiments.world_model_integration.urgent_world_model_integration.run \
+            --checkpoint "$V4_CHECKPOINT" --group pruning_check \
+            --evaluation-mode full --terminal-mode budgeted_queue --random-coupling keyed \
+            --cpu-budget-seconds 300 --out "$RUNNER_TEMP/results/new-full" \
+            2>&1 | tee "$RUNNER_TEMP/results/new-full.log"
+      - name: Same eight new synthetic cases with exact pruning
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 340s python -m experiments.world_model_integration.urgent_world_model_integration.run \
+            --checkpoint "$V4_CHECKPOINT" --group pruning_check \
+            --evaluation-mode dominance --terminal-mode budgeted_queue --random-coupling keyed \
+            --cpu-budget-seconds 300 --out "$RUNNER_TEMP/results/new-pruned" \
+            2>&1 | tee "$RUNNER_TEMP/results/new-pruned.log"
+      - name: Compare every legal action, score, real history and CPU cost
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.urgent_world_model_integration.verify_pruning \
+            --original "$RUNNER_TEMP/reference/confirmation/cases.json.gz" \
+            --optimized "$RUNNER_TEMP/results/historical-pruned/cases.json.gz" \
+            --new-full "$RUNNER_TEMP/results/new-full/cases.json.gz" \
+            --new-optimized "$RUNNER_TEMP/results/new-pruned/cases.json.gz" \
+            --output "$RUNNER_TEMP/results/exact_pruning_regression.json" \
+            2>&1 | tee "$RUNNER_TEMP/results/regression.log"
+          python -m experiments.world_model_integration.urgent_world_model_integration.explain_frozen_flips \
+            --summary "$RUNNER_TEMP/reference/confirmation/summary.json" \
+            --out "$RUNNER_TEMP/results/six_frozen_action_flips.json" \
+            2>&1 | tee "$RUNNER_TEMP/results/flips.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'results'
+          for name,expected in [('historical-pruned',12),('new-full',8),('new-pruned',8)]:
+              item=json.loads((root/name/'summary.json').read_text())
+              assert item['scenarios']==expected
+              assert item['reference_case_count']==expected*4
+              for m in list(item['metrics'].values())+list(item['reference_metrics'].values()):
+                  assert not (m['resource_violations'] or m['motion_violations'] or m['lifecycle_violations'])
+          comparison=json.loads((root/'exact_pruning_regression.json').read_text())
+          for d in comparison.values():
+              if isinstance(d,dict) and 'lossless' in d:
+                  assert d['lossless']
+          print('ALL_HISTORIES_AND_BUSINESS_METRICS_UNCHANGED')
+          PY
+          (cd "$RUNNER_TEMP/results" && find . -type f -print0 | sort -z | xargs -0 sha256sum > sha256.txt)
+      - name: Upload original logs and new result artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-v4-exact-pruning-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/results/**/*
+          if-no-files-found: warn
+          retention-days: 90

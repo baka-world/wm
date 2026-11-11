@@ -47,6 +47,26 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(case["motion_violations"],0)
         self.assertEqual(case["lifecycle_violations"],0)
 
+    def test_dominance_exact_same_action_and_history(self):
+        baseline=run_case(self.spec,self.protocol,"P4",None,
+                          terminal_mode="budgeted_queue",evaluation_mode="full")
+        pruned=run_case(self.spec,self.protocol,"P4",None,
+                        terminal_mode="budgeted_queue",evaluation_mode="dominance")
+        self.assertEqual(baseline["history_sha256"],pruned["history_sha256"])
+        self.assertEqual(baseline["events_sha256"],pruned["events_sha256"])
+        self.assertEqual(baseline["metrics"],pruned["metrics"])
+        self.assertLess(pruned["candidates_evaluated"],baseline["candidates_evaluated"])
+        self.assertGreater(pruned["candidates_pruned"],0)
+        for full,fast in zip(baseline["decisions"],pruned["decisions"]):
+            self.assertEqual(full["selected"],fast["selected"])
+            for original,projected in zip(full["plans"],fast["plans"]):
+                if projected["evaluated"]:
+                    self.assertEqual(original["score"],projected["score"])
+                    self.assertEqual(original["particle_costs"],projected["particle_costs"])
+                else:
+                    self.assertIsNone(projected["score"])
+                    self.assertEqual(projected["particle_costs"],[])
+
     def test_rule_episode(self):
         case=run_case(self.spec,self.protocol,"P4",None)
         self.assertGreater(case["decision_count"],0)

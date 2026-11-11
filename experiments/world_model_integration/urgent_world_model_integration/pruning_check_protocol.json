@@ -1,0 +1,76 @@
+{
+  "protocol": "pr18-strict-urgent-lexicographic-dominance-pruning-v1",
+  "source_commit": "09014f136ff5854aeb1147a957b0d0c31c30d348",
+  "algorithm": "candidate first-component dominance skip without changing selected eligible assignment",
+  "source_archived_run_id": 42986822400,
+  "source_archived_artifact_id": 13840027102,
+  "source_archived_artifact_sha256": "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233",
+  "frozen_V4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "historical_regression": "all 12 confirmed synthetic cases replayed under dominance and exact SHA+action+survivor-score compared to archived full",
+  "frozen_new_synthetic_cases": [
+    {
+      "index": 36,
+      "seed": 906001
+    },
+    {
+      "index": 37,
+      "seed": 906098
+    },
+    {
+      "index": 38,
+      "seed": 906195
+    },
+    {
+      "index": 39,
+      "seed": 906292
+    },
+    {
+      "index": 40,
+      "seed": 906389
+    },
+    {
+      "index": 41,
+      "seed": 906486
+    },
+    {
+      "index": 42,
+      "seed": 906583
+    },
+    {
+      "index": 43,
+      "seed": 906680
+    }
+  ],
+  "fresh_regression": "run the new 8 cases in full and dominance; compare exact history, decisions, scores on eligible candidates and real business metrics",
+  "both_arms": [
+    "P4_ProgressAwareRule",
+    "P5_frozen_V4"
+  ],
+  "strong_baselines": [
+    "P0_original_CP_SAT",
+    "P1_urgent_first",
+    "P2_ETA",
+    "P3_analytic_risk"
+  ],
+  "horizon": 5,
+  "post_horizon_public_rule_ticks": 20,
+  "particles": 3,
+  "candidates_limit": 4,
+  "evaluation_mode": [
+    "full",
+    "dominance"
+  ],
+  "random_coupling": "keyed",
+  "safety": "true simulator is unchanged, no private retest, no future outages, no leaked event keys",
+  "no_new_training": true,
+  "gpu": 0,
+  "not_company_field_generalization": true,
+  "primary_claim": "prove mathematical lossless elimination and assess actual CPU/query savings; do not claim neural improved from pruning",
+  "abort_conditions": [
+    "action or episode hash mismatch",
+    "surviving forecast mismatch",
+    "unexpected checkpoint SHA",
+    "safety invariant failure",
+    "CPU timeout"
+  ]
+}

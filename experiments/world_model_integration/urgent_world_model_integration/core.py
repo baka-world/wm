@@ -169,7 +169,7 @@ class _OneStepUniforms:
 
 
 class UrgentWorldPolicy:
-    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3,random_coupling="stream",terminal_mode="optimistic"):
+    def __init__(self,arm,geometry,rules,config,checkpoint,*,seed,steps=5,particles=3,random_coupling="stream",terminal_mode="optimistic",evaluation_mode="full"):
         if arm not in ("P4","P5"):
             raise ValueError("expected P4 Rule or P5 frozen V4")
         if steps!=5 or particles!=3:
@@ -180,6 +180,11 @@ class UrgentWorldPolicy:
         if terminal_mode not in ("optimistic","rule_continuation","budgeted_queue"):
             raise ValueError("unknown terminal value estimator")
         self.terminal_mode=terminal_mode
+        if evaluation_mode not in ("full","dominance"):
+            raise ValueError("unknown candidate evaluation mode")
+        self.evaluation_mode=evaluation_mode
+        self.candidates_pruned=0
+        self.candidates_evaluated=0
         self.arm,self.geometry,self.config=arm,geometry,config
         self.seed,self.steps,self.particles=seed,steps,particles
         self.observer=PriorityObserver()
@@ -315,12 +320,39 @@ class UrgentWorldPolicy:
         plans=unique_plans(self.solver.proposals(obs,candidates),candidates)
         if not plans:
             return ()
+        # Exact lexicographic dominance: the first score component is
+        # uncovered currently-waiting urgent assignments. No downstream
+        # predicted loss can overturn a strictly worse first component.
+        # Compute this from the current lawful observation, before any
+        # stochastic rollouts, without changing the legal candidate set.
+        waiting_urgent={s.id for s in obs.samples if s.status=="waiting" and s.priority==2}
+        uncovered=[
+            len(waiting_urgent-{a.sample_id for a in plan})
+            for plan in plans
+        ]
+        minimum_uncovered=min(uncovered)
         scores=[]
+        evaluated=[]
+        pruned=[]
         for index,plan in enumerate(plans):
+            matching=[asdict(a) for a in plan]
+            if self.evaluation_mode=="dominance" and uncovered[index]>minimum_uncovered:
+                scores.append({"matching":matching,"score":None,"particle_costs":[],
+                               "evaluated":False,"uncovered_urgent":uncovered[index],
+                               "pruned_reason":"strictly_worse_first_lexicographic_component"})
+                pruned.append(index)
+                self.candidates_pruned+=1
+                continue
             score,particles=self._score(obs,plan,rules,index)
-            scores.append({"matching":[asdict(a) for a in plan],
-                           "score":score,"particle_costs":particles})
-        choice=min(range(len(plans)),key=lambda i:scores[i]["score"])
+            if score[0]!=uncovered[index]:
+                raise AssertionError("coverage score inconsistency")
+            scores.append({"matching":matching,"score":score,"particle_costs":particles,
+                           "evaluated":True,"uncovered_urgent":uncovered[index]})
+            evaluated.append(index)
+            self.candidates_evaluated+=1
+        if not evaluated:
+            raise AssertionError("no non-dominated candidate")
+        choice=min(evaluated,key=lambda i:scores[i]["score"])
         selected=plans[choice]
         if any(a not in candidates for a in selected):
             raise AssertionError("world policy chose an illegal assignment")
@@ -335,7 +367,14 @@ class UrgentWorldPolicy:
             "plans":scores,
             "selected_candidate_index":choice,
             "selected":[asdict(a) for a in selected],
-            "rank":sorted(range(len(plans)),key=lambda i:scores[i]["score"]),
+            # Non-dominated candidates have their exact full-score ranking.
+            # Dominated candidates are placed last in first-component order
+            # but their downstream scores are intentionally NOT computed.
+            "rank":sorted(evaluated,key=lambda i:scores[i]["score"])+
+                   sorted(pruned,key=lambda i:(uncovered[i],i)),
+            "partial_rank":bool(pruned),
+            "candidates_pruned":len(pruned),
+            "candidate_evaluation_mode":self.evaluation_mode,
             "predicted_retest_event":"not_modelled_until_disclosed",
             "random_coupling":self.random_coupling,
             "terminal_mode":self.terminal_mode,
@@ -344,11 +383,11 @@ class UrgentWorldPolicy:
         return selected
 
 
-def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream",terminal_mode="optimistic"):
+def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream",terminal_mode="optimistic",evaluation_mode="full"):
     business,geo=scene_for(spec)
     sim=ConditionalRetestSimulator(
         business,spec["seed"],spec["retest_rate_percent"],collect_metrics=True)
-    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"],random_coupling=random_coupling,terminal_mode=terminal_mode)
+    policy=UrgentWorldPolicy(arm,geo,business.rules,protocol,checkpoint,seed=spec["seed"],random_coupling=random_coupling,terminal_mode=terminal_mode,evaluation_mode=evaluation_mode)
     started=time.process_time()
     result=sim.run(dispatch_policy=lambda o,c:policy(o,c,sim),
                    on_observation=policy.observer.observe)
@@ -372,6 +411,9 @@ def run_case(spec,protocol,arm,checkpoint,*,random_coupling="stream",terminal_mo
         "seed":spec["seed"],"index":spec["index"],"arm":arm,"spec":spec,
         "random_coupling":random_coupling,
         "terminal_mode":terminal_mode,
+        "evaluation_mode":evaluation_mode,
+        "candidates_pruned":policy.candidates_pruned,
+        "candidates_evaluated":policy.candidates_evaluated,
         "terminal_continuation_steps":policy.terminal_steps,
         "metrics":metrics,"decision_count":len(policy.records),
         "decisions":policy.records,"query_calls":policy.query_calls,

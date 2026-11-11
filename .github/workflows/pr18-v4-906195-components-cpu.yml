@@ -1,0 +1,90 @@
+name: PR18 V4 fixed-state 906195 component isolation CPU
+
+on:
+  push:
+    branches: [feature/world-model-decision-integration-20261110]
+    paths:
+      - '.github/workflows/pr18-v4-906195-components-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: pr18-906195-components-cpu
+  cancel-in-progress: false
+
+jobs:
+  isolate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies and refuse CUDA
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print('CPU_ONLY',torch.__version__)
+          PY
+      - name: Restore hashed frozen V4 model and later archive
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-906195"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json"             "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip"             -o "$RUNNER_TEMP/pr18-906195/v4-archive.zip"
+          unzip -p "$RUNNER_TEMP/pr18-906195/v4-archive.zip" v4-data.pt > "$RUNNER_TEMP/pr18-906195/v4-data.pt"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json"             "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13842933799/zip"             -o "$RUNNER_TEMP/pr18-906195/new-full.zip"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-906195/v4-data.pt" | sha256sum -c
+          echo "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5  $RUNNER_TEMP/pr18-906195/new-full.zip" | sha256sum -c
+      - name: Compile and run existing frozen integration regression tests
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/urgent_world_model_integration
+          python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/tests -v             2>&1 | tee "$RUNNER_TEMP/pr18-906195/tests.log"
+          python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/fixed_state_tests -v             2>&1 | tee "$RUNNER_TEMP/pr18-906195/fixed_tests.log"
+      - name: Isolate frozen H5 prefix and terminal proxy rankings on CPU
+        run: |
+          set -euo pipefail
+          timeout 380s python -m experiments.world_model_integration.urgent_world_model_integration.probe_906195_components             --archive-new-full "$RUNNER_TEMP/pr18-906195/new-full.zip"             --checkpoint "$RUNNER_TEMP/pr18-906195/v4-data.pt"             --cpu-budget 300             --output "$RUNNER_TEMP/pr18-906195/906195-components.json"             2>&1 | tee "$RUNNER_TEMP/pr18-906195/probe.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'pr18-906195'
+          data=json.loads((root/'906195-components.json').read_text())
+          assert data['gpu']==0 and data['training']==0
+          assert data['target']['tick']==138 and data['target']['seed']==906195
+          assert len(data['seeds'])==8 and len(data['scores'])==48
+          assert data['summary']['budgeted_queue']['P5']['choice_counts']=={'0':8,'1':0}
+          print('FROZEN_COMPONENTS_CHECKED')
+          PY
+          (cd "$RUNNER_TEMP/pr18-906195" &&
+            sha256sum 906195-components.json tests.log fixed_tests.log probe.log > sha256.txt)
+      - name: Preserve result and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-906195-components-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-906195/906195-components.json
+            ${{ runner.temp }}/pr18-906195/tests.log
+            ${{ runner.temp }}/pr18-906195/fixed_tests.log
+            ${{ runner.temp }}/pr18-906195/probe.log
+            ${{ runner.temp }}/pr18-906195/sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

@@ -1,0 +1,20 @@
+{
+  "protocol": "pr18-urgent-frozen-v4-real-integration-v1",
+  "source_head": "50e0741fee60006263414450fe255c994e1df069",
+  "scope": "previously_seen_synthetic_smoke_and_development_only",
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "checkpoint_source_artifact_id": 13765135588,
+  "arms": ["P4", "P5"],
+  "horizon_steps": 5,
+  "particles": 3,
+  "max_legal_candidates": 4,
+  "model_seed_base": 1810,
+  "urgent_objective": ["uncovered_current_urgent", "predicted_urgent_lateness", "predicted_urgent_work", "predicted_routine_lateness", "predicted_routine_work", "candidate_index"],
+  "unknown_retest_branch": "current public default route until actual result disclosed; no private retest prediction",
+  "no_training": true,
+  "no_gpu": true,
+  "not_independent_test": true,
+  "smoke_groups": 4,
+  "development_groups": 20,
+  "per_phase_cpu_budget_seconds": 900
+}

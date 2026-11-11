@@ -1,0 +1,656 @@
+{
+  "P1": [
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902001
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.0,
+      "delta_urgent_late_lower_bound": -27.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902074
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.33333333333333,
+      "delta_urgent_late_lower_bound": -14.999999999999998,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902147
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902220
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.666666666666657,
+      "delta_urgent_late_lower_bound": -34.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903001
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.0,
+      "delta_urgent_late_lower_bound": -16.66666666666667,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903074
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903147
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903220
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.0,
+      "delta_urgent_late_lower_bound": -28.000000000000004,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903293
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903366
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903439
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 13.666666666666657,
+      "delta_urgent_late_lower_bound": -13.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903512
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903585
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 14.333333333333343,
+      "delta_urgent_late_lower_bound": -23.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903658
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 15.0,
+      "delta_urgent_late_lower_bound": -16.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903731
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903804
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 16.333333333333343,
+      "delta_urgent_late_lower_bound": -32.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903877
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 11.666666666666657,
+      "delta_urgent_late_lower_bound": -15.666666666666671,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903950
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904023
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904096
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.33333333333333,
+      "delta_urgent_late_lower_bound": -28.666666666666668,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904169
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904242
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904315
+    },
+    {
+      "arm": "P1",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.3333333333333286,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904388
+    }
+  ],
+  "P2": [
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902001
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.0,
+      "delta_urgent_late_lower_bound": -27.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902074
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.66666666666667,
+      "delta_urgent_late_lower_bound": -14.999999999999998,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902147
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902220
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.666666666666657,
+      "delta_urgent_late_lower_bound": -34.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903001
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.0,
+      "delta_urgent_late_lower_bound": -16.66666666666667,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903074
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903147
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.3333333333333428,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903220
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.0,
+      "delta_urgent_late_lower_bound": -28.000000000000004,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903293
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -1.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903366
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903439
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 13.666666666666657,
+      "delta_urgent_late_lower_bound": -13.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903512
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903585
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 14.333333333333343,
+      "delta_urgent_late_lower_bound": -23.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903658
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 15.0,
+      "delta_urgent_late_lower_bound": -16.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903731
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903804
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 16.333333333333343,
+      "delta_urgent_late_lower_bound": -32.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903877
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 11.666666666666657,
+      "delta_urgent_late_lower_bound": -15.666666666666671,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903950
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904023
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.6666666666666572,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904096
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.33333333333333,
+      "delta_urgent_late_lower_bound": -28.666666666666668,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904169
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.3333333333333144,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904242
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904315
+    },
+    {
+      "arm": "P2",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.3333333333333286,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904388
+    }
+  ],
+  "P3": [
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902001
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.0,
+      "delta_urgent_late_lower_bound": -27.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902074
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.66666666666667,
+      "delta_urgent_late_lower_bound": -14.999999999999998,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902147
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 902220
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 18.666666666666657,
+      "delta_urgent_late_lower_bound": -34.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903001
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 17.0,
+      "delta_urgent_late_lower_bound": -16.66666666666667,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903074
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903147
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.3333333333333428,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903220
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.0,
+      "delta_urgent_late_lower_bound": -28.000000000000004,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903293
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -1.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903366
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903439
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 13.666666666666657,
+      "delta_urgent_late_lower_bound": -13.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903512
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903585
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 14.333333333333343,
+      "delta_urgent_late_lower_bound": -23.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903658
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 15.0,
+      "delta_urgent_late_lower_bound": -16.666666666666664,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903731
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903804
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 16.333333333333343,
+      "delta_urgent_late_lower_bound": -32.5,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903877
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 11.666666666666657,
+      "delta_urgent_late_lower_bound": -15.666666666666671,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 903950
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904023
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.6666666666666572,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904096
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 30.33333333333333,
+      "delta_urgent_late_lower_bound": -28.666666666666668,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904169
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": -0.3333333333333144,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904242
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.0,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904315
+    },
+    {
+      "arm": "P3",
+      "baseline": "P0",
+      "delta_routine_restricted_flow": 0.0,
+      "delta_urgent_late_lower_bound": 0.3333333333333286,
+      "delta_urgent_on_time": 0.0,
+      "same_exogenous_retest_for_shared_completed_detection": true,
+      "seed": 904388
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "protocol": "pr18-v4-frozen-synthetic-mechanism-20261110",
+  "status": "one-frozen-training-and-one-locked-in-range-OOD-test-complete",
+  "pr": 18,
+  "draft": true,
+  "merged": false,
+  "pr19_untouched": true,
+  "gpu": 0,
+  "source_head": "d457514d4b441d2d0e4fdc6ec8198e652021966e",
+  "config_sha256": "a311d2015991f15956a2ef0cc5fa1ba5e9f0db1625d7a311a3bb6b2a4a82c5e8",
+  "training": {
+    "run": 42815634215,
+    "artifact_id": 13765135588,
+    "source_sha256": "7dd3973f1b598471af241de5938396b056b0ea164f06c21ea4c622d249f76987",
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "model_version": "business-sets-session-v4-data",
+    "input_schema": "business-service-query-input-v3",
+    "online_verified": false,
+    "train_groups": 32,
+    "validation_groups": 8,
+    "train_records": 2784,
+    "train_positives": 560,
+    "validation_records": 639,
+    "validation_positives": 127,
+    "actual_gradient_updates": 2262,
+    "best_gradient_update": 1392,
+    "best_epoch": 16,
+    "epochs_executed": 26,
+    "cpu_seconds": 4.391819578000003,
+    "train_nominal_prior_counts_positive": {
+      "3": [
+        236,
+        94
+      ],
+      "4": [
+        333,
+        96
+      ],
+      "5": [
+        371,
+        84
+      ],
+      "6": [
+        506,
+        94
+      ],
+      "7": [
+        629,
+        98
+      ],
+      "8": [
+        709,
+        94
+      ]
+    },
+    "actual_pause_train": 141,
+    "recoveries_train": 21,
+    "capacity_blocked_station_ticks_train": 341,
+    "validation_brier": {
+      "B0": 0.15925302552975917,
+      "B1": 0.12108516349353758,
+      "B2": 0.07274585332706729,
+      "Rule": 0.07981220657276995,
+      "V3C": 0.16947603487592366,
+      "V4": 0.07013876186303786
+    }
+  },
+  "independent": {
+    "run": 42816481249,
+    "artifact_id": 13765795897,
+    "no_retraining": true,
+    "in_range": {
+      "groups": 8,
+      "nominal_ticks": "3..8",
+      "eligible_events": 703,
+      "completions": 140,
+      "actual_pause": 35,
+      "resumes": 5,
+      "blocked": 88,
+      "brier": {
+        "B0": 0.15949119217471538,
+        "B1": 0.1249092527003091,
+        "B2": 0.06369384098757373,
+        "Rule": 0.06970128022759602,
+        "V3C": 0.1528256754989313,
+        "V4": 0.0648171835931961
+      },
+      "logloss_v4": 0.2187424007124715,
+      "ece_v4": 0.0238,
+      "precision_v4": 0.8624,
+      "recall_v4": 0.6714,
+      "groups_v4_beats_B0": 8,
+      "groups_v4_beats_Rule": 5,
+      "groups_v4_beats_B2": 3
+    },
+    "nominal_ood": {
+      "groups": 8,
+      "nominal_ticks": "9..10",
+      "eligible_events": 1254,
+      "completions": 140,
+      "actual_pause": 29,
+      "resumes": 5,
+      "blocked": 138,
+      "brier": {
+        "B0": 0.10719008724203113,
+        "B1": 0.14633852341819362,
+        "B2": 0.09629225600677087,
+        "Rule": 0.04704944178628389,
+        "V3C": 0.2871566073855535,
+        "V4": 0.04334623924877822
+      },
+      "logloss_v4": 0.1426226772810087,
+      "ece_v4": 0.0262,
+      "precision_v4": 0.9032,
+      "recall_v4": 0.6,
+      "groups_v4_beats_B0": 8,
+      "groups_v4_beats_Rule": 5,
+      "groups_v4_beats_B2": 8
+    }
+  },
+  "limited_dispatch": {
+    "tested_case_seeds": [
+      43011,
+      43015,
+      43019
+    ],
+    "complete_jobs_all_arms": 10,
+    "arms": [
+      "Rule",
+      "V3-C",
+      "V4"
+    ],
+    "same_business_flow": true,
+    "restricted_mean_flow_per_case": [
+      77.5,
+      45.75,
+      51
+    ],
+    "fixed_states": 3,
+    "rank_changed_vs_Rule": 0,
+    "action_changed_vs_Rule": 0,
+    "score_changed_same_action": 0,
+    "capacity_motion_lifecycle_violations": 0,
+    "model_fallbacks": 0,
+    "predicted_system_steps_per_case": [
+      135,
+      210,
+      210
+    ],
+    "mean_decision_ms_per_case": {
+      "Rule": [
+        20.9066,
+        26.1486,
+        33.4941
+      ],
+      "V3C": [
+        27.6208,
+        42.8305,
+        46.8007
+      ],
+      "V4": [
+        27.2392,
+        43.051,
+        47.0052
+      ]
+    }
+  },
+  "conclusions": {
+    "coverage_fixed": true,
+    "V4_better_than_frozen_V3C": true,
+    "V4_better_than_B0_in_range": true,
+    "V4_better_than_Rule_aggregate_in_range": true,
+    "V4_better_than_B2_in_range": false,
+    "V4_learned_duration_conditionals": true,
+    "dispatch_value_observed": false,
+    "need_more_training_now": false
+  },
+  "caveats": [
+    "Only synthetic simulator facts",
+    "Events within same full trajectory are correlated; 8 new independent groups per split",
+    "Nominal prior 9-10 OOD but adaptive observed expected-duration neural input can overlap training feature range",
+    "Current observable adaptive expected duration may differ from configured nominal public service prior; separate coverage fields",
+    "Model query forward counts distinct from policy model rollout steps; only rollout steps recorded in this dispatch artifact",
+    "CI artifacts expire after 90 days. Binary checkpoint and full data have NOT been permanently archived in repository/releases.",
+    "No test refitting, no repeated freeze condition, no retuning on independent groups"
+  ],
+  "artifact_links": {
+    "training": "https://github.com/lieuyimo/wm/actions/runs/42815634215",
+    "confirmation": "https://github.com/lieuyimo/wm/actions/runs/42816481249"
+  }
+}

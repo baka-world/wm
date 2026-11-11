@@ -1,0 +1,147 @@
+name: PR18 long-term value learnability CPU (tick0, one-shot)
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-value-learnability-cpu.yml'
+      - 'experiments/world_model_integration/value_learnability/run.py'
+      - 'experiments/world_model_integration/value_learnability/protocol.json'
+      - 'experiments/world_model_integration/value_learnability/tests/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: pr18-value-learnability-one-shot
+  cancel-in-progress: false
+
+jobs:
+  cpu-long-value:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: CPU-only pinned environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import numpy, torch
+          assert torch.version.cuda is None, 'GPU training/inference forbidden'
+          torch.set_num_threads(1)
+          print('cpu-only', numpy.__version__, torch.__version__)
+          PY
+      - name: Recover EXACT frozen V4 checkpoint (no training)
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-value"
+          curl -fSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+            'https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip' \
+            -o "$RUNNER_TEMP/pr18-value/v4-archive.zip"
+          unzip -p "$RUNNER_TEMP/pr18-value/v4-archive.zip" v4-data.pt > "$RUNNER_TEMP/pr18-value/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-value/v4-data.pt" | sha256sum -c
+      - name: Freeze contract and run pure CPU unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/world_model_integration/value_learnability/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/pr18-value/tests.log"
+          sha256sum experiments/world_model_integration/value_learnability/protocol.json \
+            | tee "$RUNNER_TEMP/pr18-value/protocol-sha.txt"
+      - name: Simulator and V4 interface preflight (Train and Validation only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 300s python -m experiments.world_model_integration.value_learnability.run \
+            --phase preflight --v4 "$RUNNER_TEMP/pr18-value/v4-data.pt" \
+            --out "$RUNNER_TEMP/pr18-value/preflight" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-value/preflight.log"
+      - name: One frozen Train-Validation-Test CPU experiment
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -e experiments/world_model_integration/value_learnability/evidence/test_metrics.json ]; then
+            echo 'Independent test already exists. Refuse to rerun or overwrite.' >&2
+            exit 1
+          fi
+          timeout 1800s python -m experiments.world_model_integration.value_learnability.run \
+            --phase full --v4 "$RUNNER_TEMP/pr18-value/v4-data.pt" \
+            --out "$RUNNER_TEMP/pr18-value/full" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-value/full.log"
+      - name: Preserve code, original metrics, hashes, and disposition in PR18
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, shutil
+          src=Path(os.environ['RUNNER_TEMP'])/'pr18-value/full'
+          dst=Path('experiments/world_model_integration/value_learnability/evidence')
+          if dst.exists():raise FileExistsError('immutable evidence destination exists')
+          shutil.copytree(src,dst)
+          log=Path(os.environ['RUNNER_TEMP'])/'pr18-value'
+          for name in ('tests.log','preflight.log','full.log','protocol-sha.txt'):
+              shutil.copyfile(log/name,dst/name)
+          manifests={str(p.relative_to(dst)):hashlib.sha256(p.read_bytes()).hexdigest()
+                     for p in sorted(dst.rglob('*')) if p.is_file()}
+          (dst/'files-sha256.json').write_text(json.dumps(manifests,indent=2,ensure_ascii=False)+'\n')
+          verdict=json.loads((dst/'verdict.json').read_text())
+          if (dst/'test_metrics.json').exists():
+              r=json.loads((dst/'test_metrics.json').read_text())
+              scores=r['summary'];paired=r['paired_ci_regret_improvement']
+          else:scores={};paired={}
+          doc=Path('docs/world-model-decision-integration.md')
+          title='## 长期调度价值可学习性与 ADP 方法选型'
+          if title in doc.read_text():raise FileExistsError('report section already exists')
+          pre='\n\n'+title+'\n\n'
+          pre+='**执行范围**：PR18 独立 CPU tick0 价值可学习性实验；不修改正式调度器，不部署 ADP。此前 43011/43015/43019 不参与本独立测试。\n\n'
+          pre+=f"**协议 SHA256** `{hashlib.sha256(Path('experiments/world_model_integration/value_learnability/protocol.json').read_bytes()).hexdigest()}`。"
+          pre+='16 组 Test 仅在 Train/Validation 超参数选择、模型文件 SHA 和 test_lock.json 形成后执行。B6 缺乏公平转移模型接口不纳入。\n\n'
+          pre+='| 方法 | Test 场景组 | 平均决策后悔值（tick/任务） | Top1 | 每状态 CPU 预测+评分(s) |\n|---|---:|---:|---:|---:|\n'
+          for name,metric in scores.items():
+              pre+=f"| {name} | {metric['groups']} | {metric['mean_regret']:.5f} | {metric['top1_all']:.3f} | {metric['mean_scoring_cpu_seconds_per_state']:.5f} |\n"
+          pre+='\n**场景级配对自助法区间**：`'+json.dumps(paired,ensure_ascii=False)+'`。\n\n'
+          pre+='**裁决**：`'+json.dumps(verdict,ensure_ascii=False)+'`。只报告可识别的离线策略评价，未证明在线策略改进或真实业务有效性。\n\n'
+          pre+='**重要局限**：tick0 无活动服务会话；预测查询覆盖与动态服务条件外推不能由本试验保证。'
+          pre+='模型仅在有限观测和该离线条件目标下评估，不把 V4 预测存在误写为 V4 的调度增益。\n\n'
+          pre+='[原始分场景结果与模型归档](../experiments/world_model_integration/value_learnability/evidence/)\n'
+          doc.write_text(doc.read_text()+pre)
+          print('verdict',verdict)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/world-model-decision-integration.md experiments/world_model_integration/value_learnability/evidence/
+          git diff --cached --check
+          git commit -m 'evidence(pr18): freeze CPU long-value independent selection and results [skip ci]'
+          git push origin HEAD:refs/heads/feature/world-model-decision-integration-20261110
+      - name: Archive CPU-only evidence on any failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-value-learnability-cpu-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-value/**/*.json
+            ${{ runner.temp }}/pr18-value/*.log
+            ${{ runner.temp }}/pr18-value/*.txt
+          if-no-files-found: warn
+          retention-days: 90

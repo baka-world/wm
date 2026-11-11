@@ -1,0 +1,29 @@
+{
+  "protocol": "pr18-dynamic-nonzero-mechanism-audit-v1-20261111",
+  "source_head": "08fba80bf73f6c07097d04bb40218efe7bb20366",
+  "source_groups": "existing value_learnability frozen Train+Validation only",
+  "allowed_splits": [
+    "train",
+    "validation"
+  ],
+  "forbidden_independent_test": true,
+  "tick_min": 1,
+  "max_selected_states": 12,
+  "max_states_per_scenario": 2,
+  "max_candidates": 4,
+  "prediction_horizon": 5,
+  "prediction_particles": 3,
+  "continuation": "P1_nearest",
+  "paired_futures": "single_original_seed_only",
+  "probe_offset": 101,
+  "ranking_tiebreak": "candidate_index_ascending",
+  "selection_priority": [
+    "S4",
+    "S3",
+    "S2"
+  ],
+  "selection_tiebreak": "scenario_seed_ascending_then_tick_ascending",
+  "candidate_source": "frozen BusinessCPSAT proposals (normalized matching dedup)",
+  "resources": "CPU only, no training, max 1800 total seconds",
+  "v4_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c"
+}

@@ -1,0 +1,3469 @@
+[
+  {
+    "split": "validation",
+    "seed": 661000,
+    "layout": 5,
+    "spec": {
+      "seed": 661000,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 1,
+      "workflow_variant": "three",
+      "workflow_depth": "single",
+      "station_service_ticks": {
+        "A0": 7,
+        "A1": 6,
+        "B0": 5,
+        "B1": 2,
+        "C": 2
+      },
+      "jitter_ticks": 0,
+      "outage": true,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        0
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 2,
+    "available_batches_including_wait": 3,
+    "distinct_action_count": 2,
+    "oracle_cost_spread": 1.0,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 18,
+    "model_cpu_seconds": {
+      "Rule": 0.010445060000000339,
+      "V4": 0.016022288000000273
+    },
+    "base_feature_cpu_seconds": 0.00018302299999994887,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 1,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661000-0::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.4,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          12.0,
+          0.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          12.0,
+          15.0,
+          1.0,
+          27.0
+        ],
+        "v4_rollout": [
+          10.0,
+          12.0,
+          15.0,
+          1.0,
+          27.0
+        ],
+        "rule_score": [
+          37.0,
+          1.0,
+          12.0
+        ],
+        "v4_score": [
+          37.0,
+          1.0,
+          12.0
+        ],
+        "heuristic_score": -91.0,
+        "full_future": {
+          "values": [
+            27.0
+          ],
+          "mean": 27.0,
+          "visible_job_values": [
+            27.0
+          ],
+          "visible_job_mean": 27.0,
+          "branch_wall_seconds": [
+            0.005862194000002319
+          ]
+        },
+        "label_centered": 0.5
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661000-1::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.4,
+          0.0,
+          1.0,
+          2.0,
+          4.0,
+          2.0,
+          8.0,
+          0.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          12.0,
+          17.0,
+          1.0,
+          29.0
+        ],
+        "v4_rollout": [
+          10.0,
+          12.0,
+          17.0,
+          1.0,
+          29.0
+        ],
+        "rule_score": [
+          39.0,
+          1.0,
+          12.0
+        ],
+        "v4_score": [
+          39.0,
+          1.0,
+          12.0
+        ],
+        "heuristic_score": -92.0,
+        "full_future": {
+          "values": [
+            26.0
+          ],
+          "mean": 26.0,
+          "visible_job_values": [
+            26.0
+          ],
+          "visible_job_mean": 26.0,
+          "branch_wall_seconds": [
+            0.007600932999991983
+          ]
+        },
+        "label_centered": -0.5
+      }
+    ],
+    "group_wall_seconds": 0.06036076899999898
+  },
+  {
+    "split": "validation",
+    "seed": 661037,
+    "layout": 6,
+    "spec": {
+      "seed": 661037,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 2,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 7,
+        "A1": 6,
+        "B0": 3,
+        "B1": 5,
+        "C": 2
+      },
+      "jitter_ticks": 2,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0"
+      ],
+      "job_release_ticks": [
+        0,
+        0,
+        3
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 4,
+    "available_batches_including_wait": 7,
+    "distinct_action_count": 4,
+    "oracle_cost_spread": 3.1666666666666714,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 66,
+    "model_cpu_seconds": {
+      "Rule": 0.022344778000000787,
+      "V4": 0.0370948680000005
+    },
+    "base_feature_cpu_seconds": 0.00017779500000081327,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661037-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661037-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.6,
+          0.0,
+          2.0,
+          0.0,
+          10.0,
+          0.0,
+          21.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          23.0,
+          0.0,
+          39.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          23.0,
+          0.0,
+          39.0
+        ],
+        "rule_score": [
+          49.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          49.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -184.5,
+        "full_future": {
+          "values": [
+            38.333333333333336,
+            39.666666666666664,
+            40.666666666666664,
+            38.666666666666664
+          ],
+          "mean": 39.33333333333333,
+          "visible_job_values": [
+            29.0,
+            30.5,
+            31.5,
+            29.5
+          ],
+          "visible_job_mean": 30.125,
+          "branch_wall_seconds": [
+            0.012773746999997115,
+            0.01244599599999674,
+            0.012761218000008512,
+            0.012125507999996898
+          ]
+        },
+        "label_centered": -1.1666666666666714
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661037-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661037-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.6,
+          0.0,
+          2.0,
+          4.0,
+          10.0,
+          2.0,
+          21.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          29.0,
+          0.0,
+          45.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          29.0,
+          0.0,
+          45.0
+        ],
+        "rule_score": [
+          55.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          55.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -180.5,
+        "full_future": {
+          "values": [
+            41.0,
+            43.666666666666664,
+            42.666666666666664,
+            42.666666666666664
+          ],
+          "mean": 42.5,
+          "visible_job_values": [
+            32.0,
+            34.5,
+            33.5,
+            33.5
+          ],
+          "visible_job_mean": 33.375,
+          "branch_wall_seconds": [
+            0.01262019699998973,
+            0.013164009999997006,
+            0.013041537000006542,
+            0.013048177000001715
+          ]
+        },
+        "label_centered": 2.0
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661037-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.6,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          10.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          25.0,
+          0.0,
+          41.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          25.0,
+          0.0,
+          41.0
+        ],
+        "rule_score": [
+          51.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          51.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -92.0,
+        "full_future": {
+          "values": [
+            38.333333333333336,
+            39.666666666666664,
+            40.666666666666664,
+            38.666666666666664
+          ],
+          "mean": 39.33333333333333,
+          "visible_job_values": [
+            29.0,
+            30.5,
+            31.5,
+            29.5
+          ],
+          "visible_job_mean": 30.125,
+          "branch_wall_seconds": [
+            0.012240378999990753,
+            0.012436121999996885,
+            0.012586206000008815,
+            0.012143494000000032
+          ]
+        },
+        "label_centered": -1.1666666666666714
+      },
+      {
+        "candidate_index": 3,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661037-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.6,
+          0.0,
+          1.0,
+          0.0,
+          4.0,
+          0.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          25.0,
+          0.0,
+          41.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          25.0,
+          0.0,
+          41.0
+        ],
+        "rule_score": [
+          51.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          51.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -92.5,
+        "full_future": {
+          "values": [
+            40.333333333333336,
+            41.666666666666664,
+            40.666666666666664,
+            40.666666666666664
+          ],
+          "mean": 40.83333333333333,
+          "visible_job_values": [
+            31.0,
+            32.5,
+            31.5,
+            31.5
+          ],
+          "visible_job_mean": 31.625,
+          "branch_wall_seconds": [
+            0.012622280000002206,
+            0.012804942999991908,
+            0.012678454999999644,
+            0.012682841000000167
+          ]
+        },
+        "label_centered": 0.3333333333333286
+      }
+    ],
+    "group_wall_seconds": 0.29869674699999393
+  },
+  {
+    "split": "validation",
+    "seed": 661074,
+    "layout": 5,
+    "spec": {
+      "seed": 661074,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 3,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 4,
+        "A1": 3,
+        "B0": 7,
+        "B1": 8,
+        "C": 3
+      },
+      "jitter_ticks": 1,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        2,
+        6,
+        10
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 3,
+    "available_batches_including_wait": 4,
+    "distinct_action_count": 3,
+    "oracle_cost_spread": 2.1875,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 23,
+    "model_cpu_seconds": {
+      "Rule": 0.01572078799999943,
+      "V4": 0.023183017999999223
+    },
+    "base_feature_cpu_seconds": 0.00017203700000045785,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661074-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          5.0,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          8.0,
+          17.0,
+          0.0,
+          25.0
+        ],
+        "v4_rollout": [
+          5.0,
+          8.666666666666666,
+          17.0,
+          0.0,
+          25.666666666666668
+        ],
+        "rule_score": [
+          30.0,
+          0.0,
+          8.0
+        ],
+        "v4_score": [
+          30.666666666666668,
+          0.0,
+          8.666666666666666
+        ],
+        "heuristic_score": -91.5,
+        "full_future": {
+          "values": [
+            43.25,
+            42.25,
+            42.25,
+            44.0
+          ],
+          "mean": 42.9375,
+          "visible_job_values": [
+            34.0,
+            33.0,
+            33.0,
+            34.0
+          ],
+          "visible_job_mean": 33.5,
+          "branch_wall_seconds": [
+            0.01723379400000624,
+            0.01616873199999702,
+            0.016060150000001272,
+            0.016829669999992802
+          ]
+        },
+        "label_centered": -1.25
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661074-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          5.0,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          18.0,
+          0.0,
+          27.0
+        ],
+        "v4_rollout": [
+          5.0,
+          9.0,
+          18.0,
+          0.0,
+          27.0
+        ],
+        "rule_score": [
+          32.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          32.0,
+          0.0,
+          9.0
+        ],
+        "heuristic_score": -89.5,
+        "full_future": {
+          "values": [
+            44.75,
+            44.25,
+            43.5,
+            45.5
+          ],
+          "mean": 44.5,
+          "visible_job_values": [
+            36.0,
+            35.0,
+            35.0,
+            36.0
+          ],
+          "visible_job_mean": 35.5,
+          "branch_wall_seconds": [
+            0.016284114000001182,
+            0.016568870000000402,
+            0.01588138200000344,
+            0.01638468499999135
+          ]
+        },
+        "label_centered": 0.3125
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661074-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          5.0,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          18.0,
+          0.0,
+          27.0
+        ],
+        "v4_rollout": [
+          5.0,
+          9.0,
+          18.0,
+          0.0,
+          27.0
+        ],
+        "rule_score": [
+          32.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          32.0,
+          0.0,
+          9.0
+        ],
+        "heuristic_score": -89.5,
+        "full_future": {
+          "values": [
+            45.25,
+            44.25,
+            44.25,
+            46.75
+          ],
+          "mean": 45.125,
+          "visible_job_values": [
+            36.0,
+            35.0,
+            35.0,
+            36.0
+          ],
+          "visible_job_mean": 35.5,
+          "branch_wall_seconds": [
+            0.08938381699999809,
+            0.01687954500000899,
+            0.016475220000003787,
+            0.017218642000003115
+          ]
+        },
+        "label_centered": 0.9375
+      }
+    ],
+    "group_wall_seconds": 0.35389063100001295
+  },
+  {
+    "split": "validation",
+    "seed": 661111,
+    "layout": 6,
+    "spec": {
+      "seed": 661111,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 1,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 5,
+        "A1": 8,
+        "B0": 6,
+        "B1": 7,
+        "C": 8
+      },
+      "jitter_ticks": 2,
+      "outage": true,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        0
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 2,
+    "available_batches_including_wait": 3,
+    "distinct_action_count": 2,
+    "oracle_cost_spread": 3.75,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 18,
+    "model_cpu_seconds": {
+      "Rule": 0.010711886999999365,
+      "V4": 0.01598824700000101
+    },
+    "base_feature_cpu_seconds": 0.00012183099999951708,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661111-0::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          6.8,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          18.0,
+          50.0,
+          0.0,
+          68.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          50.0,
+          0.0,
+          68.0
+        ],
+        "rule_score": [
+          78.0,
+          0.0,
+          18.0
+        ],
+        "v4_score": [
+          78.0,
+          0.0,
+          18.0
+        ],
+        "heuristic_score": -91.5,
+        "full_future": {
+          "values": [
+            58.5,
+            63.0,
+            64.0,
+            58.5
+          ],
+          "mean": 61.0,
+          "visible_job_values": [
+            58.5,
+            63.0,
+            64.0,
+            58.5
+          ],
+          "visible_job_mean": 61.0,
+          "branch_wall_seconds": [
+            0.0135399020000051,
+            0.014355210000005059,
+            0.014439276000004497,
+            0.013429445999989298
+          ]
+        },
+        "label_centered": -1.875
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661111-1::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          6.8,
+          0.0,
+          1.0,
+          2.0,
+          4.0,
+          2.0,
+          15.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          18.0,
+          52.0,
+          0.0,
+          70.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          52.0,
+          0.0,
+          70.0
+        ],
+        "rule_score": [
+          80.0,
+          0.0,
+          18.0
+        ],
+        "v4_score": [
+          80.0,
+          0.0,
+          18.0
+        ],
+        "heuristic_score": -88.5,
+        "full_future": {
+          "values": [
+            62.0,
+            66.5,
+            67.0,
+            63.5
+          ],
+          "mean": 64.75,
+          "visible_job_values": [
+            62.0,
+            66.5,
+            67.0,
+            63.5
+          ],
+          "visible_job_mean": 64.75,
+          "branch_wall_seconds": [
+            0.013600783000001115,
+            0.014391825999993557,
+            0.014913445000004799,
+            0.013819379000011622
+          ]
+        },
+        "label_centered": 1.875
+      }
+    ],
+    "group_wall_seconds": 0.17558341500000552
+  },
+  {
+    "split": "validation",
+    "seed": 661148,
+    "layout": 5,
+    "spec": {
+      "seed": 661148,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 2,
+      "workflow_variant": "three",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 8,
+        "A1": 2,
+        "B0": 6,
+        "B1": 8,
+        "C": 7
+      },
+      "jitter_ticks": 0,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0"
+      ],
+      "job_release_ticks": [
+        0,
+        0,
+        3
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 4,
+    "available_batches_including_wait": 7,
+    "distinct_action_count": 4,
+    "oracle_cost_spread": 3.333333333333343,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 39,
+    "model_cpu_seconds": {
+      "Rule": 0.023067305999999732,
+      "V4": 0.03453321799999998
+    },
+    "base_feature_cpu_seconds": 0.00018706900000076132,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 1,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661148-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661148-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          6.2,
+          0.0,
+          2.0,
+          0.0,
+          10.0,
+          0.0,
+          24.0,
+          1.0,
+          0.0,
+          4.0,
+          2.0,
+          0.0,
+          2.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          22.0,
+          75.0,
+          1.0,
+          97.0
+        ],
+        "v4_rollout": [
+          10.0,
+          22.0,
+          75.0,
+          1.0,
+          97.0
+        ],
+        "rule_score": [
+          107.0,
+          1.0,
+          22.0
+        ],
+        "v4_score": [
+          107.0,
+          1.0,
+          22.0
+        ],
+        "heuristic_score": -175.0,
+        "full_future": {
+          "values": [
+            77.66666666666667
+          ],
+          "mean": 77.66666666666667,
+          "visible_job_values": [
+            61.0
+          ],
+          "visible_job_mean": 61.0,
+          "branch_wall_seconds": [
+            0.0268073359999903
+          ]
+        },
+        "label_centered": 1.1666666666666714
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661148-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661148-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          6.2,
+          0.0,
+          2.0,
+          4.0,
+          10.0,
+          2.0,
+          24.0,
+          1.0,
+          0.0,
+          4.0,
+          2.0,
+          0.0,
+          2.0,
+          4.0
+        ],
+        "rule_rollout": [
+          10.0,
+          21.0,
+          77.0,
+          0.0,
+          98.0
+        ],
+        "v4_rollout": [
+          10.0,
+          22.0,
+          78.0,
+          0.3333333333333333,
+          100.0
+        ],
+        "rule_score": [
+          108.0,
+          0.0,
+          21.0
+        ],
+        "v4_score": [
+          110.0,
+          0.3333333333333333,
+          22.0
+        ],
+        "heuristic_score": -171.0,
+        "full_future": {
+          "values": [
+            76.33333333333333
+          ],
+          "mean": 76.33333333333333,
+          "visible_job_values": [
+            60.0
+          ],
+          "visible_job_mean": 60.0,
+          "branch_wall_seconds": [
+            0.026004807000006736
+          ]
+        },
+        "label_centered": -0.1666666666666714
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661148-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          6.2,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          14.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          22.0,
+          75.0,
+          1.0,
+          97.0
+        ],
+        "v4_rollout": [
+          10.0,
+          22.0,
+          75.0,
+          1.0,
+          97.0
+        ],
+        "rule_score": [
+          107.0,
+          1.0,
+          22.0
+        ],
+        "v4_score": [
+          107.0,
+          1.0,
+          22.0
+        ],
+        "heuristic_score": -90.0,
+        "full_future": {
+          "values": [
+            77.66666666666667
+          ],
+          "mean": 77.66666666666667,
+          "visible_job_values": [
+            61.0
+          ],
+          "visible_job_mean": 61.0,
+          "branch_wall_seconds": [
+            0.03159052699999165
+          ]
+        },
+        "label_centered": 1.1666666666666714
+      },
+      {
+        "candidate_index": 3,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661148-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          6.2,
+          0.0,
+          1.0,
+          0.0,
+          4.0,
+          0.0,
+          10.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          19.0,
+          75.0,
+          0.0,
+          94.0
+        ],
+        "v4_rollout": [
+          10.0,
+          20.333333333333332,
+          76.33333333333333,
+          0.0,
+          96.66666666666667
+        ],
+        "rule_score": [
+          104.0,
+          0.0,
+          19.0
+        ],
+        "v4_score": [
+          106.66666666666667,
+          0.0,
+          20.333333333333332
+        ],
+        "heuristic_score": -93.0,
+        "full_future": {
+          "values": [
+            74.33333333333333
+          ],
+          "mean": 74.33333333333333,
+          "visible_job_values": [
+            58.0
+          ],
+          "visible_job_mean": 58.0,
+          "branch_wall_seconds": [
+            0.02568725199999733
+          ]
+        },
+        "label_centered": -2.1666666666666714
+      }
+    ],
+    "group_wall_seconds": 0.22872601199999565
+  },
+  {
+    "split": "validation",
+    "seed": 661185,
+    "layout": 6,
+    "spec": {
+      "seed": 661185,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 3,
+      "workflow_variant": "two",
+      "workflow_depth": "single",
+      "station_service_ticks": {
+        "A0": 5,
+        "A1": 5,
+        "B0": 8,
+        "B1": 4,
+        "C": 2
+      },
+      "jitter_ticks": 2,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        2,
+        6,
+        10
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 3,
+    "available_batches_including_wait": 4,
+    "distinct_action_count": 3,
+    "oracle_cost_spread": 1.0,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 24,
+    "model_cpu_seconds": {
+      "Rule": 0.015315764000000343,
+      "V4": 0.022904252000000014
+    },
+    "base_feature_cpu_seconds": 0.0001975550000015147,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661185-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.8,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          13.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          6.0,
+          8.0,
+          0.0,
+          14.0
+        ],
+        "v4_rollout": [
+          5.0,
+          6.0,
+          8.0,
+          0.0,
+          14.0
+        ],
+        "rule_score": [
+          19.0,
+          0.0,
+          6.0
+        ],
+        "v4_score": [
+          19.0,
+          0.0,
+          6.0
+        ],
+        "heuristic_score": -90.5,
+        "full_future": {
+          "values": [
+            22.25,
+            23.25,
+            23.25,
+            21.75
+          ],
+          "mean": 22.625,
+          "visible_job_values": [
+            20.0,
+            21.0,
+            22.0,
+            20.0
+          ],
+          "visible_job_mean": 20.75,
+          "branch_wall_seconds": [
+            0.008314178999995647,
+            0.00818661899999995,
+            0.008130315000002497,
+            0.00811544199999048
+          ]
+        },
+        "label_centered": -0.6666666666666679
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661185-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.8,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          13.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          6.0,
+          10.0,
+          0.0,
+          16.0
+        ],
+        "v4_rollout": [
+          5.0,
+          6.0,
+          10.0,
+          0.0,
+          16.0
+        ],
+        "rule_score": [
+          21.0,
+          0.0,
+          6.0
+        ],
+        "v4_score": [
+          21.0,
+          0.0,
+          6.0
+        ],
+        "heuristic_score": -88.5,
+        "full_future": {
+          "values": [
+            23.25,
+            24.25,
+            24.25,
+            22.75
+          ],
+          "mean": 23.625,
+          "visible_job_values": [
+            22.0,
+            23.0,
+            24.0,
+            22.0
+          ],
+          "visible_job_mean": 22.75,
+          "branch_wall_seconds": [
+            0.00843885599999794,
+            0.00839029400000868,
+            0.008410592999993582,
+            0.008402902000000267
+          ]
+        },
+        "label_centered": 0.33333333333333215
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661185-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          4.8,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          13.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          6.0,
+          10.0,
+          0.0,
+          16.0
+        ],
+        "v4_rollout": [
+          5.0,
+          6.0,
+          10.0,
+          0.0,
+          16.0
+        ],
+        "rule_score": [
+          21.0,
+          0.0,
+          6.0
+        ],
+        "v4_score": [
+          21.0,
+          0.0,
+          6.0
+        ],
+        "heuristic_score": -88.5,
+        "full_future": {
+          "values": [
+            23.25,
+            24.25,
+            24.25,
+            22.75
+          ],
+          "mean": 23.625,
+          "visible_job_values": [
+            22.0,
+            23.0,
+            24.0,
+            22.0
+          ],
+          "visible_job_mean": 22.75,
+          "branch_wall_seconds": [
+            0.008484002999992413,
+            0.008215661999997792,
+            0.008237024000010251,
+            0.00839326800000606
+          ]
+        },
+        "label_centered": 0.33333333333333215
+      }
+    ],
+    "group_wall_seconds": 0.1639190570000011
+  },
+  {
+    "split": "validation",
+    "seed": 661222,
+    "layout": 5,
+    "spec": {
+      "seed": 661222,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 1,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 2,
+        "A1": 7,
+        "B0": 6,
+        "B1": 4,
+        "C": 3
+      },
+      "jitter_ticks": 1,
+      "outage": true,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        0
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 2,
+    "available_batches_including_wait": 3,
+    "distinct_action_count": 2,
+    "oracle_cost_spread": 1.25,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 13,
+    "model_cpu_seconds": {
+      "Rule": 0.01085214699999959,
+      "V4": 0.015187272999998669
+    },
+    "base_feature_cpu_seconds": 0.0001171350000017668,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661222-0::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.4,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          8.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          33.0,
+          0.0,
+          49.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          33.0,
+          0.0,
+          51.0
+        ],
+        "rule_score": [
+          59.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          61.0,
+          0.0,
+          18.0
+        ],
+        "heuristic_score": -93.0,
+        "full_future": {
+          "values": [
+            43.5,
+            44.0,
+            42.5,
+            42.5
+          ],
+          "mean": 43.125,
+          "visible_job_values": [
+            43.5,
+            44.0,
+            42.5,
+            42.5
+          ],
+          "visible_job_mean": 43.125,
+          "branch_wall_seconds": [
+            0.010278016000000889,
+            0.010125056000006794,
+            0.009874623000001748,
+            0.009700272000003451
+          ]
+        },
+        "label_centered": -0.625
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661222-1::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.4,
+          0.0,
+          1.0,
+          2.0,
+          4.0,
+          2.0,
+          11.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          18.0,
+          32.0,
+          1.0,
+          50.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          32.0,
+          1.0,
+          50.0
+        ],
+        "rule_score": [
+          60.0,
+          1.0,
+          18.0
+        ],
+        "v4_score": [
+          60.0,
+          1.0,
+          18.0
+        ],
+        "heuristic_score": -90.5,
+        "full_future": {
+          "values": [
+            44.0,
+            45.0,
+            45.0,
+            43.5
+          ],
+          "mean": 44.375,
+          "visible_job_values": [
+            44.0,
+            45.0,
+            45.0,
+            43.5
+          ],
+          "visible_job_mean": 44.375,
+          "branch_wall_seconds": [
+            0.010192648000000304,
+            0.010356572999995706,
+            0.010141351000001464,
+            0.009941021000003047
+          ]
+        },
+        "label_centered": 0.625
+      }
+    ],
+    "group_wall_seconds": 0.1361538080000031
+  },
+  {
+    "split": "validation",
+    "seed": 661259,
+    "layout": 6,
+    "spec": {
+      "seed": 661259,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 2,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 5,
+        "A1": 3,
+        "B0": 2,
+        "B1": 2,
+        "C": 6
+      },
+      "jitter_ticks": 2,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0"
+      ],
+      "job_release_ticks": [
+        0,
+        0,
+        3
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 4,
+    "available_batches_including_wait": 7,
+    "distinct_action_count": 4,
+    "oracle_cost_spread": 2.0,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 61,
+    "model_cpu_seconds": {
+      "Rule": 0.022576573000000266,
+      "V4": 0.03722883799999899
+    },
+    "base_feature_cpu_seconds": 0.00019131500000035828,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661259-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661259-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          2.0,
+          0.0,
+          10.0,
+          0.0,
+          12.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          14.0,
+          20.0,
+          0.0,
+          34.0
+        ],
+        "v4_rollout": [
+          10.0,
+          15.333333333333334,
+          20.0,
+          0.0,
+          35.333333333333336
+        ],
+        "rule_score": [
+          44.0,
+          0.0,
+          14.0
+        ],
+        "v4_score": [
+          45.333333333333336,
+          0.0,
+          15.333333333333334
+        ],
+        "heuristic_score": -189.0,
+        "full_future": {
+          "values": [
+            37.333333333333336,
+            36.0,
+            36.0,
+            36.666666666666664
+          ],
+          "mean": 36.5,
+          "visible_job_values": [
+            29.0,
+            28.5,
+            28.0,
+            28.0
+          ],
+          "visible_job_mean": 28.375,
+          "branch_wall_seconds": [
+            0.012323993999999061,
+            0.011630878000005396,
+            0.011540283000002205,
+            0.01189251899999988
+          ]
+        },
+        "label_centered": -1.0
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661259-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661259-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          2.0,
+          4.0,
+          10.0,
+          2.0,
+          12.0,
+          0.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          24.0,
+          0.0,
+          40.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          24.0,
+          0.0,
+          40.0
+        ],
+        "rule_score": [
+          50.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          50.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -185.0,
+        "full_future": {
+          "values": [
+            39.333333333333336,
+            38.0,
+            38.0,
+            38.666666666666664
+          ],
+          "mean": 38.5,
+          "visible_job_values": [
+            31.0,
+            30.5,
+            30.0,
+            30.0
+          ],
+          "visible_job_mean": 30.375,
+          "branch_wall_seconds": [
+            0.012237454999990405,
+            0.011590448000006859,
+            0.01179052699998806,
+            0.012002172999999061
+          ]
+        },
+        "label_centered": 1.0
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661259-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          7.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          16.0,
+          20.0,
+          0.0,
+          36.0
+        ],
+        "v4_rollout": [
+          10.0,
+          16.0,
+          20.0,
+          0.0,
+          36.0
+        ],
+        "rule_score": [
+          46.0,
+          0.0,
+          16.0
+        ],
+        "v4_score": [
+          46.0,
+          0.0,
+          16.0
+        ],
+        "heuristic_score": -93.5,
+        "full_future": {
+          "values": [
+            39.333333333333336,
+            38.0,
+            38.0,
+            38.666666666666664
+          ],
+          "mean": 38.5,
+          "visible_job_values": [
+            31.0,
+            30.5,
+            30.0,
+            30.0
+          ],
+          "visible_job_mean": 30.375,
+          "branch_wall_seconds": [
+            0.012047781000006808,
+            0.011444658999991475,
+            0.0116488449999963,
+            0.01204464699999619
+          ]
+        },
+        "label_centered": 1.0
+      },
+      {
+        "candidate_index": 3,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661259-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          1.0,
+          0.0,
+          4.0,
+          0.0,
+          5.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          14.0,
+          22.0,
+          0.0,
+          36.0
+        ],
+        "v4_rollout": [
+          10.0,
+          15.0,
+          22.0,
+          0.0,
+          37.0
+        ],
+        "rule_score": [
+          46.0,
+          0.0,
+          14.0
+        ],
+        "v4_score": [
+          47.0,
+          0.0,
+          15.0
+        ],
+        "heuristic_score": -95.5,
+        "full_future": {
+          "values": [
+            37.333333333333336,
+            36.0,
+            36.0,
+            36.666666666666664
+          ],
+          "mean": 36.5,
+          "visible_job_values": [
+            29.0,
+            28.5,
+            28.0,
+            28.0
+          ],
+          "visible_job_mean": 28.375,
+          "branch_wall_seconds": [
+            0.011751317999994626,
+            0.011180604000003314,
+            0.011397919999993178,
+            0.011742234000010399
+          ]
+        },
+        "label_centered": -1.0
+      }
+    ],
+    "group_wall_seconds": 0.282845590000008
+  },
+  {
+    "split": "validation",
+    "seed": 661296,
+    "layout": 5,
+    "spec": {
+      "seed": 661296,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 3,
+      "workflow_variant": "three",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 2,
+        "A1": 2,
+        "B0": 8,
+        "B1": 2,
+        "C": 6
+      },
+      "jitter_ticks": 0,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        2,
+        6,
+        10
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 3,
+    "available_batches_including_wait": 4,
+    "distinct_action_count": 3,
+    "oracle_cost_spread": 0.5,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 19,
+    "model_cpu_seconds": {
+      "Rule": 0.015771484000000058,
+      "V4": 0.021762437999999662
+    },
+    "base_feature_cpu_seconds": 0.0001477599999990531,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 1,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661296-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          10.0,
+          0.0,
+          0.0,
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          30.0,
+          0.0,
+          39.0
+        ],
+        "v4_rollout": [
+          5.0,
+          10.333333333333334,
+          30.0,
+          0.0,
+          40.333333333333336
+        ],
+        "rule_score": [
+          44.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          45.333333333333336,
+          0.0,
+          10.333333333333334
+        ],
+        "heuristic_score": -92.0,
+        "full_future": {
+          "values": [
+            59.0
+          ],
+          "mean": 59.0,
+          "visible_job_values": [
+            48.0
+          ],
+          "visible_job_mean": 48.0,
+          "branch_wall_seconds": [
+            0.02409981899999991
+          ]
+        },
+        "label_centered": -0.3333333333333357
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661296-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          10.0,
+          0.0,
+          0.0,
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          11.0,
+          30.0,
+          0.0,
+          41.0
+        ],
+        "v4_rollout": [
+          5.0,
+          12.0,
+          30.0,
+          0.0,
+          42.0
+        ],
+        "rule_score": [
+          46.0,
+          0.0,
+          11.0
+        ],
+        "v4_score": [
+          47.0,
+          0.0,
+          12.0
+        ],
+        "heuristic_score": -90.0,
+        "full_future": {
+          "values": [
+            59.5
+          ],
+          "mean": 59.5,
+          "visible_job_values": [
+            48.0
+          ],
+          "visible_job_mean": 48.0,
+          "branch_wall_seconds": [
+            0.023937485999994124
+          ]
+        },
+        "label_centered": 0.1666666666666643
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661296-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          10.0,
+          0.0,
+          0.0,
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          11.0,
+          30.0,
+          0.0,
+          41.0
+        ],
+        "v4_rollout": [
+          5.0,
+          12.0,
+          30.0,
+          0.0,
+          42.0
+        ],
+        "rule_score": [
+          46.0,
+          0.0,
+          11.0
+        ],
+        "v4_score": [
+          47.0,
+          0.0,
+          12.0
+        ],
+        "heuristic_score": -90.0,
+        "full_future": {
+          "values": [
+            59.5
+          ],
+          "mean": 59.5,
+          "visible_job_values": [
+            48.0
+          ],
+          "visible_job_mean": 48.0,
+          "branch_wall_seconds": [
+            0.02383869800000582
+          ]
+        },
+        "label_centered": 0.1666666666666643
+      }
+    ],
+    "group_wall_seconds": 0.16546315499999764
+  },
+  {
+    "split": "validation",
+    "seed": 661333,
+    "layout": 6,
+    "spec": {
+      "seed": 661333,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 1,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 5,
+        "A1": 2,
+        "B0": 8,
+        "B1": 7,
+        "C": 4
+      },
+      "jitter_ticks": 2,
+      "outage": true,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        0
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 2,
+    "available_batches_including_wait": 3,
+    "distinct_action_count": 2,
+    "oracle_cost_spread": 1.125,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 18,
+    "model_cpu_seconds": {
+      "Rule": 0.010471969000001025,
+      "V4": 0.015883650999999332
+    },
+    "base_feature_cpu_seconds": 0.00011955799999974204,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661333-0::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          5.2,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          13.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          18.0,
+          40.0,
+          0.0,
+          58.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          40.0,
+          0.0,
+          58.0
+        ],
+        "rule_score": [
+          68.0,
+          0.0,
+          18.0
+        ],
+        "v4_score": [
+          68.0,
+          0.0,
+          18.0
+        ],
+        "heuristic_score": -90.5,
+        "full_future": {
+          "values": [
+            55.5,
+            52.0,
+            56.5,
+            51.5
+          ],
+          "mean": 53.875,
+          "visible_job_values": [
+            55.5,
+            52.0,
+            56.5,
+            51.5
+          ],
+          "visible_job_mean": 53.875,
+          "branch_wall_seconds": [
+            0.01229949700000077,
+            0.01138915699999643,
+            0.012478063999992628,
+            0.011276886000004538
+          ]
+        },
+        "label_centered": 0.5625
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661333-1::stage1"
+          }
+        ],
+        "base_features": [
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          5.2,
+          0.0,
+          1.0,
+          2.0,
+          4.0,
+          2.0,
+          9.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          18.0,
+          43.0,
+          0.0,
+          61.0
+        ],
+        "v4_rollout": [
+          10.0,
+          18.0,
+          43.0,
+          0.0,
+          61.0
+        ],
+        "rule_score": [
+          71.0,
+          0.0,
+          18.0
+        ],
+        "v4_score": [
+          71.0,
+          0.0,
+          18.0
+        ],
+        "heuristic_score": -91.5,
+        "full_future": {
+          "values": [
+            53.0,
+            50.5,
+            56.5,
+            51.0
+          ],
+          "mean": 52.75,
+          "visible_job_values": [
+            53.0,
+            50.5,
+            56.5,
+            51.0
+          ],
+          "visible_job_mean": 52.75,
+          "branch_wall_seconds": [
+            0.012443632000000093,
+            0.011612033000005795,
+            0.012654463999993482,
+            0.01155893799999319
+          ]
+        },
+        "label_centered": -0.5625
+      }
+    ],
+    "group_wall_seconds": 0.15532783099999392
+  },
+  {
+    "split": "validation",
+    "seed": 661370,
+    "layout": 5,
+    "spec": {
+      "seed": 661370,
+      "layout": 5,
+      "resource_capacity_A": 1,
+      "robot_count": 2,
+      "workflow_variant": "two",
+      "workflow_depth": "single",
+      "station_service_ticks": {
+        "A0": 5,
+        "A1": 2,
+        "B0": 3,
+        "B1": 7,
+        "C": 3
+      },
+      "jitter_ticks": 1,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0"
+      ],
+      "job_release_ticks": [
+        0,
+        0,
+        3
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 4,
+    "available_batches_including_wait": 7,
+    "distinct_action_count": 4,
+    "oracle_cost_spread": 2.0,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": true,
+    "v4_effective_queries": 39,
+    "model_cpu_seconds": {
+      "Rule": 0.02282357200000007,
+      "V4": 0.03786344500000105
+    },
+    "base_feature_cpu_seconds": 0.0002553899999995224,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661370-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661370-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          2.0,
+          0.0,
+          10.0,
+          0.0,
+          17.0,
+          1.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          2.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          10.0,
+          12.0,
+          0.0,
+          22.0
+        ],
+        "v4_rollout": [
+          10.0,
+          10.0,
+          12.0,
+          0.6666666666666666,
+          22.0
+        ],
+        "rule_score": [
+          32.0,
+          0.0,
+          10.0
+        ],
+        "v4_score": [
+          32.0,
+          0.6666666666666666,
+          10.0
+        ],
+        "heuristic_score": -178.5,
+        "full_future": {
+          "values": [
+            22.0,
+            22.666666666666668,
+            22.666666666666668,
+            22.666666666666668
+          ],
+          "mean": 22.5,
+          "visible_job_values": [
+            16.5,
+            17.5,
+            17.5,
+            18.0
+          ],
+          "visible_job_mean": 17.375,
+          "branch_wall_seconds": [
+            0.007268742999997357,
+            0.007047055999990448,
+            0.00703431799999521,
+            0.006809446000005437
+          ]
+        },
+        "label_centered": 0.125
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661370-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "F661370-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          2.0,
+          4.0,
+          10.0,
+          2.0,
+          17.0,
+          1.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          2.0,
+          4.0
+        ],
+        "rule_rollout": [
+          10.0,
+          9.0,
+          14.0,
+          0.0,
+          23.0
+        ],
+        "v4_rollout": [
+          10.0,
+          10.0,
+          15.0,
+          0.3333333333333333,
+          25.0
+        ],
+        "rule_score": [
+          33.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          35.0,
+          0.3333333333333333,
+          10.0
+        ],
+        "heuristic_score": -174.5,
+        "full_future": {
+          "values": [
+            22.333333333333332,
+            23.0,
+            24.0,
+            23.666666666666668
+          ],
+          "mean": 23.25,
+          "visible_job_values": [
+            17.0,
+            17.5,
+            18.5,
+            18.5
+          ],
+          "visible_job_mean": 17.875,
+          "branch_wall_seconds": [
+            0.007200495000006413,
+            0.007438626000009663,
+            0.007492351999999869,
+            0.007353695000006155
+          ]
+        },
+        "label_centered": 0.875
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661370-0::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          8.0,
+          0.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          10.0,
+          12.0,
+          0.0,
+          22.0
+        ],
+        "v4_rollout": [
+          10.0,
+          10.0,
+          12.0,
+          0.6666666666666666,
+          22.0
+        ],
+        "rule_score": [
+          32.0,
+          0.0,
+          10.0
+        ],
+        "v4_score": [
+          32.0,
+          0.6666666666666666,
+          10.0
+        ],
+        "heuristic_score": -93.0,
+        "full_future": {
+          "values": [
+            22.0,
+            22.666666666666668,
+            22.666666666666668,
+            22.666666666666668
+          ],
+          "mean": 22.5,
+          "visible_job_values": [
+            16.5,
+            17.5,
+            17.5,
+            18.0
+          ],
+          "visible_job_mean": 17.375,
+          "branch_wall_seconds": [
+            0.006928207000001407,
+            0.006964037000003032,
+            0.006971088000000236,
+            0.0068060720000033825
+          ]
+        },
+        "label_centered": 0.125
+      },
+      {
+        "candidate_index": 3,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661370-1::stage1"
+          }
+        ],
+        "base_features": [
+          2.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0,
+          4.0,
+          4.0,
+          0.0,
+          1.0,
+          0.0,
+          4.0,
+          0.0,
+          9.0,
+          0.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          10.0,
+          7.0,
+          12.0,
+          0.0,
+          19.0
+        ],
+        "v4_rollout": [
+          10.0,
+          8.333333333333334,
+          13.333333333333334,
+          0.0,
+          21.666666666666668
+        ],
+        "rule_score": [
+          29.0,
+          0.0,
+          7.0
+        ],
+        "v4_score": [
+          31.666666666666668,
+          0.0,
+          8.333333333333334
+        ],
+        "heuristic_score": -93.5,
+        "full_future": {
+          "values": [
+            20.333333333333332,
+            21.0,
+            22.0,
+            21.666666666666668
+          ],
+          "mean": 21.25,
+          "visible_job_values": [
+            15.0,
+            15.5,
+            16.5,
+            16.5
+          ],
+          "visible_job_mean": 15.875,
+          "branch_wall_seconds": [
+            0.006630200000003583,
+            0.00682747199999767,
+            0.007003152999999429,
+            0.006794764999995095
+          ]
+        },
+        "label_centered": -1.125
+      }
+    ],
+    "group_wall_seconds": 0.19748007000001166
+  },
+  {
+    "split": "validation",
+    "seed": 661407,
+    "layout": 6,
+    "spec": {
+      "seed": 661407,
+      "layout": 6,
+      "resource_capacity_A": 2,
+      "robot_count": 3,
+      "workflow_variant": "two",
+      "workflow_depth": "multiple",
+      "station_service_ticks": {
+        "A0": 8,
+        "A1": 2,
+        "B0": 2,
+        "B1": 3,
+        "C": 3
+      },
+      "jitter_ticks": 2,
+      "outage": false,
+      "outage_window": [
+        13,
+        21
+      ],
+      "outage_station": "C",
+      "job_workflows": [
+        "w0",
+        "w1",
+        "w0",
+        "w1"
+      ],
+      "job_release_ticks": [
+        0,
+        2,
+        6,
+        10
+      ],
+      "max_ticks": 115
+    },
+    "state_tick": 0,
+    "candidate_count": 3,
+    "available_batches_including_wait": 4,
+    "distinct_action_count": 3,
+    "oracle_cost_spread": 0.75,
+    "active_service_sessions_at_state": 0,
+    "resource_contested": false,
+    "v4_effective_queries": 24,
+    "model_cpu_seconds": {
+      "Rule": 0.015760367000000386,
+      "V4": 0.02328790500000011
+    },
+    "base_feature_cpu_seconds": 0.00015781499999967252,
+    "ground_truth_scope": "offline complete future all configured jobs (not online features)",
+    "futures_per_candidate": 4,
+    "rows": [
+      {
+        "candidate_index": 0,
+        "action": [
+          {
+            "robot_id": "R1",
+            "sample_id": "F661407-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          1.0,
+          0.0,
+          6.0,
+          0.0,
+          10.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          10.0,
+          0.0,
+          19.0
+        ],
+        "v4_rollout": [
+          5.0,
+          9.0,
+          10.0,
+          0.0,
+          19.0
+        ],
+        "rule_score": [
+          24.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          24.0,
+          0.0,
+          9.0
+        ],
+        "heuristic_score": -92.0,
+        "full_future": {
+          "values": [
+            31.75,
+            34.25,
+            31.5,
+            30.0
+          ],
+          "mean": 31.875,
+          "visible_job_values": [
+            31.0,
+            34.0,
+            26.0,
+            29.0
+          ],
+          "visible_job_mean": 30.0,
+          "branch_wall_seconds": [
+            0.012796727000008445,
+            0.012940302000004067,
+            0.012375375000004851,
+            0.011304343000006156
+          ]
+        },
+        "label_centered": -0.3333333333333357
+      },
+      {
+        "candidate_index": 1,
+        "action": [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661407-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          10.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          12.0,
+          0.0,
+          21.0
+        ],
+        "v4_rollout": [
+          5.0,
+          9.0,
+          12.0,
+          0.0,
+          21.0
+        ],
+        "rule_score": [
+          26.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          26.0,
+          0.0,
+          9.0
+        ],
+        "heuristic_score": -90.0,
+        "full_future": {
+          "values": [
+            32.5,
+            35.0,
+            31.75,
+            31.25
+          ],
+          "mean": 32.625,
+          "visible_job_values": [
+            30.0,
+            34.0,
+            31.0,
+            30.0
+          ],
+          "visible_job_mean": 31.25,
+          "branch_wall_seconds": [
+            0.012468748000003416,
+            0.013562571999997886,
+            0.013002872000001275,
+            0.011839498000000503
+          ]
+        },
+        "label_centered": 0.4166666666666643
+      },
+      {
+        "candidate_index": 2,
+        "action": [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661407-0::stage1"
+          }
+        ],
+        "base_features": [
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          3.6,
+          0.0,
+          1.0,
+          2.0,
+          6.0,
+          2.0,
+          10.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rule_rollout": [
+          5.0,
+          9.0,
+          12.0,
+          0.0,
+          21.0
+        ],
+        "v4_rollout": [
+          5.0,
+          9.0,
+          12.0,
+          0.0,
+          21.0
+        ],
+        "rule_score": [
+          26.0,
+          0.0,
+          9.0
+        ],
+        "v4_score": [
+          26.0,
+          0.0,
+          9.0
+        ],
+        "heuristic_score": -90.0,
+        "full_future": {
+          "values": [
+            31.5,
+            34.5,
+            31.25,
+            31.25
+          ],
+          "mean": 32.125,
+          "visible_job_values": [
+            30.0,
+            34.0,
+            31.0,
+            30.0
+          ],
+          "visible_job_mean": 31.25,
+          "branch_wall_seconds": [
+            0.011637919999998303,
+            0.01282179199999689,
+            0.011955975000006447,
+            0.01173380699999882
+          ]
+        },
+        "label_centered": -0.0833333333333357
+      }
+    ],
+    "group_wall_seconds": 0.22180444900000396
+  }
+]

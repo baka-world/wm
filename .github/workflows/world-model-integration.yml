@@ -1,0 +1,118 @@
+name: World model decision integration CPU
+
+on:
+  pull_request:
+    paths:
+      - 'business_transport/**'
+      - 'lab_transport/business_state_learning.py'
+      - 'experiments/world_model_integration/**'
+      - '.github/workflows/world-model-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  model-decision-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None"
+      - name: Verify grouped factual dataset and train session model on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 120s python -m experiments.world_model_integration.build_dataset --output "$RUNNER_TEMP/session-dataset.json" 2>&1 | tee "$RUNNER_TEMP/session-dataset.log"
+          timeout 210s python -m lab_transport.business_state_learning --dataset "$RUNNER_TEMP/session-dataset.json" --checkpoint "$RUNNER_TEMP/session-v2.pt" --seed 1810 --epochs 10 --seconds 180 2>&1 | tee "$RUNNER_TEMP/session-training.log"
+          python -c 'import hashlib,os; p=os.environ["RUNNER_TEMP"]+"/session-v2.pt"; print("SESSION_CHECKPOINT_SHA256",hashlib.sha256(open(p,"rb").read()).hexdigest())' | tee "$RUNNER_TEMP/session-checkpoint-sha.log"
+          echo "WM_SESSION_CHECKPOINT=$RUNNER_TEMP/session-v2.pt" >> "$GITHUB_ENV"
+      - name: Compare same factual service events against old models
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s python -m experiments.world_model_integration.compare_event_models --checkpoint "$RUNNER_TEMP/session-v2.pt" --dataset "$RUNNER_TEMP/session-dataset.json" --output "$RUNNER_TEMP/session-event-comparison.json" 2>&1 | tee "$RUNNER_TEMP/session-event-comparison.log"
+      - name: Test new scoring and state-model contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/integration-tests.log"
+      - name: Test historical workflow compatibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/workflow-regression.log"
+      - name: Build pinned official PIBT and LaCAM3 backends
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s bash tools/pibt_motion/prepare_upstream.sh "$RUNNER_TEMP/v2-pibt" 2>&1 | tee "$RUNNER_TEMP/v2-pibt.log"
+          timeout 450s bash tools/lacam3_recovery/prepare_upstream.sh "$RUNNER_TEMP/v2-lacam" 2>&1 | tee "$RUNNER_TEMP/v2-lacam.log"
+          python -m tools.pibt_motion.prepare_sources --output "$RUNNER_TEMP/v2-hospital-sources"
+          echo "WM_PIBT_LIBRARY=$RUNNER_TEMP/v2-pibt/bridge/libwm_pibt_bridge.so" >> "$GITHUB_ENV"
+          echo "WM_LACAM3_WORKER=$RUNNER_TEMP/v2-lacam/bridge/wm_lacam3_worker" >> "$GITHUB_ENV"
+          echo "WM_HOSPITAL_SOURCES=$RUNNER_TEMP/v2-hospital-sources" >> "$GITHUB_ENV"
+      - name: Run genuine fixed motion backend and session-branch regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 420s python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/v2-motion-old-tests.log"
+          timeout 420s python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/v2-motion-new-tests.log"
+      - name: Run fixed four-arm CPU development pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600s python -m experiments.world_model_integration.pilot --output "$RUNNER_TEMP/decision-pilot.json" 2>&1 | tee "$RUNNER_TEMP/decision-pilot.log"
+      - name: Run frozen limited synthetic holdout (no tuning)
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 900s python -m experiments.world_model_integration.confirmation --output "$RUNNER_TEMP/decision-confirmation.json" 2>&1 | tee "$RUNNER_TEMP/decision-confirmation.log"
+      - name: Run frozen six-arm business confirmation with experimental F
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 900s python -m experiments.world_model_integration.session_confirmation --checkpoint "$RUNNER_TEMP/session-v2.pt" --output "$RUNNER_TEMP/session-confirmation.json" 2>&1 | tee "$RUNNER_TEMP/session-confirmation.log"
+      - name: Stress real workstation contention, never reuse as confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s python -m experiments.world_model_integration.capacity_stress --checkpoint "$RUNNER_TEMP/session-v2.pt" --output "$RUNNER_TEMP/capacity-stress.json" 2>&1 | tee "$RUNNER_TEMP/capacity-stress.log"
+      - name: Preserve raw decision and test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-decision-integration-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/integration-tests.log
+            ${{ runner.temp }}/workflow-regression.log
+            ${{ runner.temp }}/decision-pilot.log
+            ${{ runner.temp }}/decision-pilot.json
+            ${{ runner.temp }}/decision-confirmation.log
+            ${{ runner.temp }}/decision-confirmation.json
+            ${{ runner.temp }}/session-dataset.log
+            ${{ runner.temp }}/session-dataset.json
+            ${{ runner.temp }}/session-training.log
+            ${{ runner.temp }}/session-checkpoint-sha.log
+            ${{ runner.temp }}/session-v2.pt
+            ${{ runner.temp }}/session-event-comparison.json
+            ${{ runner.temp }}/session-event-comparison.log
+            ${{ runner.temp }}/session-confirmation.json
+            ${{ runner.temp }}/session-confirmation.log
+            ${{ runner.temp }}/capacity-stress.log
+            ${{ runner.temp }}/capacity-stress.json
+            ${{ runner.temp }}/v2-pibt.log
+            ${{ runner.temp }}/v2-lacam.log
+            ${{ runner.temp }}/v2-motion-old-tests.log
+            ${{ runner.temp }}/v2-motion-new-tests.log
+          if-no-files-found: warn
+          retention-days: 60

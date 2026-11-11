@@ -1,0 +1,168 @@
+{
+  "scope": "readonly_offline_analysis_of_two_existing_synthetic_artifacts",
+  "source_zip_sha256": {
+    "confirmation_12_scenes": "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233",
+    "new_regression_8_scenes": "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5"
+  },
+  "model_inference": 0,
+  "training": 0,
+  "gpu": 0,
+  "new_simulator_trajectories": 0,
+  "comparison": {
+    "confirmation": {
+      "scenes": 12,
+      "P4_rule_multicandidate": 178,
+      "P4_LOO_sensitive": 0,
+      "P5_v4_multicandidate": 179,
+      "P5_LOO_sensitive": 17,
+      "same_state_action_flips": 6,
+      "rule_business_ties_at_flip": 6,
+      "v4_LOO_sensitive_flips": 5,
+      "urgent_ontime_P4_jobs": 9,
+      "urgent_ontime_P5_jobs": 11,
+      "urgent_job_count": 24
+    },
+    "new_regression": {
+      "scenes": 8,
+      "P4_rule_multicandidate": 117,
+      "P4_LOO_sensitive": 0,
+      "P5_v4_multicandidate": 119,
+      "P5_LOO_sensitive": 8,
+      "same_state_action_flips": 4,
+      "rule_business_ties_at_flip": 3,
+      "v4_LOO_sensitive_flips": 3,
+      "urgent_ontime_P4_jobs": 8,
+      "urgent_ontime_P5_jobs": 8,
+      "urgent_job_count": 15
+    }
+  },
+  "pooled_descriptive_counts": {
+    "scenes": 20,
+    "P5_v4_multicandidate": 298,
+    "P5_LOO_sensitive": 25,
+    "P4_rule_multicandidate": 295,
+    "P4_LOO_sensitive": 0,
+    "strict_matched_action_flips": 10,
+    "rule_business_tied_flips": 9,
+    "V4_LOO_sensitive_flips": 8
+  },
+  "actual_matched_action_flip_details": [
+    [
+      905074,
+      126,
+      0,
+      1,
+      true,
+      true,
+      3,
+      0.3333333333333428
+    ],
+    [
+      905147,
+      0,
+      0,
+      1,
+      true,
+      true,
+      2,
+      0.3333333333333428
+    ],
+    [
+      905220,
+      41,
+      0,
+      1,
+      true,
+      true,
+      4,
+      0.3333333333333144
+    ],
+    [
+      905585,
+      0,
+      0,
+      1,
+      true,
+      true,
+      1,
+      0.3333333333333333
+    ],
+    [
+      905658,
+      105,
+      1,
+      2,
+      true,
+      false,
+      3,
+      1.0999999999999943
+    ],
+    [
+      905804,
+      0,
+      0,
+      1,
+      true,
+      true,
+      2,
+      1.3333333333333286
+    ],
+    [
+      906001,
+      42,
+      0,
+      2,
+      true,
+      true,
+      4,
+      0.3333333333333428
+    ],
+    [
+      906098,
+      110,
+      0,
+      2,
+      true,
+      true,
+      3,
+      0.3333333333333286
+    ],
+    [
+      906195,
+      138,
+      1,
+      0,
+      false,
+      false,
+      3,
+      3.126984126984148
+    ],
+    [
+      906680,
+      66,
+      0,
+      1,
+      true,
+      true,
+      1,
+      0.33333333333333215
+    ]
+  ],
+  "action_flip_detail_columns": [
+    "seed",
+    "tick",
+    "Rule_selected_index",
+    "V4_selected_index",
+    "Rule_business_cost_tied",
+    "V4_leave_one_particle_unstable",
+    "decisive_V4_score_component",
+    "V4_advantage_in_that_component"
+  ],
+  "interpretation": "LOO is sensitivity of existing three paired particle predictions, NOT independent sampling or single-action causal effect",
+  "identification_limit": [
+    "no matched per-query model likelihood and true service event labels",
+    "no complete paired true futures for all alternate candidate actions",
+    "no separation of neural one-step forecast error and terminal value proxy error"
+  ],
+  "next_step_requires_new_frozen_protocol": true
+}

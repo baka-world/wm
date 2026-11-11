@@ -1,0 +1,28 @@
+{
+  "status": "predeclared-before-confirmation-evaluation",
+  "scope": "limited synthetic holdout; independent map shift, obstacles, release table and execution seeds",
+  "map": {
+    "width": 10,
+    "height": 7,
+    "station_shift": [1, 1],
+    "robot_shift": [1, 1],
+    "blocked": [[4, 2], [4, 4]]
+  },
+  "jobs": [
+    {"id": "H1", "workflow": "w0", "release_tick": 0},
+    {"id": "H2", "workflow": "w1", "release_tick": 2},
+    {"id": "H3", "workflow": "w0", "release_tick": 3}
+  ],
+  "execution_seeds": [941, 947],
+  "max_ticks": 100,
+  "station_service_jitter_ticks": 1,
+  "planner_seed": 1810,
+  "horizon": 5,
+  "particles": 3,
+  "candidate_budget": 4,
+  "solver_seconds": 0.5,
+  "max_prediction_seconds": 120.0,
+  "risk_weight": 0.0,
+  "arms": ["A_rule_legacy", "B_pets_legacy", "C_pets_model", "D_structured_model"],
+  "prohibited": ["GPU", "training", "hindsight_oracle", "configuration_change_after_confirmation"]
+}

@@ -1,0 +1,15 @@
+{
+  "protocol": "pr18-v4-frozen-synthetic-mechanism-20261110",
+  "source_training_run_id": 42815634215,
+  "artifact_id": 13765135588,
+  "config_sha256": "a311d2015991f15956a2ef0cc5fa1ba5e9f0db1625d7a311a3bb6b2a4a82c5e8",
+  "development_data_sha256": "7dd3973f1b598471af241de5938396b056b0ea164f06c21ea4c622d249f76987",
+  "v4_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "v3_frozen_sha256": "65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696",
+  "in_range_groups": 8,
+  "ood_9_10_groups": 8,
+  "one_time": true,
+  "no_retrain": true,
+  "do_not_modify_after_results": true,
+  "note": "Frozen validation-selected V4; first and only independent in-range and OOD generation after selecting V4; no confirmation refitting."
+}

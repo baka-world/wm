@@ -1,0 +1,1 @@
+{"preflight": [{"seed": 551000, "candidate_count": 2, "jitter": 0, "v4_queries": 16, "elapsed": 0.06204287299999578, "spread": 3.0}, {"seed": 661000, "candidate_count": 2, "jitter": 0, "v4_queries": 18, "elapsed": 0.0588209850000041, "spread": 1.0}]}

@@ -1,0 +1,19 @@
+{
+  "protocol": "pr18-frozen-v4-keyed-service-crn-diagnostic-v1",
+  "original_run_id": 42915514192,
+  "original_artifact_id": 13810225052,
+  "original_pr_commit": "d9dd934ca70c073b267b9879910321bab94bc49f",
+  "new_arm_pair": ["P4_Rule", "P5_V4_keyed"],
+  "changed_dimension": "only V4 particle random draw coupling: query-order stream to session-keyed independent uniform",
+  "preserved": ["frozen V4 weights SHA256 60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "4 smoke seeds","20 development seeds","H=5","3 particles","4 candidate maximum",
+    "identical business score","same lawful observation","same scheduler","same simulator","same stop horizon"],
+  "no_training": true,
+  "gpu": 0,
+  "post_hoc_dev_diagnostic": true,
+  "independent_test": false,
+  "prior_action_flips": 10,
+  "precommitted_analysis": ["P4/P5 strict shared-state action flips",
+    "P4/P5 business metrics","P5 actual service query count","CPU and safety",
+    "paired per-seed comparison with original stream baseline without tuning"]
+}

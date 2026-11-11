@@ -1,0 +1,8 @@
+{
+  "analytic_conditional_hazard": "for integer service effective progress e with not completed, P(D=e+1|D>e,x)=P(D=e+1|x)/P(D>e|x) when denominator nonzero, conditional on public duration/jitter and legitimate history",
+  "analytic_formula_scope": "Cannot use hidden SHA/seed, private service_remaining, future outage plan as online input. A complex analytic whole-system closed form may not exist but this does not establish neural-exclusive conditional information.",
+  "current_synthetic_duration": "D = public station.service_ticks + SHA256(seed,sample_id,phase,station_id) % (jitter+1); future seed private",
+  "information_verdict": "NO_VERIFIED_V4_INCREMENT_OVER_ANALYTIC_OR_B2; no new inference performed",
+  "p2_p3_full_workflow": "P3 convolves independent public discrete jitter for current publicly known future stages and compares expected positive lateness; it omits unknown future retest, queue dynamics and outage. Not a whole-system true oracle.",
+  "v4_scope": "V4 predicts only active eligible service next-step completion, not future test retest decision, workstation outage or job-level on-time success probability. Prior independent event Brier Rule 0.06970, B2 0.06369, V4 0.06482."
+}

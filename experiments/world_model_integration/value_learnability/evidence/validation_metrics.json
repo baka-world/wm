@@ -1,0 +1,1422 @@
+{
+  "groups": [
+    {
+      "seed": 661000,
+      "layout": 5,
+      "candidate_count": 2,
+      "cost_spread": 1.0,
+      "contested": true,
+      "workflow_depth": "single",
+      "v4_queries": 18,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 1,
+          "regret": 1.0,
+          "top1": 0,
+          "pair_concordance": 0.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              37.0,
+              1.0,
+              12.0
+            ],
+            [
+              39.0,
+              1.0,
+              12.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -91.0,
+            -92.0
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 1,
+          "regret": 1.0,
+          "top1": 0,
+          "pair_concordance": 0.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              37.0,
+              1.0,
+              12.0
+            ],
+            [
+              39.0,
+              1.0,
+              12.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.4343859467438138,
+          "scores": [
+            0.2828070266280931,
+            -0.2828070266280931
+          ]
+        },
+        "B4": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.33483525620455223,
+          "scores": [
+            0.3325823718977239,
+            -0.3325823718977239
+          ]
+        },
+        "B5": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.3260313865826937,
+          "scores": [
+            0.33698430670865315,
+            -0.33698430670865315
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661037,
+      "layout": 6,
+      "candidate_count": 4,
+      "cost_spread": 3.1666666666666714,
+      "contested": false,
+      "workflow_depth": "multiple",
+      "v4_queries": 66,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              49.0,
+              0.0,
+              16.0
+            ],
+            [
+              55.0,
+              0.0,
+              16.0
+            ],
+            [
+              51.0,
+              0.0,
+              16.0
+            ],
+            [
+              51.0,
+              0.0,
+              16.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.4,
+          "relative_gap_mae": null,
+          "scores": [
+            -184.5,
+            -180.5,
+            -92.0,
+            -92.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              49.0,
+              0.0,
+              16.0
+            ],
+            [
+              55.0,
+              0.0,
+              16.0
+            ],
+            [
+              51.0,
+              0.0,
+              16.0
+            ],
+            [
+              51.0,
+              0.0,
+              16.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": 1.0532436886239458,
+          "scores": [
+            -1.179324989607223,
+            1.9665083437261126,
+            -0.08736799259261052,
+            -0.699815361526279
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": 1.100246482040829,
+          "scores": [
+            -1.0415442335590277,
+            1.8103132447393528,
+            -0.11566791562921847,
+            -0.6531010955511062
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": 1.1018407711175808,
+          "scores": [
+            -1.0533912544176833,
+            1.8111274811775613,
+            -0.10255230026909502,
+            -0.6551839264907835
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661074,
+      "layout": 5,
+      "candidate_count": 3,
+      "cost_spread": 2.1875,
+      "contested": true,
+      "workflow_depth": "multiple",
+      "v4_queries": 23,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              30.0,
+              0.0,
+              8.0
+            ],
+            [
+              32.0,
+              0.0,
+              9.0
+            ],
+            [
+              32.0,
+              0.0,
+              9.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": null,
+          "scores": [
+            -91.5,
+            -89.5,
+            -89.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              30.666666666666668,
+              0.0,
+              8.666666666666666
+            ],
+            [
+              32.0,
+              0.0,
+              9.0
+            ],
+            [
+              32.0,
+              0.0,
+              9.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": 0.4166666666666667,
+          "scores": [
+            -1.213801050048144,
+            0.6069005250240721,
+            0.6069005250240721
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": 0.4166666666666667,
+          "scores": [
+            -1.1345460227882838,
+            0.5672730113941422,
+            0.5672730113941422
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6666666666666666,
+          "relative_gap_mae": 0.4166666666666667,
+          "scores": [
+            -1.103570385821736,
+            0.5517851929108684,
+            0.5517851929108684
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661111,
+      "layout": 6,
+      "candidate_count": 2,
+      "cost_spread": 3.75,
+      "contested": false,
+      "workflow_depth": "multiple",
+      "v4_queries": 18,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              78.0,
+              0.0,
+              18.0
+            ],
+            [
+              80.0,
+              0.0,
+              18.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -91.5,
+            -88.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              78.0,
+              0.0,
+              18.0
+            ],
+            [
+              80.0,
+              0.0,
+              18.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.4774248382246116,
+          "scores": [
+            -1.1362875808876942,
+            1.1362875808876942
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.8299647818556266,
+          "scores": [
+            -0.9600176090721867,
+            0.9600176090721867
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.9419757930379231,
+          "scores": [
+            -0.9040121034810384,
+            0.9040121034810384
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661148,
+      "layout": 5,
+      "candidate_count": 4,
+      "cost_spread": 3.333333333333343,
+      "contested": true,
+      "workflow_depth": "multiple",
+      "v4_queries": 39,
+      "methods": {
+        "B0": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              107.0,
+              1.0,
+              22.0
+            ],
+            [
+              108.0,
+              0.0,
+              21.0
+            ],
+            [
+              107.0,
+              1.0,
+              22.0
+            ],
+            [
+              104.0,
+              0.0,
+              19.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 3,
+          "regret": 3.333333333333343,
+          "top1": 0,
+          "pair_concordance": 0.4,
+          "relative_gap_mae": null,
+          "scores": [
+            -175.0,
+            -171.0,
+            -90.0,
+            -93.0
+          ]
+        },
+        "B3": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              107.0,
+              1.0,
+              22.0
+            ],
+            [
+              110.0,
+              0.3333333333333333,
+              22.0
+            ],
+            [
+              107.0,
+              1.0,
+              22.0
+            ],
+            [
+              106.66666666666667,
+              0.0,
+              20.333333333333332
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6,
+          "relative_gap_mae": 2.162618284855781,
+          "scores": [
+            -0.316738399947601,
+            1.8811782667190673,
+            0.41093788077846793,
+            -1.9753777475499346
+          ]
+        },
+        "B4": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6,
+          "relative_gap_mae": 1.568191423085063,
+          "scores": [
+            0.06474590233923438,
+            1.4672617943818138,
+            0.7442206998846601,
+            -2.276228396605709
+          ]
+        },
+        "B5": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.6,
+          "relative_gap_mae": 1.5550990257253487,
+          "scores": [
+            0.06679171987157594,
+            1.439252002702016,
+            0.7453223501653099,
+            -2.2513660727389033
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661185,
+      "layout": 6,
+      "candidate_count": 3,
+      "cost_spread": 1.0,
+      "contested": false,
+      "workflow_depth": "single",
+      "v4_queries": 24,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              19.0,
+              0.0,
+              6.0
+            ],
+            [
+              21.0,
+              0.0,
+              6.0
+            ],
+            [
+              21.0,
+              0.0,
+              6.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -90.5,
+            -88.5,
+            -88.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              19.0,
+              0.0,
+              6.0
+            ],
+            [
+              21.0,
+              0.0,
+              6.0
+            ],
+            [
+              21.0,
+              0.0,
+              6.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.8207015750722162,
+          "scores": [
+            -1.213801050048144,
+            0.6069005250240721,
+            0.6069005250240721
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.48801841233882803,
+          "scores": [
+            -0.9920122748925518,
+            0.4960061374462762,
+            0.4960061374462762
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.4299085255414963,
+          "scores": [
+            -0.9532723503609974,
+            0.47663617518049894,
+            0.47663617518049894
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661222,
+      "layout": 5,
+      "candidate_count": 2,
+      "cost_spread": 1.25,
+      "contested": true,
+      "workflow_depth": "multiple",
+      "v4_queries": 13,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              59.0,
+              0.0,
+              16.0
+            ],
+            [
+              60.0,
+              1.0,
+              18.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -93.0,
+            -90.5
+          ]
+        },
+        "B3": {
+          "chosen": 1,
+          "oracle_choice": 0,
+          "regret": 1.25,
+          "top1": 0,
+          "pair_concordance": 0.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              61.0,
+              0.0,
+              18.0
+            ],
+            [
+              60.0,
+              1.0,
+              18.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.6678015098964414,
+          "scores": [
+            -0.9589007549482207,
+            0.9589007549482207
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.4415560567748469,
+          "scores": [
+            -1.3457780283874234,
+            1.3457780283874234
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.5997108205076427,
+          "scores": [
+            -1.4248554102538213,
+            1.4248554102538213
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661259,
+      "layout": 6,
+      "candidate_count": 4,
+      "cost_spread": 2.0,
+      "contested": false,
+      "workflow_depth": "multiple",
+      "v4_queries": 61,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              44.0,
+              0.0,
+              14.0
+            ],
+            [
+              50.0,
+              0.0,
+              16.0
+            ],
+            [
+              46.0,
+              0.0,
+              16.0
+            ],
+            [
+              46.0,
+              0.0,
+              14.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.75,
+          "relative_gap_mae": null,
+          "scores": [
+            -189.0,
+            -185.0,
+            -93.5,
+            -95.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 0.75,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              45.333333333333336,
+              0.0,
+              15.333333333333334
+            ],
+            [
+              50.0,
+              0.0,
+              16.0
+            ],
+            [
+              46.0,
+              0.0,
+              16.0
+            ],
+            [
+              47.0,
+              0.0,
+              15.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.7719152918588922,
+          "scores": [
+            -1.9775657063348535,
+            1.1682676269984822,
+            1.2430332019534398,
+            -0.43373512261706915
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.6789465618676771,
+          "scores": [
+            -1.9824323446982004,
+            1.2970263772873762,
+            1.3099451883736701,
+            -0.624539220962846
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.6707307685467644,
+          "scores": [
+            -1.9800255137215828,
+            1.3353873282558775,
+            1.2832021620937586,
+            -0.6385639766280539
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661296,
+      "layout": 5,
+      "candidate_count": 3,
+      "cost_spread": 0.5,
+      "contested": true,
+      "workflow_depth": "multiple",
+      "v4_queries": 19,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              44.0,
+              0.0,
+              9.0
+            ],
+            [
+              46.0,
+              0.0,
+              11.0
+            ],
+            [
+              46.0,
+              0.0,
+              11.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -92.0,
+            -90.0,
+            -90.0
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              45.333333333333336,
+              0.0,
+              10.333333333333334
+            ],
+            [
+              47.0,
+              0.0,
+              12.0
+            ],
+            [
+              47.0,
+              0.0,
+              12.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.3207015750722162,
+          "scores": [
+            -1.213801050048144,
+            0.6069005250240721,
+            0.6069005250240721
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.415619656026024,
+          "scores": [
+            -1.277079770684016,
+            0.6385398853420079,
+            0.6385398853420079
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.3432819273506325,
+          "scores": [
+            -1.2288546182337545,
+            0.6144273091168779,
+            0.6144273091168779
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661333,
+      "layout": 6,
+      "candidate_count": 2,
+      "cost_spread": 1.125,
+      "contested": false,
+      "workflow_depth": "multiple",
+      "v4_queries": 18,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 1,
+          "regret": 1.125,
+          "top1": 0,
+          "pair_concordance": 0.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              68.0,
+              0.0,
+              18.0
+            ],
+            [
+              71.0,
+              0.0,
+              18.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -90.5,
+            -91.5
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 1,
+          "regret": 1.125,
+          "top1": 0,
+          "pair_concordance": 0.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              68.0,
+              0.0,
+              18.0
+            ],
+            [
+              71.0,
+              0.0,
+              18.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.5593859467438138,
+          "scores": [
+            0.2828070266280931,
+            -0.2828070266280931
+          ]
+        },
+        "B4": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.3495338773644382,
+          "scores": [
+            0.3877330613177809,
+            -0.3877330613177809
+          ]
+        },
+        "B5": {
+          "chosen": 1,
+          "oracle_choice": 1,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.21307743186722627,
+          "scores": [
+            0.45596128406638686,
+            -0.45596128406638686
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661370,
+      "layout": 5,
+      "candidate_count": 4,
+      "cost_spread": 2.0,
+      "contested": true,
+      "workflow_depth": "single",
+      "v4_queries": 39,
+      "methods": {
+        "B0": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              32.0,
+              0.0,
+              10.0
+            ],
+            [
+              33.0,
+              0.0,
+              9.0
+            ],
+            [
+              32.0,
+              0.0,
+              10.0
+            ],
+            [
+              29.0,
+              0.0,
+              7.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 3,
+          "regret": 1.25,
+          "top1": 0,
+          "pair_concordance": 0.4,
+          "relative_gap_mae": null,
+          "scores": [
+            -178.5,
+            -174.5,
+            -93.0,
+            -93.5
+          ]
+        },
+        "B3": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              32.0,
+              0.6666666666666666,
+              10.0
+            ],
+            [
+              35.0,
+              0.3333333333333333,
+              10.0
+            ],
+            [
+              32.0,
+              0.6666666666666666,
+              10.0
+            ],
+            [
+              31.666666666666668,
+              0.0,
+              8.333333333333334
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 3,
+          "regret": 1.25,
+          "top1": 0,
+          "pair_concordance": 0.8,
+          "relative_gap_mae": 0.8574669191423491,
+          "scores": [
+            -0.743351342110545,
+            1.4545653245561232,
+            -0.04938330675595459,
+            -0.6618306756896234
+          ]
+        },
+        "B4": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.6550483548825936,
+          "scores": [
+            -0.6551781120236483,
+            1.3041059913645727,
+            0.09950151479570729,
+            -0.7484293941366319
+          ]
+        },
+        "B5": {
+          "chosen": 3,
+          "oracle_choice": 3,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.3671406301209863,
+          "scores": [
+            -0.4315999469809686,
+            1.1535516198316667,
+            0.25539997666710235,
+            -0.977351649517801
+          ]
+        }
+      }
+    },
+    {
+      "seed": 661407,
+      "layout": 6,
+      "candidate_count": 3,
+      "cost_spread": 0.75,
+      "contested": false,
+      "workflow_depth": "multiple",
+      "v4_queries": 24,
+      "methods": {
+        "B0": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              24.0,
+              0.0,
+              9.0
+            ],
+            [
+              26.0,
+              0.0,
+              9.0
+            ],
+            [
+              26.0,
+              0.0,
+              9.0
+            ]
+          ]
+        },
+        "B1": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            -92.0,
+            -90.0,
+            -90.0
+          ]
+        },
+        "B3": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": null,
+          "scores": [
+            [
+              24.0,
+              0.0,
+              9.0
+            ],
+            [
+              26.0,
+              0.0,
+              9.0
+            ],
+            [
+              26.0,
+              0.0,
+              9.0
+            ]
+          ]
+        },
+        "B2": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 1.0471343833814775,
+          "scores": [
+            -1.213801050048144,
+            0.6069005250240721,
+            0.6069005250240721
+          ]
+        },
+        "B4": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.8253456082258853,
+          "scores": [
+            -0.992012274892552,
+            0.49600613744627614,
+            0.49600613744627614
+          ]
+        },
+        "B5": {
+          "chosen": 0,
+          "oracle_choice": 0,
+          "regret": 0.0,
+          "top1": 1,
+          "pair_concordance": 1.0,
+          "relative_gap_mae": 0.7866056836943308,
+          "scores": [
+            -0.9532723503609977,
+            0.4766361751804987,
+            0.4766361751804987
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "B0": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.17708333333333334,
+      "top1_all": 0.8333333333333334,
+      "top1_informative": 0.8333333333333334,
+      "pair_concordance": 0.7555555555555555,
+      "relative_gap_mae": null,
+      "mean_scoring_cpu_seconds_per_state": 0.016490831500000375
+    },
+    "B1": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.38194444444444525,
+      "top1_all": 0.8333333333333334,
+      "top1_informative": 0.8333333333333334,
+      "pair_concordance": 0.8013888888888889,
+      "relative_gap_mae": null,
+      "mean_scoring_cpu_seconds_per_state": 0.00016902358333359402
+    },
+    "B2": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.10416666666666667,
+      "top1_all": 0.9166666666666666,
+      "top1_informative": 0.9166666666666666,
+      "pair_concordance": 0.9055555555555556,
+      "relative_gap_mae": 0.965787218856852,
+      "mean_scoring_cpu_seconds_per_state": 0.00018356458333368408
+    },
+    "B3": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.28125,
+      "top1_all": 0.75,
+      "top1_informative": 0.75,
+      "pair_concordance": 0.6513888888888889,
+      "relative_gap_mae": null,
+      "mean_scoring_cpu_seconds_per_state": 0.025247310333333495
+    },
+    "B4": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.0,
+      "top1_all": 1,
+      "top1_informative": 1,
+      "pair_concordance": 0.9222222222222223,
+      "relative_gap_mae": 0.9253310947777525,
+      "mean_scoring_cpu_seconds_per_state": 0.016503414583333893
+    },
+    "B5": {
+      "groups": 12,
+      "informative_groups": 12,
+      "mean_regret": 0.0,
+      "top1_all": 1,
+      "top1_informative": 1,
+      "pair_concordance": 0.9222222222222223,
+      "relative_gap_mae": 0.8960057858966077,
+      "mean_scoring_cpu_seconds_per_state": 0.025259347416666984
+    }
+  }
+}

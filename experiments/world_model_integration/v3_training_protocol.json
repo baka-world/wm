@@ -1,0 +1,23 @@
+{
+  "protocol": "pr18-v3-frozen-training-20261110",
+  "input_source": "existing v2 factual train/validation, no old test during selection",
+  "source_dataset_config": "experiments/world_model_integration/dataset_config.json",
+  "baseline": {
+    "B0": "train empirical event frequency",
+    "B1": "conditional-at-risk elapsed effective steps, bins [0,1,2,3,4,5,6,8,infinity], Beta prior B0 weight 4",
+    "B2": "conditional-on-public-expected and normalized effective progress; ratio bins [0,0.25,0.5,0.75,1.0,1.25,infinity], prior B1 weight 6; expected bins <=3, <=5, >5",
+    "threshold": 0.5,
+    "ece_bins": 5
+  },
+  "ablation": {
+    "V2": {"source": "original frozen CI artifact 13753445460; sha256 84f426a7acdb860b283cc7f19efdc930ab6073d191bd17366949d7b7c52bb68d", "train": false},
+    "V3-A": {"input": "v2", "batch_size": 32, "epochs_max": 100, "patience": 10},
+    "V3-B": {"input": "v3", "batch_size": "full", "max_optimizer_steps": 10, "epochs_max": 10, "patience": 10},
+    "V3-C": {"input": "v3", "batch_size": 32, "epochs_max": 100, "patience": 10}
+  },
+  "cpu": {"seed": 1810, "optimizer": "Adam", "lr": 0.001, "threads": 1, "seconds_max_per_variant": 180, "seconds_max_total": 600, "preflight_train_steps": 3, "shuffle_seed_base": 1810},
+  "checkpoint_selection": {"method":"minimum validation Brier", "ties":"V3-A then V3-B then V3-C","threshold":0.5,"no_test_selection":true},
+  "prediction_gate": {"candidate_validation_brier_must_beat": "B0 validation Brier", "require_finite_probabilities":true},
+  "independent_holdout": "experiments/world_model_integration/v3_independent_config.json",
+  "freeze_before_run": true
+}

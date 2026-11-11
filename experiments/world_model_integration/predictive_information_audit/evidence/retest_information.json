@@ -1,0 +1,49 @@
+{
+  "contradictions": [],
+  "law": "SHA256(private_seed,public_job_id) %100 < synthetic_retest_probability; policy order independent; seed hidden; no verified predictor prior to detection",
+  "leakage_limitations": "Cannot identify pre-detection result from public job id or group-level rate; group-level base-rate estimate is possible, not job-specific risk prediction.",
+  "per_arm": {
+    "P0": {
+      "counts": {
+        "candidate_retest_observed": 23,
+        "created": 23,
+        "decision_before_detection": 0,
+        "decisions": 91,
+        "declined": 68,
+        "urgent_created": 9
+      }
+    },
+    "P1": {
+      "counts": {
+        "candidate_retest_observed": 24,
+        "created": 24,
+        "decision_before_detection": 0,
+        "decisions": 93,
+        "declined": 69,
+        "urgent_created": 13
+      }
+    },
+    "P2": {
+      "counts": {
+        "candidate_retest_observed": 24,
+        "created": 24,
+        "decision_before_detection": 0,
+        "decisions": 93,
+        "declined": 69,
+        "urgent_created": 13
+      }
+    },
+    "P3": {
+      "counts": {
+        "candidate_retest_observed": 24,
+        "created": 24,
+        "decision_before_detection": 0,
+        "decisions": 93,
+        "declined": 69,
+        "urgent_created": 13
+      }
+    }
+  },
+  "pre_retest_signal_verdict": "PRE_RETEST_PREDICTION_NOT_IDENTIFIABLE_FROM_CURRENT_OBSERVATION",
+  "same_job_same_seed_truth_on_observed_decisions": true
+}

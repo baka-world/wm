@@ -1,0 +1,135 @@
+name: PR18 dynamic nonzero-tick value and counterfactual CPU audit
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-dynamic-audit-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  dynamic-value-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 32
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Checkout existing PR18 HEAD only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Python CPU setup
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Pinned CPU deps, no neural training
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print('CPU-only torch',torch.__version__)
+          PY
+      - name: Restore unchanged V4 checkpoint with checksum
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-dynamic"
+          curl -fSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr18-dynamic/training.zip"
+          unzip -p "$RUNNER_TEMP/pr18-dynamic/training.zip" v4-data.pt > "$RUNNER_TEMP/pr18-dynamic/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-dynamic/v4-data.pt" | sha256sum -c
+      - name: Unit tests and protocol SHA before any predictions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/world_model_integration/dynamic_value_audit/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/pr18-dynamic/test.log"
+          sha256sum experiments/world_model_integration/dynamic_value_audit/protocol.json \
+            experiments/world_model_integration/value_learnability/protocol.json \
+            | tee "$RUNNER_TEMP/pr18-dynamic/protocol-sha.txt"
+      - name: Scan existing development trajectory specifications and SEAL selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-dynamic/data"
+          timeout 550s python -m experiments.world_model_integration.dynamic_value_audit.audit \
+            --phase scan --out "$RUNNER_TEMP/pr18-dynamic/data" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-dynamic/scan.log"
+          test -s "$RUNNER_TEMP/pr18-dynamic/data/selection_lock.json"
+          sha256sum "$RUNNER_TEMP/pr18-dynamic/data/selection_lock.json" \
+            | tee "$RUNNER_TEMP/pr18-dynamic/selection-lock-sha.txt"
+      - name: Prefix replay gate, V4 layered prediction, single-realization costs
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 1050s python -m experiments.world_model_integration.dynamic_value_audit.audit \
+            --phase evaluate --v4 "$RUNNER_TEMP/pr18-dynamic/v4-data.pt" \
+            --out "$RUNNER_TEMP/pr18-dynamic/data" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-dynamic/evaluate.log"
+      - name: Verify source, lock and preserve immutable evidence in PR18
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil
+          source=pathlib.Path(os.environ['RUNNER_TEMP'])/'pr18-dynamic'
+          s=json.loads((source/'data/summary.json').read_text())
+          lock=json.loads((source/'data/selection_lock.json').read_text())
+          out=pathlib.Path('experiments/world_model_integration/dynamic_value_audit/evidence')
+          if out.exists() and any(out.iterdir()):
+              raise FileExistsError('immutable dynamic evidence already exists')
+          out.mkdir(parents=True,exist_ok=True)
+          for p in (source/'data').glob('*.json'): shutil.copy2(p,out/p.name)
+          for name in ('scan.log','evaluate.log','test.log','protocol-sha.txt','selection-lock-sha.txt'):
+              shutil.copy2(source/name,out/name)
+          meta={
+             'run_id':int(os.environ['GITHUB_RUN_ID']),
+             'source_head':os.environ['GITHUB_SHA'],
+             'protocol_sha256':hashlib.sha256(pathlib.Path('experiments/world_model_integration/dynamic_value_audit/protocol.json').read_bytes()).hexdigest(),
+             'v4_sha256':'60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c',
+             'cpu_only':True,'trained_models':0,'new_checkpoints':0,
+             'independent_test_reuse':False,'state_selection_before_labels':lock['not_selected_on_counterfactual_cost'],
+             'single_realization_only':True,
+             'python_version':os.popen('python --version').read().strip()
+          }
+          (out/'provenance.json').write_text(json.dumps(meta,indent=2)+'\n')
+          hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.iterdir()) if p.is_file()}
+          (out/'sha256.json').write_text(json.dumps(hashes,indent=2)+'\n')
+          print('DYNAMIC_VERDICT',s['verdict'])
+          print('DYNAMIC_VALID',s['valid_evaluated_states'])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/world_model_integration/dynamic_value_audit/evidence
+          git diff --cached --check
+          git commit -m 'evidence(pr18): archive nonzero dynamic audit and single-realization gates [skip ci]'
+          git push origin HEAD:refs/heads/feature/world-model-decision-integration-20261110
+      - name: Always archive CPU diagnostics including aborted gates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-dynamic-value-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-dynamic/data/*.json
+            ${{ runner.temp }}/pr18-dynamic/*.log
+            ${{ runner.temp }}/pr18-dynamic/*-sha.txt
+          if-no-files-found: warn
+          retention-days: 90

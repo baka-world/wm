@@ -1,0 +1,520 @@
+{
+  "protocol": "pr18-v4-frozen-synthetic-mechanism-20261110",
+  "gate_pass": true,
+  "config": {
+    "seed": 1810,
+    "horizon": 5,
+    "particles": 3,
+    "candidate_budget": 4,
+    "solver_seconds": 0.5,
+    "risk_weight": 0.0,
+    "case_count_if_pass": 3,
+    "states_per_case": 2,
+    "candidate_stride": 13
+  },
+  "models": [
+    "Rule",
+    "V3-C",
+    "V4"
+  ],
+  "model_online_verified": false,
+  "cases": [
+    {
+      "seed": 43011,
+      "layout": 5,
+      "arms": {
+        "Rule": {
+          "completed": 2,
+          "restricted_mean_flow": 77.5,
+          "mean_wait": 26.5,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 20.9065833333284,
+          "decision_p95_ms": 29.311082499990704,
+          "model_calls": 135,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.16050028600000132
+        },
+        "V3-C": {
+          "completed": 2,
+          "restricted_mean_flow": 77.5,
+          "mean_wait": 26.5,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 27.62081833333004,
+          "decision_p95_ms": 37.211571999996806,
+          "model_calls": 135,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.19968277899999975
+        },
+        "V4": {
+          "completed": 2,
+          "restricted_mean_flow": 77.5,
+          "mean_wait": 26.5,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 27.239170833335418,
+          "decision_p95_ms": 36.87838999999826,
+          "model_calls": 135,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.19743603399999188
+        }
+      },
+      "fixed_states": [
+        {
+          "tick": 0,
+          "candidates": [
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43011-0::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43011-1::stage1"
+              }
+            ]
+          ],
+          "factual_counterfactual_flow": [
+            77.5,
+            72.5
+          ],
+          "predictions": {
+            "Rule": {
+              "rank": [
+                0,
+                1
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  99.0,
+                  0.0,
+                  24.0
+                ],
+                [
+                  99.0,
+                  1.0,
+                  24.0
+                ]
+              ],
+              "true_regret": 5.0
+            },
+            "V3-C": {
+              "rank": [
+                0,
+                1
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  99.0,
+                  0.0,
+                  24.0
+                ],
+                [
+                  99.0,
+                  1.0,
+                  24.0
+                ]
+              ],
+              "true_regret": 5.0
+            },
+            "V4": {
+              "rank": [
+                0,
+                1
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  99.0,
+                  0.0,
+                  24.0
+                ],
+                [
+                  99.0,
+                  1.0,
+                  24.0
+                ]
+              ],
+              "true_regret": 5.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 43015,
+      "layout": 6,
+      "arms": {
+        "Rule": {
+          "completed": 4,
+          "restricted_mean_flow": 45.75,
+          "mean_wait": 6.75,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 26.14862849999966,
+          "decision_p95_ms": 36.44904100000019,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.23699815499999488
+        },
+        "V3-C": {
+          "completed": 4,
+          "restricted_mean_flow": 45.75,
+          "mean_wait": 6.75,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 42.830537749999564,
+          "decision_p95_ms": 55.85551539999756,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.37044005399999946
+        },
+        "V4": {
+          "completed": 4,
+          "restricted_mean_flow": 45.75,
+          "mean_wait": 6.75,
+          "resource_wait_ticks": 0,
+          "decision_mean_ms": 43.05104037500307,
+          "decision_p95_ms": 55.865666700000105,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.3725638290000006
+        }
+      },
+      "fixed_states": [
+        {
+          "tick": 0,
+          "candidates": [
+            [
+              {
+                "robot_id": "R2",
+                "sample_id": "F43015-0::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R3",
+                "sample_id": "F43015-0::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43015-0::stage1"
+              }
+            ]
+          ],
+          "factual_counterfactual_flow": [
+            45.25,
+            47.25,
+            47.25
+          ],
+          "predictions": {
+            "Rule": {
+              "rank": [
+                0,
+                1,
+                2
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  32.0,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ]
+              ],
+              "true_regret": 0.0
+            },
+            "V3-C": {
+              "rank": [
+                0,
+                1,
+                2
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  31.666666666666668,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ]
+              ],
+              "true_regret": 0.0
+            },
+            "V4": {
+              "rank": [
+                0,
+                1,
+                2
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  32.0,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ],
+                [
+                  34.0,
+                  0.0,
+                  7.0
+                ]
+              ],
+              "true_regret": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 43019,
+      "layout": 5,
+      "arms": {
+        "Rule": {
+          "completed": 4,
+          "restricted_mean_flow": 51,
+          "mean_wait": 7.5,
+          "resource_wait_ticks": 21,
+          "decision_mean_ms": 33.49412214285913,
+          "decision_p95_ms": 69.11906090000738,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.2665970150000021
+        },
+        "V3-C": {
+          "completed": 4,
+          "restricted_mean_flow": 51,
+          "mean_wait": 7.5,
+          "resource_wait_ticks": 21,
+          "decision_mean_ms": 46.80074500000079,
+          "decision_p95_ms": 90.02726440000257,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.4132009869999962
+        },
+        "V4": {
+          "completed": 4,
+          "restricted_mean_flow": 51,
+          "mean_wait": 7.5,
+          "resource_wait_ticks": 21,
+          "decision_mean_ms": 47.005201142852115,
+          "decision_p95_ms": 88.32394639999845,
+          "model_calls": 210,
+          "fallbacks": 0,
+          "resource_violations": 0,
+          "motion_violations": 0,
+          "lifecycle_violations": 0,
+          "elapsed_wall_seconds": 0.36100354799999934
+        }
+      },
+      "fixed_states": [
+        {
+          "tick": 0,
+          "candidates": [
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43019-0::stage1"
+              },
+              {
+                "robot_id": "R3",
+                "sample_id": "F43019-1::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43019-0::stage1"
+              },
+              {
+                "robot_id": "R2",
+                "sample_id": "F43019-1::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R2",
+                "sample_id": "F43019-1::stage1"
+              },
+              {
+                "robot_id": "R3",
+                "sample_id": "F43019-0::stage1"
+              }
+            ],
+            [
+              {
+                "robot_id": "R1",
+                "sample_id": "F43019-1::stage1"
+              },
+              {
+                "robot_id": "R3",
+                "sample_id": "F43019-0::stage1"
+              }
+            ]
+          ],
+          "factual_counterfactual_flow": [
+            51,
+            51,
+            44.25,
+            46.25
+          ],
+          "predictions": {
+            "Rule": {
+              "rank": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  62.0,
+                  1.0,
+                  16.0
+                ]
+              ],
+              "true_regret": 6.75
+            },
+            "V3-C": {
+              "rank": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  62.0,
+                  1.0,
+                  16.0
+                ]
+              ],
+              "true_regret": 6.75
+            },
+            "V4": {
+              "rank": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "chosen": 0,
+              "score": [
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  60.0,
+                  1.0,
+                  16.0
+                ],
+                [
+                  62.0,
+                  1.0,
+                  16.0
+                ]
+              ],
+              "true_regret": 6.75
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "only_frozen_precommitted_test": true,
+  "comparison": {
+    "fixed_candidate_states": 3,
+    "v4_action_changed_vs_rule": 0,
+    "v4_rank_changed_vs_rule": 0,
+    "v4_cost_changed_same_choice": 0
+  }
+}

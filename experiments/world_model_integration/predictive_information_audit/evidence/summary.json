@@ -1,0 +1,88 @@
+{
+  "audit_source_sha256": "4432a981636322af5ac77f3fbece20efcd6b23575ae2ee68ffc0a042a28d6b50",
+  "cpu_process_seconds": 1.7130804439999998,
+  "factual_retest_created": 23,
+  "factual_retest_decisions": 91,
+  "fixed_oracle_ids": [
+    "903074:10",
+    "903293:10",
+    "903512:13"
+  ],
+  "input_provenance": {
+    "full_raw.json.gz": {
+      "path": "evidence/full_raw.json.gz",
+      "sha256": "85197b34d21a1bfe232086f78d6741a584ba710eed1f9517402270c2beaaef90"
+    },
+    "oracle.json": {
+      "path": "evidence/oracle.json",
+      "sha256": "52985d64beeee42d2094cbde625c7280b30b648a794a65f22800610627e63b98"
+    },
+    "paired.json": {
+      "path": "evidence/paired.json",
+      "sha256": "2b3a9f20f6cd4e7eda6cb29f427daab88ae844cc889c8b682768e9879f62f1d7"
+    },
+    "selection_lock.json": {
+      "path": "evidence/selection_lock.json",
+      "sha256": "7bb8d9aae414407d56fd321b2538f646d8445fc1fdf51cbe961aa9100b9645d7"
+    },
+    "summary.json": {
+      "path": "evidence/summary.json",
+      "sha256": "41225e243b6dde9a49386e276c8255e9e32ea6ef212b6ce3285aa5c77f8a537d"
+    }
+  },
+  "model_calls": 0,
+  "new_trajectories": 0,
+  "original_arms": 4,
+  "original_scenarios": 24,
+  "prediction_information_verdict": "BLOCKED_NO_INCREMENTAL_CONDITIONAL_SIGNAL_DEMONSTRATED",
+  "protocol_sha256": "da29dc472c5edafdc238c49d2d2b3985c794533c1b2e33e3c3c781a3510a36d2",
+  "read_only": true,
+  "retest_information_verdict": "PRE_RETEST_PREDICTION_NOT_IDENTIFIABLE_FROM_CURRENT_OBSERVATION",
+  "score_masking_counts": {
+    "C0": 37,
+    "C1": 168,
+    "C2": 29,
+    "C3": 94,
+    "C4": 2,
+    "all_strict_paired_calls": 389,
+    "multi_candidate_calls": 330,
+    "paired_scenarios": 24
+  },
+  "score_numeric_masks": {
+    "changed_among_min_missed": 198,
+    "changed_outside_min_missed": 47,
+    "different_missed_values": 172,
+    "full_candidate_rank_order_change": 2,
+    "multiple_min_missed": 162,
+    "numeric_changed_but_first_layer_unique": 102,
+    "numeric_score_changed": 198,
+    "routine_risk_changed": 140,
+    "unique_min_missed": 168,
+    "urgent_risk_changed": 106
+  },
+  "simulator_calls": 0,
+  "source_head": "9aa554bc541e5a68cb74089feeecbbe62ada1aa0",
+  "training_calls": 0,
+  "urgent_job_states": {
+    "P0": {
+      "censored_overdue": 14,
+      "late_complete": 12,
+      "on_time": 22
+    },
+    "P1": {
+      "censored_overdue": 3,
+      "late_complete": 23,
+      "on_time": 22
+    },
+    "P2": {
+      "censored_overdue": 3,
+      "late_complete": 23,
+      "on_time": 22
+    },
+    "P3": {
+      "censored_overdue": 3,
+      "late_complete": 23,
+      "on_time": 22
+    }
+  }
+}

@@ -1,0 +1,2379 @@
+{
+  "evidence_scope": "development_deterministic_cpu_replay_not_independent_confirmation",
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "original_5step_parity_all": true,
+  "cases": [
+    {
+      "seed": 43011,
+      "tick": 0,
+      "windows": {
+        "5": {
+          "classification": "F3",
+          "archive_5step_parity": {
+            "Rule": true,
+            "V4": true
+          },
+          "counts": {
+            "robots_different": 9,
+            "samples_different": 4,
+            "stations_different": 4,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 6,
+            "service_queries_considered": 19,
+            "service_queries_eligible": 16,
+            "different_probabilities_on_identical_v4_state": 16,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 4,
+            "candidate_score_tuple_changed": 0,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 0,
+            "component_estimated_remaining_service_changed": 0,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 0,
+            "component_rule_prior_service_changed": 0,
+            "component_model_service_changed": 0,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 16,
+          "v4_query_calls": 16,
+          "v4_fallback_reasons": {
+            "not_started": 3
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.015136873000000328,
+            "V4": 0.02641915199999989
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R1",
+              "sample_id": "F43011-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A0"
+            },
+            "p_v4": 0.22225221991539001,
+            "u": 0.6475442201094946,
+            "sampled_finish": false,
+            "v4_transition_finished": 0,
+            "v4_label_reason": "continues",
+            "rule_on_identical_v4_input_finished": 1,
+            "rule_label_reason": "finished",
+            "p_diff_vs_rule_on_same_input": 0.77774778008461,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1
+            ],
+            "V4": [
+              0,
+              1
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 0.0,
+            "V4": 0.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                99.0,
+                0.0,
+                24.0
+              ],
+              "v4_score": [
+                99.0,
+                0.0,
+                24.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 65.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 89.0,
+                "rule_prior_service": 65.0,
+                "model_service": 65.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 65.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 89.0,
+                "rule_prior_service": 65.0,
+                "model_service": 65.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                99.0,
+                99.0,
+                99.0
+              ],
+              "particle_costs_v4": [
+                99.0,
+                99.0,
+                99.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                99.0,
+                1.0,
+                24.0
+              ],
+              "v4_score": [
+                99.0,
+                1.0,
+                24.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 65.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 89.0,
+                "rule_prior_service": 65.0,
+                "model_service": 65.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 65.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 89.0,
+                "rule_prior_service": 65.0,
+                "model_service": 65.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                99.0,
+                99.0,
+                99.0
+              ],
+              "particle_costs_v4": [
+                99.0,
+                99.0,
+                99.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "10": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 34,
+            "samples_different": 6,
+            "stations_different": 9,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 10,
+            "service_queries_considered": 24,
+            "service_queries_eligible": 21,
+            "different_probabilities_on_identical_v4_state": 21,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 6,
+            "candidate_score_tuple_changed": 1,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 0,
+            "component_estimated_remaining_service_changed": 1,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 1,
+            "component_rule_prior_service_changed": 1,
+            "component_model_service_changed": 1,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 21,
+          "v4_query_calls": 21,
+          "v4_fallback_reasons": {
+            "not_started": 3
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.027877423000000068,
+            "V4": 0.04420320000000011
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R1",
+              "sample_id": "F43011-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A0"
+            },
+            "p_v4": 0.22225221991539001,
+            "u": 0.6475442201094946,
+            "sampled_finish": false,
+            "v4_transition_finished": 0,
+            "v4_label_reason": "continues",
+            "rule_on_identical_v4_input_finished": 1,
+            "rule_label_reason": "finished",
+            "p_diff_vs_rule_on_same_input": 0.77774778008461,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1
+            ],
+            "V4": [
+              0,
+              1
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 2.0,
+            "V4": 1.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                106.0,
+                0.0,
+                22.0
+              ],
+              "v4_score": [
+                107.0,
+                0.0,
+                22.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 22,
+                "estimated_remaining_service": 64.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 86.0,
+                "rule_prior_service": 64.0,
+                "model_service": 64.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 22,
+                "estimated_remaining_service": 65.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 87.0,
+                "rule_prior_service": 65.0,
+                "model_service": 65.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.0,
+                "model_minus_prior": 0.0,
+                "model_service": 1.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                106.0,
+                106.0,
+                106.0
+              ],
+              "particle_costs_v4": [
+                107.0,
+                107.0,
+                107.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                108.0,
+                0.0,
+                24.0
+              ],
+              "v4_score": [
+                108.0,
+                0.0,
+                24.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 64.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 88.0,
+                "rule_prior_service": 64.0,
+                "model_service": 64.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 64.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 88.0,
+                "rule_prior_service": 64.0,
+                "model_service": 64.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                108.0,
+                108.0,
+                108.0
+              ],
+              "particle_costs_v4": [
+                108.0,
+                108.0,
+                108.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "20": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 89,
+            "samples_different": 42,
+            "stations_different": 30,
+            "successor_releases_different": 12,
+            "service_completion_count_different": 25,
+            "service_queries_considered": 75,
+            "service_queries_eligible": 66,
+            "different_probabilities_on_identical_v4_state": 66,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 11,
+            "candidate_score_tuple_changed": 2,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 1,
+            "component_estimated_remaining_service_changed": 2,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 2,
+            "component_rule_prior_service_changed": 2,
+            "component_model_service_changed": 2,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 66,
+          "v4_query_calls": 66,
+          "v4_fallback_reasons": {
+            "not_started": 9
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.05435005500000001,
+            "V4": 0.09924199599999994
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R1",
+              "sample_id": "F43011-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A0"
+            },
+            "p_v4": 0.22225221991539001,
+            "u": 0.6475442201094946,
+            "sampled_finish": false,
+            "v4_transition_finished": 0,
+            "v4_label_reason": "continues",
+            "rule_on_identical_v4_input_finished": 1,
+            "rule_label_reason": "finished",
+            "p_diff_vs_rule_on_same_input": 0.77774778008461,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 3,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 14,
+            "rule": [
+              "F43011-0::stage2"
+            ],
+            "v4": []
+          },
+          "ranks": {
+            "Rule": [
+              0,
+              1
+            ],
+            "V4": [
+              0,
+              1
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 3.0,
+            "V4": 1.3333333333333286
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                115.0,
+                0.0,
+                20.0
+              ],
+              "v4_score": [
+                118.0,
+                0.0,
+                22.0
+              ],
+              "score_delta": [
+                3.0,
+                0.0,
+                2.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 20,
+                "estimated_remaining_service": 55.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 75.0,
+                "rule_prior_service": 55.0,
+                "model_service": 55.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 22,
+                "estimated_remaining_service": 56.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 78.0,
+                "rule_prior_service": 56.0,
+                "model_service": 56.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.0,
+                "model_minus_prior": 0.0,
+                "model_service": 1.0,
+                "remaining_distance": 2,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.0,
+                "terminal_work": 3.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                115.0,
+                115.0,
+                115.0
+              ],
+              "particle_costs_v4": [
+                118.0,
+                119.0,
+                117.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                118.0,
+                0.0,
+                24.0
+              ],
+              "v4_score": [
+                119.33333333333333,
+                0.0,
+                24.0
+              ],
+              "score_delta": [
+                1.33333333,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 54.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 78.0,
+                "rule_prior_service": 54.0,
+                "model_service": 54.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 24,
+                "estimated_remaining_service": 55.333333333333336,
+                "resource_contention_proxy": 0,
+                "terminal_work": 79.33333333333333,
+                "rule_prior_service": 55.333333333333336,
+                "model_service": 55.333333333333336,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.33333333,
+                "model_minus_prior": 0.0,
+                "model_service": 1.33333333,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.33333333,
+                "terminal_work": 1.33333333,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                118.0,
+                118.0,
+                118.0
+              ],
+              "particle_costs_v4": [
+                119.0,
+                120.0,
+                119.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        }
+      }
+    },
+    {
+      "seed": 43015,
+      "tick": 0,
+      "windows": {
+        "5": {
+          "classification": "F2",
+          "archive_5step_parity": {
+            "Rule": true,
+            "V4": true
+          },
+          "counts": {
+            "robots_different": 0,
+            "samples_different": 0,
+            "stations_different": 0,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 0,
+            "service_queries_considered": 30,
+            "service_queries_eligible": 24,
+            "different_probabilities_on_identical_v4_state": 24,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 0,
+            "candidate_score_tuple_changed": 0,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 0,
+            "component_estimated_remaining_service_changed": 0,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 0,
+            "component_rule_prior_service_changed": 0,
+            "component_model_service_changed": 0,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 24,
+          "v4_query_calls": 24,
+          "v4_fallback_reasons": {
+            "not_started": 6
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.021708907999999916,
+            "V4": 0.038948197999999934
+          },
+          "first_same_input_event_difference": null,
+          "first_recursive_state_difference": null,
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2
+            ],
+            "V4": [
+              0,
+              1,
+              2
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 2.0,
+            "V4": 2.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                32.0,
+                0.0,
+                7.0
+              ],
+              "v4_score": [
+                32.0,
+                0.0,
+                7.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 20.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 27.0,
+                "rule_prior_service": 20.0,
+                "model_service": 20.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 20.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 27.0,
+                "rule_prior_service": 20.0,
+                "model_service": 20.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                32.0,
+                32.0,
+                32.0
+              ],
+              "particle_costs_v4": [
+                32.0,
+                32.0,
+                32.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                34.0,
+                0.0,
+                7.0
+              ],
+              "v4_score": [
+                34.0,
+                0.0,
+                7.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 22.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 29.0,
+                "rule_prior_service": 22.0,
+                "model_service": 22.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 22.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 29.0,
+                "rule_prior_service": 22.0,
+                "model_service": 22.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                34.0,
+                34.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                34.0,
+                0.0,
+                7.0
+              ],
+              "v4_score": [
+                34.0,
+                0.0,
+                7.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 22.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 29.0,
+                "rule_prior_service": 22.0,
+                "model_service": 22.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 5,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 22.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 29.0,
+                "rule_prior_service": 22.0,
+                "model_service": 22.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                34.0,
+                34.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "10": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 22,
+            "samples_different": 9,
+            "stations_different": 9,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 12,
+            "service_queries_considered": 60,
+            "service_queries_eligible": 54,
+            "different_probabilities_on_identical_v4_state": 54,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 9,
+            "candidate_score_tuple_changed": 3,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 3,
+            "component_estimated_remaining_service_changed": 0,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 3,
+            "component_rule_prior_service_changed": 0,
+            "component_model_service_changed": 0,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 54,
+          "v4_query_calls": 54,
+          "v4_fallback_reasons": {
+            "not_started": 6
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.041710763999999845,
+            "V4": 0.07891297400000008
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 1,
+            "step": 6,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R2",
+              "sample_id": "F43015-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A1"
+            },
+            "p_v4": 0.4249613285064697,
+            "u": 0.8243226632231253,
+            "sampled_finish": false,
+            "v4_transition_finished": 0,
+            "v4_label_reason": "continues",
+            "rule_on_identical_v4_input_finished": 1,
+            "rule_label_reason": "finished",
+            "p_diff_vs_rule_on_same_input": 0.5750386714935303,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 1,
+            "step": 6,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2
+            ],
+            "V4": [
+              0,
+              1,
+              2
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 2.0,
+            "V4": 2.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                32.0,
+                0.0,
+                3.0
+              ],
+              "v4_score": [
+                33.0,
+                0.0,
+                4.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                1.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 22.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 4,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 23.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 1,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                32.0,
+                32.0,
+                32.0
+              ],
+              "particle_costs_v4": [
+                32.0,
+                34.0,
+                33.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                34.0,
+                0.0,
+                5.0
+              ],
+              "v4_score": [
+                35.0,
+                0.0,
+                6.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                1.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 5,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 24.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 6,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 25.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 1,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                36.0,
+                35.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                34.0,
+                0.0,
+                5.0
+              ],
+              "v4_score": [
+                35.0,
+                0.0,
+                6.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                1.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 5,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 24.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 6,
+                "estimated_remaining_service": 19.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 25.0,
+                "rule_prior_service": 19.0,
+                "model_service": 19.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 1,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                36.0,
+                35.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "20": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 87,
+            "samples_different": 24,
+            "stations_different": 29,
+            "successor_releases_different": 11,
+            "service_completion_count_different": 23,
+            "service_queries_considered": 127,
+            "service_queries_eligible": 112,
+            "different_probabilities_on_identical_v4_state": 112,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 15,
+            "candidate_score_tuple_changed": 3,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 0,
+            "component_estimated_remaining_service_changed": 3,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 3,
+            "component_rule_prior_service_changed": 3,
+            "component_model_service_changed": 3,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 112,
+          "v4_query_calls": 112,
+          "v4_fallback_reasons": {
+            "not_started": 15
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.0812931739999998,
+            "V4": 0.1583600180000002
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 1,
+            "step": 6,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R2",
+              "sample_id": "F43015-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A1"
+            },
+            "p_v4": 0.4249613285064697,
+            "u": 0.8243226632231253,
+            "sampled_finish": false,
+            "v4_transition_finished": 0,
+            "v4_label_reason": "continues",
+            "rule_on_identical_v4_input_finished": 1,
+            "rule_label_reason": "finished",
+            "p_diff_vs_rule_on_same_input": 0.5750386714935303,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 1,
+            "step": 6,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 18,
+            "rule": [
+              "F43015-0::stage2"
+            ],
+            "v4": []
+          },
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2
+            ],
+            "V4": [
+              0,
+              1,
+              2
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 2.0,
+            "V4": 1.6666666666666643
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                32.0,
+                0.0,
+                3.0
+              ],
+              "v4_score": [
+                33.333333333333336,
+                0.0,
+                3.0
+              ],
+              "score_delta": [
+                1.33333333,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 9.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 12.0,
+                "rule_prior_service": 9.0,
+                "model_service": 9.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 10.333333333333334,
+                "resource_contention_proxy": 0,
+                "terminal_work": 13.333333333333334,
+                "rule_prior_service": 10.333333333333334,
+                "model_service": 10.333333333333334,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.33333333,
+                "model_minus_prior": 0.0,
+                "model_service": 1.33333333,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.33333333,
+                "terminal_work": 1.33333333,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                32.0,
+                32.0,
+                32.0
+              ],
+              "particle_costs_v4": [
+                33.0,
+                33.0,
+                34.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                34.0,
+                0.0,
+                3.0
+              ],
+              "v4_score": [
+                35.0,
+                0.0,
+                3.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 11.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 14.0,
+                "rule_prior_service": 11.0,
+                "model_service": 11.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 12.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 15.0,
+                "rule_prior_service": 12.0,
+                "model_service": 12.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.0,
+                "model_minus_prior": 0.0,
+                "model_service": 1.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                36.0,
+                35.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                34.0,
+                0.0,
+                3.0
+              ],
+              "v4_score": [
+                35.0,
+                0.0,
+                3.0
+              ],
+              "score_delta": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 11.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 14.0,
+                "rule_prior_service": 11.0,
+                "model_service": 11.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 3,
+                "estimated_remaining_service": 12.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 15.0,
+                "rule_prior_service": 12.0,
+                "model_service": 12.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 1.0,
+                "model_minus_prior": 0.0,
+                "model_service": 1.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 1.0,
+                "terminal_work": 1.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                34.0,
+                34.0,
+                34.0
+              ],
+              "particle_costs_v4": [
+                34.0,
+                36.0,
+                35.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        }
+      }
+    },
+    {
+      "seed": 43019,
+      "tick": 0,
+      "windows": {
+        "5": {
+          "classification": "F2",
+          "archive_5step_parity": {
+            "Rule": true,
+            "V4": true
+          },
+          "counts": {
+            "robots_different": 0,
+            "samples_different": 0,
+            "stations_different": 0,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 0,
+            "service_queries_considered": 84,
+            "service_queries_eligible": 42,
+            "different_probabilities_on_identical_v4_state": 42,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 0,
+            "candidate_score_tuple_changed": 0,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 0,
+            "component_estimated_remaining_service_changed": 0,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 0,
+            "component_rule_prior_service_changed": 0,
+            "component_model_service_changed": 0,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 42,
+          "v4_query_calls": 42,
+          "v4_fallback_reasons": {
+            "not_started": 42
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.03155802999999979,
+            "V4": 0.06322531299999978
+          },
+          "first_same_input_event_difference": null,
+          "first_recursive_state_difference": null,
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "V4": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 0.0,
+            "V4": 0.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "v4_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                60.0,
+                60.0,
+                60.0
+              ],
+              "particle_costs_v4": [
+                60.0,
+                60.0,
+                60.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "v4_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                60.0,
+                60.0,
+                60.0
+              ],
+              "particle_costs_v4": [
+                60.0,
+                60.0,
+                60.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "v4_score": [
+                60.0,
+                1.0,
+                16.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 34.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 50.0,
+                "rule_prior_service": 34.0,
+                "model_service": 34.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                60.0,
+                60.0,
+                60.0
+              ],
+              "particle_costs_v4": [
+                60.0,
+                60.0,
+                60.0
+              ]
+            },
+            {
+              "candidate": 3,
+              "rule_score": [
+                62.0,
+                1.0,
+                16.0
+              ],
+              "v4_score": [
+                62.0,
+                1.0,
+                16.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 36.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 52.0,
+                "rule_prior_service": 36.0,
+                "model_service": 36.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 10,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 36.0,
+                "resource_contention_proxy": 1,
+                "terminal_work": 52.0,
+                "rule_prior_service": 36.0,
+                "model_service": 36.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                62.0,
+                62.0,
+                62.0
+              ],
+              "particle_costs_v4": [
+                62.0,
+                62.0,
+                62.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "10": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 28,
+            "samples_different": 8,
+            "stations_different": 15,
+            "successor_releases_different": 0,
+            "service_completion_count_different": 15,
+            "service_queries_considered": 179,
+            "service_queries_eligible": 92,
+            "different_probabilities_on_identical_v4_state": 92,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 8,
+            "candidate_score_tuple_changed": 1,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 1,
+            "component_estimated_remaining_service_changed": 1,
+            "component_resource_contention_proxy_changed": 1,
+            "component_terminal_work_changed": 1,
+            "component_rule_prior_service_changed": 1,
+            "component_model_service_changed": 1,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 92,
+          "v4_query_calls": 92,
+          "v4_fallback_reasons": {
+            "not_started": 87
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.06129866699999997,
+            "V4": 0.12531448300000037
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 6,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R1",
+              "sample_id": "F43019-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A0"
+            },
+            "p_v4": 0.20094004273414612,
+            "u": 0.1251544925020317,
+            "sampled_finish": true,
+            "v4_transition_finished": 1,
+            "v4_label_reason": "finished",
+            "rule_on_identical_v4_input_finished": 0,
+            "rule_label_reason": "continues",
+            "p_diff_vs_rule_on_same_input": 0.20094004273414612,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 6,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": null,
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "V4": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 0.0,
+            "V4": 0.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                62.0,
+                0.0,
+                13.0
+              ],
+              "v4_score": [
+                62.0,
+                0.0,
+                13.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 13,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 42.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 13,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 42.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                62.0,
+                62.0,
+                62.0
+              ],
+              "particle_costs_v4": [
+                60.0,
+                64.0,
+                62.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                62.0,
+                0.0,
+                13.0
+              ],
+              "v4_score": [
+                62.0,
+                0.0,
+                13.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 13,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 42.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 13,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 42.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                62.0,
+                62.0,
+                62.0
+              ],
+              "particle_costs_v4": [
+                60.0,
+                64.0,
+                62.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                63.0,
+                0.0,
+                14.0
+              ],
+              "v4_score": [
+                63.0,
+                0.0,
+                14.0
+              ],
+              "score_delta": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 14,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 43.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 14,
+                "estimated_remaining_service": 29.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 43.0,
+                "rule_prior_service": 29.0,
+                "model_service": 29.0,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.0,
+                "model_minus_prior": 0.0,
+                "model_service": 0.0,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.0,
+                "terminal_work": 0.0,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                63.0,
+                63.0,
+                63.0
+              ],
+              "particle_costs_v4": [
+                65.0,
+                63.0,
+                61.0
+              ]
+            },
+            {
+              "candidate": 3,
+              "rule_score": [
+                67.0,
+                0.0,
+                16.0
+              ],
+              "v4_score": [
+                66.33333333333333,
+                0.3333333333333333,
+                15.666666666666666
+              ],
+              "score_delta": [
+                -0.66666667,
+                0.33333333,
+                -0.33333333
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 16,
+                "estimated_remaining_service": 31.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 47.0,
+                "rule_prior_service": 31.0,
+                "model_service": 31.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 20,
+                "remaining_distance": 15.666666666666666,
+                "estimated_remaining_service": 30.666666666666668,
+                "resource_contention_proxy": 0.3333333333333333,
+                "terminal_work": 46.333333333333336,
+                "rule_prior_service": 30.666666666666668,
+                "model_service": 30.666666666666668,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": -0.33333333,
+                "model_minus_prior": 0.0,
+                "model_service": -0.33333333,
+                "remaining_distance": -0.33333333,
+                "resource_contention_proxy": 0.33333333,
+                "rule_prior_service": -0.33333333,
+                "terminal_work": -0.66666667,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                67.0,
+                67.0,
+                67.0
+              ],
+              "particle_costs_v4": [
+                67.0,
+                67.0,
+                65.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        },
+        "20": {
+          "classification": "F4",
+          "archive_5step_parity": {},
+          "counts": {
+            "robots_different": 125,
+            "samples_different": 57,
+            "stations_different": 61,
+            "successor_releases_different": 16,
+            "service_completion_count_different": 49,
+            "service_queries_considered": 324,
+            "service_queries_eligible": 218,
+            "different_probabilities_on_identical_v4_state": 218,
+            "sampled_event_diff_vs_rule_on_identical_v4_state": 33,
+            "candidate_score_tuple_changed": 4,
+            "component_unfinished_job_ticks_changed": 0,
+            "component_remaining_distance_changed": 2,
+            "component_estimated_remaining_service_changed": 4,
+            "component_resource_contention_proxy_changed": 0,
+            "component_terminal_work_changed": 4,
+            "component_rule_prior_service_changed": 4,
+            "component_model_service_changed": 4,
+            "component_model_minus_prior_changed": 0,
+            "ranking_changed": false,
+            "action_changed": false
+          },
+          "v4_forward_batches": 198,
+          "v4_query_calls": 218,
+          "v4_fallback_reasons": {
+            "not_started": 106
+          },
+          "cpu_seconds_instrumented": {
+            "Rule": 0.12434565600000003,
+            "V4": 0.3477908660000004
+          },
+          "first_same_input_event_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 6,
+            "same_input_as_recursive_rule": true,
+            "query": {
+              "robot_id": "R1",
+              "sample_id": "F43019-0::stage1",
+              "phase": "to_pickup",
+              "station_id": "A0"
+            },
+            "p_v4": 0.20094004273414612,
+            "u": 0.1251544925020317,
+            "sampled_finish": true,
+            "v4_transition_finished": 1,
+            "v4_label_reason": "finished",
+            "rule_on_identical_v4_input_finished": 0,
+            "rule_label_reason": "continues",
+            "p_diff_vs_rule_on_same_input": 0.20094004273414612,
+            "event_diff_vs_rule_on_same_input": true
+          },
+          "first_recursive_state_difference": {
+            "candidate": 0,
+            "particle": 0,
+            "step": 6,
+            "same_input_before_step": true,
+            "robot_change": true,
+            "sample_change": true,
+            "station_change": true
+          },
+          "first_successor_release_difference": {
+            "candidate": 0,
+            "particle": 1,
+            "step": 16,
+            "rule": [
+              "F43019-0::stage2"
+            ],
+            "v4": []
+          },
+          "ranks": {
+            "Rule": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "V4": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "primary_cost_gap": {
+            "Rule": 0.0,
+            "V4": 0.0
+          },
+          "candidates": [
+            {
+              "candidate": 0,
+              "rule_score": [
+                62.0,
+                0.0,
+                5.0
+              ],
+              "v4_score": [
+                63.333333333333336,
+                0.0,
+                6.0
+              ],
+              "score_delta": [
+                1.33333333,
+                0.0,
+                1.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 5,
+                "estimated_remaining_service": 17.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 22.0,
+                "rule_prior_service": 17.0,
+                "model_service": 17.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 6,
+                "estimated_remaining_service": 17.333333333333332,
+                "resource_contention_proxy": 0,
+                "terminal_work": 23.333333333333332,
+                "rule_prior_service": 17.333333333333332,
+                "model_service": 17.333333333333332,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.33333333,
+                "model_minus_prior": 0.0,
+                "model_service": 0.33333333,
+                "remaining_distance": 1,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.33333333,
+                "terminal_work": 1.33333333,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                62.0,
+                62.0,
+                62.0
+              ],
+              "particle_costs_v4": [
+                62.0,
+                64.0,
+                64.0
+              ]
+            },
+            {
+              "candidate": 1,
+              "rule_score": [
+                62.0,
+                0.0,
+                5.0
+              ],
+              "v4_score": [
+                63.333333333333336,
+                0.0,
+                6.0
+              ],
+              "score_delta": [
+                1.33333333,
+                0.0,
+                1.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 5,
+                "estimated_remaining_service": 17.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 22.0,
+                "rule_prior_service": 17.0,
+                "model_service": 17.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 6,
+                "estimated_remaining_service": 17.333333333333332,
+                "resource_contention_proxy": 0,
+                "terminal_work": 23.333333333333332,
+                "rule_prior_service": 17.333333333333332,
+                "model_service": 17.333333333333332,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.33333333,
+                "model_minus_prior": 0.0,
+                "model_service": 0.33333333,
+                "remaining_distance": 1,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.33333333,
+                "terminal_work": 1.33333333,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                62.0,
+                62.0,
+                62.0
+              ],
+              "particle_costs_v4": [
+                62.0,
+                64.0,
+                64.0
+              ]
+            },
+            {
+              "candidate": 2,
+              "rule_score": [
+                63.0,
+                0.0,
+                7.0
+              ],
+              "v4_score": [
+                63.666666666666664,
+                0.0,
+                7.0
+              ],
+              "score_delta": [
+                0.66666667,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 16.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 23.0,
+                "rule_prior_service": 16.0,
+                "model_service": 16.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 7,
+                "estimated_remaining_service": 16.666666666666668,
+                "resource_contention_proxy": 0,
+                "terminal_work": 23.666666666666668,
+                "rule_prior_service": 16.666666666666668,
+                "model_service": 16.666666666666668,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.66666667,
+                "model_minus_prior": 0.0,
+                "model_service": 0.66666667,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.66666667,
+                "terminal_work": 0.66666667,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                63.0,
+                63.0,
+                63.0
+              ],
+              "particle_costs_v4": [
+                65.0,
+                63.0,
+                63.0
+              ]
+            },
+            {
+              "candidate": 3,
+              "rule_score": [
+                67.0,
+                0.0,
+                9.0
+              ],
+              "v4_score": [
+                67.66666666666667,
+                0.0,
+                9.0
+              ],
+              "score_delta": [
+                0.66666667,
+                0.0,
+                0.0
+              ],
+              "rule_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 9,
+                "estimated_remaining_service": 18.0,
+                "resource_contention_proxy": 0,
+                "terminal_work": 27.0,
+                "rule_prior_service": 18.0,
+                "model_service": 18.0,
+                "model_minus_prior": 0.0
+              },
+              "v4_components": {
+                "unfinished_job_ticks": 40,
+                "remaining_distance": 9,
+                "estimated_remaining_service": 18.666666666666668,
+                "resource_contention_proxy": 0,
+                "terminal_work": 27.666666666666668,
+                "rule_prior_service": 18.666666666666668,
+                "model_service": 18.666666666666668,
+                "model_minus_prior": 0.0
+              },
+              "component_delta": {
+                "estimated_remaining_service": 0.66666667,
+                "model_minus_prior": 0.0,
+                "model_service": 0.66666667,
+                "remaining_distance": 0,
+                "resource_contention_proxy": 0,
+                "rule_prior_service": 0.66666667,
+                "terminal_work": 0.66666667,
+                "unfinished_job_ticks": 0
+              },
+              "particle_costs_rule": [
+                67.0,
+                67.0,
+                67.0
+              ],
+              "particle_costs_v4": [
+                69.0,
+                67.0,
+                67.0
+              ]
+            }
+          ],
+          "instrumentation_checks": {
+            "forward_batches_one_per_nonempty_service_batch": true,
+            "original_rng_stream_matches_each_sample": true,
+            "captured_event_matches_transition": true,
+            "adjacent_state_snapshots_consistent": true
+          }
+        }
+      }
+    }
+  ],
+  "raw_replay_sha256": "fc7aa63eff18c9f33d14201f81d0a280c3687335770d98d6079e55ff50f68d36"
+}

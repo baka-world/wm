@@ -1,0 +1,37 @@
+{
+  "evidence_scope": "development_deterministic_cpu_replay_not_independent_confirmation",
+  "source_head_pre_diagnostic": "15dca8e9b12b83f80c004aec1eb545b9f8e2b551",
+  "source_training_run": 42815634215,
+  "source_training_artifact": 13765135588,
+  "source_independent_run": 42816481249,
+  "source_independent_artifact": 13765795897,
+  "replay_cpu_workflow_run": 42853051044,
+  "v4_checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "raw_replay_sha256": "fc7aa63eff18c9f33d14201f81d0a280c3687335770d98d6079e55ff50f68d36",
+  "compressed_replay_sha256": "5c3b5c41f89395db6d6512cd2e35133dda7164ad6feb3ca626ee269f3c186fbb",
+  "original_dispatch_sha256": "4ccbc98c9ac9e0234f0e86edad533733212335e4102fa7db273b1c80d297d3a1",
+  "score_parity": "all 3 seeds, both Rule and V4, all 9 5-step candidates exactly matched",
+  "allowed_windows": [
+    5,
+    10,
+    20
+  ],
+  "hardware": "ubuntu GitHub Actions CPU only",
+  "not_an_independent_confirmation": true,
+  "model_training_in_this_diagnostic": false,
+  "gpu_used_by_diagnostic": false,
+  "business_truth_used_as_online_model_input": false,
+  "unintended_existing_pr_ci_reruns": [
+    {
+      "run": 42851675182,
+      "workflow": "World model decision integration CPU",
+      "contains_legacy_cpu_model_training": true
+    },
+    {
+      "run": 42851675471,
+      "workflow": "PR18 frozen v3 CPU ablation",
+      "contains_legacy_cpu_model_training": true
+    }
+  ],
+  "execution_limit_qualification": "Dedicated V4 diagnostic jobs did not train; first workflow commit unexpectedly triggered existing PR CI with legacy CPU training; do not claim whole-turn zero training."
+}

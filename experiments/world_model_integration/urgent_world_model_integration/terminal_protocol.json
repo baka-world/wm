@@ -1,0 +1,31 @@
+{
+  "protocol": "pr18-urgent-v4-terminal-continuation-after-H5-posthoc-v1",
+  "source_head": "58620627878dbaa9e8307e890e0e02ae2a85f129",
+  "baseline_run_id": 42979455192,
+  "baseline_artifact_id": 13837360333,
+  "targeted_previous_failure_seeds": [
+    902147,
+    904096,
+    904388
+  ],
+  "independent_test": false,
+  "unchanged": {
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "legal_candidates": 4,
+    "neural_horizon": 5,
+    "particles": 3,
+    "random_coupling": "keyed",
+    "action_space": "original legal CP-SAT",
+    "score": "same lexicographic urgent objective",
+    "true_simulator": "unchanged"
+  },
+  "changed": {
+    "terminal_mode": "rule_continuation",
+    "terminal_forecast": "after H5 same ProgressAwareRule WorkflowDynamics nearest continuation for both methods, until all visible jobs complete or synthetic cutoff"
+  },
+  "no_independent_claim": true,
+  "no_future_retest_labels": true,
+  "no_future_outage_schedule": true,
+  "gpu": 0,
+  "training": 0
+}

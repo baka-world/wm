@@ -1,0 +1,174 @@
+{
+  "protocol": "PR18_FROZEN_SAME_STATE_RESAMPLING_AND_REAL_COUNTERFACTUAL_P1_V1",
+  "status": "SUCCESS_ACTUALLY_EXECUTED_ON_CPU",
+  "run_id": 43001341457,
+  "artifact_id": 13846965181,
+  "artifact_sha256": "561ccbf7bfc6adb5813233edcfddd03a56bc449a7d8789957a685c50a05df454",
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "tests": {
+    "existing": 7,
+    "new_protocol": 3,
+    "passed": 10,
+    "failed": 0
+  },
+  "resource": {
+    "GPU": 0,
+    "new_training": 0,
+    "cpu_process_seconds": 11.285016735,
+    "V4_service_event_queries": 776
+  },
+  "scope": {
+    "fixed_known_states": 5,
+    "legal_candidate_futures": 12,
+    "resampling_seeds_per_state": 8,
+    "extra_independent_prediction_seeds": 7,
+    "exogenous": "keyed service and retest per task",
+    "forced_prefix": "archived P5",
+    "continuation": "P1 for all forced alternatives"
+  },
+  "summary": {
+    "states_with_sampling_dependent_selection": 4,
+    "states_with_identical_selection_all_8": 1,
+    "mean_original_action_agreement": 0.5,
+    "mean_chosen_optimal_by_frozen_judge_score": 0.4,
+    "original_V4_selected_frozen_judge_best_states": 2,
+    "rule_selected_frozen_judge_best_states": 3
+  },
+  "states": [
+    {
+      "seed": 905147,
+      "tick": 0,
+      "candidates": 2,
+      "counts": {
+        "0": 6,
+        "1": 2
+      },
+      "original_V4": 1,
+      "Rule": 0,
+      "judge_best": 0,
+      "P1_future_urgent_ontime": [
+        0,
+        0.3333333333333333
+      ],
+      "P1_future_urgent_late": [
+        20.666666666666668,
+        21.666666666666668
+      ],
+      "P1_future_routine_flow": [
+        156.66666666666666,
+        154.66666666666666
+      ],
+      "notes": "higher urgent punctual rate of candidate1 but worse mean lateness; frozen judge picks0"
+    },
+    {
+      "seed": 905585,
+      "tick": 0,
+      "candidates": 2,
+      "counts": {
+        "0": 5,
+        "1": 3
+      },
+      "original_V4": 1,
+      "Rule": 0,
+      "judge_best": 1,
+      "P1_future_urgent_ontime": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "P1_future_urgent_late": [
+        36.666666666666664,
+        35.333333333333336
+      ],
+      "P1_future_routine_flow": [
+        157,
+        157
+      ],
+      "notes": "fixing same P1 continuation removes originally observed punctual count difference"
+    },
+    {
+      "seed": 905220,
+      "tick": 41,
+      "candidates": 4,
+      "counts": {
+        "0": 4,
+        "1": 4
+      },
+      "original_V4": 1,
+      "Rule": 0,
+      "judge_best": 0,
+      "P1_future_urgent_ontime": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "P1_future_urgent_late": [
+        0,
+        0,
+        2,
+        12
+      ],
+      "P1_future_routine_flow": [
+        116.66666666666667,
+        118,
+        111.66666666666667,
+        116.66666666666667
+      ]
+    },
+    {
+      "seed": 905804,
+      "tick": 0,
+      "candidates": 2,
+      "counts": {
+        "0": 5,
+        "1": 3
+      },
+      "original_V4": 1,
+      "Rule": 0,
+      "judge_best": 1,
+      "P1_future_urgent_ontime": [
+        0,
+        0
+      ],
+      "P1_future_urgent_late": [
+        28,
+        27.666666666666668
+      ],
+      "P1_future_routine_flow": [
+        157,
+        157
+      ]
+    },
+    {
+      "seed": 906195,
+      "tick": 138,
+      "candidates": 2,
+      "counts": {
+        "0": 8
+      },
+      "original_V4": 0,
+      "Rule": 1,
+      "judge_best": 1,
+      "P1_future_urgent_ontime": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "P1_future_urgent_late": [
+        11.666666666666666,
+        11.666666666666666
+      ],
+      "P1_future_routine_flow": [
+        154,
+        152.66666666666666
+      ],
+      "notes": "stable V4 choice but greater routine flow"
+    }
+  ],
+  "important_caveats": [
+    "posthoc selected states, not a blind test",
+    "one synthetic true future per candidate, not conditional expected value",
+    "frozen judge prioritizes incomplete and lateness, not punctual count",
+    "same P1 continuation used for all alternatives",
+    "per-query V4 probability calibration not identified"
+  ]
+}

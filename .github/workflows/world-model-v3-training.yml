@@ -1,0 +1,89 @@
+name: PR18 frozen v3 CPU ablation
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/world_model_integration/**'
+      - 'business_transport/session_features_v3.py'
+      - 'lab_transport/business_session_v3.py'
+      - 'lab_transport/business_session_learning.py'
+      - '.github/workflows/world-model-v3-training.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  frozen-v3-training:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install frozen CPU dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; torch.set_num_threads(1)"
+      - name: Download exact previously archived v2 checkpoint without retraining
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13753445460/zip" \
+            --output "$RUNNER_TEMP/frozen-v2-archive.zip"
+          unzip -p "$RUNNER_TEMP/frozen-v2-archive.zip" session-v2.pt > "$RUNNER_TEMP/frozen-v2.pt"
+          echo "84f426a7acdb860b283cc7f19efdc930ab6073d191bd17366949d7b7c52bb68d  $RUNNER_TEMP/frozen-v2.pt" | sha256sum -c
+      - name: Execute v3 target and hazard regression contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/v3-contracts.log"
+          python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/v3-workflow-regression.log"
+      - name: Regenerate identical historical factual TRAIN and VALIDATION groups
+        run: |
+          set -euo pipefail
+          timeout 120s python -m experiments.world_model_integration.build_dataset --output "$RUNNER_TEMP/v3-source.json"
+      - name: Fit precommitted B0/B1/B2 and three fixed v3 optimization variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 660s python -m experiments.world_model_integration.v3_training \
+            --dataset "$RUNNER_TEMP/v3-source.json" \
+            --frozen-v2 "$RUNNER_TEMP/frozen-v2.pt" \
+            --outdir "$RUNNER_TEMP/v3" 2>&1 | tee "$RUNNER_TEMP/v3-training.log"
+      - name: Compare frozen Rule PETS Structured and v2 on VALIDATION only
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 180s python -m experiments.world_model_integration.compare_event_models \
+            --checkpoint "$RUNNER_TEMP/frozen-v2.pt" \
+            --dataset "$RUNNER_TEMP/v3-source.json" \
+            --split validation \
+            --output "$RUNNER_TEMP/v3-frozen-validation.json" 2>&1 | tee "$RUNNER_TEMP/v3-frozen-validation.log"
+      - name: Preserve unedited CPU ablation evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr18-frozen-v3-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/v3-contracts.log
+            ${{ runner.temp }}/v3-workflow-regression.log
+            ${{ runner.temp }}/v3-source.json
+            ${{ runner.temp }}/v3-training.log
+            ${{ runner.temp }}/v3-frozen-validation.json
+            ${{ runner.temp }}/v3-frozen-validation.log
+            ${{ runner.temp }}/v3/v3_selection.json
+            ${{ runner.temp }}/v3/v3-a.pt
+            ${{ runner.temp }}/v3/v3-b.pt
+            ${{ runner.temp }}/v3/v3-c.pt
+          if-no-files-found: warn
+          retention-days: 90

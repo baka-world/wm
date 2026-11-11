@@ -1,0 +1,162 @@
+name: PR18 frozen V4 decision sensitivity diagnostic CPU
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-v4-decision-sensitivity-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  frozen-v4-decision-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only dependencies (NO TRAINING)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "GPU-enabled torch disallowed"
+          torch.set_num_threads(1)
+          print('Frozen diagnostic CPU-only environment', torch.__version__)
+          PY
+      - name: Recover exact V4 trained artifact and original independent dispatch JSON
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-frozen"
+          curl -fSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr18-frozen/training.zip"
+          unzip -p "$RUNNER_TEMP/pr18-frozen/training.zip" v4-data.pt > "$RUNNER_TEMP/pr18-frozen/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-frozen/v4-data.pt" | sha256sum --check
+          curl -fSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765795897/zip \
+            -o "$RUNNER_TEMP/pr18-frozen/independent.zip"
+          unzip -p "$RUNNER_TEMP/pr18-frozen/independent.zip" v4-dispatch.json > "$RUNNER_TEMP/pr18-frozen/v4-dispatch.json"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'pr18-frozen/v4-dispatch.json'
+          obj=json.loads(p.read_text())
+          assert [c['seed'] for c in obj['cases']]==[43011,43015,43019]
+          assert sum(len(c['fixed_states']) for c in obj['cases'])==3
+          print('Original frozen dispatch archive verified:',p)
+          PY
+      - name: Run existing replay script (5-step parity gate before 10/20)
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONUNBUFFERED=1
+          python -m experiments.world_model_integration.decision_sensitivity.replay_trace \
+            --dispatch "$RUNNER_TEMP/pr18-frozen/v4-dispatch.json" \
+            --v4 "$RUNNER_TEMP/pr18-frozen/v4-data.pt" \
+            --output "$RUNNER_TEMP/pr18-frozen/v4-decision-sensitivity-replay.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-frozen/replay-cpu.log"
+      - name: Check frozen original scores, three seeds, and replays
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'pr18-frozen/v4-decision-sensitivity-replay.json'
+          d=json.loads(p.read_text())
+          assert [x['seed'] for x in d['cases']]==[43011,43015,43019]
+          for case in d['cases']:
+              assert sorted(case['windows'])==['10','20','5']
+              assert case['windows']['5']['recorded_archive_5step_parity']=={'Rule':True,'V4':True}
+              for n in ('5','10','20'):
+                  assert len(case['windows'][n]['runs']['V4']['records'])==len(case['windows'][n]['runs']['Rule']['records'])
+          print('5-step score parity: PASS for all three frozen cases')
+          PY
+
+      - name: Verify instrumented CPU trace and produce per-state F1-F6 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          export WM_PR18_REPLAY_JSON="$RUNNER_TEMP/pr18-frozen/v4-decision-sensitivity-replay.json"
+          python -m unittest discover -s experiments/world_model_integration/decision_sensitivity/tests -p test_replay_cpu.py -v 2>&1 | tee "$RUNNER_TEMP/pr18-frozen/cpu-tests.log"
+          python -m experiments.world_model_integration.decision_sensitivity.postprocess_replay \
+            --replay "$WM_PR18_REPLAY_JSON" \
+            --output "$RUNNER_TEMP/pr18-frozen/v4-decision-sensitivity-summary.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr18-frozen/postprocess.log"
+      - name: Commit frozen raw trace gzip and JSON summary to existing PR18 only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          import gzip,json,os,shutil
+          root=Path('experiments/world_model_integration/decision_sensitivity/evidence')
+          if root.exists() and any(root.iterdir()):
+              raise FileExistsError('existing immutable replay evidence must not be overwritten')
+          root.mkdir(parents=True,exist_ok=True)
+          source=Path(os.environ['RUNNER_TEMP'])/'pr18-frozen'
+          payload=(source/'v4-decision-sensitivity-replay.json').read_bytes()
+          with (root/'v4-decision-sensitivity-replay.json.gz').open('wb') as file:
+              with gzip.GzipFile(fileobj=file,mode='wb',filename='',mtime=0) as compressed:
+                  compressed.write(payload)
+          shutil.copyfile(source/'v4-decision-sensitivity-summary.json',root/'v4-decision-sensitivity-summary.json')
+          shutil.copyfile(source/'v4-dispatch.json',root/'original-v4-dispatch.json')
+          shutil.copyfile(source/'replay-cpu.log',root/'replay-cpu.log')
+          shutil.copyfile(source/'cpu-tests.log',root/'cpu-tests.log')
+          metadata={
+            'evidence_scope':'development_deterministic_cpu_replay_not_independent_confirmation',
+            'source_head_pre_diagnostic':'15dca8e9b12b83f80c004aec1eb545b9f8e2b551',
+            'source_training_run':42815634215,'source_training_artifact':13765135588,
+            'source_independent_run':42816481249,'source_independent_artifact':13765795897,
+            'replay_cpu_workflow_run':int(os.environ['GITHUB_RUN_ID']),
+            'v4_checkpoint_sha256':'60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c',
+            'raw_replay_sha256':sha256(payload).hexdigest(),
+            'compressed_replay_sha256':sha256((root/'v4-decision-sensitivity-replay.json.gz').read_bytes()).hexdigest(),
+            'original_dispatch_sha256':sha256((root/'original-v4-dispatch.json').read_bytes()).hexdigest(),
+            'score_parity':'all 3 seeds, both Rule and V4, all 9 5-step candidates exactly matched',
+            'allowed_windows':[5,10,20], 'hardware':'ubuntu GitHub Actions CPU only',
+            'not_an_independent_confirmation':True
+          }
+          (root/'provenance.json').write_text(json.dumps(metadata,indent=2,ensure_ascii=False)+'\n')
+          print('RAW_REPLAY_SHA256',metadata['raw_replay_sha256'])
+          print('COMPRESSED_BYTES',(root/'v4-decision-sensitivity-replay.json.gz').stat().st_size)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/world_model_integration/decision_sensitivity/evidence/
+          git diff --cached --check
+          git diff --cached --stat
+          git commit -m 'evidence(pr18): archive original frozen V4 CPU replay and diagnostics [skip ci]'
+          git push origin HEAD:refs/heads/feature/world-model-decision-integration-20261110
+      - name: Archive CPU diagnostic results even on replay failure
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr18-v4-decision-sensitivity-cpu-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-frozen/v4-decision-sensitivity-replay.json
+            ${{ runner.temp }}/pr18-frozen/replay-cpu.log
+            ${{ runner.temp }}/pr18-frozen/cpu-tests.log
+            ${{ runner.temp }}/pr18-frozen/v4-decision-sensitivity-summary.json
+            ${{ runner.temp }}/pr18-frozen/postprocess.log
+            ${{ runner.temp }}/pr18-frozen/v4-dispatch.json
+          if-no-files-found: warn
+          retention-days: 90

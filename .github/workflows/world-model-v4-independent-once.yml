@@ -1,0 +1,153 @@
+name: PR18 V4 one-shot in-range and out-of-range independent confirmation
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - 'experiments/world_model_integration/v4_CONFIRM_ONE_SHOT_TRIGGER.json'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  frozen-v4-holdouts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 38
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU-only environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c 'import torch;assert torch.version.cuda is None;torch.set_num_threads(1)'
+      - name: Recover exact frozen V3-C and V4 training checkpoints, no retraining
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('experiments/world_model_integration/v4_CONFIRM_ONE_SHOT_TRIGGER.json')
+          manifest=json.loads(p.read_text())
+          assert manifest['protocol']=='pr18-v4-frozen-synthetic-mechanism-20261110'
+          assert manifest['artifact_id']>0 and len(manifest['v4_checkpoint_sha256'])==64
+          with open(os.environ['GITHUB_ENV'],'a') as file:
+              file.write('V4_TRAIN_ARTIFACT_ID='+str(manifest['artifact_id'])+'\n')
+          PY
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13753819654/zip" \
+            -o "$RUNNER_TEMP/v3-frozen.zip"
+          unzip -p "$RUNNER_TEMP/v3-frozen.zip" v3/v3-c.pt > "$RUNNER_TEMP/v3-c.pt"
+          echo "65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696  $RUNNER_TEMP/v3-c.pt" | sha256sum -c
+      - name: Verify frozen V4 selection artifact and source provenance
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$V4_TRAIN_ARTIFACT_ID/zip" \
+            -o "$RUNNER_TEMP/v4-frozen.zip"
+          unzip -p "$RUNNER_TEMP/v4-frozen.zip" v4-data.pt > "$RUNNER_TEMP/v4-data.pt"
+          unzip -p "$RUNNER_TEMP/v4-frozen.zip" v4-development.json > "$RUNNER_TEMP/v4-development.json"
+          unzip -p "$RUNNER_TEMP/v4-frozen.zip" v4-training.json > "$RUNNER_TEMP/v4-training.json"
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          folder=Path(os.environ['RUNNER_TEMP'])
+          trigger=json.loads(Path('experiments/world_model_integration/v4_CONFIRM_ONE_SHOT_TRIGGER.json').read_text())
+          for name,want in [('v4-data.pt',trigger['v4_checkpoint_sha256']),
+                            ('v4-development.json',trigger['development_data_sha256'])]:
+              actual=hashlib.sha256((folder/name).read_bytes()).hexdigest()
+              assert actual==want,(name,actual,want)
+          report=json.loads((folder/'v4-training.json').read_text())
+          assert report['checkpoint_sha256']==trigger['v4_checkpoint_sha256']
+          assert report['dataset_sha256']==trigger['development_data_sha256']
+          print('V4 FROZEN MODEL AND TRAIN PROVENANCE OK',trigger['v4_checkpoint_sha256'])
+          PY
+      - name: Generate NEW frozen in-range factual holdout only after V4 selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python -m experiments.world_model_integration.build_dataset_v4 \
+            --part independent_in --output "$RUNNER_TEMP/v4-independent-in-data.json" \
+            --coverage "$RUNNER_TEMP/v4-independent-in-coverage.json" 2>&1 | tee "$RUNNER_TEMP/v4-independent-in-generation.log"
+      - name: Evaluate one-shot paired in-range predictions with unchanged baselines
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 420s python -m experiments.world_model_integration.evaluate_v4 \
+            --development "$RUNNER_TEMP/v4-development.json" \
+            --split "$RUNNER_TEMP/v4-independent-in-data.json" \
+            --v3-frozen "$RUNNER_TEMP/v3-c.pt" --v4 "$RUNNER_TEMP/v4-data.pt" \
+            --part independent_in --output "$RUNNER_TEMP/v4-independent-in-metrics.json" 2>&1 | tee "$RUNNER_TEMP/v4-independent-in-evaluation.log"
+      - name: Plot in-range factual conditional completion curves
+        shell: bash
+        run: |
+          python -m experiments.world_model_integration.plot_v4_curves \
+            --metrics "$RUNNER_TEMP/v4-independent-in-metrics.json" \
+            --output "$RUNNER_TEMP/v4-independent-in-curves.svg"
+      - name: Generate frozen 9-10 step OOD stress group without altering selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python -m experiments.world_model_integration.build_dataset_v4 \
+            --part independent_ood --output "$RUNNER_TEMP/v4-independent-ood-data.json" \
+            --coverage "$RUNNER_TEMP/v4-independent-ood-coverage.json" 2>&1 | tee "$RUNNER_TEMP/v4-independent-ood-generation.log"
+      - name: Evaluate OOD as separate stress result, never merge with in-range
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 420s python -m experiments.world_model_integration.evaluate_v4 \
+            --development "$RUNNER_TEMP/v4-development.json" \
+            --split "$RUNNER_TEMP/v4-independent-ood-data.json" \
+            --v3-frozen "$RUNNER_TEMP/v3-c.pt" --v4 "$RUNNER_TEMP/v4-data.pt" \
+            --part independent_ood --output "$RUNNER_TEMP/v4-independent-ood-metrics.json" 2>&1 | tee "$RUNNER_TEMP/v4-independent-ood-evaluation.log"
+      - name: Plot separate OOD conditional completion curves
+        shell: bash
+        run: |
+          python -m experiments.world_model_integration.plot_v4_curves \
+            --metrics "$RUNNER_TEMP/v4-independent-ood-metrics.json" \
+            --output "$RUNNER_TEMP/v4-independent-ood-curves.svg"
+      - name: Apply frozen B0 and group-stability gate to optional three-arm dispatch
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python -m experiments.world_model_integration.v4_dispatch \
+            --inrange "$RUNNER_TEMP/v4-independent-in-metrics.json" \
+            --v3-frozen "$RUNNER_TEMP/v3-c.pt" --v4 "$RUNNER_TEMP/v4-data.pt" \
+            --output "$RUNNER_TEMP/v4-dispatch.json" 2>&1 | tee "$RUNNER_TEMP/v4-dispatch.log"
+      - name: Archive first and ONLY in-range and OOD results plus factual source
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr18-v4-independent-once-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/v4-independent-in-generation.log
+            ${{ runner.temp }}/v4-independent-in-data.json
+            ${{ runner.temp }}/v4-independent-in-coverage.json
+            ${{ runner.temp }}/v4-independent-in-metrics.json
+            ${{ runner.temp }}/v4-independent-in-evaluation.log
+            ${{ runner.temp }}/v4-independent-in-curves.svg
+            ${{ runner.temp }}/v4-independent-ood-generation.log
+            ${{ runner.temp }}/v4-independent-ood-data.json
+            ${{ runner.temp }}/v4-independent-ood-coverage.json
+            ${{ runner.temp }}/v4-independent-ood-metrics.json
+            ${{ runner.temp }}/v4-independent-ood-evaluation.log
+            ${{ runner.temp }}/v4-independent-ood-curves.svg
+            ${{ runner.temp }}/v4-dispatch.json
+            ${{ runner.temp }}/v4-dispatch.log
+          if-no-files-found: warn
+          retention-days: 90

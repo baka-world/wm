@@ -1,0 +1,300 @@
+{
+  "not_independent_test": true,
+  "not_selected_on_counterfactual_cost": true,
+  "protocol_sha256": "4e32f6aebc99ac5847822036e0053bb5c15211809db72045ec23b1a090accec6",
+  "selected": [
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F551074-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F551074-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551074:2",
+      "seed": 551074,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F551518-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F551518-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551518:2",
+      "seed": 551518,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F551740-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F551740-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551740:2",
+      "seed": 551740,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F551962-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F551962-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551962:2",
+      "seed": 551962,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F551962-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F551962-3::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551962:12",
+      "seed": 551962,
+      "split": "train",
+      "tick": 12
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F552184-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F552184-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "552184:2",
+      "seed": 552184,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F552184-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F552184-3::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "552184:13",
+      "seed": 552184,
+      "split": "train",
+      "tick": 13
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F552406-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F552406-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "552406:2",
+      "seed": 552406,
+      "split": "train",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F552628-2::stage3"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F552628-2::stage3"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "552628:49",
+      "seed": 552628,
+      "split": "train",
+      "tick": 49
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661074-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661074-1::stage1"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "661074:2",
+      "seed": 661074,
+      "split": "validation",
+      "tick": 2
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R3",
+            "sample_id": "F661296-2::stage3"
+          }
+        ],
+        [
+          {
+            "robot_id": "R2",
+            "sample_id": "F661296-2::stage3"
+          }
+        ]
+      ],
+      "category": "S3",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "661296:53",
+      "seed": 661296,
+      "split": "validation",
+      "tick": 53
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F551037-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "F551037-2::stage1"
+          }
+        ]
+      ],
+      "category": "S2",
+      "distinct_legal_plans": 2,
+      "eligible_current_v4_queries": 1,
+      "id": "551037:13",
+      "seed": 551037,
+      "split": "train",
+      "tick": 13
+    }
+  ],
+  "selection_rule": "category S4>S3>S2 then (seed,tick), max 2 per scenario",
+  "selection_stats": {
+    "eligible_by_class": {
+      "S2": 63,
+      "S3": 11
+    },
+    "eligible_count": 74,
+    "selected_by_class": {
+      "S2": 1,
+      "S3": 11
+    },
+    "selected_count": 12,
+    "source_scenarios_selected": 10,
+    "unselected_count": 62
+  },
+  "stage": "SEALED_BEFORE_V4_PREDICTION_OR_FUTURE_COST",
+  "value_development_protocol_sha256": "0726627fb0a18a906acc84bb51d8bb5e2e8ae4811159572349548c66f4ce4cbc"
+}

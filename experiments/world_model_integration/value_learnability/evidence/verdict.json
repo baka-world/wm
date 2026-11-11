@@ -1,0 +1,7 @@
+{
+  "value": "EXPLORATORY_ONLY",
+  "v4": "NO-GO-V4",
+  "informative_groups": 16,
+  "groups_with_v4_queries": 16,
+  "reason": "16 independent groups are exploratory; inspect paired CI; do not claim statistical proof"
+}

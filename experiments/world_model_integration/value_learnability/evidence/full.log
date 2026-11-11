@@ -1,0 +1,78 @@
+train 1/48 candidates=2 spread=3.00000 v4q=16
+train 2/48 candidates=4 spread=3.50000 v4q=55
+train 3/48 candidates=3 spread=1.43750 v4q=19
+train 4/48 candidates=2 spread=1.12500 v4q=18
+train 5/48 candidates=4 spread=4.00000 v4q=33
+train 6/48 candidates=3 spread=1.56250 v4q=19
+train 7/48 candidates=2 spread=0.87500 v4q=18
+train 8/48 candidates=4 spread=2.33333 v4q=57
+train 9/48 candidates=3 spread=3.75000 v4q=19
+train 10/48 candidates=2 spread=0.87500 v4q=17
+train 11/48 candidates=4 spread=4.08333 v4q=42
+train 12/48 candidates=3 spread=1.37500 v4q=24
+train 13/48 candidates=2 spread=1.00000 v4q=16
+train 14/48 candidates=4 spread=3.83333 v4q=66
+train 15/48 candidates=3 spread=2.00000 v4q=19
+train 16/48 candidates=2 spread=3.50000 v4q=13
+train 17/48 candidates=4 spread=3.00000 v4q=42
+train 18/48 candidates=3 spread=4.62500 v4q=22
+train 19/48 candidates=2 spread=1.37500 v4q=18
+train 20/48 candidates=4 spread=4.25000 v4q=64
+train 21/48 candidates=3 spread=2.00000 v4q=22
+train 22/48 candidates=2 spread=2.87500 v4q=16
+train 23/48 candidates=4 spread=2.00000 v4q=41
+train 24/48 candidates=3 spread=1.68750 v4q=24
+train 25/48 candidates=2 spread=1.50000 v4q=13
+train 26/48 candidates=4 spread=2.66667 v4q=55
+train 27/48 candidates=3 spread=0.37500 v4q=19
+train 28/48 candidates=2 spread=0.12500 v4q=18
+train 29/48 candidates=4 spread=2.33333 v4q=40
+train 30/48 candidates=3 spread=2.00000 v4q=19
+train 31/48 candidates=2 spread=3.37500 v4q=17
+train 32/48 candidates=4 spread=3.16667 v4q=60
+train 33/48 candidates=3 spread=2.50000 v4q=23
+train 34/48 candidates=2 spread=3.00000 v4q=18
+train 35/48 candidates=4 spread=2.66667 v4q=35
+train 36/48 candidates=3 spread=1.56250 v4q=24
+train 37/48 candidates=2 spread=2.00000 v4q=18
+train 38/48 candidates=4 spread=2.16667 v4q=66
+train 39/48 candidates=3 spread=2.00000 v4q=22
+train 40/48 candidates=2 spread=2.50000 v4q=16
+train 41/48 candidates=4 spread=2.33333 v4q=40
+train 42/48 candidates=3 spread=2.00000 v4q=24
+train 43/48 candidates=2 spread=0.50000 v4q=18
+train 44/48 candidates=4 spread=3.50000 v4q=66
+train 45/48 candidates=3 spread=4.50000 v4q=19
+train 46/48 candidates=2 spread=3.37500 v4q=13
+train 47/48 candidates=4 spread=4.00000 v4q=39
+train 48/48 candidates=3 spread=1.43750 v4q=23
+validation 1/12 candidates=2 spread=1.00000 v4q=18
+validation 2/12 candidates=4 spread=3.16667 v4q=66
+validation 3/12 candidates=3 spread=2.18750 v4q=23
+validation 4/12 candidates=2 spread=3.75000 v4q=18
+validation 5/12 candidates=4 spread=3.33333 v4q=39
+validation 6/12 candidates=3 spread=1.00000 v4q=24
+validation 7/12 candidates=2 spread=1.25000 v4q=13
+validation 8/12 candidates=4 spread=2.00000 v4q=61
+validation 9/12 candidates=3 spread=0.50000 v4q=19
+validation 10/12 candidates=2 spread=1.12500 v4q=18
+validation 11/12 candidates=4 spread=2.00000 v4q=39
+validation 12/12 candidates=3 spread=0.75000 v4q=24
+TEST_LOCK_SHA256 6328352a82ec6991aae526d1d98a13abf95c8a713c16d73aa342294f7f5dd85c
+TEST 1/16 candidates=2 v4q=18
+TEST 2/16 candidates=4 v4q=66
+TEST 3/16 candidates=3 v4q=24
+TEST 4/16 candidates=2 v4q=18
+TEST 5/16 candidates=4 v4q=40
+TEST 6/16 candidates=3 v4q=22
+TEST 7/16 candidates=2 v4q=18
+TEST 8/16 candidates=4 v4q=66
+TEST 9/16 candidates=3 v4q=19
+TEST 10/16 candidates=2 v4q=18
+TEST 11/16 candidates=4 v4q=40
+TEST 12/16 candidates=3 v4q=19
+TEST 13/16 candidates=2 v4q=17
+TEST 14/16 candidates=4 v4q=65
+TEST 15/16 candidates=3 v4q=24
+TEST 16/16 candidates=2 v4q=18
+FINAL {"summary": {"B0": {"groups": 16, "informative_groups": 16, "mean_regret": 0.3203124999999998, "top1_all": 0.75, "top1_informative": 0.75, "pair_concordance": 0.8291666666666667, "relative_gap_mae": null, "mean_scoring_cpu_seconds_per_state": 0.01599844968749997}, "B1": {"groups": 16, "informative_groups": 16, "mean_regret": 0.36979166666666674, "top1_all": 0.75, "top1_informative": 0.75, "pair_concordance": 0.7895833333333333, "relative_gap_mae": null, "mean_scoring_cpu_seconds_per_state": 0.00017725618749997452}, "B2": {"groups": 16, "informative_groups": 16, "mean_regret": 0.20312500000000067, "top1_all": 0.75, "top1_informative": 0.75, "pair_concordance": 0.8791666666666667, "relative_gap_mae": 0.8921280105740654, "mean_scoring_cpu_seconds_per_state": 0.00019900856249943644}, "B3": {"groups": 16, "informative_groups": 16, "mean_regret": 0.5494791666666667, "top1_all": 0.6875, "top1_informative": 0.6875, "pair_concordance": 0.76875, "relative_gap_mae": null, "mean_scoring_cpu_seconds_per_state": 0.02446612831250039}, "B4": {"groups": 16, "informative_groups": 16, "mean_regret": 0.16406250000000067, "top1_all": 0.75, "top1_informative": 0.75, "pair_concordance": 0.86875, "relative_gap_mae": 0.9111863352116973, "mean_scoring_cpu_seconds_per_state": 0.016012420562500407}, "B5": {"groups": 16, "informative_groups": 16, "mean_regret": 0.16406250000000067, "top1_all": 0.75, "top1_informative": 0.75, "pair_concordance": 0.8791666666666667, "relative_gap_mae": 0.9284565080981938, "mean_scoring_cpu_seconds_per_state": 0.024478604437499496}}, "verdict": {"value": "EXPLORATORY_ONLY", "v4": "NO-GO-V4", "informative_groups": 16, "groups_with_v4_queries": 16, "reason": "16 independent groups are exploratory; inspect paired CI; do not claim statistical proof"}, "wall_seconds": 15.819105412999996}

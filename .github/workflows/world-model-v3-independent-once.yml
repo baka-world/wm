@@ -1,0 +1,100 @@
+name: PR18 one-shot new-map independent verification
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - 'experiments/world_model_integration/v3_ONE_SHOT_CONFIRMATION_TRIGGER.txt'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  one-shot-independent:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU inference environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch;assert torch.version.cuda is None;torch.set_num_threads(1)"
+      - name: Recover frozen V2 and validation-selected V3-C without any retraining
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13753445460/zip" \
+            --output "$RUNNER_TEMP/original-v2.zip"
+          curl --fail --silent --show-error --location -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13753819654/zip" \
+            --output "$RUNNER_TEMP/original-v3-ablation.zip"
+          unzip -p "$RUNNER_TEMP/original-v2.zip" session-v2.pt > "$RUNNER_TEMP/frozen-v2.pt"
+          unzip -p "$RUNNER_TEMP/original-v3-ablation.zip" v3/v3-c.pt > "$RUNNER_TEMP/selected-v3.pt"
+          unzip -p "$RUNNER_TEMP/original-v3-ablation.zip" v3/v3_selection.json > "$RUNNER_TEMP/selection.json"
+          unzip -p "$RUNNER_TEMP/original-v3-ablation.zip" v3-source.json > "$RUNNER_TEMP/train-source.json"
+          echo "84f426a7acdb860b283cc7f19efdc930ab6073d191bd17366949d7b7c52bb68d  $RUNNER_TEMP/frozen-v2.pt" | sha256sum -c
+          echo "65aeca1bb7a09d36af8793379a7766ea28b43fdbc6e0ef370777a2f024602696  $RUNNER_TEMP/selected-v3.pt" | sha256sum -c
+          python - <<'PY'
+          import json,os
+          x=json.load(open(os.environ['RUNNER_TEMP']+'/selection.json'))
+          assert x['selection']['winner']=='V3-C'
+          assert x['selection']['gate_vs_B0']
+          print('CONFIRMATION FROZEN WINNER',x['selection'])
+          PY
+      - name: Validate that independently predeclared map layouts compile
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from experiments.world_model_integration.build_dataset import case_for
+          from experiments.world_model_integration.v3_independent import CONFIG
+          cfg=json.loads(CONFIG.read_text())
+          for spec in cfg['groups']:
+              business,geo=case_for(spec,cfg)
+              assert len(business.jobs)==4 and spec['layout'] in (3,4)
+          print('ALL SIX PREDECLARED NOVEL-MAP CASES CONSTRUCTIBLE')
+          PY
+      - name: Once-only factual new-map service-event evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 300s python -m experiments.world_model_integration.v3_independent \
+            --source "$RUNNER_TEMP/train-source.json" \
+            --frozen-v2 "$RUNNER_TEMP/frozen-v2.pt" \
+            --selected "$RUNNER_TEMP/selected-v3.pt" \
+            --output "$RUNNER_TEMP/v3-independent.json" 2>&1 | tee "$RUNNER_TEMP/v3-independent.log"
+      - name: Stop or run strictly bounded three-arm factual dispatch
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 450s python -m experiments.world_model_integration.v3_decision \
+            --holdout "$RUNNER_TEMP/v3-independent.json" \
+            --frozen-v2 "$RUNNER_TEMP/frozen-v2.pt" \
+            --selected "$RUNNER_TEMP/selected-v3.pt" \
+            --output "$RUNNER_TEMP/v3-decision.json" 2>&1 | tee "$RUNNER_TEMP/v3-decision.log"
+      - name: Preserve the first and only independent confirmation
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr18-v3-once-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/selection.json
+            ${{ runner.temp }}/v3-independent.log
+            ${{ runner.temp }}/v3-independent.json
+            ${{ runner.temp }}/v3-decision.log
+            ${{ runner.temp }}/v3-decision.json
+          if-no-files-found: warn
+          retention-days: 90

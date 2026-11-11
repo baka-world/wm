@@ -1,0 +1,15 @@
+{
+  "audit_source_sha256": "4432a981636322af5ac77f3fbece20efcd6b23575ae2ee68ffc0a042a28d6b50",
+  "cpu_seconds": 1.7130804439999998,
+  "gpu": 0,
+  "input_original_head": "9aa554bc541e5a68cb74089feeecbbe62ada1aa0",
+  "model_inference": 0,
+  "python_version": "3.13.5",
+  "read_only": true,
+  "run_mode": "local/offline original artifact extracted from GH run 42903407020",
+  "simulator_replays": 0,
+  "test_count": 9,
+  "test_source_sha256": "72978fdc9626d203be268f50c47a9223c5c3287343f6a896383d40ebb924ee0b",
+  "tests_passed": 9,
+  "training": 0
+}

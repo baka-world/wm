@@ -1,0 +1,82 @@
+{
+  "protocol": "PR18_FROZEN_SAME_STATE_RESAMPLING_AND_REAL_COUNTERFACTUAL_P1_V1",
+  "baseline_head_before_work": "d9c5f819efc8a72d231261b3d034283909b2265b",
+  "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "archives": {
+    "confirmation": {
+      "run_id": 42986822400,
+      "artifact_id": 13840027102,
+      "sha256": "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233"
+    },
+    "new_full": {
+      "run_id": 42995397402,
+      "artifact_id": 13842933799,
+      "sha256": "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5"
+    }
+  },
+  "fixed_states": [
+    {
+      "seed": 905147,
+      "index": 26,
+      "tick": 0,
+      "source": "confirmation",
+      "observation_sha256": "600fe17debc205ebd340dfe59827c2dfc571783465ca58453cfb590752f0fb71",
+      "candidate_count": 2
+    },
+    {
+      "seed": 905585,
+      "index": 32,
+      "tick": 0,
+      "source": "confirmation",
+      "observation_sha256": "40f2777620b52690c82df7300337d5f3182887a67e9bc0b23c3182a152af23cc",
+      "candidate_count": 2
+    },
+    {
+      "seed": 905220,
+      "index": 27,
+      "tick": 41,
+      "source": "confirmation",
+      "observation_sha256": "c148fde404c476b0ca305ebdfed8f75d7ae1ff00d59313b52e33059883905a67",
+      "candidate_count": 4
+    },
+    {
+      "seed": 905804,
+      "index": 35,
+      "tick": 0,
+      "source": "confirmation",
+      "observation_sha256": "24dc1b9ab4d15aa36be5750051e1052d38f09983fb4a717ddb34cddcac117209",
+      "candidate_count": 2
+    },
+    {
+      "seed": 906195,
+      "index": 38,
+      "tick": 138,
+      "source": "new_full",
+      "observation_sha256": "1f3573019d375d8457c8ce7d3eee079c3f45ab2aa220e1c9570463ff3858f1ab",
+      "candidate_count": 2
+    }
+  ],
+  "independent_rng_seeds": [
+    700101,
+    700211,
+    700307,
+    700401,
+    700507,
+    700601,
+    700703
+  ],
+  "original_sampling_seed": "scene_seed",
+  "prediction_sampling": "hash-keyed service query uniform with same query identity and new seed per repetition; H5+20 deterministic public continuation; 3 particles per seed",
+  "real_future": "same simulator scene seed, same keyed per sample service duration and retest outcome, exact archived P5 action prefix, target candidate forced once, P1 after target",
+  "true_future_scoring": "original fixed judge_score: urgent incomplete rate, urgent late lower bound, routine restricted flow, all restricted flow, lexicographic; no online access",
+  "fixed_budget": {
+    "max_states": 5,
+    "max_candidates_each": 4,
+    "max_model_rollout_calls_estimate": 200,
+    "CPU_process_seconds": 600
+  },
+  "no_new_training": true,
+  "GPU": 0,
+  "scope": "post-hoc known flip states; causal comparison only under fixed P1 continuation and keyed exogenous synthetic simulator; not real-world or independent generalization",
+  "immutable_inputs": true
+}

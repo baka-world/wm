@@ -1,0 +1,592 @@
+{
+  "eligible": 227,
+  "no_future_label_used": true,
+  "only_development_seeds": true,
+  "protocol_sha256": "da29dc472c5edafdc238c49d2d2b3985c794533c1b2e33e3c3c781a3510a36d2",
+  "selected": [
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902001-0::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902001-1::stage1"
+          }
+        ]
+      ],
+      "id": "902001:0",
+      "routine_waiting": 1,
+      "seed": 902001,
+      "spec": {
+        "capacity": 1,
+        "index": 0,
+        "jitter": 1,
+        "jobs": 4,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 0,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 902001,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 1,
+        "urgent_due_offset": 65
+      },
+      "tick": 0,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902074-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902074-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902074-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902074-2::stage1"
+          }
+        ]
+      ],
+      "id": "902074:12",
+      "routine_waiting": 3,
+      "seed": 902074,
+      "spec": {
+        "capacity": 1,
+        "index": 1,
+        "jitter": 2,
+        "jobs": 5,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 0,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 902074,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 2,
+        "urgent_due_offset": 70
+      },
+      "tick": 12,
+      "urgent_waiting": 2,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902147-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902147-5::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902147-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902147-3::stage1"
+          }
+        ]
+      ],
+      "id": "902147:12",
+      "routine_waiting": 3,
+      "seed": 902147,
+      "spec": {
+        "capacity": 1,
+        "index": 2,
+        "jitter": 1,
+        "jobs": 6,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 0,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 902147,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 3,
+        "urgent_due_offset": 75
+      },
+      "tick": 12,
+      "urgent_waiting": 2,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902220-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "U902220-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U902220-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "U902220-0::stage1"
+          }
+        ]
+      ],
+      "id": "902220:0",
+      "routine_waiting": 1,
+      "seed": 902220,
+      "spec": {
+        "capacity": 1,
+        "index": 3,
+        "jitter": 2,
+        "jobs": 4,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 35,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 902220,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 1,
+        "urgent_due_offset": 65
+      },
+      "tick": 0,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903001-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903001-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903001-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903001-2::stage1"
+          }
+        ]
+      ],
+      "id": "903001:8",
+      "routine_waiting": 3,
+      "seed": 903001,
+      "spec": {
+        "capacity": 1,
+        "index": 4,
+        "jitter": 1,
+        "jobs": 5,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 35,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 903001,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 2,
+        "urgent_due_offset": 70
+      },
+      "tick": 8,
+      "urgent_waiting": 2,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903074-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903074-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903074-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903074-2::stage1"
+          }
+        ]
+      ],
+      "id": "903074:10",
+      "routine_waiting": 2,
+      "seed": 903074,
+      "spec": {
+        "capacity": 1,
+        "index": 5,
+        "jitter": 2,
+        "jobs": 6,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 35,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 903074,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 3,
+        "urgent_due_offset": 75
+      },
+      "tick": 10,
+      "urgent_waiting": 3,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903147-0::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "U903147-1::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903147-1::stage1"
+          },
+          {
+            "robot_id": "R2",
+            "sample_id": "U903147-0::stage1"
+          }
+        ]
+      ],
+      "id": "903147:0",
+      "routine_waiting": 1,
+      "seed": 903147,
+      "spec": {
+        "capacity": 1,
+        "index": 6,
+        "jitter": 1,
+        "jobs": 4,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 65,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 903147,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 1,
+        "urgent_due_offset": 65
+      },
+      "tick": 0,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903220-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903220-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903220-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903220-2::stage1"
+          }
+        ]
+      ],
+      "id": "903220:14",
+      "routine_waiting": 3,
+      "seed": 903220,
+      "spec": {
+        "capacity": 1,
+        "index": 7,
+        "jitter": 2,
+        "jobs": 5,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 65,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 903220,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 2,
+        "urgent_due_offset": 70
+      },
+      "tick": 14,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903293-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903293-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903293-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903293-2::stage1"
+          }
+        ]
+      ],
+      "id": "903293:10",
+      "routine_waiting": 2,
+      "seed": 903293,
+      "spec": {
+        "capacity": 1,
+        "index": 8,
+        "jitter": 1,
+        "jobs": 6,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 65,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 903293,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 3,
+        "urgent_due_offset": 75
+      },
+      "tick": 10,
+      "urgent_waiting": 3,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903366-0::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903366-1::stage1"
+          }
+        ]
+      ],
+      "id": "903366:0",
+      "routine_waiting": 1,
+      "seed": 903366,
+      "spec": {
+        "capacity": 2,
+        "index": 9,
+        "jitter": 2,
+        "jobs": 4,
+        "max_ticks": 165,
+        "outage": false,
+        "retest_rate_percent": 0,
+        "robot_count": 1,
+        "routine_due_offset": 145,
+        "seed": 903366,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 1,
+        "urgent_due_offset": 65
+      },
+      "tick": 0,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903439-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903439-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903439-3::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903439-2::stage1"
+          }
+        ]
+      ],
+      "id": "903439:10",
+      "routine_waiting": 3,
+      "seed": 903439,
+      "spec": {
+        "capacity": 2,
+        "index": 10,
+        "jitter": 1,
+        "jobs": 5,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 0,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 903439,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 2,
+        "urgent_due_offset": 70
+      },
+      "tick": 10,
+      "urgent_waiting": 1,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    },
+    {
+      "candidate_matchings": [
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903512-0::stage2"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903512-5::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903512-4::stage1"
+          }
+        ],
+        [
+          {
+            "robot_id": "R1",
+            "sample_id": "U903512-3::stage1"
+          }
+        ]
+      ],
+      "id": "903512:13",
+      "routine_waiting": 3,
+      "seed": 903512,
+      "spec": {
+        "capacity": 2,
+        "index": 11,
+        "jitter": 2,
+        "jobs": 6,
+        "max_ticks": 165,
+        "outage": true,
+        "retest_rate_percent": 0,
+        "robot_count": 2,
+        "routine_due_offset": 145,
+        "seed": 903512,
+        "source": "SYNTHETIC_ASSUMPTION_NOT_COMPANY",
+        "urgent_count": 3,
+        "urgent_due_offset": 75
+      },
+      "tick": 13,
+      "urgent_waiting": 2,
+      "visible_active_service": 0,
+      "visible_outage": 0,
+      "visible_retest_waiting": 0
+    }
+  ],
+  "selected_groups": 12,
+  "selection_rule": "observed urgent and routine waiting, >=2 unique CP-SAT candidates, scenario seed asc, tick asc, before any true cost",
+  "state_selection_stage": "SEALED_BEFORE_CANDIDATE_FUTURE_COST",
+  "unselected": 215
+}

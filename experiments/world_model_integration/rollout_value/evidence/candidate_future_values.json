@@ -1,0 +1,366 @@
+{
+  "scope": "DEVELOPMENT_OFFLINE_COUNTERFACTUAL_NOT_NEW_CONFIRMATION",
+  "source": {
+    "run_id": 42860109188,
+    "artifact_id": 13784716984,
+    "original_full_value_json_sha256": "80019f54abe8a2149e0560552fb6e5a2447db437cfb3d64d6b7d8eeb60420b5c",
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "first_frozen_head": "3663d93b1348fec068996bb86a10c6b80c2c1c08"
+  },
+  "cost_units": "restricted mean flow tick per job over all configured synthetic jobs",
+  "seed_offsets_predeclared": [
+    0,
+    101,
+    203,
+    307,
+    409,
+    503,
+    607,
+    709
+  ],
+  "simulation_wall_seconds": 6.236824756999994,
+  "model_scores_are_nominal_proxy_not_calibrated_flow": true,
+  "p2_equals_p1_full_event_hashes_in_every_candidate_seed": true,
+  "model_choice_both_rule_and_v4_h5_all_cases": 0,
+  "B2_rollout": "not available without new dynamics adapter; historical Brier cannot substitute for value prediction",
+  "cases": [
+    {
+      "seed": 43011,
+      "jitter": 0,
+      "offsets": [
+        0
+      ],
+      "flows": [
+        [
+          77.5
+        ],
+        [
+          72.5
+        ]
+      ],
+      "stage_wait": [
+        26.5,
+        23.5
+      ],
+      "capacity_wait": [
+        0,
+        0
+      ],
+      "rule5": [
+        99,
+        99
+      ],
+      "v4_10": [
+        107,
+        108
+      ],
+      "rule10": [
+        106,
+        108
+      ],
+      "rule20": [
+        115,
+        118
+      ],
+      "v4_20": [
+        118,
+        119.33333333333333
+      ],
+      "rank": [
+        1,
+        0
+      ],
+      "regret": 5,
+      "gap_mae_rule5": 2.5,
+      "gap_mae_v4_20": 3.1666666666666643,
+      "candidate_means": [
+        77.5,
+        72.5
+      ],
+      "p1_rank": [
+        1,
+        0
+      ],
+      "p2_rank": [
+        1,
+        0
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        0
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        77.5,
+        72.5
+      ],
+      "mean_flow_later_released_jobs_offline_only": null,
+      "tick0_visible_job_count": 2
+    },
+    {
+      "seed": 43015,
+      "jitter": 1,
+      "offsets": [
+        0,
+        101,
+        203,
+        307,
+        409,
+        503,
+        607,
+        709
+      ],
+      "flows": [
+        [
+          45.25,
+          43.75,
+          43.75,
+          45.25,
+          44,
+          45.25,
+          44,
+          45.5
+        ],
+        [
+          47.25,
+          45.75,
+          45.75,
+          47.25,
+          46,
+          47.75,
+          46,
+          47.5
+        ],
+        [
+          47.25,
+          45.75,
+          45.75,
+          47.25,
+          46,
+          47.25,
+          46,
+          47.5
+        ]
+      ],
+      "stage_wait": [
+        5.84375,
+        6.375,
+        6.34375
+      ],
+      "capacity_wait": [
+        0,
+        0,
+        0
+      ],
+      "rule5": [
+        32,
+        34,
+        34
+      ],
+      "v4_10": [
+        33,
+        35,
+        35
+      ],
+      "rule10": [
+        32,
+        34,
+        34
+      ],
+      "rule20": [
+        32,
+        34,
+        34
+      ],
+      "v4_20": [
+        33.333333333333336,
+        35,
+        35
+      ],
+      "rank": [
+        0,
+        2,
+        1
+      ],
+      "regret": 0,
+      "gap_mae_rule5": 0.020833333333333332,
+      "gap_mae_v4_20": 0.24305555555555713,
+      "candidate_means": [
+        44.59375,
+        46.65625,
+        46.59375
+      ],
+      "p1_rank": [
+        0,
+        2,
+        1
+      ],
+      "p2_rank": [
+        0,
+        2,
+        1
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        2,
+        4,
+        10
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        33.375,
+        36.125,
+        36.125
+      ],
+      "mean_flow_later_released_jobs_offline_only": [
+        48.333333333333336,
+        50.166666666666664,
+        50.083333333333336
+      ],
+      "tick0_visible_job_count": 1
+    },
+    {
+      "seed": 43019,
+      "jitter": 2,
+      "offsets": [
+        0,
+        101,
+        203,
+        307,
+        409,
+        503,
+        607,
+        709
+      ],
+      "flows": [
+        [
+          51,
+          47.75,
+          47.75,
+          51.75,
+          47.75,
+          47,
+          50.5,
+          50
+        ],
+        [
+          51,
+          47.75,
+          47.75,
+          51.75,
+          47.75,
+          47,
+          50.5,
+          50
+        ],
+        [
+          44.25,
+          42.25,
+          41.75,
+          45.5,
+          43.75,
+          41.75,
+          45.25,
+          43.75
+        ],
+        [
+          46.25,
+          44.25,
+          43.25,
+          47,
+          45.75,
+          43.25,
+          47.25,
+          45.75
+        ]
+      ],
+      "stage_wait": [
+        6.84375,
+        6.84375,
+        5.40625,
+        5.90625
+      ],
+      "capacity_wait": [
+        19.875,
+        21.875,
+        6.75,
+        8.75
+      ],
+      "rule5": [
+        60,
+        60,
+        60,
+        62
+      ],
+      "rule10": [
+        62,
+        62,
+        63,
+        67
+      ],
+      "v4_10": [
+        62,
+        62,
+        63,
+        66.33333333333333
+      ],
+      "rule20": [
+        62,
+        62,
+        63,
+        67
+      ],
+      "v4_20": [
+        63.333333333333336,
+        63.333333333333336,
+        63.666666666666664,
+        67.66666666666667
+      ],
+      "rank": [
+        2,
+        3,
+        0,
+        1
+      ],
+      "regret": 5.65625,
+      "gap_mae_rule5": 2.875,
+      "gap_mae_v4_20": 3.541666666666666,
+      "candidate_means": [
+        49.1875,
+        49.1875,
+        43.53125,
+        45.34375
+      ],
+      "p1_rank": [
+        2,
+        3,
+        0,
+        1
+      ],
+      "p2_rank": [
+        2,
+        3,
+        0,
+        1
+      ],
+      "job_release_ticks_offline_only": [
+        0,
+        0,
+        5,
+        10
+      ],
+      "mean_flow_tick0_visible_jobs": [
+        42.0625,
+        42.0625,
+        35.875,
+        37.6875
+      ],
+      "mean_flow_later_released_jobs_offline_only": [
+        56.3125,
+        56.3125,
+        51.1875,
+        53
+      ],
+      "tick0_visible_job_count": 2
+    }
+  ],
+  "partition_semantics": "offline descriptive decomposition: stage-final flow for jobs released at tick 0 versus later; later jobs' identities/times are NEVER model or continuation policy inputs"
+}

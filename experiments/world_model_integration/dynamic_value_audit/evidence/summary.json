@@ -1,0 +1,146 @@
+{
+  "conditioning_probes": [
+    {
+      "id": "551074:2",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "551518:2",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "551740:2",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "551962:2",
+      "offset": 101,
+      "prefix_identical": false,
+      "reason": "RAW_OBSERVATION_PREFIX_CHANGED",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "551962:12",
+      "offset": 101,
+      "prefix_identical": false,
+      "reason": "RAW_OBSERVATION_PREFIX_CHANGED",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "552184:2",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "552184:13",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "552406:2",
+      "offset": 101,
+      "prefix_identical": false,
+      "reason": "HIDDEN_HISTORY_PREFIX_NOT_IDENTICAL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "552628:49",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "661074:2",
+      "offset": 101,
+      "prefix_identical": false,
+      "reason": "HIDDEN_HISTORY_PREFIX_NOT_IDENTICAL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "661296:53",
+      "offset": 101,
+      "prefix_identical": true,
+      "reason": "identical captured prefix for this probe; sampling contract not established",
+      "status": "NOT_ADMITTED_AS_LABEL",
+      "usable_as_conditional_future": false
+    },
+    {
+      "id": "551037:13",
+      "offset": 101,
+      "prefix_identical": false,
+      "reason": "RAW_OBSERVATION_PREFIX_CHANGED",
+      "usable_as_conditional_future": false
+    }
+  ],
+  "cpu_evaluate_elapsed_seconds": 2.5419181910000006,
+  "development_only": true,
+  "legitimate_multiple_futures_estimated": false,
+  "mechanism_counts": {
+    "action_changed": 0,
+    "candidate_score_tuple_changed": 21,
+    "component_estimated_remaining_service_changed": 17,
+    "component_model_minus_prior_changed": 0,
+    "component_model_service_changed": 17,
+    "component_remaining_distance_changed": 17,
+    "component_resource_contention_proxy_changed": 1,
+    "component_rule_prior_service_changed": 17,
+    "component_terminal_work_changed": 21,
+    "component_unfinished_job_ticks_changed": 0,
+    "different_probabilities_on_identical_v4_state": 309,
+    "ranking_changed": 0,
+    "robots_different": 187,
+    "sampled_event_diff_vs_rule_on_identical_v4_state": 68,
+    "samples_different": 99,
+    "service_completion_count_different": 108,
+    "service_queries_considered": 396,
+    "service_queries_eligible": 309,
+    "stations_different": 117,
+    "successor_releases_different": 13,
+    "v4_actual_forward_batches": 289,
+    "v4_actual_query_calls": 309
+  },
+  "not_independent_test": true,
+  "paired_rule_minus_v4_by_original_scenario": {
+    "551037": 0,
+    "551074": 0.0,
+    "551518": 0.0,
+    "551740": 0.0,
+    "551962": 0.0,
+    "552184": 0,
+    "552406": 0,
+    "552628": 0.0,
+    "661074": 0.0,
+    "661296": 0
+  },
+  "realization_regret_rule_mean": 0.041666666666666664,
+  "realization_regret_v4_mean": 0.041666666666666664,
+  "rejected_states": 0,
+  "rule_v4_different_actions": 0,
+  "same_action_fraction": 1.0,
+  "selected": 12,
+  "source": "existing_train_validation_only",
+  "total_actual_v4_batches": 289,
+  "total_actual_v4_queries": 309,
+  "valid_evaluated_states": 12,
+  "verdict": "NO_GO_DEVELOPMENT_NO_CHANGED_ACTION"
+}

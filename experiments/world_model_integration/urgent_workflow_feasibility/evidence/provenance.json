@@ -1,0 +1,18 @@
+{
+  "conditional_retest_keyed_by_seed_job": true,
+  "core_sha256": "13d9583fa712065edbcaabd34e7538707fc649effaed9d02b2dd0560962da782",
+  "cpu_only": true,
+  "environment": "GitHub Actions ubuntu-24.04 Python 3.10 CPU",
+  "github_run_id": 42903407020,
+  "github_source_head": "a52b4e35d76d00db04f9d0b2da439be8b2356433",
+  "independent_test": false,
+  "no_new_model_checkpoints": true,
+  "one_single_realization_per_candidate": true,
+  "oracle_selection_preceded_any_candidate_replay": true,
+  "protocol_sha256": "da29dc472c5edafdc238c49d2d2b3985c794533c1b2e33e3c3c781a3510a36d2",
+  "python": "3.10.22",
+  "runner_sha256": "004349ece3c41d4d8950ae5b975fb4fb9aa99777f0c567ea1a22e31e3bde6770",
+  "source_commit": "4a3ca9edc10350d4fbe42538c00c3b19ad28fffb",
+  "training_calls": 0,
+  "v4_calls": 0
+}

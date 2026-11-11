@@ -1,0 +1,116 @@
+name: PR18 urgent retest synthetic CPU feasibility
+# retry contract audit after correcting the int safety count
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - '.github/workflows/pr18-urgent-feasibility-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  urgent-retest-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 36
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Check out exact PR18 source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Setup CPU-only Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, 'unexpected CUDA dependency'
+          print('CPU torch=',torch.__version__)
+          PY
+      - name: Freeze protocol SHA, syntax compile and execute actual CPU tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/urgent"
+          python -m compileall -q experiments/world_model_integration/urgent_workflow_feasibility
+          sha256sum experiments/world_model_integration/urgent_workflow_feasibility/protocol.json \
+            experiments/world_model_integration/urgent_workflow_feasibility/core.py \
+            experiments/world_model_integration/urgent_workflow_feasibility/run.py \
+            | tee "$RUNNER_TEMP/urgent/source-sha.txt"
+          timeout 200s python -m unittest discover -s experiments/world_model_integration/urgent_workflow_feasibility/tests -v \
+            2>&1 | tee "$RUNNER_TEMP/urgent/tests.log"
+      - name: Run sealed four smoke + twenty development CPU groups then finite P0 replay oracle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/urgent/results"
+          timeout 1860s python -m experiments.world_model_integration.urgent_workflow_feasibility.run \
+            --out "$RUNNER_TEMP/urgent/results" 2>&1 | tee "$RUNNER_TEMP/urgent/experiment.log"
+      - name: Seal immutable evidence under existing PR18
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'urgent'
+          src=root/'results'
+          out=pathlib.Path('experiments/world_model_integration/urgent_workflow_feasibility/evidence')
+          if out.exists() and any(out.iterdir()):
+              raise FileExistsError('immutable evidence directory already populated')
+          summary=json.loads((src/'summary.json').read_text())
+          assert summary['groups']==24 and summary['smoke_groups']==4
+          assert summary['development_groups']==20
+          assert summary['no_old_independent_test'] and summary['no_v4']
+          assert all(x['resource_violations_total']==0 and x['motion_violations_total']==0
+                     and x['lifecycle_violations_total']==0
+                     for x in summary['aggregated_all'].values())
+          out.mkdir(parents=True,exist_ok=True)
+          for f in src.iterdir(): shutil.copy2(f,out/f.name)
+          for name in ('source-sha.txt','tests.log','experiment.log'):
+              shutil.copy2(root/name,out/name)
+          prov=json.loads((out/'provenance.json').read_text())
+          prov.update({'github_run_id':int(os.environ['GITHUB_RUN_ID']),
+             'github_source_head':os.environ['GITHUB_SHA'],
+             'environment':'GitHub Actions ubuntu-24.04 Python 3.10 CPU',
+             'independent_test':False,'no_new_model_checkpoints':True})
+          (out/'provenance.json').write_text(json.dumps(prov,sort_keys=True,indent=2)+'\n')
+          sha={f.name:hashlib.sha256(f.read_bytes()).hexdigest()
+               for f in sorted(out.iterdir()) if f.is_file() and f.name!='sha256.json'}
+          (out/'sha256.json').write_text(json.dumps(sha,sort_keys=True,indent=2)+'\n')
+          print('PROTOCOL',prov['protocol_sha256'])
+          print('VERDICT',summary['verdict'])
+          print('CPU_SECONDS',summary['cpu_process_seconds'])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/world_model_integration/urgent_workflow_feasibility/evidence/
+          git diff --cached --check
+          git commit -m 'evidence(pr18): archive urgent-retest CPU development, baseline and bounded oracle [skip ci]'
+          git push origin HEAD:refs/heads/feature/world-model-decision-integration-20261110
+      - name: Upload diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-urgent-feasibility-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/urgent/*.log
+            ${{ runner.temp }}/urgent/*-sha.txt
+            ${{ runner.temp }}/urgent/results/*
+          if-no-files-found: warn
+          retention-days: 90

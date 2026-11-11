@@ -1,0 +1,1711 @@
+{
+  "protocol": "pr18-v4-frozen-synthetic-mechanism-20261110",
+  "label_contract": "business-service-query-v2",
+  "input_contract": "business-service-query-input-v3",
+  "source": "BusinessSimulator factual t, executed action, t+1 label, no oracle",
+  "train_seen_prior_range": [
+    3,
+    8
+  ],
+  "in_range_test_service_prior": [
+    3,
+    8
+  ],
+  "ood_service_prior": [
+    9,
+    10
+  ],
+  "train_groups": 32,
+  "validation_groups": 8,
+  "in_groups": 8,
+  "ood_groups": 8,
+  "groups": {
+    "train": [
+      {
+        "seed": 41011,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41015,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41019,
+        "layout": 2,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41023,
+        "layout": 0,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41027,
+        "layout": 1,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41031,
+        "layout": 2,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41035,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41039,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41043,
+        "layout": 2,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41047,
+        "layout": 0,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41051,
+        "layout": 1,
+        "resource_capacity_A": 1,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41055,
+        "layout": 2,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41059,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41063,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41067,
+        "layout": 2,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41071,
+        "layout": 0,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41075,
+        "layout": 1,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41079,
+        "layout": 2,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41083,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41087,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41091,
+        "layout": 2,
+        "resource_capacity_A": 1,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41095,
+        "layout": 0,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41099,
+        "layout": 1,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41103,
+        "layout": 2,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41107,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41111,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41115,
+        "layout": 2,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41119,
+        "layout": 0,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41123,
+        "layout": 1,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41127,
+        "layout": 2,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41131,
+        "layout": 0,
+        "resource_capacity_A": 1,
+        "robot_count": 2,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 41135,
+        "layout": 1,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      }
+    ],
+    "validation": [
+      {
+        "seed": 42011,
+        "layout": 3,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42015,
+        "layout": 4,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42019,
+        "layout": 3,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42023,
+        "layout": 4,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42027,
+        "layout": 3,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42031,
+        "layout": 4,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42035,
+        "layout": 3,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 42039,
+        "layout": 4,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      }
+    ],
+    "independent_in": [
+      {
+        "seed": 43011,
+        "layout": 5,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43015,
+        "layout": 6,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 5,
+          "A1": 6,
+          "B0": 7,
+          "B1": 8,
+          "C": 3
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43019,
+        "layout": 5,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 7,
+          "A1": 8,
+          "B0": 3,
+          "B1": 4,
+          "C": 5
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43023,
+        "layout": 6,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 3,
+          "A1": 4,
+          "B0": 5,
+          "B1": 6,
+          "C": 7
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43027,
+        "layout": 5,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43031,
+        "layout": 6,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 8,
+          "A1": 3,
+          "B0": 4,
+          "B1": 5,
+          "C": 6
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43035,
+        "layout": 5,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 4,
+          "A1": 5,
+          "B0": 6,
+          "B1": 7,
+          "C": 8
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 43039,
+        "layout": 6,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 6,
+          "A1": 7,
+          "B0": 8,
+          "B1": 3,
+          "C": 4
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      }
+    ],
+    "independent_ood": [
+      {
+        "seed": 44011,
+        "layout": 7,
+        "resource_capacity_A": 1,
+        "robot_count": 1,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 9,
+          "A1": 10,
+          "B0": 9,
+          "B1": 10,
+          "C": 9
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44015,
+        "layout": 8,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 10,
+          "A1": 9,
+          "B0": 10,
+          "B1": 9,
+          "C": 10
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44019,
+        "layout": 7,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 9,
+          "A1": 10,
+          "B0": 9,
+          "B1": 10,
+          "C": 9
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44023,
+        "layout": 8,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 10,
+          "A1": 9,
+          "B0": 10,
+          "B1": 9,
+          "C": 10
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44027,
+        "layout": 7,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 0,
+        "station_service_ticks": {
+          "A0": 9,
+          "A1": 10,
+          "B0": 9,
+          "B1": 10,
+          "C": 9
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "B0",
+        "outage_window": [
+          9,
+          17
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44031,
+        "layout": 8,
+        "resource_capacity_A": 2,
+        "robot_count": 2,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 1,
+        "station_service_ticks": {
+          "A0": 10,
+          "A1": 9,
+          "B0": 10,
+          "B1": 9,
+          "C": 10
+        },
+        "jitter_ticks": 2,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44035,
+        "layout": 7,
+        "resource_capacity_A": 1,
+        "robot_count": 3,
+        "workflow_variant": "three",
+        "job_workflows": [
+          "w0",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "release_pattern": 2,
+        "station_service_ticks": {
+          "A0": 9,
+          "A1": 10,
+          "B0": 9,
+          "B1": 10,
+          "C": 9
+        },
+        "jitter_ticks": 0,
+        "outage": true,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      },
+      {
+        "seed": 44039,
+        "layout": 8,
+        "resource_capacity_A": 2,
+        "robot_count": 3,
+        "workflow_variant": "two",
+        "job_workflows": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "release_pattern": 3,
+        "station_service_ticks": {
+          "A0": 10,
+          "A1": 9,
+          "B0": 10,
+          "B1": 9,
+          "C": 10
+        },
+        "jitter_ticks": 1,
+        "outage": false,
+        "outage_station": "A0",
+        "outage_window": [
+          2,
+          9
+        ],
+        "max_ticks": 260
+      }
+    ]
+  },
+  "service_stations": [
+    "A0",
+    "A1",
+    "B0",
+    "B1",
+    "C"
+  ],
+  "old_seeds_forbidden": [
+    941,
+    947,
+    21071,
+    21073,
+    18011,
+    18013,
+    18017,
+    18019,
+    18023,
+    18029,
+    18031,
+    18037,
+    19041,
+    19043,
+    19047,
+    19049,
+    20053,
+    20059,
+    20061,
+    20063,
+    33101,
+    33103,
+    33107,
+    33109,
+    33113,
+    33117
+  ],
+  "data_gate": {
+    "each_prior_train_min_complete": 2,
+    "each_prior_train_min_continue": 2,
+    "at_least_one_observed_pause_in_train": true,
+    "group_disjoint": true,
+    "no_negative_for_pause_or_unstarted": true
+  },
+  "cpu": {
+    "generator_seconds_max": 480,
+    "training_seconds_max": 180,
+    "one_shot_test_seconds_max": 600,
+    "optimizer": "Adam",
+    "lr": 0.001,
+    "batch_size": 32,
+    "max_epochs": 100,
+    "patience": 10,
+    "seed": 1810,
+    "threads": 1
+  },
+  "validation_selection": {
+    "metric": "Brier",
+    "threshold": 0.5,
+    "no_holdout_selection": true
+  },
+  "decision_gate": {
+    "requires_v4_brier_below_in_range_B0": true,
+    "minimum_groups_improved_vs_B0": 5,
+    "minimum_groups": 8,
+    "otherwise": "one legal step only"
+  },
+  "no_resampling_after_test": true,
+  "keep_pr_draft": true,
+  "do_not_modify_pr19": true,
+  "no_gpu": true
+}

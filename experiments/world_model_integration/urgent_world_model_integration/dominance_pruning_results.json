@@ -1,0 +1,69 @@
+{
+  "protocol": "pr18-exact-lexicographic-urgent-dominance-regression-v1",
+  "head_code": "9972a09765efc384b7ffcb9c9a9e6f03559313c6",
+  "first_failed_run": 42994880664,
+  "first_failure": "frozen protocol key mismatch before new 8 scenes; 12 old completed",
+  "successful_run": 42995397402,
+  "successful_artifact_id": 13842933799,
+  "artifact_zip_sha256": "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5",
+  "tests_passed": 7,
+  "frozen_model_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "historical": {
+    "scenarios": 12,
+    "candidates_full": 1154,
+    "candidates_pruned": 476,
+    "percent_pruned": 41.2478336222,
+    "V4_queries_before": 3972,
+    "V4_queries_after": 2936,
+    "CPU_before_seconds": 63.606441358,
+    "CPU_after_seconds": 29.184904909,
+    "CPU_saved_seconds": 34.421536449,
+    "CPU_saved_pct": 54.11643178599,
+    "identical_hashes_actions_surviving_scores_and_metrics": true
+  },
+  "fresh": {
+    "seeds": [
+      906001,
+      906098,
+      906195,
+      906292,
+      906389,
+      906486,
+      906583,
+      906680
+    ],
+    "scenarios": 8,
+    "candidates_full": 737,
+    "candidates_pruned": 286,
+    "percent_pruned": 38.805970149,
+    "V4_queries_before": 2310,
+    "V4_queries_after": 1782,
+    "CPU_before_seconds": 28.141307547,
+    "CPU_after_seconds": 18.876057826,
+    "CPU_saved_seconds": 9.265249721,
+    "CPU_saved_pct": 32.92401998566,
+    "identical_hashes_actions_surviving_scores_and_metrics": true,
+    "metrics": {
+      "P1": {
+        "urgent_ontime": 0.6458333333333334,
+        "urgent_late_lower_bound": 12.8125,
+        "routine_restricted_flow": 141.04166666666666
+      },
+      "P4": {
+        "urgent_ontime": 0.6458333333333334,
+        "urgent_late_lower_bound": 12.8125,
+        "routine_restricted_flow": 147.45833333333334
+      },
+      "P5": {
+        "urgent_ontime": 0.6458333333333334,
+        "urgent_late_lower_bound": 12.875,
+        "routine_restricted_flow": 148.125
+      }
+    }
+  },
+  "action_flips_from_old_artifact": 6,
+  "no_gpu": true,
+  "no_training": true,
+  "no_company_field_data": true,
+  "verdict": "lossless_cpu_optimization_GO;V4_incremental_business_advantage_not_confirmed_on_new_synthetic_regression"
+}

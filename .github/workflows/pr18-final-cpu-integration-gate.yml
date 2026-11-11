@@ -1,0 +1,66 @@
+name: PR18 final CPU integration gate
+
+on:
+  push:
+    branches:
+      - feature/world-model-decision-integration-20261110
+    paths:
+      - .github/workflows/pr18-final-cpu-integration-gate.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final-cpu-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install pinned CPU dependencies without training
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "CPU only"
+          torch.set_num_threads(1)
+          print("torch", torch.__version__)
+          PY
+      - name: Compile and run current-world-model regression suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q business_transport lab_transport experiments/world_model_integration
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/world-model-tests.log"
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/tests -v 2>&1 | tee "$RUNNER_TEMP/urgent-integration-tests.log"
+          timeout 120s python -m unittest discover -s experiments/world_model_integration/urgent_world_model_integration/fixed_state_tests -v 2>&1 | tee "$RUNNER_TEMP/fixed-state-tests.log"
+          timeout 180s python -m unittest discover -s experiments/workflow_prediction/tests -v 2>&1 | tee "$RUNNER_TEMP/workflow-tests.log"
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("docs/rhwm-world-model-development-plan-20261111.md")
+          assert p.is_file() and "RHWM-v1" in p.read_text()
+          print("PR18_FINAL_HANDOFF_COMPLETE; GPU=0; model training=0")
+          PY
+      - name: Preserve final merge gate logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-final-cpu-merge-gate-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/world-model-tests.log
+            ${{ runner.temp }}/urgent-integration-tests.log
+            ${{ runner.temp }}/fixed-state-tests.log
+            ${{ runner.temp }}/workflow-tests.log
+          if-no-files-found: warn
+          retention-days: 60

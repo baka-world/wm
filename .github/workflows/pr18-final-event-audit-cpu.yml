@@ -1,0 +1,88 @@
+name: PR18 one-time final paired event audit CPU
+
+on:
+  push:
+    branches: [feature/world-model-decision-integration-20261110]
+    paths:
+      - '.github/workflows/pr18-final-event-audit-cpu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: pr18-final-event-audit-once
+  cancel-in-progress: false
+
+jobs:
+  final-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install frozen CPU-only requirements
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("CPU_ONLY",torch.__version__)
+          PY
+      - name: Restore three original frozen artifacts and check digests
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr18-final"
+          for pair in '13765135588 v4' '13840027102 confirmation' '13842933799 new-full'; do
+            set -- $pair
+            curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN"               -H "Accept: application/vnd.github+json"               "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$1/zip"               -o "$RUNNER_TEMP/pr18-final/$2.zip"
+          done
+          unzip -p "$RUNNER_TEMP/pr18-final/v4.zip" v4-data.pt > "$RUNNER_TEMP/pr18-final/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr18-final/v4-data.pt" | sha256sum -c
+          echo "a5ec5d7a1f886f2d84ba10f3f76decf68d984a26d852f9fd050c7035f8157233  $RUNNER_TEMP/pr18-final/confirmation.zip" | sha256sum -c
+          echo "0aae5c4e365fab8694b3c239bebe1c3e2c08e2ff617a983f9f672af80afb3dc5  $RUNNER_TEMP/pr18-final/new-full.zip" | sha256sum -c
+      - name: Execute exactly one limited CPU audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/urgent_world_model_integration
+          timeout 300s python -m experiments.world_model_integration.urgent_world_model_integration.final_event_audit             --confirmation-zip "$RUNNER_TEMP/pr18-final/confirmation.zip"             --new-full-zip "$RUNNER_TEMP/pr18-final/new-full.zip"             --v4-archive "$RUNNER_TEMP/pr18-final/v4.zip"             --checkpoint "$RUNNER_TEMP/pr18-final/v4-data.pt"             --budget-seconds 180             --output "$RUNNER_TEMP/pr18-final/result.json"             2>&1 | tee "$RUNNER_TEMP/pr18-final/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"pr18-final"/"result.json"
+          d=json.loads(p.read_text())
+          assert d["training_runs"]==0 and d["gpu"]==0
+          assert len(d["candidate_futures"])==12
+          assert len(d["by_synthetic_seed"])==5
+          assert d["aggregate_descriptive_only"]["n"]==len(d["factual_transition_rows"])
+          print("FINAL_EVENT_PROTOCOL_VALIDATED")
+          PY
+          (cd "$RUNNER_TEMP/pr18-final" &&
+            sha256sum result.json run.log > evidence_sha256.txt)
+      - name: Archive evidence on success or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr18-final-event-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr18-final/result.json
+            ${{ runner.temp }}/pr18-final/run.log
+            ${{ runner.temp }}/pr18-final/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

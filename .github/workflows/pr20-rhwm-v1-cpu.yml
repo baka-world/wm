@@ -1,0 +1,99 @@
+name: PR20 RHWM-v1 CPU full-state contract
+
+on:
+  push:
+    branches:
+      - feature/rhwm-v1-system-state-forecast-20261111
+    paths:
+      - .github/workflows/pr20-rhwm-v1-cpu.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  full-state-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install pinned CPU environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("RHWM CPU-only", torch.__version__)
+          PY
+      - name: Restore PR18 original V4 checkpoint with immutable checksum
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/rhwm-v1"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/rhwm-v1/v4.zip"
+          unzip -p "$RUNNER_TEMP/rhwm-v1/v4.zip" v4-data.pt > "$RUNNER_TEMP/rhwm-v1/v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/rhwm-v1/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/rhwm-v1/v4.pt" >> "$GITHUB_ENV"
+      - name: Compile and run real-state and checkpoint integration unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q business_transport/world_model business_transport/session_dynamics.py experiments/world_model_integration/system_world_model
+          timeout 120s python -m unittest discover -s experiments/world_model_integration/system_world_model/tests -v 2>&1 | tee "$RUNNER_TEMP/rhwm-v1/tests.log"
+      - name: Run two-action five-step state forecasts for Rule and frozen V4
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 90s python -m experiments.world_model_integration.system_world_model.smoke \
+            --kind rule --horizon 5 --particles 3 --output "$RUNNER_TEMP/rhwm-v1/rule.json"
+          timeout 90s python -m experiments.world_model_integration.system_world_model.smoke \
+            --kind v4 --checkpoint "$RHWM_V4_CHECKPOINT" --horizon 5 --particles 3 \
+            --output "$RUNNER_TEMP/rhwm-v1/v4.json"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ["RUNNER_TEMP"])/"rhwm-v1"
+          for name in ("rule","v4"):
+              d=json.loads((root/f"{name}.json").read_text())
+              assert d["ground_truth_future_used_for_model"] is False
+              assert len(d["candidate_forecasts"])==2
+              assert d["candidate_forecasts"][0]["first_action"] != d["candidate_forecasts"][1]["first_action"]
+              assert all(len(c["future_summary"])==5 for c in d["candidate_forecasts"])
+              assert all(c["legal_transitions"]==15 for c in d["candidate_forecasts"])
+              assert all(len(c["future_summary"][0]["resource_occupancy_mean"])==3 for c in d["candidate_forecasts"])
+              if name=="v4":
+                  assert sum(c["query_count"] for c in d["candidate_forecasts"])>0
+              print(name, d["world_model"], "candidates=2, ticks=5, particles=3, full-states=30")
+          print("RHWM_V1_FULL_STATE_GATE_PASSED")
+          PY
+          (cd "$RUNNER_TEMP/rhwm-v1" && sha256sum rule.json v4.json tests.log > evidence_sha256.txt)
+      - name: Upload checkable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr20-rhwm-v1-full-state-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/rhwm-v1/tests.log
+            ${{ runner.temp }}/rhwm-v1/rule.json
+            ${{ runner.temp }}/rhwm-v1/v4.json
+            ${{ runner.temp }}/rhwm-v1/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

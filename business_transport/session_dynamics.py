@@ -42,6 +42,8 @@ class SessionRuleDynamics:
         self.service_calls=0
         self.query_calls=0
         self.fallback_reasons={}
+        # Per-call public-query predictions; diagnostics only, never training labels.
+        self.last_service_events=()
         self.experimental=experimental
 
     def reset_seed(self,seed):
@@ -51,6 +53,7 @@ class SessionRuleDynamics:
         if not isinstance(observation,ObservationV2):
             raise ValueError("v2 per-session inference requires observable history V2")
         assignments=tuple(assignments)
+        self.last_service_events=()
         query_rows=eligible_sessions(observation,assignments)
         viable=[q for q,reason in query_rows if reason is None]
         for _,reason in query_rows:
@@ -70,6 +73,7 @@ class SessionRuleDynamics:
             self.service_calls+=1
             self.query_calls+=len(viable)
             by_robot={r.id:r for r in observation.robots}
+            recorded=[]
             for query,prob in zip(viable,probabilities):
                 if not 0<=prob<=1:
                     raise ValueError("invalid learned service completion probability")
@@ -78,7 +82,10 @@ class SessionRuleDynamics:
                 # Set the rule model's observed duration threshold to realize
                 # the sampled completion event. No job or robot state fabricated.
                 advance=self.rng.random()<prob
+                recorded.append({"query":dict(query),"p_finish":float(prob),
+                                 "sampled_finished":bool(advance)})
                 overrides[query["station_id"]]=progress+(1 if advance else 2)
+            self.last_service_events=tuple(recorded)
         if overrides:
             modified=replace(observation,stations=tuple(
                 replace(station,expected_service_ticks=overrides[station.id],

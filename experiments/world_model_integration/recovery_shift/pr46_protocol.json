@@ -1,0 +1,459 @@
+{
+  "protocol": "PR46_OBSERVED_RECOVERY_SHIFT_VS_ONLINE_20261112_V1",
+  "source_pr45_head": "805bfb2e35c3257f69fa6d96aaa854b61b611cf5",
+  "pr44_training_artifact": 13915489041,
+  "pr44_training_sha_requirement": "source commit d3751b6743a4ad8e88448df77a7d9067d268cb39 and verified SHA256SUMS",
+  "frozen_original_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "method": "Unchanged PR45 two-stage V4 service transitions + KM conditionally observed recovery and unchanged PR30 CP-SAT candidate selection/score under process-CPU budget",
+  "hidden_environment_only": {
+    "outage_start_tick": 7,
+    "support_by_mechanism": {
+      "within_support": {
+        "B0": [
+          4,
+          6,
+          8,
+          10
+        ],
+        "B1": [
+          8,
+          12,
+          16,
+          20
+        ],
+        "C": [
+          3,
+          5,
+          7,
+          9
+        ]
+      },
+      "extended_outage": {
+        "B0": [
+          9,
+          12,
+          16,
+          22
+        ],
+        "B1": [
+          18,
+          24,
+          30,
+          36
+        ],
+        "C": [
+          8,
+          12,
+          16,
+          24
+        ]
+      }
+    },
+    "support_selector": "SHA256(seed, mechanism, station) only inside simulator scenario builder",
+    "job_count": 10,
+    "capacity": 1,
+    "max_ticks": 170,
+    "deadline_tick": 100
+  },
+  "cohort": {
+    "forecast": [
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B0_1",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 8100007
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B0_2",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 8100344
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B0_3",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 8100681
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B0_4",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 8101018
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B1_1",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 8110007
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B1_2",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 8110344
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B1_3",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 8110681
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_B1_4",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 8111018
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_C_1",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 8120007
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_C_2",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 8120344
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_C_3",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 8120681
+      },
+      {
+        "id": "PR46_FORECAST_WITHIN_SUPPORT_C_4",
+        "track": "forecast",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 8121018
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B0_1",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 8150007
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B0_2",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 8150344
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B0_3",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 8150681
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B0_4",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 8151018
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B1_1",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 8160007
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B1_2",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 8160344
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B1_3",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 8160681
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_B1_4",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 8161018
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_C_1",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 8170007
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_C_2",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 8170344
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_C_3",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 8170681
+      },
+      {
+        "id": "PR46_FORECAST_EXTENDED_OUTAGE_C_4",
+        "track": "forecast",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 8171018
+      }
+    ],
+    "online": [
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B0_1",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 9100011
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B0_2",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 9100348
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B0_3",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 9100685
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B0_4",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B0",
+        "seed": 9101022
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B1_1",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 9110011
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B1_2",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 9110348
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B1_3",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 9110685
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_B1_4",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "B1",
+        "seed": 9111022
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_C_1",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 9120011
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_C_2",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 9120348
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_C_3",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 9120685
+      },
+      {
+        "id": "PR46_ONLINE_WITHIN_SUPPORT_C_4",
+        "track": "online",
+        "mechanism": "within_support",
+        "station_id": "C",
+        "seed": 9121022
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B0_1",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 9150011
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B0_2",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 9150348
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B0_3",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 9150685
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B0_4",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B0",
+        "seed": 9151022
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B1_1",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 9160011
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B1_2",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 9160348
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B1_3",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 9160685
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_B1_4",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "B1",
+        "seed": 9161022
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_C_1",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 9170011
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_C_2",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 9170348
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_C_3",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 9170685
+      },
+      {
+        "id": "PR46_ONLINE_EXTENDED_OUTAGE_C_4",
+        "track": "online",
+        "mechanism": "extended_outage",
+        "station_id": "C",
+        "seed": 9171022
+      }
+    ]
+  },
+  "forecast": {
+    "anchors": [
+      8,
+      10
+    ],
+    "horizons": [
+      5,
+      20
+    ],
+    "particles": 3,
+    "arms": [
+      "v4_original",
+      "v4_public_km_recovery"
+    ],
+    "continuation_policy": "existing nearest_batch on forecast public states",
+    "metrics": [
+      "target_station_device_brier",
+      "sample_status_error",
+      "robot_task_error",
+      "station_busy_brier",
+      "resource_occupancy_mae",
+      "completed_count_mae",
+      "waiting_count_mae"
+    ],
+    "separation": "FORECAST cohort only. Never adjust online score or recovery parameters using FORECAST outcomes."
+  },
+  "online": {
+    "arms": [
+      "cp_sat",
+      "v4_original",
+      "v4_public_km_recovery"
+    ],
+    "particles": 3,
+    "horizon": 20,
+    "candidate_limit": 4,
+    "decision_cpu_budget_seconds": 0.5,
+    "score": "max expected completed samples at H20, original PR30 score, original CP-SAT proposals and fallback",
+    "metrics": [
+      "true makespan",
+      "late jobs",
+      "resource waiting",
+      "blocked moves",
+      "plan switches",
+      "fallback counts",
+      "budget overrun counts",
+      "CPU process seconds",
+      "recovery draws",
+      "safety violations"
+    ],
+    "separation": "ONLINE cohort disjoint seeds, evaluate only after all methods frozen. No retuning based on reported cohorts."
+  },
+  "resources": {
+    "gpu": 0,
+    "new_training": 0,
+    "new_neural_networks": 0,
+    "process_cpu_budget_seconds": 550
+  },
+  "claims": "two preregistered synthetic mechanism conditions, not unseen-map or external-real-equipment generalization",
+  "promotion": "research only, keep original V4 default untouched until stable wins and budget compliance"
+}

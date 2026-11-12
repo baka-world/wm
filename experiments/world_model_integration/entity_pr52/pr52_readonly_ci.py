@@ -84,7 +84,7 @@ def restore_ckpt(path,arm,seed,hidden):
     return net
 
 
-def evaluate(data,models_dir,selection_path):
+def evaluate(data,models_dir,selection_path,train_report_path=None):
     cfg=json.loads(PROTOCOL.read_text())
     chosen=json.loads(selection_path.read_text())
     if (chosen["schema"]!="pr52-validation-only-multi-seed-world-model-selection-v1"
@@ -130,8 +130,12 @@ def evaluate(data,models_dir,selection_path):
                         case["real_all_candidate_makespan_ticks"]=costs
                     elif case["cp_sat_first_candidate_regret"]!=original_regret:
                         raise AssertionError("true business outcomes changed during readonly audit")
+                    ordered=sorted(predicted)
+                    minimum_rank_gap=(ordered[1]-ordered[0] if len(ordered)>=2 else None)
                     case["regret_by_arm_seed"].setdefault(a,{})[str(s)]={
                         "chosen_index":pick,
+                        "candidate_score_gap_top_two":minimum_rank_gap,
+                        "candidate_scoring_float_values":predicted,
                         "true_regret_ticks":regret,
                         "estimated_completed_h20":[-v for v in predicted],
                         "actual_selected_makespan_ticks":costs[pick]
@@ -144,6 +148,32 @@ def evaluate(data,models_dir,selection_path):
             for a in ARMS}
         case["mean_two_training_seeds_regret"]["cp_sat_first"] = (
             case["cp_sat_first_candidate_regret"])
+    replay={}
+    if train_report_path is not None:
+        archived=json.loads(train_report_path.read_text())
+        if archived.get("schema")!="pr52-trained-entity-conditional-world-model-independent-test-v1":
+            raise ValueError("not original independently evaluated training result")
+        for arm in ARMS:
+            replay[arm]={}
+            for seed in cfg["training"]["seeds"]:
+                key=str(seed)
+                original=archived["independent_test"][arm][key]["metrics"][
+                    "mean_true_candidate_regret_ticks"]
+                reproduced=_mean([
+                    r["regret_by_arm_seed"][arm][key]["true_regret_ticks"]
+                    for r in rows])
+                tiny=sum(
+                    r["regret_by_arm_seed"][arm][key]["candidate_score_gap_top_two"]
+                    is not None and
+                    r["regret_by_arm_seed"][arm][key]["candidate_score_gap_top_two"]<1e-5
+                    for r in rows)
+                replay[arm][key]={
+                    "original_training_report_regret":original,
+                    "readonly_recomputed_regret":reproduced,
+                    "difference_ticks":reproduced-original,
+                    "cases_top2_forecast_gap_below_1e_minus_5":tiny,
+                    "note":"Numerical instability diagnostic only. Rank selection is UNCHANGED."
+                }
     paired={}
     for arm in ARMS:
         if arm!="rel_entity_pred_only":
@@ -162,6 +192,7 @@ def evaluate(data,models_dir,selection_path):
                          for reg in REGIMES}}
             for a in (*ARMS,"cp_sat_first")},
         "pairwise_stratified_95pct_bootstrap":paired,
+        "replay_consistency_against_original_training_report":replay,
         "cases":rows,
         "interpretation_limits":"Fixed candidate counterfactual regret at first action; NOT full-online policy performance or neural-training seed uncertainty; test-based loss changes forbidden",
     }
@@ -172,19 +203,21 @@ def main():
     p.add_argument("--test",type=Path,required=True)
     p.add_argument("--models",type=Path,required=True)
     p.add_argument("--selection",type=Path,required=True)
+    p.add_argument("--original-train-result",type=Path,required=True)
     p.add_argument("--out",type=Path,required=True)
     a=p.parse_args()
     if a.out.exists():
         raise FileExistsError("original test audit write-once")
     data=load_split(a.test,"test")
     torch.set_num_threads(1)
-    result=evaluate(data,a.models,a.selection)
+    result=evaluate(data,a.models,a.selection,a.original_train_result)
     a.out.parent.mkdir(parents=True,exist_ok=True)
     a.out.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n")
     print("PR52_READONLY_PAIRED_TEST_BOOTSTRAP",json.dumps({
         "selected":result["frozen_validation_selected_arm"],
         "estimates":result["point_estimates"],
-        "bootstrap":result["pairwise_stratified_95pct_bootstrap"]
+        "bootstrap":result["pairwise_stratified_95pct_bootstrap"],
+        "frozen_training_replay_audit":result["replay_consistency_against_original_training_report"]
     },ensure_ascii=False),flush=True)
 
 

@@ -1,0 +1,451 @@
+{
+  "protocol": "RHWM_PR30_INDEPENDENT_H20_ONLINE_20261112_V1",
+  "purpose": "One-shot fully online fixed-policy comparison after PR29, no after-the-fact score tuning",
+  "literature": {
+    "PETS": "Chua et al 2018 probabilistic ensembles with trajectory sampling; use existing RHWM particles not invented training",
+    "FJSP": "Reijnen et al 2026 job-shop benchmark task-load strata",
+    "DRO": "Flores-Gomez and Dauzere-Peres 2026 makespan service level under processing duration uncertainty"
+  },
+  "frozen_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "max_ticks": 240,
+  "groups": [
+    {
+      "id": "ON_LIGHT_1",
+      "regime": "light",
+      "seed": 1100013,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_LIGHT_2",
+      "regime": "light",
+      "seed": 1100361,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_LIGHT_3",
+      "regime": "light",
+      "seed": 1100711,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_LIGHT_4",
+      "regime": "light",
+      "seed": 1101063,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_LIGHT_5",
+      "regime": "light",
+      "seed": 1101417,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_LIGHT_6",
+      "regime": "light",
+      "seed": 1101773,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "ON_MEDIUM_1",
+      "regime": "medium",
+      "seed": 1200017,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_MEDIUM_2",
+      "regime": "medium",
+      "seed": 1200365,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_MEDIUM_3",
+      "regime": "medium",
+      "seed": 1200715,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_MEDIUM_4",
+      "regime": "medium",
+      "seed": 1201067,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_MEDIUM_5",
+      "regime": "medium",
+      "seed": 1201421,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_MEDIUM_6",
+      "regime": "medium",
+      "seed": 1201777,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "ON_HEAVY_1",
+      "regime": "heavy",
+      "seed": 1300021,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_HEAVY_2",
+      "regime": "heavy",
+      "seed": 1300369,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_HEAVY_3",
+      "regime": "heavy",
+      "seed": 1300719,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_HEAVY_4",
+      "regime": "heavy",
+      "seed": 1301071,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_HEAVY_5",
+      "regime": "heavy",
+      "seed": 1301425,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_HEAVY_6",
+      "regime": "heavy",
+      "seed": 1301781,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_1",
+      "regime": "shift",
+      "seed": 1400029,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_2",
+      "regime": "shift",
+      "seed": 1400377,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_3",
+      "regime": "shift",
+      "seed": 1400727,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_4",
+      "regime": "shift",
+      "seed": 1401079,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_5",
+      "regime": "shift",
+      "seed": 1401433,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "ON_SHIFT_6",
+      "regime": "shift",
+      "seed": 1401789,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    }
+  ],
+  "arms": [
+    "cp_sat",
+    "rule_h20",
+    "v4_h5",
+    "v4_h20"
+  ],
+  "horizon_rule_h20": 20,
+  "horizon_v4_h5": 5,
+  "horizon_v4_h20": 20,
+  "particles": 3,
+  "candidate_limit": 4,
+  "candidate_criterion": "The online arm scores each eligible CP-SAT plan by predicted completed sample-stage count at its horizon; tie prefers CP-SAT first; no learnt/tuned utility weights.",
+  "continuation_policy": "Original BusinessCPSAT first plan on current predicted public state",
+  "decision_cpu_budget_seconds": 0.5,
+  "common_noise": "Original simulator keyed scene/job/station/phase; no stochastic dynamics change",
+  "metrics": [
+    "final makespan",
+    "late jobs",
+    "completed jobs",
+    "resource waiting ticks",
+    "blocked movement",
+    "world model calls and state steps",
+    "decisions flipped vs current CP-SAT first proposal",
+    "CPU process time including model loading",
+    "timeout and fallback counts",
+    "motion+capacity+workflow safety"
+  ],
+  "factual_design": "Whole-episode repeated online reranking; identical seeds and job/workflow configurations per arm, but future decisions/actions can diverge",
+  "training": "None: no model fitting, no checkpoint mutation",
+  "scoring": "All policies always execute actual simulator transitions, no oracle decision selection; no historical PR29 group reused",
+  "go_rule": "Promote no method on one positive cell; report wins/ties/losses per regime and extra CPU including loading",
+  "limits": {
+    "GPU": 0,
+    "CPU_seconds": 480
+  },
+  "known_reuse": "Existing scenario builder from PR28; new test seeds not re-used from PR29"
+}

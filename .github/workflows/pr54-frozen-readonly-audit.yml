@@ -1,0 +1,71 @@
+name: PR54 original heldout scene-level temporal prediction confidence audit
+on:
+  push:
+    branches: [research/pr54-temporal-relational-transition-20261112]
+    paths:
+      - .github/workflows/pr54-frozen-readonly-audit.yml
+      - experiments/world_model_integration/temporal_pr54/pr54_readonly.py
+      - experiments/world_model_integration/temporal_pr54/test_pr54_readonly.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  readonly-real-test-worlds:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43192730343
+          github-token: ${{ github.token }}
+          name: pr54-trained-temporal-relational-world-43192730343
+          path: ${{ runner.temp }}/pr54original
+      - name: Verify exact original test results and historical full environment SHA
+        run: |
+          set -euo pipefail
+          RESULT="$(find "$RUNNER_TEMP/pr54original" -name 'result.json' -type f -print -quit)"
+          test -n "$RESULT"
+          DIR="$(dirname "$RESULT")"
+          test -f "$DIR/SHA256SUMS"
+          (cd "$DIR" && sha256sum -c SHA256SUMS)
+          grep -Fx 'e20ff5805185ebead596ac4d82e25977535e1bd5' "$DIR/source_head.txt"
+          echo "PR54_ORIGINAL_RESULT=$RESULT" >> "$GITHUB_ENV"
+          echo "PR54_READONLY_SOURCE_VERIFIED $RESULT"
+      - name: Strict 12-scenario bootstrap unit tests, zero GPU and zero training
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.temporal_pr54.test_pr54_readonly -v
+      - name: Paired confidence audit on all original 12 public test episodes
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr54-readonly"
+          python -m experiments.world_model_integration.temporal_pr54.pr54_readonly \
+            --report "$PR54_ORIGINAL_RESULT" \
+            --out "$RUNNER_TEMP/pr54-readonly/paired-scene.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr54-readonly/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"pr54-readonly/paired-scene.json"
+          x=json.loads(p.read_text())
+          assert x["scenarios"]==12
+          assert x["neural_training"]==x["new_factual_episodes"]==x["gpu"]==0
+          assert x["original_validation_model_choice_not_changed"]=="public_history_gru"
+          assert len(x["per_true_independent_scene"])==12
+          for key in ("history_minus_snapshot_entity_mse","history_minus_snapshot_device_brier"):
+              d=x[key]
+              assert d["wins"]+d["ties"]+d["losses"]==12
+          print("PR54_ORIGINAL_TEST_SCENARIO_CI_VERIFIED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr54-readonly/source_head.txt"
+          (cd "$RUNNER_TEMP/pr54-readonly" && sha256sum paired-scene.json run.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr54-independent-scenario-paired-confidence-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr54-readonly/
+          retention-days: 90

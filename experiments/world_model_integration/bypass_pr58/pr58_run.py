@@ -29,7 +29,7 @@ PROTOCOL=Path(__file__).with_name("protocol.json")
 ID="PR58_STATION_FREE_BYPASS_PAIRED_WORLD_DATA_20261112_V1"
 REGIMES=("congestion","multi_fault","staggered_arrivals")
 ORIGINAL_HEAD="f3dc4605edf0d2afaaab717562c6744f0de64f53"
-ORIGINAL_ACTIONS_HEAD="916552fdbf6908e94161d120a1efdd3092fb603d"
+ORIGINAL_ACTIONS_HEAD="ec22b94a919400ddce7a34e1d0575d6fe9682c6c"
 
 
 def read_protocol():

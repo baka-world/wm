@@ -920,5 +920,17 @@
     "final_inference_gpu_target": true
   },
   "if_gate_passes": "Still stop at CPU model graph/batching/no-leakage preflight; then commit GPU agent task/prompt with 60 train plan and test seal; GPU work ONLY performed by delegated agent.",
-  "if_gate_fails": "Keep all raw; annotate failure causes, do not tune map/test or false-complete; redesign developer data protocol only after preserving immutable QA."
+  "if_gate_fails": "Keep all raw; annotate failure causes, do not tune map/test or false-complete; redesign developer data protocol only after preserving immutable QA.",
+  "max_ticks": 260,
+  "public_history_window": 4,
+  "actual_legal_alternatives": {
+    "candidate_limit": 4,
+    "anchor_tick_min": 7,
+    "anchor_tick_max": 70,
+    "predict_horizons": [
+      5,
+      20
+    ],
+    "same_prefix_fingerprint": true
+  }
 }

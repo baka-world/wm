@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/pr56-readonly-layout-failures.yml
       - experiments/world_model_integration/topology_pr56/pr56_readonly_stall.py
+      - experiments/world_model_integration/topology_pr56/test_pr56_stall.py
   workflow_dispatch:
 permissions:
   contents: read
@@ -44,6 +45,9 @@ jobs:
           assert found=={"congestion","multi_fault","staggered_arrivals"}
           print("PR56_READONLY_ORIGINAL_FAILING_12_SOURCE_VERIFIED",known)
           PY
+      - name: Unit test descriptive static public map cut-vertices
+        run: |
+          python -m unittest experiments.world_model_integration.topology_pr56.test_pr56_stall -v
       - name: Diagnose factual censoring/stagnation and static route articulation WITHOUT resimulation
         run: |
           set -euo pipefail

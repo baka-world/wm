@@ -1,0 +1,129 @@
+name: PR53 readonly 48 new-scene frozen 15-model regret and score-gap audit
+on:
+  push:
+    branches: [research/pr53-action-contrast-consistent-dynamics-20261112]
+    paths:
+      - .github/workflows/pr53-frozen-blind-audit.yml
+      - experiments/world_model_integration/action_pr53/pr53_readonly.py
+      - experiments/world_model_integration/action_pr53/test_pr53_readonly.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  frozen-new-test-scenario-bootstrap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Exact historical CPU PyG evaluation runtime, zero fitting
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - name: Restore 15 ORIGINAL frozen fitted models and SHA-verify ORIGINAL truth corpus
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr53audit/raw" "$RUNNER_TEMP/pr53audit/models" \
+                   "$RUNNER_TEMP/pr53audit/isolated" "$RUNNER_TEMP/pr53audit/result"
+          for entry in "congestion:13928320359" "multi_fault:13927538208" "staggered_arrivals:13928115740"; do
+            REGIME="${entry%%:*}"
+            ID="${entry##*:}"
+            mkdir -p "$RUNNER_TEMP/pr53audit/raw/$REGIME"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$ID/zip" \
+              -o "$RUNNER_TEMP/pr53audit/raw/$REGIME.zip"
+            unzip -q "$RUNNER_TEMP/pr53audit/raw/$REGIME.zip" \
+              -d "$RUNNER_TEMP/pr53audit/raw/$REGIME"
+            (cd "$RUNNER_TEMP/pr53audit/raw/$REGIME" && sha256sum -c SHA256SUMS)
+            grep -Fx "943d11c5861f6ec0981dd5f1431ab4a8c8d0f33d" \
+              "$RUNNER_TEMP/pr53audit/raw/$REGIME/source_head.txt"
+          done
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13928705690/zip" \
+            -o "$RUNNER_TEMP/pr53audit/models.zip"
+          unzip -q "$RUNNER_TEMP/pr53audit/models.zip" -d "$RUNNER_TEMP/pr53audit/models"
+          RESULT="$(find "$RUNNER_TEMP/pr53audit/models" -name 'result.json' -type f -print -quit)"
+          SEL="$(find "$RUNNER_TEMP/pr53audit/models" -name 'selection.json' -type f -print -quit)"
+          test -n "$RESULT" && test -n "$SEL"
+          test "$(dirname "$RESULT")" = "$(dirname "$SEL")"
+          grep -Fx "1c4875087887a51ef4c06fb13a0d815cdb0a6329" \
+            "$(dirname "$RESULT")/source_head.txt"
+          (cd "$(dirname "$RESULT")" && sha256sum -c SHA256SUMS)
+          test "$(find "$RUNNER_TEMP/pr53audit/models" -name '*.pt' -type f | wc -l)" -eq 15
+          echo PR53_FROZEN_ORIGINAL_ARTIFACTS_VERIFIED
+      - name: Physically re-isolate EXACT original new TEST 48 public scenarios
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import os,json
+          root=Path(os.environ["RUNNER_TEMP"])/"pr53audit"
+          cohort=[]
+          protocol_ids=set()
+          for r in ("congestion","multi_fault","staggered_arrivals"):
+              x=json.loads((root/"raw"/r/"data.json").read_text())
+              assert x["regime"]==r and x["schema"]=="pr53-new-blind-entity-action-paired-truth-v1"
+              assert len(x["cases"])==76
+              protocol_ids.add(x["protocol_sha256"])
+              cohort.extend([v for v in x["cases"] if v["split"]=="test"])
+          assert len(protocol_ids)==1 and len(cohort)==48
+          assert len({v["seed"] for v in cohort})==48
+          assert all(v["labelable"] and v["all_branches_completed"] for v in cohort)
+          (root/"isolated/test.json").write_text(json.dumps({
+              "schema":"pr53-physically-separated-public-entity-world-state-v1",
+              "split":"test","cases":cohort
+          },ensure_ascii=False,indent=2)+"\n")
+          print("PR53_FROZEN_NEW_48_BLIND_TEST_SEALED",len(cohort))
+          PY
+      - name: Unit tests: scenario is inference unit not training seeds or 4 proposals
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.action_pr53.test_pr53_readonly -v \
+            2>&1 | tee "$RUNNER_TEMP/pr53audit/result/tests.log"
+      - name: "0 training, 0 new simulator: re-score exact 15 frozen world models and bootstrap 48 real scenarios"
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.action_pr53.pr53_readonly \
+            --input "$RUNNER_TEMP/pr53audit/isolated" \
+            --models "$RUNNER_TEMP/pr53audit/models" \
+            --out "$RUNNER_TEMP/pr53audit/result/readonly.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr53audit/result/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"pr53audit/result/readonly.json"
+          z=json.loads(p.read_text())
+          assert z["schema"]=="pr53-stratified-readonly-fresh-test-intervals-v1"
+          assert z["scenarios"]==48 and z["new_training"]==z["new_true_simulations"]==0
+          assert z["selected_validation_arm_unchanged"]=="consistent_delta_value"
+          assert z["unselected_models_not_promoted_from_test"]
+          for item in z["paired_stratified_scene_bootstrap"].values():
+              assert item["wins"]+item["ties"]+item["losses"]==48
+          print("PR53_FROZEN_NEW_TEST_BOOTSTRAP_VALIDATED",
+                "all_original_reports_replayed",z["full_training_report_replayed_exactly"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr53audit/result/audit_head.txt"
+          (cd "$RUNNER_TEMP/pr53audit/result" && sha256sum readonly.json tests.log run.log audit_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr53-frozen-independent-test-bootstrap-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr53audit/result/
+          retention-days: 90
+          if-no-files-found: warn

@@ -128,7 +128,7 @@ jobs:
           import os,subprocess,json
           from pathlib import Path
           root=Path(os.environ["RUNNER_TEMP"])
-          exact_old="916552fdbf6908e94161d120a1efdd3092fb603d"
+          exact_old="ec22b94a919400ddce7a34e1d0575d6fe9682c6c"
           new_head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
           for base,expected in ((root/"pr58-original-pr57",exact_old),
                                 (root/"pr58-new",new_head)):

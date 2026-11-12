@@ -65,6 +65,7 @@ jobs:
              "$(dirname "$SEL")/source_head.txt"
           (cd "$(dirname "$SEL")" && sha256sum -c SHA256SUMS)
           echo "PR52_ORIGINAL_SELECTION=$SEL" >> "$GITHUB_ENV"
+          echo "PR52_ORIGINAL_RESULT=$(dirname "$SEL")/result.json" >> "$GITHUB_ENV"
           test "$(find "$RUNNER_TEMP/pr52audit/models" -name '*.pt' -type f | wc -l)" -eq 8
       - name: Independently verify and isolate all 48 original TEST scenarios
         run: |
@@ -103,6 +104,7 @@ jobs:
             --test "$RUNNER_TEMP/pr52audit/test" \
             --models "$RUNNER_TEMP/pr52audit/models" \
             --selection "$PR52_ORIGINAL_SELECTION" \
+            --original-train-result "$PR52_ORIGINAL_RESULT" \
             --out "$RUNNER_TEMP/pr52audit/report/paired-bootstrap.json" \
             2>&1 | tee "$RUNNER_TEMP/pr52audit/report/run.log"
           python - <<'PY'

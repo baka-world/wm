@@ -1,0 +1,132 @@
+name: PR52 readonly scenario bootstrap of frozen independent action regret
+on:
+  push:
+    branches: [research/pr52-entity-dynamics-decision-aware-20261112]
+    paths:
+      - .github/workflows/pr52-readonly-regret-ci.yml
+      - experiments/world_model_integration/entity_pr52/pr52_readonly_ci.py
+      - experiments/world_model_integration/entity_pr52/test_pr52_readonly_ci.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  original-independent-seed-value-analysis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install same frozen PyG evaluation dependencies, zero fitting
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - name: Restore ORIGINAL immutable facts and eight trained checkpoints, verify SHA provenance
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr52audit/source" "$RUNNER_TEMP/pr52audit/models" \
+                   "$RUNNER_TEMP/pr52audit/test" "$RUNNER_TEMP/pr52audit/report"
+          for entry in "congestion:13925251731" "multi_fault:13925121588" "staggered_arrivals:13924917237"; do
+            REGIME="${entry%%:*}"
+            ID="${entry##*:}"
+            mkdir -p "$RUNNER_TEMP/pr52audit/source/$REGIME"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$ID/zip" \
+              -o "$RUNNER_TEMP/pr52audit/source/$REGIME.zip"
+            unzip -q "$RUNNER_TEMP/pr52audit/source/$REGIME.zip" \
+              -d "$RUNNER_TEMP/pr52audit/source/$REGIME"
+            (cd "$RUNNER_TEMP/pr52audit/source/$REGIME" && sha256sum -c SHA256SUMS)
+            grep -Fx "c72523d0bb296966978e02f852403b6e1d52c713" \
+              "$RUNNER_TEMP/pr52audit/source/$REGIME/source_head.txt"
+          done
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13925756335/zip" \
+            -o "$RUNNER_TEMP/pr52audit/models.zip"
+          unzip -q "$RUNNER_TEMP/pr52audit/models.zip" \
+            -d "$RUNNER_TEMP/pr52audit/models"
+          SEL="$(find "$RUNNER_TEMP/pr52audit/models" -name 'selection.json' -type f -print -quit)"
+          if [ -z "$SEL" ]; then echo "Missing preselected validation decision" >&2; exit 1; fi
+          grep -Fx "179b0a142a4abdcfeac3b6b198b40d28a159ebae" \
+             "$(dirname "$SEL")/source_head.txt"
+          (cd "$(dirname "$SEL")" && sha256sum -c SHA256SUMS)
+          echo "PR52_ORIGINAL_SELECTION=$SEL" >> "$GITHUB_ENV"
+          test "$(find "$RUNNER_TEMP/pr52audit/models" -name '*.pt' -type f | wc -l)" -eq 8
+      - name: Independently verify and isolate all 48 original TEST scenarios
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          base=Path(os.environ["RUNNER_TEMP"])/"pr52audit"
+          groups=[]
+          provenance=set()
+          for regime in ("congestion","multi_fault","staggered_arrivals"):
+              doc=json.loads((base/"source"/regime/"data.json").read_text())
+              assert doc["schema"]=="pr52-true-entity-world-state-paired-actions-v1"
+              provenance.add(doc["protocol_sha256"])
+              for case in doc["cases"]:
+                  if case["split"]=="test":
+                      groups.append(case)
+          assert len(provenance)==1 and len(groups)==48
+          assert len({x["seed"] for x in groups})==48
+          assert len([x for x in groups if x["regime"]=="congestion"])==16
+          (base/"test/test.json").write_text(json.dumps({
+              "schema":"pr52-physical-isolated-public-entity-split-v1",
+              "split":"test","cases":groups
+          },indent=2,ensure_ascii=False)+"\n")
+          print("PR52_READONLY_ORIGINAL_TEST_SEALED",len(groups))
+          PY
+      - name: Verify scenario-level paired confidence intervals, not pseudo independent candidates
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.entity_pr52.test_pr52_readonly_ci -v \
+            2>&1 | tee "$RUNNER_TEMP/pr52audit/report/tests.log"
+      - name: 0 training, 0 true-world simulation: original 8 frozen models on same 48 tests
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.entity_pr52.pr52_readonly_ci \
+            --test "$RUNNER_TEMP/pr52audit/test" \
+            --models "$RUNNER_TEMP/pr52audit/models" \
+            --selection "$PR52_ORIGINAL_SELECTION" \
+            --out "$RUNNER_TEMP/pr52audit/report/paired-bootstrap.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr52audit/report/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr52audit/report"
+          d=json.loads((root/"paired-bootstrap.json").read_text())
+          assert d["scenarios"]==48 and d["new_training"]==d["new_simulator_episodes"]==d["gpu"]==0
+          assert d["frozen_validation_selected_arm"]=="rel_entity_joint025"
+          assert len(d["cases"])==48
+          for key,x in d["pairwise_stratified_95pct_bootstrap"].items():
+              assert x["wins"]+x["ties"]+x["losses"]==48
+          print("PR52_READONLY_PAIRED_48_FINAL",json.dumps({
+              "selected":d["frozen_validation_selected_arm"],
+              "intervals":d["pairwise_stratified_95pct_bootstrap"]
+          },ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr52audit/report/audit_head.txt"
+          (cd "$RUNNER_TEMP/pr52audit/report" && sha256sum \
+             paired-bootstrap.json run.log tests.log audit_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr52-readonly-paired-regret-intervals-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr52audit/report/
+          retention-days: 90
+          if-no-files-found: warn

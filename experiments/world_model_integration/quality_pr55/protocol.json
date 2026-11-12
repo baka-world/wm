@@ -1,0 +1,287 @@
+{
+  "protocol": "PR55_QUALITY_FIRST_PUBLIC_WORLD_DATA_PILOT_V1_20261112",
+  "parent_pr_head": "3a78396189720e844d79b28a2d04dc1a38100e6f",
+  "pilot_purpose": "Quality and information content audit BEFORE any 200+ simulation expansion or GPU. 18 fully new DEV-ONLY simulations; no training or independent test claims.",
+  "pilot_cases": [
+    {
+      "id": "PR55_PILOT_CONGESTION_BASELINE",
+      "split": "pilot_development_only",
+      "seed": 55100341,
+      "regime": "congestion",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 14
+    },
+    {
+      "id": "PR55_PILOT_CONGESTION_HIGHER_DEMAND",
+      "split": "pilot_development_only",
+      "seed": 55101218,
+      "regime": "congestion",
+      "profile": "higher_demand",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 18
+    },
+    {
+      "id": "PR55_PILOT_CONGESTION_CAPACITY_RELIEF",
+      "split": "pilot_development_only",
+      "seed": 55102095,
+      "regime": "congestion",
+      "profile": "capacity_relief",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 14
+    },
+    {
+      "id": "PR55_PILOT_CONGESTION_FEWER_ROBOTS",
+      "split": "pilot_development_only",
+      "seed": 55102972,
+      "regime": "congestion",
+      "profile": "fewer_robots",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 14
+    },
+    {
+      "id": "PR55_PILOT_CONGESTION_SLOW_SERVICE",
+      "split": "pilot_development_only",
+      "seed": 55103849,
+      "regime": "congestion",
+      "profile": "slow_service",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 14
+    },
+    {
+      "id": "PR55_PILOT_CONGESTION_SHIFTED_RELEASES",
+      "split": "pilot_development_only",
+      "seed": 55104726,
+      "regime": "congestion",
+      "profile": "shifted_releases",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 14
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_BASELINE",
+      "split": "pilot_development_only",
+      "seed": 55801341,
+      "regime": "multi_fault",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_HIGHER_DEMAND",
+      "split": "pilot_development_only",
+      "seed": 55802218,
+      "regime": "multi_fault",
+      "profile": "higher_demand",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "job_count": 16
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_CAPACITY_RELIEF",
+      "split": "pilot_development_only",
+      "seed": 55803095,
+      "regime": "multi_fault",
+      "profile": "capacity_relief",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": "C",
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_FEWER_ROBOTS",
+      "split": "pilot_development_only",
+      "seed": 55803972,
+      "regime": "multi_fault",
+      "profile": "fewer_robots",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_SLOW_SERVICE",
+      "split": "pilot_development_only",
+      "seed": 55804849,
+      "regime": "multi_fault",
+      "profile": "slow_service",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_MULTI_FAULT_SHIFTED_RELEASES",
+      "split": "pilot_development_only",
+      "seed": 55805726,
+      "regime": "multi_fault",
+      "profile": "shifted_releases",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": "C",
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_BASELINE",
+      "split": "pilot_development_only",
+      "seed": 56502341,
+      "regime": "staggered_arrivals",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_HIGHER_DEMAND",
+      "split": "pilot_development_only",
+      "seed": 56503218,
+      "regime": "staggered_arrivals",
+      "profile": "higher_demand",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 16
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_CAPACITY_RELIEF",
+      "split": "pilot_development_only",
+      "seed": 56504095,
+      "regime": "staggered_arrivals",
+      "profile": "capacity_relief",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_FEWER_ROBOTS",
+      "split": "pilot_development_only",
+      "seed": 56504972,
+      "regime": "staggered_arrivals",
+      "profile": "fewer_robots",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_SLOW_SERVICE",
+      "split": "pilot_development_only",
+      "seed": 56505849,
+      "regime": "staggered_arrivals",
+      "profile": "slow_service",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 12
+    },
+    {
+      "id": "PR55_PILOT_STAGGERED_ARRIVALS_SHIFTED_RELEASES",
+      "split": "pilot_development_only",
+      "seed": 56506726,
+      "regime": "staggered_arrivals",
+      "profile": "shifted_releases",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 12
+    }
+  ],
+  "source_system": "Existing PR48 BusinessSimulator/compile_scenario and PR54 on_transition public observations; official CP-SAT first candidate, no new simulator or policy.",
+  "original_archived_60_scene_comparator": "PR54 60 x 56 first-tick-only sample; frozen results, no retraining.",
+  "no_future_leakage": "public t-3..t and selected lawful action only in features; next public observation only in targets; unreleased jobs and private outage schedule forbidden.",
+  "quality_dimensions": [
+    "all_true_state_transitions_and_business_safety",
+    "rare_station_down_and_recovery_events",
+    "release_assignment_completion_queue_capacity_robot_transitions",
+    "eventful_vs_static_negative_control_balance",
+    "semantic_input_near_duplicate_ratio",
+    "full_episode_coverage_including_late_recovery_not_fixed_first_56_ticks",
+    "scenario_configuration_and_physical_resource_diversity",
+    "true_action_contrast_coverage_still_unverified_requires_second_gate",
+    "explicit_unseen_topology_test_NOT_YET_COVERED"
+  ],
+  "allowed_profile_changes": {
+    "baseline": "original PR48 generated stress scenario",
+    "higher_demand": "18 instead of 14 in congestion; 16 instead of 12 in other regimes",
+    "capacity_relief": "shared resource A capacity 1->2, same legal station ports",
+    "fewer_robots": "3 to 2 original robot specs, retain valid homes and all stations",
+    "slow_service": "B0 and C service_ticks +2, prior_ticks +2; unchanged robot policy",
+    "shifted_releases": "change source scenario release_ticks of ONLY registered stress regime; deterministic, private simulator only"
+  },
+  "max_ticks": 260,
+  "full_truth_collection": "Record and audit all consecutive actual public transitions from tick0 to terminal, not only first 56.",
+  "curated_training_preview": {
+    "max_per_episode": 72,
+    "regular_negative_stride": 9,
+    "rare_flags": [
+      "station_fault_onset",
+      "station_recovery",
+      "new_task_release",
+      "capacity_transition"
+    ],
+    "positive_flags": [
+      "assignment",
+      "task_status_change",
+      "task_completed",
+      "robot_phase_change",
+      "queue_transition"
+    ],
+    "include_neighboring_ticks": 1,
+    "rule": "Training-only label-informed event stratification. Never select unseen validation/test examples using target outcomes; future eval must retain natural time distribution.",
+    "preserve_full_original_episode": true,
+    "no_oversampling_claim": "Curated subset cannot be interpreted as natural deployment frequency; preserve raw and report both frequencies."
+  },
+  "quality_gate_frozen_before_pilot": {
+    "source_safety_violations_allowed": 0,
+    "future_leak_violations_allowed": 0,
+    "exact_duplicate_scene_seed_allowed": 0,
+    "min_global_event_categories_present": 5,
+    "mandatory_global_flags": [
+      "station_fault_onset",
+      "station_recovery",
+      "new_task_release",
+      "task_status_change",
+      "assignment"
+    ],
+    "max_curated_static_ratio": 0.5,
+    "min_curated_semantic_input_uniqueness_ratio": 0.5,
+    "mandatory_pilot_profiles": [
+      "baseline",
+      "higher_demand",
+      "capacity_relief",
+      "fewer_robots",
+      "slow_service",
+      "shifted_releases"
+    ],
+    "mandatory_stress_regimes": [
+      "congestion",
+      "multi_fault",
+      "staggered_arrivals"
+    ],
+    "untouched_holdout_requirement": "all 18 are development, none called blind test; new OOD layout holdout protocol separately required before model generalization claims",
+    "action_counterfactual_gate": "NO-GO on declaring decision-aware training data ready until same-prefix alternative-action effects and legal candidate diversity explicitly measured in another frozen gate"
+  },
+  "resource_budget": {
+    "gpu": 0,
+    "neural_training": 0,
+    "platform": "GitHub Actions CPU",
+    "pilot_scenarios": 18,
+    "not_authorized_full_scale_scenarios": true
+  }
+}

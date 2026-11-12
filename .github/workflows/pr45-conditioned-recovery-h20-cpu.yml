@@ -1,0 +1,104 @@
+name: PR45 explicit recovery world transition frozen V4 CPU
+on:
+  push:
+    branches: [research/pr45-conditioned-recovery-world-20261112]
+    paths:
+      - .github/workflows/pr45-conditioned-recovery-h20-cpu.yml
+      - experiments/world_model_integration/recovery_integration/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  bounded-exogenous-recovery-world:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Restore frozen original CPU dependency environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "PR45 requires CPU-only frozen V4"
+          torch.set_num_threads(1)
+          print("PR45_CPU",torch.__version__)
+          PY
+      - name: Restore SHA-verified original frozen V4 and PR44 train-only KM estimates
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr45"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr45/original_v4.zip"
+          unzip -p "$RUNNER_TEMP/pr45/original_v4.zip" v4-data.pt > "$RUNNER_TEMP/pr45/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr45/v4-data.pt" | sha256sum -c
+          mkdir -p "$RUNNER_TEMP/pr45/pr44"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13915489041/zip \
+            -o "$RUNNER_TEMP/pr45/pr44_original.zip"
+          unzip -q "$RUNNER_TEMP/pr45/pr44_original.zip" -d "$RUNNER_TEMP/pr45/pr44"
+          (cd "$RUNNER_TEMP/pr45/pr44" && sha256sum -c SHA256SUMS)
+          grep -Fx "d3751b6743a4ad8e88448df77a7d9067d268cb39" "$RUNNER_TEMP/pr45/pr44/source_head.txt"
+          echo "PR45_V4=$RUNNER_TEMP/pr45/v4-data.pt" >> "$GITHUB_ENV"
+          echo "PR45_KM=$RUNNER_TEMP/pr45/pr44/result.json" >> "$GITHUB_ENV"
+      - name: Two-stage recovery invariants and no leakage tests
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/recovery_integration
+          python -m unittest experiments.world_model_integration.recovery_integration.test_pr45 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr45/tests.log"
+      - name: New 12 scene public-state H5 H20 forecast paired comparison
+        run: |
+          set -euo pipefail
+          timeout 600s python -m experiments.world_model_integration.recovery_integration.pr45_recovery_world \
+            --checkpoint "$PR45_V4" --pr44-result "$PR45_KM" \
+            --out "$RUNNER_TEMP/pr45/result.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr45/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr45/result.json").read_text())
+          assert x["schema"]=="pr45-exogenous-conditioned-recovery-world-state-v1"
+          assert x["summary"]["groups"]==12
+          assert x["gpu"]==x["new_training"]==0
+          assert x["original_v4_unchanged"] and x["no_future_fault_onset_prediction"]
+          assert all(g["eligible_anchored_forecasts"] for g in x["groups"])
+          for horizon,block in x["summary"]["by_horizon"].items():
+              print("PR45_HORIZON",horizon,json.dumps(block,ensure_ascii=False))
+          print("PR45_COMPLETE_VALIDATED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr45/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr45/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr45/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr45" && sha256sum result.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive complete new H20 state diagnostics and source hashes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr45-conditioned-recovery-world-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr45/result.json
+            ${{ runner.temp }}/pr45/run.log
+            ${{ runner.temp }}/pr45/tests.log
+            ${{ runner.temp }}/pr45/source_head.txt
+            ${{ runner.temp }}/pr45/dependency-lock.sha256
+            ${{ runner.temp }}/pr45/pip-freeze.txt
+            ${{ runner.temp }}/pr45/SHA256SUMS
+          retention-days: 90
+          if-no-files-found: warn

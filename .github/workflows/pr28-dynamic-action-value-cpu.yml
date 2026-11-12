@@ -1,4 +1,5 @@
 name: PR28 literature-grounded dynamic decision identifiability CPU
+# Run the same frozen workload with the explicit 240-tick cap in the config.
 
 on:
   push:

@@ -46,7 +46,7 @@ class PR54TemporalWorldTests(unittest.TestCase):
             self.assertEqual(len(inp["history_visible_mask"]),len(inp["history"]))
             self.assertTrue(all(x[-1]==1 for x in inp["history_visible_mask"]))
             self.assertEqual(sum(v["kind"]=="robot" for v in inp["graph"]["nodes"]),3)
-            self.assertNotIn("future",json.dumps(inp["graph"]["source"]))
+            self.assertNotIn("future_job_schedule",json.dumps(inp["graph"]))
             self.assertNotIn("private_outage",json.dumps(inp))
             if any(v[0]==0 for v in inp["history_visible_mask"]):
                 seen=True

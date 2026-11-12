@@ -1,0 +1,91 @@
+name: PR54 factual public history one-step transition dataset
+on:
+  push:
+    branches: [research/pr54-temporal-relational-transition-20261112]
+    paths:
+      - .github/workflows/pr54-public-transitions.yml
+      - experiments/world_model_integration/temporal_pr54/pr54_public_sequence.py
+      - experiments/world_model_integration/temporal_pr54/protocol.json
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  simulator-public-transitions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install original business environment and official graph dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR54_REAL_PUBLIC_SIMULATOR_TRANSITIONS_CPU_ONLY")
+          PY
+      - name: Test actual public temporal graph, state labels and causal input isolation
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/temporal_pr54
+          python -m unittest experiments.world_model_integration.temporal_pr54.test_pr54 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr54-tests.log"
+      - name: Collect original BusinessSimulator policy transitions with fully observed t-3..t
+        env:
+          PR54_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr54"
+          timeout 2350s python -m experiments.world_model_integration.temporal_pr54.pr54_public_sequence \
+            --regime "$PR54_REGIME" --out "$RUNNER_TEMP/pr54/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr54/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=Path(os.environ["RUNNER_TEMP"])/"pr54"
+          x=json.loads((d/"data.json").read_text())
+          assert x["schema"]=="pr54-true-public-temporal-world-transitions-v1"
+          assert x["summary"]["by_split"]=={"train":12,"validation":4,"test":4}
+          assert x["summary"]["training"]==x["summary"]["gpu"]==0
+          assert x["summary"]["lookahead_feature_leakage"] is False
+          assert len(x["episodes"])==20
+          for ep in x["episodes"]:
+              assert len(ep["transitions"])==ep["real_observation_transitions"]
+              for row in ep["transitions"]:
+                  before=row["input"]
+                  after=row["target"]
+                  assert after["next_public_tick"]==before["public_tick"]+1
+                  assert len(before["graph"]["nodes"])==len(before["history"])
+                  assert all(x[-1]==1 for x in before["history_visible_mask"])
+          print("PR54_REAL_SIMULATOR_PUBLIC_HISTORY_VERIFIED",x["summary"])
+          PY
+          cp "$RUNNER_TEMP/pr54-tests.log" "$RUNNER_TEMP/pr54/tests.log"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr54/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr54/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr54/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr54" && sha256sum data.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive each registered stress family true public trajectories
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr54-public-true-transitions-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr54/
+          retention-days: 90
+          if-no-files-found: warn

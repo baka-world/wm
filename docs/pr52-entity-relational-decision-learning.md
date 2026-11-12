@@ -84,3 +84,28 @@ negative_expected_completed_H20 =
 - 训练工作流以原始源Artifact哈希为输入，物理隔离test并存储optimizer/RNG后，在同一运行内选择和独立评测。
 
 **所有 PR 保持 Draft，未合并历史PR/PR19/正式V4路径。**
+
+
+## 实际阶段A：228组逐实体真实反事实数据全量通过（2026-11-12）
+
+[原始GitHub Actions #43177828891](https://github.com/lieuyimo/wm/actions/runs/43177828891) **SUCCESS**。三种压力场景原始真实模拟数据各76组，所有源事件序列、每个候选对应的H5/H20逐实体目标以及四项业务安全校验均经过对照；三个原始产物的 `SHA256SUMS` 与同一来源commit/协议SHA再次由独立聚合节点验证：
+
+- [14任务拥堵原始数据 Artifact #13925251731](https://github.com/lieuyimo/wm/actions/runs/43177828891/artifacts/13925251731)
+- [双设备故障原始数据 Artifact #13925121588](https://github.com/lieuyimo/wm/actions/runs/43177828891/artifacts/13925121588)
+- [任务分批到达原始数据 Artifact #13924917237](https://github.com/lieuyimo/wm/actions/runs/43177828891/artifacts/13924917237)
+- [228组完整独立数据汇总 Artifact #13925571029](https://github.com/lieuyimo/wm/actions/runs/43177828891/artifacts/13925571029)
+
+| 预注册类别 | 独立真实场景 | 完整合法候选分支 | 有真实决策后果差异的场景 | H5/H20逐实体标签齐全 | 未完成/截尾 |
+|---|---:|---:|---:|---:|---:|
+| 拥堵14任务 | 76 | 304 | 75 | 76 | 0 |
+| 双设备故障 | 76 | 304 | 65 | 76 | 0 |
+| 分批到达 | 76 | 304 | 61 | 76 | 0 |
+| **合计** | **228** | **912** | **201** | **228** | **0** |
+
+按完全隔离的原始train/validation/test组：144/36/48场景；有非零候选后果差异的分布分别为**127/144、33/36、41/48**。这一结果说明有足够的标注信息对**逐实体未来系统动态**进行动作条件学习，且新任务不属于当前图节点、只有未来匿名新任务数量作为学习标签。
+
+## 阶段B：真正的PyG训练合约与独立测试
+
+[官方PyG R-GCN节点未来状态及decision-gradient合同测试 Actions #43178269192](https://github.com/lieuyimo/wm/actions/runs/43178269192) **SUCCESS**，验证R-GCN实体状态输出、H5/H20固定完成进度读出、决策损失与价值敏感加权的非零共享关系动态梯度，测试/验证文件实体上隔离。
+
+正式实验 [Actions #43178484839](https://github.com/lieuyimo/wm/actions/runs/43178484839) 按原始三个数据artifact原始SHA复核、物理拆分训练/验证/测试，开始8个预注册模型训练。最终效果以训练完成后独立test的真实regret、Brier及node MSE为准，不能预先断言关系模型或决策损失更优。

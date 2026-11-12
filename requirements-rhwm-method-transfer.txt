@@ -2,3 +2,9 @@
 # Kaplan-Meier estimator from lifelines (MIT), Python 3.10 compatible.
 # https://pypi.org/project/lifelines/0.30.0/
 lifelines==0.30.0
+
+# Official upstream conditional discrete-time survival model (BSD-2-Clause).
+# https://pypi.org/project/pycox/0.3.0/
+pycox==0.3.0
+# https://pypi.org/project/torchtuples/0.2.2/
+torchtuples==0.2.2

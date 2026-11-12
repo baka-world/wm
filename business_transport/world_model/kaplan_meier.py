@@ -73,12 +73,13 @@ class KaplanMeierServiceModel:
         return max(0.0, min(1.0, 1.0 - after / before))
 
 
-class KaplanMeierRuleDynamics:
-    """Map a source-library probability to the existing legal state transition."""
+class SurvivalEventRuleDynamics:
+    """Adapt a published survival estimator to existing legal state transitions."""
 
     def __init__(self, geometry, rules, service_model: KaplanMeierServiceModel, *, seed=1810):
-        if not isinstance(service_model, KaplanMeierServiceModel):
-            raise TypeError("service_model must be fitted upstream lifelines Kaplan-Meier")
+        if not callable(getattr(service_model, "p_finish_next", None)) and not callable(
+                getattr(service_model, "query_probability", None)):
+            raise TypeError("service_model must expose a library-backed survival probability")
         self.geometry, self.rules = geometry, rules
         self.rule = ProgressAwareRule(geometry)
         self.service_model = service_model
@@ -108,7 +109,10 @@ class KaplanMeierRuleDynamics:
             fallback = (station.observed_effective_service_mean
                         if station.observed_effective_service_mean is not None
                         else station.expected_service_ticks)
-            p = self.service_model.p_finish_next(q["station_id"], age, fallback)
+            if callable(getattr(self.service_model, "query_probability", None)):
+                p = self.service_model.query_probability(observation, q, age, fallback)
+            else:
+                p = self.service_model.p_finish_next(q["station_id"], age, fallback)
             outcome = self.rng.random() < p
             events.append({
                 "query": dict(q), "p_finish": float(p),
@@ -135,3 +139,7 @@ class KaplanMeierRuleDynamics:
                     expected_service_ticks=previous[s.id].expected_service_ticks,
                     observed_effective_service_mean=previous[s.id].observed_effective_service_mean)
             for s in predicted.stations))
+
+
+# Preserve the published-method pilot's existing interface unchanged.
+KaplanMeierRuleDynamics = SurvivalEventRuleDynamics

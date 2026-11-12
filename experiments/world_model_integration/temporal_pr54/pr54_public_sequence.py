@@ -134,8 +134,8 @@ class PublicTransitionCollector:
         self.tick=-1
 
     def __call__(self,tr):
-        before=self.observer.observe(tr.before)
-        after=self.observer.observe(tr.after)
+        before=self.observer.observe(tr.observation)
+        after=self.observer.observe(tr.next_observation)
         if before.tick!=self.tick+1:
             raise AssertionError("true transition callback not monotonic")
         self.tick=before.tick

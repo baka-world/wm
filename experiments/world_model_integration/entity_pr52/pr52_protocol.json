@@ -2398,5 +2398,6 @@
     "training_checkpoint_save_optimizer": true,
     "label_collection_runner_wall_max_minutes": 75
   },
-  "caveat": "New pilot same 7x5 map / three robot types / synthetic faults; H5/H20 anchored future entity predictions not autoregressive full-transition rollout; no claim GPU serving or actual company deployment."
+  "caveat": "New pilot same 7x5 map / three robot types / synthetic faults; H5/H20 anchored future entity predictions not autoregressive full-transition rollout; no claim GPU serving or actual company deployment.",
+  "counterfactual_max_candidates": 4
 }

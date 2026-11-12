@@ -230,7 +230,7 @@ def evaluate_one(spec,settings,arm,*,checkpoint,bayes):
         "policy_cpu_seconds":policy.cpu_seconds,
         "total_episode_cpu_seconds":total_cpu,
         "resource_violations":len(resource["violations"]),
-        "motion_violations":len(motion),"lifecycle_violations":len(lifecycle),
+        "motion_violations":motion,"lifecycle_violations":len(lifecycle),
         "event_hash":hashlib.sha256(
             json.dumps(result["events"],sort_keys=True).encode()).hexdigest(),
         "decision_records":policy.records,

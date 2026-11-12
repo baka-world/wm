@@ -1,0 +1,68 @@
+name: PR48 read-only PR47 full-scoring decision attribution
+on:
+  push:
+    branches: [research/pr48-independent-stress-generalization-20261112]
+    paths:
+      - .github/workflows/pr48-pr47-readonly-attribution.yml
+      - experiments/world_model_integration/stress_pr48/pr48_readonly_pr47.py
+      - experiments/world_model_integration/stress_pr48/test_pr48_readonly.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  archived-decision-provenance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Download exact PR47 original evidence and verify SHA256SUMS
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr48-readonly/original" "$RUNNER_TEMP/pr48-readonly/audit"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13919130952/zip \
+            -o "$RUNNER_TEMP/pr48-readonly/original.zip"
+          unzip -q "$RUNNER_TEMP/pr48-readonly/original.zip" -d "$RUNNER_TEMP/pr48-readonly/original"
+          (cd "$RUNNER_TEMP/pr48-readonly/original" && sha256sum -c SHA256SUMS)
+          grep -Fx "ef9554bfa2b6f4da5124089fc72d5121c06af3e5" "$RUNNER_TEMP/pr48-readonly/original/source_head.txt"
+      - name: Pure-standard-library tests, zero model and zero simulation
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.stress_pr48.test_pr48_readonly -v \
+            2>&1 | tee "$RUNNER_TEMP/pr48-readonly/audit/tests.log"
+      - name: First same-public-prefix full-ranking divergence from archived PR47
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.stress_pr48.pr48_readonly_pr47 \
+            --source "$RUNNER_TEMP/pr48-readonly/original/online.json" \
+            --out "$RUNNER_TEMP/pr48-readonly/audit/decision-attribution.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr48-readonly/audit/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import os,json
+          p=Path(os.environ["RUNNER_TEMP"])/"pr48-readonly/audit/decision-attribution.json"
+          x=json.loads(p.read_text())
+          assert x["schema"]=="pr48-readonly-pr47-first-complete-score-divergence-v1"
+          assert len(x["cases"])==24 and x["zero_new_simulation"] and x["zero_new_training"] and x["zero_new_inference"]
+          assert x["gpu"]==0
+          for k,v in x["summary"].items():
+              print("PR48_OLD_COMPLETE_SCORING",k,json.dumps(v,ensure_ascii=False))
+          print("PR48_PR47_READONLY_VERIFIED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr48-readonly/audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr48-readonly/audit" && sha256sum tests.log run.log decision-attribution.json source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr48-old-pr47-attribution-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr48-readonly/audit/
+          retention-days: 90
+          if-no-files-found: warn

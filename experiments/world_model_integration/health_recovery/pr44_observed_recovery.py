@@ -210,6 +210,7 @@ def score_episode(episode,models,horizons):
     sid=episode["station_id"]
     queries=prediction_queries(episode["public_observations"],sid,horizons)
     by_h={}
+    query_evidence=[]
     for h in horizons:
         own=[q for q in queries if q["horizon"]==h]
         scored=[q for q in own if q["truth_available"] is not None]
@@ -221,6 +222,11 @@ def score_episode(episode,models,horizons):
                 "persist_down":0.,
                 "pooled_km":recovery_probability(models["pooled"],age,h),
                 "station_km":recovery_probability(models["station"][sid],age,h)}
+            query_evidence.append({
+                "tick":q["tick"],"public_observed_down_age":age,
+                "horizon":h,"offline_truth_available_by_h":q["truth_available"],
+                "predicted_recovery_probabilities":guesses,
+            })
             for name,p in guesses.items():
                 if p is None:
                     unsupported[name]+=1
@@ -236,6 +242,7 @@ def score_episode(episode,models,horizons):
         }
     return {"id":episode["id"],"seed":episode["seed"],"station_id":sid,
             "public_spells":episode["public_spells"],"horizons":by_h,
+            "prediction_label_pairs":query_evidence,
             "safety_violations":episode["safety_violations"]}
 
 
@@ -321,6 +328,18 @@ def run(output):
         "train_censored_spells":sum(not s["recovered"]
                                     for v in spells_by_station.values() for s in v),
         "heldout_scored":raw,
+        "public_status_streams":{
+            split:[{
+                "id":e["id"],"station_id":e["station_id"],
+                "public_device_status":[{
+                    "tick":obs["tick"],
+                    "device_available":obs["stations"][e["station_id"]]["device_available"],
+                    "service_admission_available":obs["stations"][e["station_id"]]["service_admission_available"],
+                    "capacity_blocked":obs["stations"][e["station_id"]]["capacity_blocked"],
+                } for obs in e["public_observations"]]
+            } for e in collection]
+            for split,collection in (("train",train),("heldout",heldout))
+        },
         "summary":summary,
         "execution_cpu_seconds":time.process_time()-began,
         "limits":"Same-map synthetic availability schedule; station identity may proxy synthetic duration regime; cannot predict onset, no real telemetry or integrated H20 scheduling gains."

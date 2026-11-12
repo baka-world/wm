@@ -198,7 +198,7 @@ def paired_admission(original_paths,new_paths,out):
             "public_map_sha256":topo["static_map_digest"]
         })
     checks={
-        "original_12_complete_source_cases_preserved":len(original_completed if isinstance(original_completed,list) else old_scenes)==12 if False else len(old_scenes)==12,
+        "original_12_complete_source_cases_preserved":len(old_scenes)==12,
         "new_12_full_episode_source_scenes_preserved":len(new_scenes)==12,
         "unchanged_private_scenarios_true_world_seed_and_original_cp_sat":True,
         "all_four_unique_station_free_bypass_maps":len(novel_map_digests)==4 and all(

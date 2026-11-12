@@ -134,7 +134,8 @@ def run_scene(spec,stress,cfg):
             "H20_has_state_action_effect":any(
                 v["H20_difference"] is not None and v["H20_difference"]["nonzero_true_public_state_effect"]
                 for v in interventions),
-            "makespan_action_effect":len({x["true_ticks"] for x in outcomes})>1,
+            "makespan_action_effect":(all(x["true_completed"] for x in outcomes) and
+                                     len({x["true_ticks"] for x in outcomes})>1),
             "candidate_count":len(outcomes),
             "anchor":anchor
         }

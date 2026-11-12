@@ -68,7 +68,7 @@ class PR56PublicMapTests(unittest.TestCase):
         business,geo=build_topology_business(case,self.stress,self.p)
         # Generate only public and legal BusinessObserver observation, not a
         # future task schedule or privately simulated next tick.
-        from lab_transport.simulation import BusinessSimulator
+        from business_transport.simulation import BusinessSimulator
         from experiments.world_model_integration.temporal_pr54.pr54_public_sequence import PublicTransitionCollector
         from experiments.world_model_integration.decision_learning_pr51.pr51_labels import TrueCPsatBranch
         policy=TrueCPsatBranch(geo,business.rules,case["seed"],

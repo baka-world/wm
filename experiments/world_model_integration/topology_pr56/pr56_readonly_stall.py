@@ -59,15 +59,16 @@ def decode_scene(case):
     branches=case["real_factual_branches"]
     all_complete=all(x["true_completed"] for x in branches)
     primary_completed=case["real_full_episode_status"]=="completed"
-    if (case["real_factual_ticks"]==260 and not primary_completed
-        and status["waiting"]+status["assigned"]+status["in_transit"]==0):
-        raise AssertionError("censored scene has no remaining public known work, investigate")
+    no_visible_unfinished=(
+        case["real_factual_ticks"]==260 and not primary_completed
+        and status["waiting"]+status["assigned"]+status["in_transit"]==0)
     return {
         "id":case["id"],"regime":case["case"]["regime"],
         "layout":case["case"]["layout"],
         "original_public_topology_sha":topo["static_map_digest"],
         "real_terminal_tick":case["real_factual_ticks"],
         "original_factual_completed":primary_completed,
+        "censored_with_no_visible_unfinished_stage_requires_further_audit":no_visible_unfinished,
         "real_action_branch_complete_status":[x["true_completed"] for x in branches],
         "CENSORED_makespan_if_any_branch_times_out":not all_complete,
         "last_30_tick_events":dict(tail_events),

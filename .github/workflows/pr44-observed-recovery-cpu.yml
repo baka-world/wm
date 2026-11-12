@@ -56,12 +56,21 @@ jobs:
           assert r["gpu"]==0 and r["new_neural_training"]==0 and r["network_inference"]==0
           assert r["no_fault_oracle_model_features"]
           assert all(c["safety_violations"]==0 for c in r["heldout_scored"])
+          assert len(r["public_status_streams"]["train"])==36
+          assert len(r["public_status_streams"]["heldout"])==24
+          assert all(c["prediction_label_pairs"] for c in r["heldout_scored"])
+          assert all(set(rec)=={"tick","device_available","service_admission_available","capacity_blocked"}
+                     for group in r["public_status_streams"].values()
+                     for ep in group for rec in ep["public_device_status"])
+          assert "outage_schedule" not in p.read_text()
           for h,s in r["summary"].items():
               print("PR44_HELDOUT",h,json.dumps(s,ensure_ascii=False))
           print("PR44_EVIDENCE_CHECK_PASSED")
           PY
           git rev-parse HEAD > "$RUNNER_TEMP/pr44/source_head.txt"
-          (cd "$RUNNER_TEMP/pr44" && sha256sum result.json tests.log run.log source_head.txt > SHA256SUMS)
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr44/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr44/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr44" && sha256sum result.json tests.log run.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
       - name: Upload full public-recovery source evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -73,5 +82,7 @@ jobs:
             ${{ runner.temp }}/pr44/run.log
             ${{ runner.temp }}/pr44/source_head.txt
             ${{ runner.temp }}/pr44/SHA256SUMS
+            ${{ runner.temp }}/pr44/dependency-lock.sha256
+            ${{ runner.temp }}/pr44/pip-freeze.txt
           retention-days: 90
           if-no-files-found: warn

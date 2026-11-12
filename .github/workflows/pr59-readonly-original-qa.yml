@@ -1,0 +1,82 @@
+name: PR59 readonly QA on immutable original 24 train and 12 validation source
+on:
+  push:
+    branches: [research/pr59-sealed-topology-data-pyg-preflight-20261112]
+    paths:
+      - .github/workflows/pr59-readonly-original-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  original-new-map-natural-data-readonly-admission:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Source-compatible official PyG and business environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43234653164
+          github-token: ${{ github.token }}
+          pattern: pr59-real-public-world-43234653164-*
+          path: ${{ runner.temp }}/pr59-original-pinned
+      - name: Original untouched train/validation world-truth SHA and unopened BLIND test verification
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr59-readonly"
+          python - <<'PY'
+          import os,json,hashlib,subprocess
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr59-original-pinned"
+          paths=sorted(root.glob("*/data.json"))
+          assert len(paths)==2, "EXACT two TRAIN/VAL source artifacts only"
+          immutable_original_head="48acd54b19805c4582bd616bb93fc81c7c92b10d"
+          digest=hashlib.sha256(Path("experiments/world_model_integration/sealed_pr59/protocol.json").read_bytes()).hexdigest()
+          found=set()
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              assert (path.parent/"source_head.txt").read_text().strip()==immutable_original_head
+              doc=json.loads(path.read_text())
+              assert doc["source_protocol_sha256"]==digest
+              assert doc["split"] in ("train","validation")
+              assert doc["BLIND_TEST_RUN"] is False
+              found.add(doc["split"])
+          assert found=={"train","validation"}
+          print("PR59_PREEXISTING_COMPLETE_TRAIN_AND_VALIDATION_SOURCE_SHA_VERIFIED",immutable_original_head)
+          PY
+      - name: REAL 36-scene immutable public world quality verdict with no new simulator execution
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.sealed_pr59.pr59_gate \
+            --source "$RUNNER_TEMP/pr59-original-pinned" \
+            --out "$RUNNER_TEMP/pr59-readonly/quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr59-readonly/quality.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          q=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr59-readonly/quality.json").read_text())
+          assert q["schema"]=="pr59-natural-map-family-physically-unopened-test-data-admission-v1"
+          assert q["BLIND_TEST_source_generated"] is False and q["BLIND_TEST_source_read"] is False
+          assert q["GPU_hours"]==0 and q["training_run_executed"] is False
+          assert q["split_statistics"]["train"]["genuine_scenarios"]==24
+          assert q["split_statistics"]["validation"]["genuine_scenarios"]==12
+          print("PR59_ORIGINAL_DATA_FROZEN_QUALITY_DECISION",q["scientific_verdict"],q["failures"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr59-readonly/audit_head.txt"
+          (cd "$RUNNER_TEMP/pr59-readonly" && sha256sum quality.json quality.log audit_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr59-original-natural-train-val-readonly-quality-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr59-readonly/
+          retention-days: 90
+          if-no-files-found: warn

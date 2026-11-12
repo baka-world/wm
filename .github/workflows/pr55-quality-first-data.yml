@@ -1,0 +1,160 @@
+name: PR55 quality-first true public world-data pilot and admission audit
+on:
+  push:
+    branches: [research/pr55-quality-first-world-data-20261112]
+    paths:
+      - .github/workflows/pr55-quality-first-data.yml
+      - experiments/world_model_integration/quality_pr55/protocol.json
+      - experiments/world_model_integration/quality_pr55/pr55_generate.py
+      - experiments/world_model_integration/quality_pr55/pr55_gate.py
+      - experiments/world_model_integration/quality_pr55/test_pr55_quality.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  profile-actual-business-episodes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Reuse original PyTorch and business-simulator locked CPU runtime
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          print("PR55_QUALITY_FIRST_CPU_SIMULATOR_ONLY_NO_NEURAL_TRAINING")
+          PY
+      - name: Run precommitted source and actual variable-workload contracts
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr55"
+          python -m unittest experiments.world_model_integration.quality_pr55.test_pr55_quality -v \
+            2>&1 | tee "$RUNNER_TEMP/pr55/tests.log"
+          python -m compileall -q experiments/world_model_integration/quality_pr55
+      - name: Sample SIX real simulator profiles, retain ALL original tick states
+        env:
+          PR55_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2600s python -m experiments.world_model_integration.quality_pr55.pr55_generate \
+            --regime "$PR55_REGIME" --out "$RUNNER_TEMP/pr55/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr55/sim.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          src=Path(os.environ["RUNNER_TEMP"])/"pr55/data.json"
+          x=json.loads(src.read_text())
+          assert x["schema"]=="pr55-quality-first-true-public-world-dev-pilot-v1"
+          assert x["regime"]==os.environ["PR55_REGIME"]
+          assert len(x["episodes"])==6
+          assert x["summary"]["GPU_used"]==x["summary"]["neural_training"]==0
+          assert x["summary"]["all_actual_transitions"]==sum(
+              len(e["raw_trajectories"]) for e in x["episodes"])
+          for e in x["episodes"]:
+              assert e["case"]["split"]=="pilot_development_only"
+              assert e["full_public_transitions"]>0
+              assert len(e["selected_ticks"])<=72
+              assert e["raw_trajectories"][-1]["target"]["next_public_tick"]==e["real_summary"]["ticks"]
+          print("PR55_SOURCE_REAL_DYNAMIC_TRUTH_VERIFIED",json.dumps(x["summary"]))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr55/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr55/dependencies.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr55/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr55" && sha256sum data.json tests.log sim.log source_head.txt dependencies.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive immutable full real trajectories, not only curated selection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr55-quality-pilot-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr55/
+          retention-days: 90
+          if-no-files-found: warn
+  immutable-quality-admission:
+    needs: profile-actual-business-episodes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install original public schema dependencies, no GPU
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr55-quality-pilot-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr55-pilot
+      - name: Verify three source HEADs, SHA256 and frozen quality rules before any expansion
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr55-qa"
+          python - <<'PY'
+          import os,subprocess,json,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr55-pilot"
+          paths=sorted(root.glob("*/data.json"))
+          assert len(paths)==3, "missing real stress family or unaudited artifact"
+          actual_head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          sha=set()
+          regime=set()
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              assert (path.parent/"source_head.txt").read_text().strip()==actual_head
+              o=json.loads(path.read_text())
+              assert o["regime"] not in regime
+              regime.add(o["regime"])
+              sha.add(o["protocol_sha256"])
+          assert len(sha)==1
+          assert regime=={"congestion","multi_fault","staggered_arrivals"}
+          print("PR55_FULL_REAL_SOURCE_SHA_VERIFIED",actual_head,len(paths))
+          PY
+      - name: Report quality PASS or explicit expansion NO-GO, never silently discard failing records
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.quality_pr55.pr55_gate \
+            --input "$RUNNER_TEMP/pr55-pilot" \
+            --out "$RUNNER_TEMP/pr55-qa/quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr55-qa/quality.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"pr55-qa/quality.json"
+          x=json.loads(p.read_text())
+          assert x["independent_dev_scenarios"]==18
+          assert x["training_ready"] is False
+          assert x["decision_aware_data_ready"] is False
+          assert x["cross_map_generalization_covered"] is False
+          assert x["cost"]["GPU"]==x["cost"]["neural_training"]==0
+          print("PR55_QUALITY_GATE_RECORDED",
+                x["decision"],"failed",x["failure_reasons"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr55-qa/source_head.txt"
+          (cd "$RUNNER_TEMP/pr55-qa" && sha256sum quality.json quality.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr55-data-quality-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr55-qa/
+          retention-days: 90
+          if-no-files-found: warn

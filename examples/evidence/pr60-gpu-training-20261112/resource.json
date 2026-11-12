@@ -1,0 +1,46 @@
+{
+  "checkpoint_archive": "/data/wm-a100-pr60-gpu-20261112/pr60-gpu-checkpoints-20261112.tar.gz",
+  "checkpoint_archive_sha256": "919a0b625659e492811a74bc5cdf76a60ccbf639acb32c33a420b7db30a74e14",
+  "checkpoint_archive_bytes": 6661520,
+  "gpu_usage": {
+    "0": {
+      "samples": 1553,
+      "util_mean": 10.356,
+      "util_max": 26.0,
+      "mem_mean_MiB": 576.38,
+      "mem_max_MiB": 599.0,
+      "power_mean_W": 74.5,
+      "temp_max_C": 40.0
+    },
+    "1": {
+      "samples": 1553,
+      "util_mean": 3.977,
+      "util_max": 18.0,
+      "mem_mean_MiB": 209.81,
+      "mem_max_MiB": 601.0,
+      "power_mean_W": 67.79,
+      "temp_max_C": 36.0
+    },
+    "6": {
+      "samples": 1553,
+      "util_mean": 3.987,
+      "util_max": 22.0,
+      "mem_mean_MiB": 212.37,
+      "mem_max_MiB": 601.0,
+      "power_mean_W": 71.29,
+      "temp_max_C": 36.0
+    },
+    "7": {
+      "samples": 1553,
+      "util_mean": 3.946,
+      "util_max": 27.0,
+      "mem_mean_MiB": 130.91,
+      "mem_max_MiB": 601.0,
+      "power_mean_W": 65.56,
+      "temp_max_C": 39.0
+    }
+  },
+  "runs": 6,
+  "summed_gpu_seconds": 2907.8506951332092,
+  "summed_gpu_hours": 0.8077
+}

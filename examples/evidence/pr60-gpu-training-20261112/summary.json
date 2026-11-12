@@ -1,0 +1,181 @@
+{
+  "schema": "pr60-a100-gpu-aggregate-v1",
+  "runs": 6,
+  "arms": {
+    "map_off": {
+      "seeds": [
+        1810,
+        1811,
+        1812
+      ],
+      "params": [
+        52953,
+        52953,
+        52953
+      ],
+      "node_mse": [
+        0.005236232973283882,
+        0.00615144067918656,
+        0.0062142177500381585
+      ],
+      "device_brier": [
+        0.004396557188628215,
+        0.004325407324163778,
+        0.004451068069631984
+      ],
+      "new_task_mae": [
+        0.23294051552572123,
+        0.18807811869061078,
+        0.15843825440743556
+      ],
+      "checkpoints": {
+        "1810": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_off-1810-20ep-e32c402/map_off/1810/best.pt",
+          "sha256": "d0721eb2052210c553f6b483c8dcc5e3a7f89a437a46328ef1098924bb553fca"
+        },
+        "1811": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_off-1811-20ep-e32c402/map_off/1811/best.pt",
+          "sha256": "5f536e04e1c091a5f59e228e5ef726ff41d74e454944f21d179a693f936c0449"
+        },
+        "1812": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_off-1812-20ep-e32c402/map_off/1812/best.pt",
+          "sha256": "d377bd0534c336799d91eb0e4918dc03d24f0e658e8816b1def7779fc282862a"
+        }
+      }
+    },
+    "map_on": {
+      "seeds": [
+        1810,
+        1811,
+        1812
+      ],
+      "params": [
+        52953,
+        52953,
+        52953
+      ],
+      "node_mse": [
+        0.004196135545557854,
+        0.005582460655973909,
+        0.005622582802202499
+      ],
+      "device_brier": [
+        0.004457209488360827,
+        0.004354674193148999,
+        0.004318411132293523
+      ],
+      "new_task_mae": [
+        0.16358503479523462,
+        0.15564090589976162,
+        0.21255507668270301
+      ],
+      "checkpoints": {
+        "1810": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_on-1810-20ep-e32c402/map_on/1810/best.pt",
+          "sha256": "d6634d97b5aa5c853677e229932095d4db3648f59935d1807fdf9f8790169590"
+        },
+        "1811": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_on-1811-20ep-e32c402/map_on/1811/best.pt",
+          "sha256": "407f919ecaec1fe435be2ea73489aea7b13d3808c82c6ea982da0021c21c98f0"
+        },
+        "1812": {
+          "path": "/data/wm-a100-pr60-gpu-20261112/runs/pr60-map_on-1812-20ep-e32c402/map_on/1812/best.pt",
+          "sha256": "3a4c93e5ea0f43d9dfe41e23c802c3814792e3085b06e635221f919a8dacd421"
+        }
+      }
+    }
+  },
+  "paired": {
+    "macro_node_mse": [
+      {
+        "seed": 1810,
+        "map_on": 0.004196135545557854,
+        "map_off": 0.005236232973283882,
+        "delta_on_minus_off": -0.0010400974277260276
+      },
+      {
+        "seed": 1811,
+        "map_on": 0.005582460655973909,
+        "map_off": 0.00615144067918656,
+        "delta_on_minus_off": -0.0005689800232126507
+      },
+      {
+        "seed": 1812,
+        "map_on": 0.005622582802202499,
+        "map_off": 0.0062142177500381585,
+        "delta_on_minus_off": -0.0005916349478356595
+      }
+    ],
+    "macro_device_brier": [
+      {
+        "seed": 1810,
+        "map_on": 0.004457209488360827,
+        "map_off": 0.004396557188628215,
+        "delta_on_minus_off": 6.0652299732611575e-05
+      },
+      {
+        "seed": 1811,
+        "map_on": 0.004354674193148999,
+        "map_off": 0.004325407324163778,
+        "delta_on_minus_off": 2.92668689852206e-05
+      },
+      {
+        "seed": 1812,
+        "map_on": 0.004318411132293523,
+        "map_off": 0.004451068069631984,
+        "delta_on_minus_off": -0.00013265693733846128
+      }
+    ],
+    "macro_new_task_mae": [
+      {
+        "seed": 1810,
+        "map_on": 0.16358503479523462,
+        "map_off": 0.23294051552572123,
+        "delta_on_minus_off": -0.06935548073048661
+      },
+      {
+        "seed": 1811,
+        "map_on": 0.15564090589976162,
+        "map_off": 0.18807811869061078,
+        "delta_on_minus_off": -0.03243721279084916
+      },
+      {
+        "seed": 1812,
+        "map_on": 0.21255507668270301,
+        "map_off": 0.15843825440743556,
+        "delta_on_minus_off": 0.05411682227526746
+      }
+    ],
+    "selection_score": [
+      {
+        "seed": 1810,
+        "map_on": 0.005310437917648061,
+        "map_off": 0.006335372270440936,
+        "delta_on_minus_off": -0.0010249343527928747
+      },
+      {
+        "seed": 1811,
+        "map_on": 0.006671129204261159,
+        "map_off": 0.007232792510227504,
+        "delta_on_minus_off": -0.0005616633059663456
+      },
+      {
+        "seed": 1812,
+        "map_on": 0.006702185585275879,
+        "map_off": 0.007326984767446154,
+        "delta_on_minus_off": -0.0006247991821702751
+      }
+    ]
+  },
+  "paired_seed_wins": {
+    "macro_node_mse": 3,
+    "macro_device_brier": 1,
+    "macro_new_task_mae": 2,
+    "selection_score": 3
+  },
+  "blind_test": {
+    "files_read": 0,
+    "episodes_generated": 0
+  },
+  "limitation": "Teacher-forced true t->t+1 validation on 12 independent scenes; no H20/autoregressive/online claim."
+}

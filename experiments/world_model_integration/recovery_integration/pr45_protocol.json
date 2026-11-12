@@ -1,0 +1,117 @@
+{
+  "protocol": "PR45_EXPLICIT_OBSERVED_RECOVERY_WORLD_TRANSITION_20261112_V1",
+  "source_pr44_head": "0d5014624441ecba2479e3b0398ee31780f00e1a",
+  "source_pr44_artifact_id": 13915489041,
+  "source_pr44_run": 43156302837,
+  "frozen_original_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "hypothesis": "A survival-estimated recovery event for already publicly-down stations improves full H20 predicted station and downstream task/resource states beyond V4 persistence",
+  "methods": [
+    "original_v4_h20_no_future_faults",
+    "v4_h20_observed_down_km_recovery"
+  ],
+  "cohort": [
+    {
+      "id": "PR45_B0_1",
+      "station_id": "B0",
+      "seed": 7100009
+    },
+    {
+      "id": "PR45_B0_2",
+      "station_id": "B0",
+      "seed": 7100280
+    },
+    {
+      "id": "PR45_B0_3",
+      "station_id": "B0",
+      "seed": 7100551
+    },
+    {
+      "id": "PR45_B0_4",
+      "station_id": "B0",
+      "seed": 7100822
+    },
+    {
+      "id": "PR45_B1_1",
+      "station_id": "B1",
+      "seed": 7110009
+    },
+    {
+      "id": "PR45_B1_2",
+      "station_id": "B1",
+      "seed": 7110280
+    },
+    {
+      "id": "PR45_B1_3",
+      "station_id": "B1",
+      "seed": 7110551
+    },
+    {
+      "id": "PR45_B1_4",
+      "station_id": "B1",
+      "seed": 7110822
+    },
+    {
+      "id": "PR45_C_1",
+      "station_id": "C",
+      "seed": 7120009
+    },
+    {
+      "id": "PR45_C_2",
+      "station_id": "C",
+      "seed": 7120280
+    },
+    {
+      "id": "PR45_C_3",
+      "station_id": "C",
+      "seed": 7120551
+    },
+    {
+      "id": "PR45_C_4",
+      "station_id": "C",
+      "seed": 7120822
+    }
+  ],
+  "independence": "new scenario seeds vs PR44 36 training and 24 test; same synthetic generating mechanism, same map not cross-domain",
+  "initial_public_down_age": "computed online only from consecutive BusinessObserver.device_available per station; missing history => unknown and no recovery sampling",
+  "anchors": [
+    8,
+    10
+  ],
+  "horizons": [
+    5,
+    20
+  ],
+  "particles": 3,
+  "prediction_seed": 1810,
+  "max_ticks": 130,
+  "forecast_policy": "existing nearest_batch on current predicted public state; factual nearest policy from original PR44",
+  "baseline_model": "original frozen V4 probability network, unchanged, no future fault/retest/job arrival",
+  "recovery_method": "PR44 stationary Kaplan Meier conditional P(T<=a+1|T>a) from TRAIN-only archived model; per-particle keyed independent repair draws, only for public-down stations; explicit exogenous boundary following ordinary transition",
+  "invariants": [
+    "original check_business_transition passes on pre-recovery baseline",
+    "each recovery is original publicly-down -> up only",
+    "health event must happen at NEXT public observation boundary",
+    "robot and sample trajectories unchanged at exogenous boundary",
+    "resource capacity/occupation and visible service relations recomputed using current public state",
+    "no new failures, tasks, hidden countdown, or unseen repair schedule injected",
+    "no source simulator modifications"
+  ],
+  "endpoints": [
+    "target_station_availability_brier",
+    "sample_status_error",
+    "station_busy_brier",
+    "resource_occupancy_mae",
+    "completed_count_mae",
+    "waiting_count_mae",
+    "detected recovery event count",
+    "recoveries sampled and contract checks",
+    "CPU process time"
+  ],
+  "resources": {
+    "gpu": 0,
+    "new_training": 0,
+    "freeze_v4": true,
+    "cpu_budget_seconds": 350
+  },
+  "promotion": "research_only_shadow; no automatic online policy, no unregistered reweighting"
+}

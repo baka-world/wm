@@ -1,0 +1,181 @@
+name: PR31 V4 reproducible warmstart and scratch CPU training
+on:
+  push:
+    branches: [research/pr31-v4-reproducible-posttraining-20261112]
+    paths: [.github/workflows/pr31-v4-reproducible-training-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  source-backed-cpu-training:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMBA_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Restore original pinned CPU runtime
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("ORIGINAL_V4_TORCH",torch.__version__)
+          PY
+      - name: Restore unchanged original V4 with immutable checksum
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr31"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/pr31/original-artifact.zip"
+          unzip -p "$RUNNER_TEMP/pr31/original-artifact.zip" v4-data.pt > "$RUNNER_TEMP/pr31/original-v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr31/original-v4.pt" | sha256sum -c
+          echo "PR31_ORIGINAL_V4=$RUNNER_TEMP/pr31/original-v4.pt" >> "$GITHUB_ENV"
+      - name: Verify frozen groups, original network, deterministic RNG
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/posttraining
+          timeout 180s python -m unittest discover \
+            -s experiments/world_model_integration/posttraining -p 'test_*.py' -v \
+            2>&1 | tee "$RUNNER_TEMP/pr31/tests.log"
+      - name: Capture full reproducibility environment BEFORE training
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.posttraining.repro_environment \
+            --out "$RUNNER_TEMP/pr31/environment" \
+            2>&1 | tee "$RUNNER_TEMP/pr31/environment-capture.log"
+          test -s "$RUNNER_TEMP/pr31/environment/pip-freeze.txt"
+          test -s "$RUNNER_TEMP/pr31/environment/environment.json"
+          test -s "$RUNNER_TEMP/pr31/environment/source_manifest.json"
+          test -s "$RUNNER_TEMP/pr31/environment/requirements-paper-reuse.lock"
+      - name: Build only Train and Validation from original factual generator
+        run: |
+          set -euo pipefail
+          timeout 300s python -m experiments.world_model_integration.posttraining.pr31_dataset \
+            --part development --out "$RUNNER_TEMP/pr31/development.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr31/development.log"
+          test -s "$RUNNER_TEMP/pr31/development.json"
+      - name: Train frozen-architecture warmstart and scratch and restore optimizer/RNG
+        run: |
+          set -euo pipefail
+          timeout 500s python -m experiments.world_model_integration.posttraining.pr31_train \
+            --development "$RUNNER_TEMP/pr31/development.json" \
+            --original "$PR31_ORIGINAL_V4" \
+            --outdir "$RUNNER_TEMP/pr31/trained" \
+            --environment "$RUNNER_TEMP/pr31/environment" \
+            2>&1 | tee "$RUNNER_TEMP/pr31/train.log"
+          test -s "$RUNNER_TEMP/pr31/trained/validation-selection.json"
+          test -s "$RUNNER_TEMP/pr31/trained/warmstart_v4-best.pt"
+          test -s "$RUNNER_TEMP/pr31/trained/scratch_v4-best.pt"
+          test -s "$RUNNER_TEMP/pr31/trained/warmstart_v4-best-resume.pt"
+          test -s "$RUNNER_TEMP/pr31/trained/warmstart_v4-latest-resume.pt"
+          test -s "$RUNNER_TEMP/pr31/trained/scratch_v4-best-resume.pt"
+          test -s "$RUNNER_TEMP/pr31/trained/scratch_v4-latest-resume.pt"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          p=Path(os.environ["RUNNER_TEMP"])/"pr31/trained"
+          r=json.loads((p/"resume-verified.json").read_text())
+          assert len(r)==4 and all(x["identical_one_step_update"] for x in r)
+          assert all(x["has_optimizer_state"] for x in r)
+          print("PR31_FULL_OPTIMIZER_AND_RNG_RECOVERY_TEST_PASSED")
+          PY
+      - name: Only NOW generate untouched independent event test
+        run: |
+          set -euo pipefail
+          test -s "$RUNNER_TEMP/pr31/trained/validation-selection.json"
+          timeout 240s python -m experiments.world_model_integration.posttraining.pr31_dataset \
+            --part independent_test --out "$RUNNER_TEMP/pr31/independent-test.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr31/test-data.log"
+      - name: Compare 3 frozen evaluation arms on new test and H20 factual first decisions
+        run: |
+          set -euo pipefail
+          timeout 500s python -m experiments.world_model_integration.posttraining.pr31_evaluate \
+            --independent "$RUNNER_TEMP/pr31/independent-test.json" \
+            --selection "$RUNNER_TEMP/pr31/trained/validation-selection.json" \
+            --original "$PR31_ORIGINAL_V4" \
+            --training-dir "$RUNNER_TEMP/pr31/trained" \
+            --out "$RUNNER_TEMP/pr31/independent-results.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr31/independent-evaluation.log"
+          python - <<'PY'
+          from pathlib import Path
+          import os,json
+          p=Path(os.environ["RUNNER_TEMP"])/"pr31"
+          r=json.loads((p/"independent-results.json").read_text())
+          assert r["summary"]["gpu"]==0 and r["summary"]["new_training_during_test"]==0
+          assert r["summary"]["independent_event_groups"]==16
+          assert r["summary"]["independent_decision_groups"]==16
+          assert set(r["summary"]["training_comparison"])=={"frozen_v4","warmstart_v4","scratch_v4"}
+          print("PR31_NEW_INDEPENDENT_EVALUATION_PASSED")
+          PY
+      - name: Final environment/data/weights/log audit and deterministic archive
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/pr31" &&
+            find environment trained -type f -print &&
+            printf '%s\n' original-v4.pt development.json independent-test.json \
+              independent-results.json train.log tests.log development.log \
+              test-data.log environment-capture.log independent-evaluation.log
+          ) | (cd "$RUNNER_TEMP/pr31" && sort | while IFS= read -r file; do sha256sum "$file"; done) > "$RUNNER_TEMP/pr31/SHA256SUMS"
+          (cd "$RUNNER_TEMP/pr31" && sha256sum -c SHA256SUMS)
+          tar -czf "$RUNNER_TEMP/pr31/full-training-and-environment.tar.gz" \
+            -C "$RUNNER_TEMP/pr31" environment trained original-v4.pt \
+            development.json independent-test.json independent-results.json \
+            SHA256SUMS tests.log development.log train.log independent-evaluation.log \
+            test-data.log environment-capture.log
+          sha256sum "$RUNNER_TEMP/pr31/full-training-and-environment.tar.gz" \
+            > "$RUNNER_TEMP/pr31/archive.sha256"
+      - name: Durable DRAFT release containing full environment and resumable checkpoints
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="rhwm-pr31-repro-${GITHUB_RUN_ID}"
+          gh release create "$TAG" \
+            "$RUNNER_TEMP/pr31/full-training-and-environment.tar.gz" \
+            "$RUNNER_TEMP/pr31/archive.sha256" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --draft \
+            --title "PR31 reproducible world-model training - $GITHUB_RUN_ID" \
+            --notes "Research only. Original V4 + new Train/Validation/independent Test, complete exact CPU pip environment, source SHA, best and latest Adam optimizer/RNG resumable checkpoints, logs, metrics, and SHA256SUMS. No production deployment."
+      - name: Upload immediate full research snapshot, independent results and release records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr31-resumable-v4-training-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr31/environment/
+            ${{ runner.temp }}/pr31/trained/
+            ${{ runner.temp }}/pr31/original-v4.pt
+            ${{ runner.temp }}/pr31/development.json
+            ${{ runner.temp }}/pr31/independent-test.json
+            ${{ runner.temp }}/pr31/independent-results.json
+            ${{ runner.temp }}/pr31/tests.log
+            ${{ runner.temp }}/pr31/development.log
+            ${{ runner.temp }}/pr31/train.log
+            ${{ runner.temp }}/pr31/test-data.log
+            ${{ runner.temp }}/pr31/independent-evaluation.log
+            ${{ runner.temp }}/pr31/environment-capture.log
+            ${{ runner.temp }}/pr31/SHA256SUMS
+            ${{ runner.temp }}/pr31/archive.sha256
+          retention-days: 90
+          if-no-files-found: warn

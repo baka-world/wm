@@ -170,7 +170,7 @@ def source_quality(paths,out):
         "train_24_real_independent_scenes":tr["genuine_scenarios"]==24,
         "validation_12_real_independent_scenes":val["genuine_scenarios"]==12,
         "known_public_train_val_topology_never_overlaps":tr["map_family"]!=val["map_family"] and tr["different_public_map_count"]==6 and val["different_public_map_count"]==2,
-        "all_protocol_reserved_BLIND_TEST_untouched":p["splits"]["test"]["generate_in_this_cpu_stage"] is False and not any(c["split"]=="test" for src in by_split.values() for c in src["scenes"]),
+        "all_protocol_reserved_BLIND_TEST_untouched":p["splits"]["test"]["generate_in_this_cpu_stage"] is False and not any(c["case"]["split"]=="test" for src in by_split.values() for c in src["scenes"]),
         "true_original_simulator_source_continuous_and_safe":True,
         "train_censor_fraction_below_predeclared":tr["right_censored"]/24<=gate["allow_train_censor_fraction_at_most"],
         "validation_censor_fraction_below_predeclared":val["right_censored"]/12<=gate["allow_validation_censor_fraction_at_most"],

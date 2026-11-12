@@ -1,0 +1,148 @@
+name: PR53 fresh paired public entity true-world action data
+on:
+  push:
+    branches: [research/pr53-action-contrast-consistent-dynamics-20261112]
+    paths:
+      - .github/workflows/pr53-factual-labels.yml
+      - experiments/world_model_integration/action_pr53/pr53_protocol.json
+      - experiments/world_model_integration/action_pr53/pr53_labels.py
+      - experiments/world_model_integration/action_pr53/test_pr53_labels.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  new-true-paired-world:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 85
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Original true-world simulator and frozen environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR53 true-world supervision, zero neural training")
+          PY
+      - name: Verify source action graph and immutable fresh test protocol
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.action_pr53.test_pr53_labels -v \
+            2>&1 | tee "$RUNNER_TEMP/pr53-tests.log"
+      - name: Enumerate original BusinessSimulator true outcomes for 76 NEW distinct scenarios
+        env:
+          PR53_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr53"
+          timeout 4800s python -m experiments.world_model_integration.action_pr53.pr53_labels \
+            --regime "$PR53_REGIME" --out "$RUNNER_TEMP/pr53/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr53/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ["RUNNER_TEMP"])/"pr53"
+          d=json.loads((root/"data.json").read_text())
+          assert d["schema"]=="pr53-new-blind-entity-action-paired-truth-v1"
+          assert d["regime"]==os.environ["PR53_REGIME"]
+          assert len(d["cases"])==76 and len({x["seed"] for x in d["cases"]})==76
+          assert d["summary"]["by_split"]=={"train":48,"validation":12,"test":16}
+          assert d["summary"]["new_neural_training"]==0
+          assert d["summary"]["gpu"]==0
+          assert all(x["full_entity_horizon_labels_available"] and x["all_branches_completed"]
+                     and len(x["public_graph"]["candidate_actions"])==4
+                     and len(x["true_factual_outcomes"])==4
+                     for x in d["cases"])
+          print("PR53_NEW_BLIND_DATA_VALIDATED",json.dumps(d["summary"],ensure_ascii=False))
+          PY
+          cp "$RUNNER_TEMP/pr53-tests.log" "$RUNNER_TEMP/pr53/tests.log"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr53/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr53/lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr53/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr53" && sha256sum data.json run.log tests.log source_head.txt lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Retain all original factual cases and exact source provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr53-new-true-entity-labels-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr53/
+          retention-days: 90
+          if-no-files-found: warn
+  aggregate-independent-true-data:
+    needs: new-true-paired-world
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr53-new-true-entity-labels-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr53-sources
+      - name: Independently SHA-check all 228 genuine business scenarios
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr53-aggregate"
+          python - <<'PY'
+          import os,json,subprocess,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr53-sources"
+          inputs=sorted(root.glob("*/data.json"))
+          assert len(inputs)==3
+          cases=[]
+          provenance=set()
+          digests={}
+          heads=set()
+          for path in inputs:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              x=json.loads(path.read_text())
+              assert x["schema"]=="pr53-new-blind-entity-action-paired-truth-v1"
+              assert x["regime"] not in digests and len(x["cases"])==76
+              digests[x["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              heads.add((path.parent/"source_head.txt").read_text().strip())
+              provenance.add(x["protocol_sha256"])
+              cases+=x["cases"]
+          assert len(heads)==len(provenance)==1
+          assert len(cases)==228 and len({v["seed"] for v in cases})==228
+          result={"schema":"pr53-independent-new-truth-data-summary-v1",
+                  "source_artifact_sha256":digests,"source_head":next(iter(heads)),
+                  "protocol_sha256":next(iter(provenance)),
+                  "scenarios":228,
+                  "factual_branches":sum(v.get("candidate_count",0) for v in cases),
+                  "all_horizons_labeled":sum(v.get("full_entity_horizon_labels_available",False) for v in cases),
+                  "nontrivial_action_regret":sum(v.get("nontrivial_rank_signal",False) for v in cases),
+                  "by_split":{s:{"groups":sum(v["split"]==s for v in cases),
+                                   "nontrivial":sum(v["split"]==s and v.get("nontrivial_rank_signal",False)
+                                                   for v in cases)}
+                              for s in ("train","validation","test")},
+                  "zero_training":True}
+          dst=Path(os.environ["RUNNER_TEMP"])/"pr53-aggregate"
+          (dst/"summary.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
+          print("PR53_TRUE_INDEPENDENT_COHORT",json.dumps(result,ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr53-aggregate/source_head.txt"
+          (cd "$RUNNER_TEMP/pr53-aggregate" && sha256sum summary.json source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr53-new-true-world-full-summary-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr53-aggregate/
+          retention-days: 90

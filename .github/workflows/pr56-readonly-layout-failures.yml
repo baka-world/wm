@@ -1,0 +1,71 @@
+name: PR56 readonly original-12-layout failure mechanism audit
+on:
+  push:
+    branches: [research/pr56-public-topology-quality-pilot-20261112]
+    paths:
+      - .github/workflows/pr56-readonly-layout-failures.yml
+      - experiments/world_model_integration/topology_pr56/pr56_readonly_stall.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  immutable-real-map-readonly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43218672573
+          github-token: ${{ github.token }}
+          pattern: pr56-real-topology-public-world-43218672573-*
+          path: ${{ runner.temp }}/pr56-authentic
+      - name: Require ALL original real source sha256 and archived original source commit
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os,subprocess,json
+          from pathlib import Path
+          src=Path(os.environ["RUNNER_TEMP"])/"pr56-authentic"
+          paths=sorted(src.glob("*/data.json"))
+          assert len(paths)==3
+          known="916552fdbf6908e94161d120a1efdd3092fb603d"
+          found=set()
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              assert (path.parent/"source_head.txt").read_text().strip()==known
+              x=json.loads(path.read_text())
+              assert len(x["scenes"])==4
+              found.add(x["regime"])
+          assert found=={"congestion","multi_fault","staggered_arrivals"}
+          print("PR56_READONLY_ORIGINAL_FAILING_12_SOURCE_VERIFIED",known)
+          PY
+      - name: Diagnose factual censoring/stagnation and static route articulation WITHOUT resimulation
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr56-stall"
+          python -m experiments.world_model_integration.topology_pr56.pr56_readonly_stall \
+            --source "$RUNNER_TEMP/pr56-authentic" \
+            --out "$RUNNER_TEMP/pr56-stall/diagnosis.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr56-stall/log.txt"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          q=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr56-stall/diagnosis.json").read_text())
+          assert q["original_real_development_scenes"]==12
+          assert q["real_original_completed"]+q["real_original_censored"]==12
+          assert q["GPU"]==q["source_new_simulations"]==q["neural_training"]==0
+          assert len(q["by_static_layout"])==4
+          print("PR56_REAL_SOURCE_CENSOR_SEMANTICS_VERIFIED",q["real_original_censored"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr56-stall/audit_head.txt"
+          (cd "$RUNNER_TEMP/pr56-stall" && sha256sum diagnosis.json log.txt audit_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr56-readonly-12-map-failure-diagnosis-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr56-stall/
+          retention-days: 90

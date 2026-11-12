@@ -96,7 +96,7 @@ jobs:
           set -euo pipefail
           python -m unittest experiments.world_model_integration.entity_pr52.test_pr52_readonly_ci -v \
             2>&1 | tee "$RUNNER_TEMP/pr52audit/report/tests.log"
-      - name: 0 training, 0 true-world simulation: original 8 frozen models on same 48 tests
+      - name: "0 training, 0 true-world simulation: original 8 frozen models on same 48 tests"
         run: |
           set -euo pipefail
           python -m experiments.world_model_integration.entity_pr52.pr52_readonly_ci \

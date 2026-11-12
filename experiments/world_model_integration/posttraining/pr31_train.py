@@ -223,9 +223,12 @@ def _one_step_resumed(checkpoint,train):
     digests=[]
     for _ in range(2):
         model=BusinessSessionEventModel(query_width=QUERY_WIDTH_V3)
-        model.load_state_dict(state["model_state"])
+        model.load_state_dict(copy.deepcopy(state["model_state"]))
         opt=torch.optim.Adam(model.parameters(),lr=state["training_config"]["lr"])
-        opt.load_state_dict(state["optimizer_state"])
+        # Adam.load_state_dict may retain storage references in its moment
+        # tensors and mutate them in-place on step(). Each independent replay
+        # must start from an unmodified deep copy of the archived tensors.
+        opt.load_state_dict(copy.deepcopy(state["optimizer_state"]))
         restore_rng(state["rng"])
         model.train()
         opt.zero_grad(set_to_none=True)

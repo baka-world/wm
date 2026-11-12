@@ -2,6 +2,14 @@
 
 你是一名熟悉 PyTorch Geometric、世界模型、事件驱动调度和真实可复现实验的研究工程师。请在 `https://github.com/lieuyimo/wm` 工作，优先执行代码与实验，禁止仅交付技术方案。
 
+## GPU阶段触发依据与不可更改事实（更新于2026-11-12）
+
+- **CPU阶段已通过**：真实公开状态3360条、60个场景；[Actions #43191970049](https://github.com/lieuyimo/wm/actions/runs/43191970049)。训练和独立测试[Actions #43192730343](https://github.com/lieuyimo/wm/actions/runs/43192730343) **SUCCESS**；权重/Adam/RNG归档 [#13930509625](https://github.com/lieuyimo/wm/actions/runs/43192730343/artifacts/13930509625)。GitHub现有托管CI只有CPU。
+- 原始可验证source artifact ID：`13930164510`(congestion)、`13931312132`(multi_fault)、`13931307297`(staggered_arrivals)，均来自Actions `43191970049`、source HEAD `60c951ac1affc60136f4c758a76767137a518e63`。
+- 新独立12场景，快照only/4步历史GRU同参训练两seed，历史版本node MSE约**0.0102862**、快照版本约**0.0121319**，改进**15.2%**，但历史设备可用Brier **0.0098502** 比快照的 **0.0093300** 略差。
+- **必须把设备Brier退步列为明确工作项目**。新GPU方案须先给出设备恢复风险概率独立校准目标、按设备类型/历史down时长的状态分组；不得仅用整体node MSE改善宣布完整世界模型已得到改进。
+- 当前历史训练TEST已公开。GPU阶段改动模型结构或超参数后，必须生成完全新的独立TEST并先固定验证集模型选择，不得把原12个TEST作为新的盲测。
+
 ## 执行前提和版本安全
 
 1. 从 **`research/pr54-temporal-relational-transition-20261112`** 开始，读取最新HEAD，不可假设某个历史 SHA 仍然最新；审查本分支的 `docs/gpu-handoff-pr54.md` 和 `experiments/world_model_integration/temporal_pr54/protocol.json`。

@@ -1,0 +1,636 @@
+{
+  "schema": "RHWM_PR29_FROZEN_HORIZON_SCENE_GENERALIZATION_20261112_V1",
+  "intent": "Test frozen V4's time-varying forecasting accuracy and first-action decision regret across existing business-scene regimes; NOT train or tune a model",
+  "methodology": [
+    {
+      "reference": "Reijnen et al. 2026 dynamic FJSP benchmark",
+      "url": "https://github.com/ai-for-decision-making-tue/Job_Shop_Scheduling_Benchmark_Environments_and_Instances",
+      "reuse": "controlled workload and resource capacity stratification; no external environments copied"
+    },
+    {
+      "reference": "Flores-Gómez & Dauzère-Pérès 2026 stochastic service-time service levels",
+      "url": "https://doi.org/10.1007/s10479-026-07197-8",
+      "reuse": "service-time jitter and fixed deadline scenario variation"
+    },
+    {
+      "reference": "PETS Chua et al. 2018",
+      "url": "https://github.com/facebookresearch/mbrl-lib",
+      "reuse": "bounded 3-particle model rollout, no CEM or RL training"
+    },
+    {
+      "reference": "Decision-Focused Learning Wilder et al. 2019",
+      "url": "https://arxiv.org/abs/1809.05504",
+      "reuse": "report downstream candidate-set regret as distinct from state prediction accuracy, no surrogate loss implementation"
+    }
+  ],
+  "source_model": {
+    "kind": "v4",
+    "checkpoint_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "train_or_tune": false
+  },
+  "baselines": [
+    "rule",
+    "v4"
+  ],
+  "scene_groups": [
+    {
+      "id": "LIGHT_01",
+      "regime": "light",
+      "seed": 930011,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_02",
+      "regime": "light",
+      "seed": 930329,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_03",
+      "regime": "light",
+      "seed": 930649,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_04",
+      "regime": "light",
+      "seed": 930971,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_05",
+      "regime": "light",
+      "seed": 931295,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_06",
+      "regime": "light",
+      "seed": 931621,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_07",
+      "regime": "light",
+      "seed": 931949,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "LIGHT_08",
+      "regime": "light",
+      "seed": 932279,
+      "robot_count": 2,
+      "job_count": 2,
+      "capacity": 2,
+      "service_add": 0,
+      "jitter": 1,
+      "release_ticks": [
+        0,
+        0
+      ],
+      "deadline_slack": 60
+    },
+    {
+      "id": "MEDIUM_01",
+      "regime": "medium",
+      "seed": 940011,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_02",
+      "regime": "medium",
+      "seed": 940329,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_03",
+      "regime": "medium",
+      "seed": 940649,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_04",
+      "regime": "medium",
+      "seed": 940971,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_05",
+      "regime": "medium",
+      "seed": 941295,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_06",
+      "regime": "medium",
+      "seed": 941621,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_07",
+      "regime": "medium",
+      "seed": 941949,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "MEDIUM_08",
+      "regime": "medium",
+      "seed": 942279,
+      "robot_count": 2,
+      "job_count": 3,
+      "capacity": 2,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 55
+    },
+    {
+      "id": "HEAVY_NEW_SEED_01",
+      "regime": "heavy_new_seed",
+      "seed": 950011,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_02",
+      "regime": "heavy_new_seed",
+      "seed": 950329,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_03",
+      "regime": "heavy_new_seed",
+      "seed": 950649,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_04",
+      "regime": "heavy_new_seed",
+      "seed": 950971,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_05",
+      "regime": "heavy_new_seed",
+      "seed": 951295,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_06",
+      "regime": "heavy_new_seed",
+      "seed": 951621,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_07",
+      "regime": "heavy_new_seed",
+      "seed": 951949,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_NEW_SEED_08",
+      "regime": "heavy_new_seed",
+      "seed": 952279,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_01",
+      "regime": "heavy_service_shift",
+      "seed": 960011,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_02",
+      "regime": "heavy_service_shift",
+      "seed": 960329,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_03",
+      "regime": "heavy_service_shift",
+      "seed": 960649,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_04",
+      "regime": "heavy_service_shift",
+      "seed": 960971,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_05",
+      "regime": "heavy_service_shift",
+      "seed": 961295,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_06",
+      "regime": "heavy_service_shift",
+      "seed": 961621,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_07",
+      "regime": "heavy_service_shift",
+      "seed": 961949,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "HEAVY_SERVICE_SHIFT_08",
+      "regime": "heavy_service_shift",
+      "seed": 962279,
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 3,
+      "jitter": 4,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    }
+  ],
+  "independent_group_unit": "scenario_seed",
+  "max_ticks": 240,
+  "scene_parameters_are_simulated_not_real_lab_measurements": true,
+  "first_action_pair": {
+    "candidate_source": "Existing BusinessCPSAT.proposals at t=0 (up to first two DISTINCT legal plans)",
+    "selection": "first or second legal proposal; rest of each true run uses native BusinessCPSAT first proposal",
+    "solver": {
+      "limit": 4,
+      "wall_seconds": 0.08,
+      "deterministic_seconds": 0.04,
+      "seed": 1810
+    },
+    "common_randomness": "Existing keyed service duration by scene_seed/task/phase/station; no stochastic data mechanism changed",
+    "oracle_scope": "only the first two proposals, same continuation algorithm, no counterfactual truth used by predictor",
+    "on_censoring": "report censored scenes, never treat 240 tick timeout as true completion time"
+  },
+  "prediction": {
+    "horizons": [
+      5,
+      10,
+      20
+    ],
+    "particles": 3,
+    "anchor_tick": 0,
+    "continuation": "Existing BusinessCPSAT first proposal computed on each particle's public predicted state",
+    "sampling_seed_formula": "1810+observed_tick*101+sample_count*271 (same between candidate policies, independent of horizons)",
+    "ranking": "Higher forecast expected_completed_samples at h; on tie choose CP-SAT first candidate; do not tune weight",
+    "time_budget_seconds_per_pair": 0.5,
+    "coverage": "At h, state error measured only if factual public observation exists at exact h; no invented terminal state padding",
+    "scoring": [
+      "full-state sample_status_error",
+      "robot_task_error",
+      "robot_phase_error",
+      "robot_position_l1",
+      "station_busy_brier",
+      "resource_occupancy_mae",
+      "waiting_count_mae",
+      "completed_count_mae",
+      "in_transit_count_mae"
+    ],
+    "decision_metrics": [
+      "candidate_set_makespan_regret_ticks",
+      "candidate_set_late_job_regret",
+      "pairwise_sign_accuracy_non_tie",
+      "candidate_flip_count",
+      "prediction_cpu_time_per_pair",
+      "coverage_and_censoring"
+    ]
+  },
+  "comparison": "Compare Rule and frozen V4 at SAME horizon and same scene; H20 vs H5 differences in ACTION DISTINCTION rather than claiming more accurate prediction from a longer horizon",
+  "frozen_go_gate": "Only if independent high-load/shift groups show nonzero true action utility differences, candidate-ranked V4 has better/equal regret than CP-SAT with reasonable CPU cost; otherwise no model promotion",
+  "resource_budget": {
+    "gpu": 0,
+    "new_training": 0,
+    "max_total_cpu_seconds": 480
+  },
+  "prohibited": [
+    "change scene seeds or jitter/queue after seeing test results",
+    "tune model weights, loss or score using heldout",
+    "use future releases that have not been observed by forecast",
+    "treat forecasting particles as independent scenes",
+    "mislabel offline initial-action choice as fully online re-planning policy"
+  ]
+}

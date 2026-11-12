@@ -59,6 +59,12 @@ def validate(cfg):
             raise ValueError("quality profiles underrepresented")
         if sum(x["mechanism"]=="within_support" for x in group)!=3:
             raise ValueError("outage support balance changed")
+        if regime=="multi_fault" and any(
+            x["station_id"]==x["secondary_station_id"] for x in group):
+            raise ValueError("multi-fault primary and secondary must be distinct")
+        if regime!="multi_fault" and any(
+            x["secondary_station_id"] is not None for x in group):
+            raise ValueError("unexpected secondary outage in single-fault regime")
     if cfg["resource_budget"]["gpu"] or cfg["resource_budget"]["neural_training"]:
         raise ValueError("no GPU or model fitting authorized")
     if cfg["max_ticks"]!=260:

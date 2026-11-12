@@ -6,6 +6,31 @@
 
 工作分支：`research/pr54-temporal-relational-transition-20261112`。**保持 Draft；不合并任何历史 PR，不修改 PR19 工程演示、不覆盖 V4 或既有训练检查点。**
 
+## 实际 CPU 结构门禁已通过（2026-11-12）
+
+**GPU任务现在可以进入G0/G1资源与数据准备，但正式大规模训练仍须在新Draft PR冻结200+场景协议并处理设备校准回退。** 当前可访问Github Actions没有GPU。
+
+- [真实逐步数据 Actions #43191970049](https://github.com/lieuyimo/wm/actions/runs/43191970049)：60个新独立BusinessSimulator场景、3360个真实t-3..t到t+1可观察状态样本，原样例来源commit `60c951ac1affc60136f4c758a76767137a518e63`，三种源Artifact为拥堵 **13930164510**、双设备故障 **13931312132**、分批到达 **13931307297**。
+- [CPU时序动态模型训练/独立测试 Actions #43192730343](https://github.com/lieuyimo/wm/actions/runs/43192730343)：4份best、4份last、完整Adam/torch RNG、源数据SHA、测试数据与选择文件均成功归档 [Artifact #13930509625](https://github.com/lieuyimo/wm/actions/runs/43192730343/artifacts/13930509625)。
+- **预注册验证集选中4步公开历史R-GCN模型**。新独立TEST为12场景（4拥堵/4双故障/4分批到达），672条one-step公共转移；节点masked MSE两seed均值：snapshot **0.01213195**，history **0.01028620**（相对减少约**15.2%**），persistence **0.04099843**。设备Brier均值snapshot **0.00933001**、history **0.00985017**（历史版本**反而略差**，必须作为下一阶段显式校准约束）。
+- 上述指标都是**teacher-forced真实已执行动作的下一步状态预测**，既不是递归H20收益、也不能推出在线调度完成时间提升。测试组仅12个独立场景，不用本组调hidden/lambda。
+
+数据恢复（需真正拥有权限和 `gh` CLI）：
+
+```bash
+gh run download 43191970049 \
+  --repo lieuyimo/wm \
+  --pattern 'pr54-public-true-transitions-43191970049-*' \
+  --dir /tmp/pr54-original-sources
+
+# 每个子目录都有 data.json/source_head.txt/SHA256SUMS。
+for directory in /tmp/pr54-original-sources/*; do
+  (cd "$directory" && sha256sum -c SHA256SUMS)
+done
+```
+
+**后续GPU训练不应直接以这12个已经公开的TEST调参。** 在真正开始较大规模训练前新建协议和完全新的盲测种子；原来的60场景可作为方法开发/回归对照。
+
 ## 现阶段已经交付的代码
 
 - `experiments/world_model_integration/temporal_pr54/protocol.json`：60个新独立真实BusinessSimulator回合，train36/validation12/test12，三种压力负载，历史窗口4，one-step真实状态转移，已有测试完全不复用。

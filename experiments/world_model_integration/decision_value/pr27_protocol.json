@@ -1,0 +1,53 @@
+{
+  "protocol": "RHWM_PR27_PAIRED_POLICY_EVALUATION_V1",
+  "base_scene_protocol": "experiments/world_model_integration/transport_events/transport_protocol.json",
+  "independent_groups": "future_decision_groups (12 unseen scene seeds precommitted in PR24)",
+  "arms": [
+    "cpsat",
+    "v4",
+    "v4_plus_risk"
+  ],
+  "worldmodel_mode": "shadow",
+  "checkpoints": {
+    "v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+    "bayes_reference": "PR25 artifact #13905800894 pgmpy-model.json"
+  },
+  "scenario_max_ticks": 240,
+  "synthetic_job_deadline": "job release + 45 + 5 * sorted job index; all stages of same job share public deadline",
+  "candidate_limit": 4,
+  "solver_time_limit_seconds": 0.08,
+  "solver_deterministic_time_limit": 0.04,
+  "per_decision_cpu_limit_seconds": 0.5,
+  "horizon_ticks": 5,
+  "particles": 3,
+  "sampling_seed": 1810,
+  "continuation_policy": "nearest_batch_public_state",
+  "ranking": "Existing decision_value.trace_score unfinished/late tick penalties plus terminal_distance; risk arm adds unadjusted expected positive-delay tick cost as per Tang&Wang probabilistic-risk scheduling, no tuned coefficient",
+  "metrics": [
+    "completed_count",
+    "ticks",
+    "mean_completion_ticks",
+    "late_count",
+    "resource_wait_ticks",
+    "blocked_move_attempts",
+    "policy_cpu_seconds",
+    "model_steps",
+    "candidate_decisions",
+    "changes_vs_cp_sat_first_proposal",
+    "solver_fallbacks",
+    "safety_violations"
+  ],
+  "fairness": "Same CP-SAT candidate list/solver bounds; shared keyed service noise; no oracle future. Total compute overhead reported, not falsely equated.",
+  "success_rule": "Report exact paired results; no promotion based on one favorable endpoint; if 0 policy flips report no value demonstrated",
+  "resource_budget": {
+    "GPU": 0,
+    "training": 0,
+    "whole_cpu_seconds": 360
+  },
+  "explicit_limits": [
+    "synthetic scenario, no actual enterprise logs",
+    "service_time uncertainty only; no future outages or arrivals",
+    "transport risk probability is not calibrated full delay duration",
+    "world-model scoring uses an approximate 5 tick horizon, not full optimal planning"
+  ]
+}

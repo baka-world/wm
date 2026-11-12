@@ -1,4 +1,5 @@
 name: PR31 V4 reproducible warmstart and scratch CPU training
+# Each resume verification reloads an independent deep-copy of saved Adam moments.
 on:
   push:
     branches: [research/pr31-v4-reproducible-posttraining-20261112]

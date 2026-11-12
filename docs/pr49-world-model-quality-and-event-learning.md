@@ -46,3 +46,19 @@ PR49 的第一阶段采用**48个此前未见过的业务压力新种子**，原
 `python -m experiments.world_model_integration.unconstrained_pr49.pr49_online --checkpoint /path/to/sha-verified-v4-data.pt --pr44-result /path/to/sha-verified-pr44-train-only.json --regime congestion --out /tmp/pr49-congestion.json`
 
 GitHub Actions `.github/workflows/pr49-high-compute-world-quality.yml` 并行执行三种环境，每个环境归档逐场景公开决策历史、模型、真实业务轨迹hash、依赖和原始结果；聚合节点仅在完整3×16新场景全部成功后分析。全程保持PR49 Draft、不给原业务生产流程打补丁。
+
+
+## GPU 目标架构迁移审计（仅设计，尚未实际GPU执行）
+
+源代码检查表明原 `train_v4.load_v4` 使用 `torch.load(..., map_location="cpu")` 并返回CPU网络；`business_transport/session_dynamics.py::SessionRuleDynamics.predict_next` 把 `encode_rows` 生成的CPU张量直接送入网络，再从torch输出 `.tolist()`。因此**原有V4不是GPU自动可用的部署路径**。不能将GitHub hosted CPU实验伪称为GPU推理实测。
+
+后续GPU版本（新的研究性选择，不修改冻结对照模型）需要采用：
+1. 保留原模型检查点的 SHA256 与权重结构，显式 `device=torch.device("cuda")`，CPU读取检查点后 `model.to(device).eval()`，输入tokens/masks/queries全部送往同一个GPU，并在需要Python事件抽样时从预测张量显式 `detach().cpu()`。
+2. CPU与GPU在相同公开观测及合法动作、相同检查点上的**事件概率**数值等价，采用可解释的浮点容差；粒子样本由于临界概率差异不能擅自宣称逐轨迹完全相同。随机种子和独立粒子流需保存。
+3. 原业务规则、容量、CP-SAT及合法状态转换继续作为可验证的结构化转移模块运行，学习型事件模型 GPU化；不要把迁移解释为在GPU上所有Python控制逻辑自动加速。
+4. 在实际GPU执行环境绑定后，独立完成设备检测、显存与batch验证、CPU/GPU概率对齐、H20粒子回放、真实墙钟P50/P95和完整训练检查点恢复试验。**目前GitHub workflow和当前可访问的运行容器没有确认可用GPU，故此项仍为待执行工程检查而非已完成结果。**
+5. 推理性能不作为下一轮世界模型有效性的选择标准；GPU运行时延仅用于系统部署验收，不能以CPU机型表现作为毕业设计的核心算法结论。
+
+## 数据可识别性优先于盲目增加模型大小
+
+PR48的 `staggered_arrivals` 合成机制按确定的发布tick 0/6/12/18生成任务，而原 V4/H20 不知道真实未来发布表。若在同一固定机制上训练事件到达网络，会很容易“背诵固定节拍”，并不证明对未知实验室任务到达的泛化。因此训练数据应当覆盖**多种合成到达机制**（定期、泊松、历史相关突发、负载相关），分离机制/seed/时间段的train、validation和完全独立test，先用可解释历史平均到达率与统计hazard验证信息增量，再使用Neural Hawkes等已有方法迁移。事件预测目标是给未来20tick可验证的概率分布，而不是把未来任务ID、真实发布tick、下游完成时刻伪造成公开输入。需要任务ID与业务属性的世界状态接入时，必须设计**外生到达第二状态转移合同**，完全独立于普通合法业务状态转移checker。

@@ -294,5 +294,6 @@
     "if no pair has distinct outcome, close information-value gate as no measured opportunity",
     "if outcomes differ, test whether model prospectively distinguishes their ordering; no model retraining in this PR",
     "no new random fault process is justified by this experiment"
-  ]
+  ],
+  "max_ticks": 240
 }

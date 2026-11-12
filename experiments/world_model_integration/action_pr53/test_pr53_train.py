@@ -44,6 +44,20 @@ class PR53ActionContrastTests(unittest.TestCase):
         self.assertTrue(gradient_path_present(model.node_transition.parameters()))
         self.assertTrue(gradient_path_present(model.new_event_transition.parameters()))
 
+    def test_value_only_sensitivity_gradient_updates_shared_world_model(self):
+        # Verify the value-inspired penalty IN ISOLATION, independently from
+        # the action-delta loss that is present in the combined objective.
+        from experiments.world_model_integration.entity_pr52.pr52_train import fixed_completion_sensitivity_loss
+        group,_=_prepare_one(example(),True)
+        torch.manual_seed(1812)
+        model=ConsistentEntityWorld(48,True)
+        nodes,events=model(group["batch"])
+        value_only=fixed_completion_sensitivity_loss(nodes,events,group)
+        model.zero_grad(set_to_none=True)
+        value_only.backward()
+        self.assertTrue(gradient_path_present(model.transition1.parameters()))
+        self.assertTrue(gradient_path_present(model.new_event_transition.parameters()))
+
     def test_no_contrast_from_different_public_node_graphs(self):
         g,_=_prepare_one(example(),True)
         torch.manual_seed(1810)

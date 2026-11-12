@@ -70,3 +70,27 @@
 ## 当前结果与研究边界
 
 当前PR54的训练质量结论依赖独立CPU模型工作流；尚不允许从本阶段的one-step测试推论“在线样本转运效率已提高”。最终研究目的仍是**高保真、合法、可递归、动作条件化的世界模型**优先，其次才是决策感知loss及真实在线CP-SAT候选重排收益。原V4、原CP-SAT正式系统和历史PR保持冻结，PR54 Draft不合并。
+
+## 实际完成的模型训练与新TEST结果（2026-11-12）
+
+[官方 PyG + BusinessSimulator 实际训练 Actions #43192730343](https://github.com/lieuyimo/wm/actions/runs/43192730343) **SUCCESS**，36独立train、12验证、12独立TEST，模型seed1810/1811，两个完全同参48维RGCN+GRU模型，16 epochs，预注册validation选中`public_history_gru`。训练4份best与4份last均保存、包括Adam状态、torch RNG、环境锁和源SHA；[原始权重与结果Artifact #13930509625](https://github.com/lieuyimo/wm/actions/runs/43192730343/artifacts/13930509625)。所有TEST均在VALIDATION选择文件写出后才读取。
+
+| 模型 | 新12个独立TEST场景，2 seed宏平均逐实体masked MSE ↓ | 设备Brier ↓ | 来源 |
+|---|---:|---:|---|
+| 公开状态不变的persistence | 0.04099843 | 需要报告每个设备字段 | 真实当前→下一tick |
+| 同参snapshot-only RGCN | 0.01213195 | **0.00933001** | 只看当前公开状态 |
+| **同参history-GRU RGCN** | **0.01028620** | 0.00985017 | 历史t−3..t |
+
+绝对MSE改善−0.00184575，约**相对降低15.2%**；两训练seed的状态MSE均明显低于snapshot。**但设备Brier反而增加+0.00052016（约5.6%相对劣化）**，不能宣称所有未来状态更可信。
+
+[全部原始12场景配对只读统计 Actions #43193769866](https://github.com/lieuyimo/wm/actions/runs/43193769866) **SUCCESS**，[逐场景记录 Artifact #13932082660](https://github.com/lieuyimo/wm/actions/runs/43193769866/artifacts/13932082660)：0新增训练、0新事实轨迹，固定2模型seed在每个场景内部平均，再按拥堵/多故障/分批到达各4个场景分层bootstrap 5000次，12个真实独立场景才是统计单位。
+
+- **实体状态**：12/12场景history更好；差值(history−snapshot) −0.00184575，95%场景Bootstrap条件区间 **[−0.00204430,−0.00165377]**。
+- **站点可用性**：仅3/12场景history更好，9/12更差；Brier差值 +0.00052016，区间 **[+0.00015335,+0.00093816]**，明确存在校准退步。
+- 这个区间仅条件于当前同地图合成三类负载与已固定的两个神经模型初始化；**不是训练seed变化和不同地图、不同厂商设备的泛化保证**。
+
+### 当前阶段判断与GPU任务触发
+
+**时序历史有价值：PASS。设备可用性概率校准：尚需改进。多步递归世界模型与真实在线调度收益：未验证。** 初步数据证明应当优先研究可观测历史而不是无限堆参数。进入下一阶段所需的是新独立数据、设备状态/历史down时长信息建模、可递归的t+1合法状态世界转移和真实GPU规模控制变量试验，**不是重调这12组公开TEST的学习率**。
+
+下一GPU任务已经创建为 [GitHub Issue #54：完整GPU清单及资源验收](https://github.com/lieuyimo/wm/issues/54)。与源代码同步的[可直接下发执行Agent的Prompt](pr54-gpu-agent-prompt.md)、[GPU完整资源和阶段门禁](gpu-handoff-pr54.md) 均已提交仓库。**当前CPU动作与结果真实，尚无GPU训练或完整H20在线闭环结果。**

@@ -91,7 +91,7 @@ jobs:
           },ensure_ascii=False,indent=2)+"\n")
           print("PR53_FROZEN_NEW_48_BLIND_TEST_SEALED",len(cohort))
           PY
-      - name: Unit tests: scenario is inference unit not training seeds or 4 proposals
+      - name: "Unit tests: scenario is inference unit not training seeds or 4 proposals"
         run: |
           set -euo pipefail
           python -m unittest experiments.world_model_integration.action_pr53.test_pr53_readonly -v \

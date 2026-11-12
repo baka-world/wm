@@ -1,0 +1,182 @@
+name: PR60 controlled marginal true-world train data and GPU handoff CPU admission
+on:
+  push:
+    branches: [research/pr60-marginal-high-information-cpu-data-gpu-handoff-20261112]
+    paths:
+      - .github/workflows/pr60-actual-incremental-source.yml
+      - experiments/world_model_integration/expand_pr60/protocol.json
+      - experiments/world_model_integration/expand_pr60/pr60_source.py
+      - experiments/world_model_integration/expand_pr60/pr60_gate.py
+      - experiments/world_model_integration/expand_pr60/test_pr60.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  additional-natural-real-world-TRAIN:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Strict original CPU simulator and public PyG world contract
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          print("PR60_TRUE_WORLD_SOURCE_NO_GPU_NO_NEURAL_TRAINING")
+          PY
+      - name: Verify 36 new genuine source designs and unchanged PR59 train/VAL/TEST seal
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr60"
+          python -m compileall -q experiments/world_model_integration/expand_pr60
+          python -m compileall -q experiments/world_model_integration/sealed_pr59/pr59_gpu_train.py
+          python -m unittest experiments.world_model_integration.expand_pr60.test_pr60 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr60/tests.log"
+          python -m experiments.world_model_integration.sealed_pr59.pr59_gpu_train --help \
+            > "$RUNNER_TEMP/pr60/gpu-entrypoint-help.txt"
+      - name: Collect registered real 12 CPU BusinessSimulator training episodes in current regime
+        env:
+          PR60_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2400s python -m experiments.world_model_integration.expand_pr60.pr60_source \
+            --regime "$PR60_REGIME" --out "$RUNNER_TEMP/pr60/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr60/real-source.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr60/data.json").read_text())
+          assert x["schema"]=="pr60-additional-real-public-map-train-source-v1"
+          assert x["split"]=="train"
+          assert len(x["scenes"])==12 and x["regime"]==os.environ["PR60_REGIME"]
+          assert x["BLIND_TEST_RUN"] is False
+          assert x["summary"]["gpu"]==x["summary"]["neural_training"]==0
+          assert x["summary"]["full_real_public_t_to_next_state_transitions"]==sum(
+              len(e["raw_actual_public_world_transitions"]) for e in x["scenes"])
+          for scene in x["scenes"]:
+              assert scene["case"]["split"]=="train"
+              assert scene["raw_actual_public_world_transitions"][-1]["target"]["next_public_tick"]==scene["real_factual_ticks"]
+          print("PR60_TRUE_ORIGINAL_BUSINESS_TRAIN_SOURCE_COMPLETE",x["summary"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr60/source_head.txt"
+          python -m pip freeze > "$RUNNER_TEMP/pr60/pip-freeze.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr60/dependencies.sha256"
+          (cd "$RUNNER_TEMP/pr60" && sha256sum data.json real-source.log tests.log gpu-entrypoint-help.txt source_head.txt pip-freeze.txt dependencies.sha256 > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr60-true-new-training-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr60/
+          retention-days: 90
+          if-no-files-found: warn
+  original-plus-new-60-train-marginal-quality:
+    needs: additional-natural-real-world-TRAIN
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Original CPU map and BusinessSimulator verifier runtime
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43234653164
+          github-token: ${{ github.token }}
+          pattern: pr59-real-public-world-43234653164-*
+          path: ${{ runner.temp }}/pr60-immutable-original-PR59
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43235876892
+          github-token: ${{ github.token }}
+          name: pr59-original-natural-train-val-readonly-quality-43235876892
+          path: ${{ runner.temp }}/pr60-original-pr59-qa
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr60-true-new-training-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr60-new-original
+      - name: Validate all ORIGINAL SHA, frozen PR59 QA and unopened OOD blind test
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr60-audit"
+          python - <<'PY'
+          import os,json,subprocess,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])
+          old_head="48acd54b19805c4582bd616bb93fc81c7c92b10d"
+          current_head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          groups=set()
+          for d,known_expected,n in [
+              (root/"pr60-immutable-original-PR59",old_head,2),
+              (root/"pr60-new-original",current_head,3)]:
+              files=sorted(d.glob("*/data.json"))
+              assert len(files)==n, f"Missing immutable files {d}"
+              for f in files:
+                  subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=f.parent,check=True)
+                  assert (f.parent/"source_head.txt").read_text().strip()==known_expected
+                  x=json.loads(f.read_text())
+                  if n==2:assert x["split"] in ("train","validation")
+                  else:
+                      assert x["split"]=="train" and x["regime"] not in groups
+                      groups.add(x["regime"])
+                  assert x["BLIND_TEST_RUN"] is False
+          assert groups=={"congestion","multi_fault","staggered_arrivals"}
+          qa=root/"pr60-original-pr59-qa"
+          subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=qa,check=True)
+          prior=json.loads((qa/"quality.json").read_text())
+          assert prior["scientific_verdict"]=="PASS_QUALITY_TO_HANDOFF_GRAPH_TRAINING"
+          assert prior["BLIND_TEST_source_read"] is False
+          print("PR60_ALL_ORIGINAL_SHA_SOURCE_AND_UNOPENED_TEST_VERIFIED",current_head)
+          PY
+      - name: Actual extra-TRAIN semantic novelty, quantitative H20 and right-censored truth admission
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.expand_pr60.pr60_gate \
+            --original "$RUNNER_TEMP/pr60-immutable-original-PR59" \
+            --old-quality "$RUNNER_TEMP/pr60-original-pr59-qa/quality.json" \
+            --new "$RUNNER_TEMP/pr60-new-original" \
+            --out "$RUNNER_TEMP/pr60-audit/quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr60-audit/quality.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr60-audit/quality.json").read_text())
+          assert x["schema"]=="pr60-frozen-60train-12val-untouched-blind-map-data-admission-v1"
+          assert x["verified_training_scenarios"]==60
+          assert x["verified_validation_scenarios"]==12
+          assert x["BLIND_TEST_source_scenes_generated"]==x["BLIND_TEST_source_files_read"]==0
+          assert x["GPU_hours"]==0 and x["gpu_training_completed"] is False
+          print("PR60_TRUE_MARGINAL_DATA_RESULT",x["decision"],x["failures"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr60-audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr60-audit" && sha256sum quality.json quality.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr60-real-60train-12val-marginal-quality-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr60-audit/
+          retention-days: 90
+          if-no-files-found: warn

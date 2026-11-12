@@ -256,7 +256,7 @@
         ]
       }
     },
-    "support_selector": "SHA256(seed, mechanism, station) in TRUE simulator builder only",
+    "support_selector": "SHA256(seed, mechanism, station) only inside simulator scenario builder",
     "job_count": 10,
     "capacity": 1,
     "max_ticks": 170,

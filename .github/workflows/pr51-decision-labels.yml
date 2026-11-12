@@ -3,8 +3,11 @@ on:
   push:
     branches: [research/pr51-decision-aware-relational-labels-20261112]
     paths:
-      - .github/workflows/pr51-decision-labels.yml
-      - experiments/world_model_integration/decision_learning_pr51/**
+      - experiments/world_model_integration/decision_learning_pr51/pr51_protocol.json
+      - experiments/world_model_integration/decision_learning_pr51/pr51_contract.py
+      - experiments/world_model_integration/decision_learning_pr51/pr51_labels.py
+      - experiments/world_model_integration/decision_learning_pr51/pr51_loss.py
+      - experiments/world_model_integration/decision_learning_pr51/test_pr51.py
   workflow_dispatch:
 permissions:
   contents: read

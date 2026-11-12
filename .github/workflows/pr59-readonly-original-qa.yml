@@ -1,3 +1,4 @@
+# First source run 43234653164 remains immutable; QA field-schema correction only.
 name: PR59 readonly QA on immutable original 24 train and 12 validation source
 on:
   push:

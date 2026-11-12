@@ -92,7 +92,7 @@ def scenario(spec,cfg,checkpoint,km):
     results={arm:run_arm(spec,cfg,arm,checkpoint,km) for arm in order}
     # Every arm must have seen the exact same keyed factual world if it
     # chooses the same actions. If not, environment RNG would be leaking.
-    originals={r["factual_event_sha256"] for r in results.values()}
+    originals={r["real_event_sha256"] for r in results.values()}
     if len(originals)==1 and len({r["makespan_ticks"] for r in results.values()})!=1:
         raise AssertionError("identical factual events yielded different completion times")
     return {

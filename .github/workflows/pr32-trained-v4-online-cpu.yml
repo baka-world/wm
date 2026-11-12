@@ -1,0 +1,108 @@
+name: PR32 independent full online posttrained V4 generalization CPU
+on:
+  push:
+    branches: [research/pr32-posttrained-v4-independent-online-20261112]
+    paths: [.github/workflows/pr32-trained-v4-online-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  test-actual-online-trained-world-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: Reconstruct pinned original V4 CPU environment
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch;assert torch.version.cuda is None;torch.set_num_threads(1)"
+      - name: Verify pre-existing original and reproducible trained V4 artifacts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr32"
+          for row in "13765135588:original.zip" "13911001730:posttrain.zip"; do
+            id="${row%%:*}"; target="${row#*:}"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/pr32/$target"
+          done
+          unzip -p "$RUNNER_TEMP/pr32/original.zip" v4-data.pt > "$RUNNER_TEMP/pr32/original.pt"
+          unzip -p "$RUNNER_TEMP/pr32/posttrain.zip" trained/warmstart_v4-best.pt > "$RUNNER_TEMP/pr32/warm.pt"
+          unzip -p "$RUNNER_TEMP/pr32/posttrain.zip" trained/scratch_v4-best.pt > "$RUNNER_TEMP/pr32/scratch.pt"
+          unzip -p "$RUNNER_TEMP/pr32/posttrain.zip" trained/validation-selection.json > "$RUNNER_TEMP/pr32/selection.json"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr32/original.pt" | sha256sum -c
+          python - <<'PY'
+          from pathlib import Path
+          import os,json,hashlib
+          p=Path(os.environ["RUNNER_TEMP"])/"pr32"
+          s=json.loads((p/"selection.json").read_text())
+          assert s["best_by_validation_brier"]=="scratch_v4"
+          for arm,filename in (("scratch_v4","scratch.pt"),("warmstart_v4","warm.pt")):
+            actual=hashlib.sha256((p/filename).read_bytes()).hexdigest()
+            assert actual==s["arms"][arm]["files"]["best"]["sha256"]
+          print("PR32_FROZEN_TRAINING_PROVENANCE_VALID")
+          PY
+          echo "RHWM_V4_ORIGINAL=$RUNNER_TEMP/pr32/original.pt" >> "$GITHUB_ENV"
+          echo "RHWM_V4_WARM=$RUNNER_TEMP/pr32/warm.pt" >> "$GITHUB_ENV"
+          echo "RHWM_V4_SCRATCH=$RUNNER_TEMP/pr32/scratch.pt" >> "$GITHUB_ENV"
+      - name: Verify new independent group and actual live five-arm safety
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/posttraining
+          timeout 180s python -m unittest discover \
+            -s experiments/world_model_integration/posttraining -p 'test_pr32_online.py' -v \
+            2>&1 | tee "$RUNNER_TEMP/pr32/tests.log"
+      - name: Execute 24 new paired online scenes including selected trained V4
+        run: |
+          set -euo pipefail
+          timeout 720s python -m experiments.world_model_integration.posttraining.pr32_online_run \
+            --original "$RHWM_V4_ORIGINAL" \
+            --warm "$RHWM_V4_WARM" \
+            --scratch "$RHWM_V4_SCRATCH" \
+            --selection "$RUNNER_TEMP/pr32/selection.json" \
+            --out "$RUNNER_TEMP/pr32/independent-online.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr32/run.log"
+          python - <<'PY'
+          import json,os,pathlib
+          p=pathlib.Path(os.environ["RUNNER_TEMP"])/"pr32"
+          r=json.loads((p/"independent-online.json").read_text())
+          s=r["summary"]
+          assert s["total_independent_groups"]==24
+          assert s["gpu"]==0 and s["new_training"]==0
+          assert set(s["by_regime"])=={"light","medium","heavy","shift"}
+          for record in s["by_regime"].values():
+            assert record["groups"]==6
+            assert set(record["arms"])=={
+              "cp_sat","rule_h20","original_v4_h20",
+              "warmstart_v4_h20","scratch_v4_h20"}
+            assert all(x["completed"]==6 for x in record["arms"].values())
+          print("PR32_FULL_ONLINE_INDEPENDENT_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/pr32" && sha256sum independent-online.json run.log tests.log selection.json > evidence_sha256.txt)
+      - name: Archive all actual online results and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr32-posttrained-online-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr32/independent-online.json
+            ${{ runner.temp }}/pr32/tests.log
+            ${{ runner.temp }}/pr32/run.log
+            ${{ runner.temp }}/pr32/selection.json
+            ${{ runner.temp }}/pr32/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

@@ -1,0 +1,152 @@
+name: PR51 public-state paired candidate outcome dataset and differentiable decision-loss gate
+on:
+  push:
+    branches: [research/pr51-decision-aware-relational-labels-20261112]
+    paths:
+      - .github/workflows/pr51-decision-labels.yml
+      - experiments/world_model_integration/decision_learning_pr51/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  fixed-true-world-branches:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 52
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Original simulator locked CPU dependencies, no neural training
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR51 TRUE fact simulator with common source and no model training",torch.__version__)
+          PY
+      - name: Same-public-state label and decision-gradient objective contracts
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/decision_learning_pr51
+          python -m unittest experiments.world_model_integration.decision_learning_pr51.test_pr51 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr51-test.log"
+      - name: True simulator replay, same prefix, each CP-SAT lawful candidate
+        env:
+          PR51_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr51"
+          timeout 2500s python -m experiments.world_model_integration.decision_learning_pr51.pr51_labels \
+            --regime "$PR51_REGIME" --out "$RUNNER_TEMP/pr51/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr51/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr51"
+          x=json.loads((root/"data.json").read_text())
+          assert x["schema"]=="pr51-paired-action-world-model-supervision-v1"
+          assert x["regime"]==os.environ["PR51_REGIME"]
+          assert len(x["cases"])==24
+          assert len({r["seed"] for r in x["cases"]})==24
+          assert all(r["no_true_future_in_public_graph"] for r in x["cases"] if r["labelable"])
+          assert all(r["candidate_count"]==len(r["true_factual_outcomes"])
+                     and all(v["late_jobs"]>=0 for v in r["true_factual_outcomes"])
+                     for r in x["cases"] if r["labelable"])
+          assert x["summary"]["new_gpu_training"]==0
+          print("PR51_VALIDATED_SAME_PUBLIC_CAUSAL_LABELS",
+                 json.dumps(x["summary"],ensure_ascii=False))
+          PY
+          cp "$RUNNER_TEMP/pr51-test.log" "$RUNNER_TEMP/pr51/tests.log"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr51/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr51/lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr51/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr51" && sha256sum data.json run.log tests.log source_head.txt lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr51-decision-labels-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr51/
+          retention-days: 90
+          if-no-files-found: warn
+  aggregate-first-decision-data:
+    needs: fixed-true-world-branches
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr51-decision-labels-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr51-source
+      - name: Verify all original factual datasets before assessing decision labels
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr51-summary"
+          python - <<'PY'
+          import os,json,subprocess,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr51-source"
+          inputs=sorted(root.glob("*/data.json"))
+          assert len(inputs)==3
+          all_cases=[]
+          source_digests={}
+          identities=set()
+          for path in inputs:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              x=json.loads(path.read_text())
+              assert len(x["cases"])==24
+              assert x["schema"]=="pr51-paired-action-world-model-supervision-v1"
+              identities.add(x["protocol_sha256"])
+              assert x["regime"] not in source_digests
+              source_digests[x["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              all_cases+=x["cases"]
+          assert len(identities)==1 and len(all_cases)==72
+          assert len({c["seed"] for c in all_cases})==72
+          def summarize(rows):
+              return {"scenarios":len(rows),
+                      "counterfactual_groups":sum(x["labelable"] for x in rows),
+                      "nontrivial_decision_groups":sum(x.get("nonzero_candidate_effect",False) for x in rows),
+                      "fully_completed_groups":sum(x.get("all_branches_completed",False) for x in rows),
+                      "true_independent_candidate_pairs":sum(x.get("candidate_count",0)-1 for x in rows),
+                      "censored_groups":sum(x["labelable"] and not x.get("all_branches_completed",False) for x in rows)}
+          result={
+              "schema":"pr51-counterfactual-label-viability-and-source-integrity-v1",
+              "protocol_sha256":next(iter(identities)),
+              "source_sha256":source_digests,
+              "overall":summarize(all_cases),
+              "by_regime":{r:summarize([c for c in all_cases if c["regime"]==r])
+                  for r in ("congestion","multi_fault","staggered_arrivals")},
+              "by_split":{s:summarize([c for c in all_cases if c["split"]==s])
+                  for s in ("train","validation","test")},
+              "training_launched":False,
+              "next_step":"Only if truthful paired labels provide nontrivial signal, train relational dynamics with prediction-only vs calibrated joint loss on TRAIN and use VALIDATION for lambda. Independent TEST remains untouched."
+          }
+          dst=Path(os.environ["RUNNER_TEMP"])/"pr51-summary"
+          (dst/"summary.json").write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n")
+          print("PR51_ALL_LABELS_AGGREGATED",json.dumps(result,ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr51-summary/source_head.txt"
+          (cd "$RUNNER_TEMP/pr51-summary" && sha256sum summary.json source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr51-paired-dataset-summary-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr51-summary/
+          retention-days: 90

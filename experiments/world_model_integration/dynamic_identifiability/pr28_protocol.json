@@ -259,7 +259,13 @@
     ],
     "continuation": "same original BusinessCPSAT first proposal online every subsequent tick",
     "exogenous_noise": "seed/sample/phase/station keyed; common across treatments",
-    "candidates": "original BusinessCPSAT, limit 4, wall budget .08s, deterministic .04",
+    "candidates": {
+      "method": "original BusinessCPSAT",
+      "limit": 4,
+      "wall_seconds": 0.08,
+      "deterministic_seconds": 0.04,
+      "seed": 1810
+    },
     "outcome_primary": "final completion tick (smaller better), with lateness and waiting reported independently",
     "censoring": "if 240-tick horizon reached before all complete, report censored and do not rank these by unobserved finishing times",
     "action_identifiable": "difference in factual outcomes under one initial legal decision and identical continuation code; not random-trial causal identification"

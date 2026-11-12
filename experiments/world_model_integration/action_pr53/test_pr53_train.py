@@ -72,7 +72,7 @@ class PR53ActionContrastTests(unittest.TestCase):
             (root/"train.json").write_text(json.dumps({
                 "schema":"pr53-physically-separated-public-entity-world-state-v1",
                 "split":"train",
-                "cases":[{"seed":j,"split":"train","regime":reg}
+                "cases":[{"seed":j+{"congestion":0,"multi_fault":100,"staggered_arrivals":200}[reg],"split":"train","regime":reg}
                          for reg in ("congestion","multi_fault","staggered_arrivals")
                          for j in range(48)]
             }))

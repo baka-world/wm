@@ -368,5 +368,16 @@
     "no_global_deadlock_causality_claim": true
   },
   "next_step_if_pass": "precommit entirely NEW train/validation/unseen topology-family TEST with actual dual-graph model consumption; stage <=60 new independent training episodes, audit marginal information before more",
-  "next_step_if_fail": "keep NO-GO, diagnose station queue/robot blocking and censored service events on old+new original full trajectories without tuning source/threshold from the same dev cases"
+  "next_step_if_fail": "keep NO-GO, diagnose station queue/robot blocking and censored service events on old+new original full trajectories without tuning source/threshold from the same dev cases",
+  "public_history_window": 4,
+  "actual_legal_alternatives": {
+    "candidate_limit": 4,
+    "anchor_tick_min": 7,
+    "anchor_tick_max": 70,
+    "predict_horizons": [
+      5,
+      20
+    ],
+    "same_prefix_fingerprint": true
+  }
 }

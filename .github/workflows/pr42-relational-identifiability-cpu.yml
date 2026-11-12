@@ -68,6 +68,22 @@ jobs:
           assert r["summary"]["new_training"]==0
           assert all(not a["factual_outcome_offline_only"]["safety_violations"]
                      for g in r["groups"] for a in g["candidates"])
+          for g in r["groups"]:
+              p=g["representation_comparison"]
+              print("PR42_CASE",json.dumps({
+                  "id":g["id"],"regime":g["regime"],
+                  "raw_relation_diff":p["raw_relationships_different"] if p else None,
+                  "token_collision":p["numeric_token_multisets_equal"] if p else None,
+                  "context_linf":p["pooled_context_linf"] if p else None,
+                  "completed_score_tie":g["candidate_predictions_tied"],
+                  "full_state_tie":g["h20_full_state_distribution_tied"],
+                  "true_makespan_delta":g["factual_makespan_second_minus_first"],
+                  "pred_completed_delta":g["predicted_completed_second_minus_first"],
+                  "prediction_completed": [
+                      c["predicted_h20"]["completed"] for c in g["candidates"]],
+                  "prediction_waiting": [
+                      c["predicted_h20"]["waiting"] for c in g["candidates"]]},
+                  ensure_ascii=False))
           print("PR42_ACTUAL_DIAGNOSTIC_EVIDENCE_VALIDATED")
           PY
           (cd "$RUNNER_TEMP/pr42" && sha256sum result.json run.log tests.log > SHA256SUMS)

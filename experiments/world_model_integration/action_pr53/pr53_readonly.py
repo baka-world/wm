@@ -62,6 +62,43 @@ def bootstrap(rows,new,base,reps=4000):
         "limits":"conditional on these 3 trained networks and synthetic map/mechanisms; not online policy or training-seed generalization"
     }
 
+def numerical_ambiguity(rows,epsilons=(1e-8,1e-5,1e-3)):
+    """Report what can happen among near-equal scores WITHOUT changing policy.
+
+    This is a post-hoc descriptive numerical sensitivity envelope, NOT a
+    tie-break tuning rule or a new selection on the independent TEST set.
+    """
+    result={}
+    for arm in ARMS:
+        result[arm]={}
+        for seed in SEEDS:
+            records=[x["arm_seed"][arm][str(seed)] for x in rows]
+            summaries={}
+            for eps in epsilons:
+                scenarios=0
+                consequential=0
+                best_regret=[]
+                worst_regret=[]
+                for x in records:
+                    pred=x["predicted_score"]
+                    factual=x["true_costs"]
+                    chosen=[i for i,v in enumerate(pred)
+                            if v<=min(pred)+eps]
+                    scenarios+=int(len(chosen)>1)
+                    consequential+=int(len({factual[i] for i in chosen})>1)
+                    best_regret.append(min(factual[i] for i in chosen)-min(factual))
+                    worst_regret.append(max(factual[i] for i in chosen)-min(factual))
+                summaries[str(eps)]={
+                    "ambiguous_groups":scenarios,
+                    "ambiguous_groups_with_different_true_makespan":consequential,
+                    "best_possible_regret_within_margin":mean(best_regret),
+                    "worst_possible_regret_within_margin":mean(worst_regret),
+                    "interpretation":"sensitivity envelope only: no epsilon tie rule used to choose model or candidate"
+                }
+            result[arm][str(seed)]=summaries
+    return result
+
+
 def run(data_root,model_root,out):
     if out.exists():
         raise FileExistsError("PR53 blinded audit cannot overwrite")
@@ -151,6 +188,7 @@ def run(data_root,model_root,out):
             comparisons[arm+"_vs_consistent_prediction"]=bootstrap(
                 rows,arm,"consistent_pred_only")
         comparisons[arm+"_vs_cp_sat"]=bootstrap(rows,arm,"cp_sat_first")
+    sensitivity=numerical_ambiguity(rows)
     fully_reproduced=all(
         abs(v["difference"])<1e-8 and
         v["archived_near_tie_1e5"]==v["readonly_near_tie_1e5"]
@@ -160,6 +198,7 @@ def run(data_root,model_root,out):
         "selected_validation_arm_unchanged":selected,
         "full_training_report_replayed_exactly":fully_reproduced,
         "original_replay_by_arm_and_seed":replay,
+        "numerical_score_ambiguity_envelope":sensitivity,
         "mean_three_seed_regret_by_arm":{
             arm:mean([x["mean_three_seed_regret"][arm] for x in rows])
             for arm in (*ARMS,"cp_sat_first")},
@@ -176,7 +215,8 @@ def run(data_root,model_root,out):
         "selected":selected,"all_replayed":fully_reproduced,
         "regret":result["mean_three_seed_regret_by_arm"],
         "bootstraps":result["paired_stratified_scene_bootstrap"],
-        "original_replay":replay
+        "original_replay":replay,
+        "numerical_ambiguity":result["numerical_score_ambiguity_envelope"]
     },ensure_ascii=False),flush=True)
 
 def main():

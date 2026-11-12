@@ -1,0 +1,85 @@
+name: PR30 independent full online H20 and H5 validation CPU
+on:
+  push:
+    branches: [research/pr30-independent-online-h20-20261112]
+    paths: [.github/workflows/pr30-full-online-horizon-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  independent-online:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: Install pinned CPU environment
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR30_ENV",torch.__version__)
+          PY
+      - name: Restore frozen V4 by checksum
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr30"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/pr30/source.zip"
+          unzip -p "$RUNNER_TEMP/pr30/source.zip" v4-data.pt > "$RUNNER_TEMP/pr30/frozen-v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr30/frozen-v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/pr30/frozen-v4.pt" >> "$GITHUB_ENV"
+      - name: Validate new online policy and frozen business constraints
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/online_horizon
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/online_horizon -v 2>&1 | tee "$RUNNER_TEMP/pr30/tests.log"
+      - name: Execute all 24 independent scenes with 4 truly online policies
+        run: |
+          set -euo pipefail
+          timeout 780s python -m experiments.world_model_integration.online_horizon.pr30_run \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --out "$RUNNER_TEMP/pr30/online-results.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr30/run.log"
+          python - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ["RUNNER_TEMP"])/"pr30"
+          r=json.loads((root/"online-results.json").read_text())
+          assert r["summary"]["groups"]==24
+          assert r["summary"]["gpu"]==0 and r["summary"]["training"]==0
+          assert set(r["summary"]["by_regime"])=={"light","medium","heavy","shift"}
+          for regime,record in r["summary"]["by_regime"].items():
+            assert record["groups"]==6
+            assert set(record["arms"])=={"cp_sat","rule_h20","v4_h5","v4_h20"}
+            assert all(x["safety_violations"]==0 for x in record["arms"].values())
+            assert all(x["completed_groups"]==6 for x in record["arms"].values())
+          print("PR30_INDEPENDENT_ONLINE_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/pr30" && sha256sum online-results.json run.log tests.log > evidence_sha256.txt)
+      - name: Archive complete online traces and environment
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr30-independent-online-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr30/online-results.json
+            ${{ runner.temp }}/pr30/run.log
+            ${{ runner.temp }}/pr30/tests.log
+            ${{ runner.temp }}/pr30/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

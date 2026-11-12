@@ -48,26 +48,30 @@ def _sha(data):
 
 
 def load_split(root,split):
+    """Open ONLY the physically separated split file requested.
+
+    The original per-regime raw archive contains all splits. CI must first
+    verify SHA and WRITE separate train/validation/test files. Reading the raw
+    archive from inside this learner would violate the pre-selection gate.
+    """
     if split not in SPLITS:
         raise ValueError("unregistered split")
-    groups=[]
-    prov=set()
+    path=root/(split+".json")
+    doc=json.loads(path.read_text())
+    if doc.get("schema")!="pr52-physical-isolated-public-entity-split-v1":
+        raise ValueError("not a physical isolated true-state split")
+    if doc.get("split")!=split:
+        raise ValueError("train/validation/test file identity mismatch")
+    groups=doc["cases"]
+    expected={"train":144,"validation":36,"test":48}[split]
+    if len(groups)!=expected or len({g["seed"] for g in groups})!=len(groups):
+        raise AssertionError("factual split incomplete or duplicate seeds")
     for regime in REGIMES:
-        path=root/regime/"data.json"
-        doc=json.loads(path.read_text())
-        if (doc["schema"]!="pr52-true-entity-world-state-paired-actions-v1"
-            or doc["regime"]!=regime):
-            raise ValueError("not original PR52 sources")
-        prov.add(doc["protocol_sha256"])
-        wanted=[g for g in doc["cases"] if g["split"]==split]
-        expected={"train":48,"validation":12,"test":16}[split]
-        if len(wanted)!=expected:
-            raise AssertionError("source splits differ from predeclared cohort")
-        groups.extend(wanted)
-    if len(prov)!=1 or len({g["seed"] for g in groups})!=len(groups):
-        raise AssertionError("source label fingerprint or split nonindependent")
+        if len([x for x in groups if x["regime"]==regime])!=expected//3:
+            raise ValueError("regime missing within isolated cohort")
+    if any(x["split"]!=split for x in groups):
+        raise AssertionError("unexpected cross-split record")
     return groups
-
 
 def _prepare_one(case,relational):
     if not case["labelable"] or not case["all_branches_completed"]:

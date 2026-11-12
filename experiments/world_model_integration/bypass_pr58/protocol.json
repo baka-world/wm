@@ -2,7 +2,7 @@
   "protocol": "PR58_STATION_FREE_BYPASS_PAIRED_WORLD_DATA_20261112_V1",
   "parent_pr57_head": "f3dc4605edf0d2afaaab717562c6744f0de64f53",
   "original_immutable_run": 43219314493,
-  "original_source_head": "916552fdbf6908e94161d120a1efdd3092fb603d",
+  "original_source_head": "ec22b94a919400ddce7a34e1d0575d6fe9682c6c",
   "original_gate_expected": "NO_GO_BULK_CROSS_MAP_DATA_EXPANSION",
   "original_pr57_cohort_protocol_sha": "use exact original file from PR57 head; verify per original archived source hash",
   "purpose": "Controlled MAP-ONLY real BusinessSimulator variation against all 12 original PR57 scenes, including all 5 censored cases. Not new independent unseen data. Preserve complete truth, diagnose rescue and time limits, check legal action H5/H20.",

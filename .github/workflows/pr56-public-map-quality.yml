@@ -1,0 +1,159 @@
+name: PR56 real 12 public-map topology full world/action quality gate
+on:
+  push:
+    branches: [research/pr56-public-topology-quality-pilot-20261112]
+    paths:
+      - .github/workflows/pr56-public-map-quality.yml
+      - experiments/world_model_integration/topology_pr56/protocol.json
+      - experiments/world_model_integration/topology_pr56/pr56_public_map.py
+      - experiments/world_model_integration/topology_pr56/pr56_trial.py
+      - experiments/world_model_integration/topology_pr56/pr56_gate.py
+      - experiments/world_model_integration/topology_pr56/test_pr56.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  real_public_topology_safety_and_action_cases:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Restore exact prior business simulator CPU and PyG environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR56_SOURCE_PUBLIC_TOPOLOGY_REAL_CPU_BUSINESS_SIMULATOR_NO_MODEL_TRAINING")
+          PY
+      - name: Frozen twelve-source obstacle layout contract and PyG map tensor tests
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr56"
+          python -m compileall -q experiments/world_model_integration/topology_pr56
+          python -m unittest experiments.world_model_integration.topology_pr56.test_pr56 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr56/tests.log"
+      - name: Real full-episode public t-to-t+1 map trajectories and matched legal H5/H20 branch interventions
+        env:
+          PR56_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2400s python -m experiments.world_model_integration.topology_pr56.pr56_trial \
+            --regime "$PR56_REGIME" \
+            --out "$RUNNER_TEMP/pr56/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr56/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          j=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr56/data.json").read_text())
+          assert j["schema"]=="pr56-original-real-topology-full-episode-and-action-pilot-v1"
+          assert j["regime"]==os.environ["PR56_REGIME"]
+          assert len(j["scenes"])==4
+          assert j["summary"]["GPU"]==j["summary"]["neural_training"]==0
+          assert j["summary"]["full_true_timestep_labels"]==sum(
+              len(x["raw_actual_public_world_transitions"]) for x in j["scenes"])
+          for x in j["scenes"]:
+              assert x["case"]["split"]=="topology_development_only"
+              assert x["public_map"]["schema"]=="pr56-public-grid-cells-v1"
+              assert x["raw_actual_public_world_transitions"][-1]["target"]["next_public_tick"]==x["real_factual_ticks"]
+              assert all(v["input"]["public_map"]["static_map_digest"]==x["public_map"]["static_map_digest"]
+                         for v in x["raw_actual_public_world_transitions"])
+          print("PR56_FULL_REAL_WORLD_PUBLIC_INPUT_AND_TRUE_STATE_VERIFIED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr56/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr56/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr56/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr56" && sha256sum data.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Immutable true failed/successful scenarios, code/lock SHA, not curated outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr56-real-topology-public-world-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr56/
+          retention-days: 90
+          if-no-files-found: warn
+  original_source_admission:
+    needs: real_public_topology_safety_and_action_cases
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Preserve existing original research dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr56-real-topology-public-world-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr56-original
+      - name: Verify source SHA256 and every public map/true factual branch before quality decision
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr56-qa"
+          python - <<'PY'
+          import os,subprocess,json,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr56-original"
+          paths=sorted(root.glob("*/data.json"))
+          assert len(paths)==3,"missing any source real map stress group"
+          head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          sha=set()
+          regimes=set()
+          for file in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=file.parent,check=True)
+              assert (file.parent/"source_head.txt").read_text().strip()==head
+              x=json.loads(file.read_text())
+              regimes.add(x["regime"])
+              sha.add(x["protocol_sha256"])
+          assert len(sha)==1 and regimes=={"congestion","multi_fault","staggered_arrivals"}
+          print("PR56_FROZEN_REAL_MAP_SOURCE_VERIFIED",head)
+          PY
+      - name: Record original unfiltered developer map-quality PASS or NO-GO; never filter failed scenarios
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.topology_pr56.pr56_gate \
+            --input "$RUNNER_TEMP/pr56-original" \
+            --out "$RUNNER_TEMP/pr56-qa/quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr56-qa/quality.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr56-qa/quality.json").read_text())
+          assert x["schema"]=="pr56-frozen-cross-topology-public-world-data-admission-v1"
+          assert x["real_development_scenarios"]==12 and x["distinct_traversability_maps"]==4
+          assert x["neural_model_trained"] is False and x["GPU_hours"]==0
+          assert x["new_unseen_topology_blind_test_already_generated"] is False
+          print("PR56_ACTUAL_MAP_QUALITY_ADMISSION",x["decision"],x["failures"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr56-qa/source_head.txt"
+          (cd "$RUNNER_TEMP/pr56-qa" && sha256sum quality.json quality.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr56-real-public-map-data-admission-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr56-qa/
+          retention-days: 90
+          if-no-files-found: warn

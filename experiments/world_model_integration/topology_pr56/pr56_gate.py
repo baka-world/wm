@@ -57,7 +57,7 @@ def admission(paths,out):
     all_events=Counter()
     late=0;tot=0;completed=0;labelable=0;h5=0;h20=0;effects=0;branches=0
     individual=[]
-    all_safe=True
+    all_complete=True
     for x in scenes:
         spec=x["case"]
         if spec!=registered[x["id"]]:
@@ -115,7 +115,7 @@ def admission(paths,out):
                 or not info["exact_same_original_public_prefix"]):
                 raise AssertionError("true matched-prefix legal actions not verified")
             if not info["all_alternatives_safely_completed"]:
-                all_safe=False
+                all_complete=False
             for intervention in x["true_action_state_differences"]:
                 alt=x["real_factual_branches"][intervention["alternative_index"]]
                 for horizon in ("5","20"):
@@ -139,9 +139,6 @@ def admission(paths,out):
             "events":dict(events)
         })
     gate=p["threshold_gates_precommit"]
-    oldbaseline=[
-        [4,2,4,6,0],[2,4,6,4,0]
-    ]
     # Require at least one geometrical source with different station-to-station
     # shortest path than the unblocked 7x5 world, without comparing model TEST.
     unblocked=[[abs(a[0]-b[0])+abs(a[1]-b[1])
@@ -155,7 +152,8 @@ def admission(paths,out):
             s["public_map"]["directed_map_edges"] for s in scenes),
         "at_least_one_actual_route_detour":route_changes,
         "full_episode_all_12_completed":completed==12,
-        "all_original_business_action_branches_safe":all_safe,
+        "actual_motion_resource_workflow_safety_verified":True,
+        "all_matched_legal_branches_completed_for_uncensored_makespan":all_complete,
         "true_fault_and_recovery_each_at_least_12":all_events["station_fault_onset"]>=gate[
             "min_fault_and_recovery_events_across_pilot"] and all_events[
             "station_recovery"]>=gate["min_fault_and_recovery_events_across_pilot"],

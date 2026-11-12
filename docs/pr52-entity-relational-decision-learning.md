@@ -109,3 +109,9 @@ negative_expected_completed_H20 =
 [官方PyG R-GCN节点未来状态及decision-gradient合同测试 Actions #43178269192](https://github.com/lieuyimo/wm/actions/runs/43178269192) **SUCCESS**，验证R-GCN实体状态输出、H5/H20固定完成进度读出、决策损失与价值敏感加权的非零共享关系动态梯度，测试/验证文件实体上隔离。
 
 正式实验 [Actions #43178484839](https://github.com/lieuyimo/wm/actions/runs/43178484839) 按原始三个数据artifact原始SHA复核、物理拆分训练/验证/测试，开始8个预注册模型训练。最终效果以训练完成后独立test的真实regret、Brier及node MSE为准，不能预先断言关系模型或决策损失更优。
+
+
+## 新近直接相邻研究对照（文献查新补充，不影响本轮冻结实验）
+
+- Hermann et al., [**Plug and schedule: scalable and modular architecture for integrated and dynamic scheduling based on graph neural networks and reinforcement learning**](https://doi.org/10.1080/00207543.2026.2741380), *International Journal of Production Research*, online 2026-10-08。其实际方法把业务资源/任务组织为异构图，用学习型state model编码，并在工序完成、设备故障/维修等事件节点执行PPO调度；这与本项目的机器人/任务/站点资源图和事件式决策确实高度相邻。但它重点是**状态编码+策略学习**，本项目当前重点是**动作条件下的多步可观测关系状态动态本身**和让决策监督进入预测动态的参数；不能把“使用GNN做动态排程”“故障维修重调度”作为新贡献。
+- Schutte, Postek & Yorke-Smith, [**Robust Losses for Decision-Focused Learning**](https://www.ijcai.org/proceedings/2024/538), IJCAI 2024：研究训练决策预测模型时的鲁棒损失。下一阶段若本轮pairwise决策监督在复杂场景失稳，应参考其**数据有限、决策后悔损失鲁棒性**的分析；不能在本轮已经冻结的独立测试集上补调新的loss后宣称全新独立结果。

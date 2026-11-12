@@ -1,0 +1,605 @@
+{
+  "protocol": "PR48_INDEPENDENT_THREE_STRESS_REGIMES_20261112_V1",
+  "source_pr47_head": "a2c01e66733ef27d36f9e59d22eb8292d4cb2103",
+  "pr47_online_artifact": 13919130952,
+  "pr47_source_sha": "ef9554bfa2b6f4da5124089fc72d5121c06af3e5",
+  "pr44_recovery_fit_artifact": 13915489041,
+  "v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "method": "Original PR30 CP-SAT proposals, original frozen V4-H20 P3 completion score, PR45 public-only recovery events, both V4 models exactly 1.5s process CPU per decision",
+  "cohort": [
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_1",
+      "seed": 13100021,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_2",
+      "seed": 13100500,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_3",
+      "seed": 13100979,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_4",
+      "seed": 13101458,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_5",
+      "seed": 13101937,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_6",
+      "seed": 13102416,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_7",
+      "seed": 13102895,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_WITHIN_SUPPORT_8",
+      "seed": 13103374,
+      "regime": "congestion",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_1",
+      "seed": 13120021,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_2",
+      "seed": 13120500,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_3",
+      "seed": 13120979,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_4",
+      "seed": 13121458,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_5",
+      "seed": 13121937,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_6",
+      "seed": 13122416,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_7",
+      "seed": 13122895,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_CONGESTION_EXTENDED_OUTAGE_8",
+      "seed": 13123374,
+      "regime": "congestion",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "all_zero",
+      "job_count": 14
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_1",
+      "seed": 13200021,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_2",
+      "seed": 13200500,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_3",
+      "seed": 13200979,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_4",
+      "seed": 13201458,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_5",
+      "seed": 13201937,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_6",
+      "seed": 13202416,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_7",
+      "seed": 13202895,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_WITHIN_SUPPORT_8",
+      "seed": 13203374,
+      "regime": "multi_fault",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_1",
+      "seed": 13220021,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_2",
+      "seed": 13220500,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_3",
+      "seed": 13220979,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_4",
+      "seed": 13221458,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_5",
+      "seed": 13221937,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_6",
+      "seed": 13222416,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_7",
+      "seed": 13222895,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_MULTI_FAULT_EXTENDED_OUTAGE_8",
+      "seed": 13223374,
+      "regime": "multi_fault",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "release_pattern": "all_zero",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_1",
+      "seed": 13300021,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_2",
+      "seed": 13300500,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_3",
+      "seed": 13300979,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_4",
+      "seed": 13301458,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_5",
+      "seed": 13301937,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_6",
+      "seed": 13302416,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_7",
+      "seed": 13302895,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_WITHIN_SUPPORT_8",
+      "seed": 13303374,
+      "regime": "staggered_arrivals",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_1",
+      "seed": 13320021,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_2",
+      "seed": 13320500,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_3",
+      "seed": 13320979,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_4",
+      "seed": 13321458,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_5",
+      "seed": 13321937,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_6",
+      "seed": 13322416,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_7",
+      "seed": 13322895,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    },
+    {
+      "id": "PR48_STAGGERED_ARRIVALS_EXTENDED_OUTAGE_8",
+      "seed": 13323374,
+      "regime": "staggered_arrivals",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "release_pattern": "staggered",
+      "job_count": 12
+    }
+  ],
+  "predefined_scenario_mechanisms": {
+    "map": "unchanged fixture 7x5 grid and 3 wheeled robots; test stress is workload/event protocol, not cross-map generalization",
+    "outage_start_tick": 7,
+    "secondary_outage_start_tick": 13,
+    "within_support": {
+      "B0": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "B1": [
+        8,
+        12,
+        16,
+        20
+      ],
+      "C": [
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    "extended_outage": {
+      "B0": [
+        9,
+        12,
+        16,
+        22
+      ],
+      "B1": [
+        18,
+        24,
+        30,
+        36
+      ],
+      "C": [
+        8,
+        12,
+        16,
+        24
+      ]
+    },
+    "synthetic_hidden_duration": "sha256 of seed, regime, mechanism, station, outage index; simulator construction only; never passed to predictor",
+    "congestion": {
+      "jobs": 14,
+      "capacity_A": 1,
+      "release_ticks": [
+        0
+      ],
+      "max_ticks": 260,
+      "deadline": 145,
+      "one_outage": true
+    },
+    "multi_fault": {
+      "jobs": 12,
+      "capacity_A": 1,
+      "release_ticks": [
+        0
+      ],
+      "max_ticks": 260,
+      "deadline": 145,
+      "two_independent_outages": true
+    },
+    "staggered_arrivals": {
+      "jobs": 12,
+      "capacity_A": 1,
+      "release_ticks": [
+        0,
+        6,
+        12,
+        18
+      ],
+      "max_ticks": 260,
+      "deadline": 145,
+      "one_outage": true
+    }
+  },
+  "arms": [
+    "cp_sat",
+    "v4_original_15",
+    "v4_recovery_15"
+  ],
+  "fixed_per_decision_cpu_process_budget_seconds": 1.5,
+  "candidate_limit": 4,
+  "horizon_ticks": 20,
+  "particles": 3,
+  "score": "expected_completed_samples at H20; no extra weighting or risk penalties",
+  "primary_metric": "actual completed episode makespan ticks; censored episodes separated and never interpreted as valid wins",
+  "secondary": [
+    "completed_jobs",
+    "late_jobs",
+    "capacity_wait_ticks",
+    "blocked_moves",
+    "candidate_decisions",
+    "chosen_nonfirst",
+    "fallbacks",
+    "budget_overruns",
+    "wall_clock_decision_p50_p95_max",
+    "cpu_process_seconds_episode",
+    "prediction_errors",
+    "safety_violations"
+  ],
+  "analysis_unit": "scenario seed (not multiple decisions or particles)",
+  "comparisons": "paired recovery minus original V4 by each of 3 regimes and synthetic duration mechanism, report win/tie/loss and all failure counts, no cherry-picking",
+  "resources": {
+    "gpu": 0,
+    "new_training": 0,
+    "research_only": true,
+    "experiment_process_cpu_limit": 2000,
+    "workflow_timeout_minutes": 55
+  },
+  "interpretation": "No direct use of PR47 holdout to train/tune methods, independent new seeds but same 7x5 map; unknown future job arrivals are not predicted by original model."
+}

@@ -1,0 +1,184 @@
+name: PR49 high-compute world model quality independent 48-stress CPU proxy
+on:
+  push:
+    branches: [research/pr49-unconstrained-world-quality-20261112]
+    paths:
+      - .github/workflows/pr49-high-compute-world-quality.yml
+      - experiments/world_model_integration/unconstrained_pr49/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  full-candidate-evaluation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Restore frozen reference CPU execution proxy, NOT target GPU serving
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("CPU here is a reproducible model-quality test host, not deployment hardware")
+          PY
+      - name: Verify reference immutable V4 and PR44 TRAIN-only historical KM
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr49/pr44"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/pr49/v4.zip"
+          unzip -p "$RUNNER_TEMP/pr49/v4.zip" v4-data.pt > "$RUNNER_TEMP/pr49/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr49/v4-data.pt" | sha256sum -c
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13915489041/zip" \
+            -o "$RUNNER_TEMP/pr49/pr44.zip"
+          unzip -q "$RUNNER_TEMP/pr49/pr44.zip" -d "$RUNNER_TEMP/pr49/pr44"
+          (cd "$RUNNER_TEMP/pr49/pr44" && sha256sum -c SHA256SUMS)
+          grep -Fx "d3751b6743a4ad8e88448df77a7d9067d268cb39" "$RUNNER_TEMP/pr49/pr44/source_head.txt"
+          echo "PR49_V4=$RUNNER_TEMP/pr49/v4-data.pt" >> "$GITHUB_ENV"
+          echo "PR49_KM=$RUNNER_TEMP/pr49/pr44/result.json" >> "$GITHUB_ENV"
+      - name: Public observation, exogenous lawful recovery and independent 30s guard contracts
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/unconstrained_pr49
+          python -m unittest \
+            experiments.world_model_integration.recovery_integration.test_pr45 \
+            experiments.world_model_integration.unconstrained_pr49.test_pr49 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr49/tests.log"
+      - name: 16 NEW cases x original CP-SAT, V4 and recovery V4 with identical ample compute
+        env:
+          PR49_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 4000s python -m experiments.world_model_integration.unconstrained_pr49.pr49_online \
+            --checkpoint "$PR49_V4" --pr44-result "$PR49_KM" \
+            --regime "$PR49_REGIME" \
+            --out "$RUNNER_TEMP/pr49/result.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr49/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          p=Path(os.environ["RUNNER_TEMP"])/"pr49/result.json"
+          d=json.loads(p.read_text())
+          assert d["schema"]=="pr49-new-independent-high-compute-full-online-v1"
+          assert len(d["groups"])==16 and d["regime"]==os.environ["PR49_REGIME"]
+          assert d["gpu_training"]==d["neural_training"]==0
+          assert d["summary"]["scenario_groups"]==16
+          assert d["summary"]["safety_violations"]==0
+          assert all(len(g["arms"])==3 for g in d["groups"])
+          print("PR49_COMPLETE_CANDIDATE_COVERAGE",
+                d["summary"]["all_candidates_fully_scored_in_both_models"])
+          print("PR49_VALIDATED",d["regime"],json.dumps(d["summary"],ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr49/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr49/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr49/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr49" && sha256sum result.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive exact factual episodes and all score decisions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr49-frozen-high-compute-${{ github.run_id }}-${{ matrix.regime }}
+          path: |
+            ${{ runner.temp }}/pr49/result.json
+            ${{ runner.temp }}/pr49/run.log
+            ${{ runner.temp }}/pr49/tests.log
+            ${{ runner.temp }}/pr49/source_head.txt
+            ${{ runner.temp }}/pr49/dependency-lock.sha256
+            ${{ runner.temp }}/pr49/pip-freeze.txt
+            ${{ runner.temp }}/pr49/SHA256SUMS
+          retention-days: 90
+          if-no-files-found: warn
+  aggregate-independent:
+    needs: full-candidate-evaluation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr49-frozen-high-compute-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr49-input
+      - name: Verify complete independent cohort and fixed model hashes
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr49-aggregate"
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,subprocess
+          root=Path(os.environ["RUNNER_TEMP"])/"pr49-input"
+          folders=sorted(root.glob("*/result.json"))
+          assert len(folders)==3, f"expected three strata, observed {len(folders)}"
+          rows=[]
+          fingerprints=set()
+          source_hashes={}
+          for path in folders:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              x=json.loads(path.read_text())
+              fingerprints.add((x["protocol_sha256"],x["source_v4_sha256"],
+                                x["source_pr44_train_only_sha256"]))
+              assert x["schema"]=="pr49-new-independent-high-compute-full-online-v1"
+              assert len(x["groups"])==16
+              source_hashes[x["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              rows+=x["groups"]
+          assert len(rows)==48 and len({x["seed"] for x in rows})==48
+          assert len(fingerprints)==1
+          def subset(items):
+              deltas=[g["arms"]["v4_recovery_h20_full"]["makespan_ticks"]-
+                      g["arms"]["v4_original_h20_full"]["makespan_ticks"] for g in items]
+              base={arm:sum(g["arms"][arm]["makespan_ticks"] for g in items)/len(items)
+                    for arm in ("cp_sat","v4_original_h20_full","v4_recovery_h20_full")}
+              falls={arm:sum(g["arms"][arm]["fallbacks"] for g in items)
+                     for arm in ("v4_original_h20_full","v4_recovery_h20_full")}
+              return {"groups":len(items),"mean_makespan_ticks":base,
+                      "mean_recovery_minus_original_ticks":sum(deltas)/len(deltas),
+                      "wins":sum(x<0 for x in deltas),"ties":sum(x==0 for x in deltas),
+                      "losses":sum(x>0 for x in deltas),
+                      "fallbacks":falls,"all_scored":all(x==0 for x in falls.values()),
+                      "paired_deltas":deltas,
+                      "safety_violations":sum(g["arms"][a]["safety_violations"] for g in items for a in g["arms"])}
+          summary={"schema":"pr49-aggregate-48-new-high-compute-v1",
+                   "source_sha256":source_hashes,
+                   "original_checkpoint_model_fingerprints":list(fingerprints)[0],
+                   "overall":subset(rows),
+                   "by_regime":{r:subset([g for g in rows if g["regime"]==r])
+                                for r in ("congestion","multi_fault","staggered_arrivals")},
+                   "by_mechanism":{m:subset([g for g in rows if g["mechanism"]==m])
+                                   for m in ("within_support","extended_outage")}}
+          output=Path(os.environ["RUNNER_TEMP"])/"pr49-aggregate"
+          (output/"result.json").write_text(json.dumps(summary,indent=2,ensure_ascii=False)+"\n")
+          print("PR49_ALL48_FULL_COMPUTE",json.dumps(summary,ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr49-aggregate/source_head.txt"
+          (cd "$RUNNER_TEMP/pr49-aggregate" && sha256sum result.json source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr49-all48-high-compute-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr49-aggregate/
+          retention-days: 90

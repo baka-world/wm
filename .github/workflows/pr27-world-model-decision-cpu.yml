@@ -67,7 +67,7 @@ jobs:
           assert all(x["groups"]==12 and x["safety_violations"]==0
                      for x in s["arms"].values())
           assert all(x["all_completed"]==12 for x in s["arms"].values())
-          assert sum(x["multiple_options"] for x in s["arms"].values())>0
+          assert sum(x["multi_candidate_decisions"] for x in s["arms"].values())>0
           print("PR27_REAL_PAIRED_POLICY_EVALUATION_PASSED")
           PY
           (cd "$RUNNER_TEMP/pr27" && sha256sum results.json run.log tests.log > evidence_sha256.txt)

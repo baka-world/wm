@@ -82,10 +82,12 @@ class RelationAuditContractTests(unittest.TestCase):
                 "numeric_token_multisets_equal": True,
                 "pooled_context_linf": 0., "same_query_count": 0},
             "candidate_predictions_tied": True,
+            "h20_full_state_distribution_tied": False,
             "true_makespan_different": True,
         }
         s = summarize([row])
         self.assertEqual(s["sensitive_but_h20_tied"], 1)
+        self.assertEqual(s["sensitive_but_h20_full_state_tied"], 0)
         self.assertEqual(s["exact_numeric_token_collisions"], 1)
         self.assertEqual(s["new_training"], 0)
         self.assertIn("development-only", s["promotion"])

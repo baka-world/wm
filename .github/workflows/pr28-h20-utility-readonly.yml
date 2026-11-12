@@ -1,0 +1,57 @@
+name: PR28 H20 forecast-vs-final-utility read-only artifact audit
+
+on:
+  push:
+    branches: [research/pr28-dynamic-decision-identifiability-20261112]
+    paths: [.github/workflows/pr28-h20-utility-readonly.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  h20-information-vs-utility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download previous immutable PR28 run evidence
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr28-h20/source"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13906784190/zip" \
+            -o "$RUNNER_TEMP/pr28-h20/original.zip"
+          unzip -q "$RUNNER_TEMP/pr28-h20/original.zip" -d "$RUNNER_TEMP/pr28-h20/source"
+          (cd "$RUNNER_TEMP/pr28-h20/source" && sha256sum -c evidence_sha256.txt)
+      - name: Inspect only original H20 stage forecast and actual final utility
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.dynamic_identifiability.pr28_h20_utility_audit \
+            --infile "$RUNNER_TEMP/pr28-h20/source/result.json" \
+            --out "$RUNNER_TEMP/pr28-h20/audit.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr28-h20/audit.log"
+          python - <<'PY'
+          import json,os,pathlib
+          x=json.loads((pathlib.Path(os.environ["RUNNER_TEMP"])/"pr28-h20/audit.json").read_text())
+          assert x["schema"]=="rhwm-pr28-h20-utility-audit-v1"
+          assert sum(g["groups"] for g in x["by_regime"].values())==12
+          assert x["new_factual_simulations"]==0 and x["new_model_inference"]==0
+          assert x["new_training"]==0 and x["gpu"]==0
+          print("PR28_H20_READ_ONLY_INTERPRETATION_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/pr28-h20" && sha256sum audit.json audit.log > audit_sha256.txt)
+      - name: Archive final actual vs predicted distinctions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr28-h20-utility-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr28-h20/audit.json
+            ${{ runner.temp }}/pr28-h20/audit.log
+            ${{ runner.temp }}/pr28-h20/audit_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

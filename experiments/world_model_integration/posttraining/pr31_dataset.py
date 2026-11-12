@@ -32,7 +32,7 @@ def _assert_seeds(protocol):
     if len(new)!=len(set(new)):raise AssertionError("PR31 scene split seed overlap")
     old={x["seed"] for grp in original["groups"].values() for x in grp}
     if old&set(new):raise AssertionError("original V4/PR31 seed overlap")
-    from experiments.world_model_integration/horizon_generalization.pr29_evaluate import _scenario_seed_set
+    from experiments.world_model_integration.horizon_generalization.pr29_evaluate import _scenario_seed_set
     _scenario_seed_set({"scene_groups":[
         x for section in ("train","validation","independent_test")
         for x in protocol["groups"][section]]+protocol["decision_test_groups"]})

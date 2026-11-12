@@ -1,0 +1,148 @@
+name: PR53 train 15 consistent action-contrast relational world model ablations
+on:
+  push:
+    branches: [research/pr53-action-contrast-consistent-dynamics-20261112]
+    paths:
+      - .github/workflows/pr53-real-model-training.yml
+      - experiments/world_model_integration/action_pr53/pr53_train.py
+      - experiments/world_model_integration/action_pr53/test_pr53_train.py
+      - experiments/world_model_integration/action_pr53/pr53_protocol.json
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  fifteen-model-public-state-consistency-and-decision:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 105
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Official PyTorch Geometric R-GCN 2.6.1 and original simulator lock
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch,torch_geometric
+          assert torch.version.cuda is None
+          assert torch_geometric.__version__=="2.6.1"
+          torch.set_num_threads(1)
+          print("PR53_CPU_EXECUTION_PROXY_NOT_FINAL_GPU_SERVING",torch.__version__)
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43183622412
+          github-token: ${{ github.token }}
+          pattern: pr53-new-true-entity-labels-43183622412-*
+          path: ${{ runner.temp }}/pr53-train/raw
+      - name: Verify EXACT new true-world artifacts and source before splitting
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os,hashlib,subprocess
+          from pathlib import Path
+          base=Path(os.environ["RUNNER_TEMP"])/"pr53-train"
+          paths=sorted((base/"raw").glob("*/data.json"))
+          assert len(paths)==3, f"need all three new original artifacts, got {len(paths)}"
+          cfg=json.loads(Path("experiments/world_model_integration/action_pr53/pr53_protocol.json").read_text())
+          original={c["seed"]:c for c in cfg["cohort"]}
+          all_cases=[]
+          digest={}
+          sources=set()
+          protocols=set()
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              doc=json.loads(path.read_text())
+              assert doc["schema"]=="pr53-new-blind-entity-action-paired-truth-v1"
+              assert len(doc["cases"])==76
+              sources.add((path.parent/"source_head.txt").read_text().strip())
+              protocols.add(doc["protocol_sha256"])
+              digest[doc["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              all_cases+=doc["cases"]
+          assert sources=={"943d11c5861f6ec0981dd5f1431ab4a8c8d0f33d"}
+          assert len(protocols)==1 and len(all_cases)==228
+          assert len({c["seed"] for c in all_cases})==228
+          assert {c["seed"] for c in all_cases}==set(original)
+          splits={name:[] for name in ("train","validation","test")}
+          for case in all_cases:
+              exact=original[case["seed"]]
+              assert all(case[k]==exact[k] for k in ("id","regime","mechanism","split"))
+              assert case["labelable"] and case["all_branches_completed"]
+              assert case["full_entity_horizon_labels_available"] and case["candidate_count"]==4
+              splits[case["split"]].append(case)
+          assert [len(splits[k]) for k in ("train","validation","test")]==[144,36,48]
+          store=base/"isolated"
+          store.mkdir(parents=True)
+          for split,rows in splits.items():
+              doc={"schema":"pr53-physically-separated-public-entity-world-state-v1",
+                   "split":split,"original_protocol_sha256":next(iter(protocols)),
+                   "cases":rows}
+              (store/(split+".json")).write_text(json.dumps(doc,ensure_ascii=False,indent=2)+"\n")
+          (base/"source-sha.json").write_text(json.dumps(digest,indent=2)+"\n")
+          print("PR53_PHYSICAL_SPLITS_HASH_VERIFIED",[(k,len(v)) for k,v in splits.items()])
+          PY
+      - name: Verify state consistency and decision/delta gradients before training
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.action_pr53.test_pr53_train -v \
+            2>&1 | tee "$RUNNER_TEMP/pr53-train/unit-tests.log"
+      - name: Train all 15 genuine relational transition checkpoints; select on VALIDATION; only then open new TEST
+        run: |
+          set -euo pipefail
+          timeout 5400s python -m experiments.world_model_integration.action_pr53.pr53_train \
+            --input "$RUNNER_TEMP/pr53-train/isolated" \
+            --out "$RUNNER_TEMP/pr53-train/trained" \
+            2>&1 | tee "$RUNNER_TEMP/pr53-train/train.log"
+          python - <<'PY'
+          from pathlib import Path
+          import os,json
+          root=Path(os.environ["RUNNER_TEMP"])/"pr53-train/trained"
+          report=json.loads((root/"result.json").read_text())
+          freeze=json.loads((root/"selection.json").read_text())
+          assert report["schema"]=="pr53-consistent-relational-action-contrast-independent-test-v1"
+          assert report["number_of_fitted_neural_models"]==15
+          assert report["distinct_scenes"]=={"train":144,"validation":36,"new_blind_test":48}
+          assert freeze["independent_test_not_loaded"]
+          assert report["selected_by_validation_before_test"]==freeze["selected"]
+          assert len(list(root.glob("*.pt")))==15
+          assert len(report["all_arms_new_blind_test"])==5
+          for name,seeds in report["all_arms_new_blind_test"].items():
+              assert set(seeds)=={"1810","1811","1812"}
+              for seed,m in seeds.items():
+                  assert m["groups"]==48
+                  assert m["station_device_count"]>0
+          print("PR53_FROZEN_BLIND_TEST_FINAL",json.dumps({
+              "selected":report["selected_by_validation_before_test"],
+              "new_test_arms":report["all_arms_new_blind_test"]
+          },ensure_ascii=False))
+          PY
+          mkdir -p "$RUNNER_TEMP/pr53-train/report"
+          cp "$RUNNER_TEMP/pr53-train/trained/"*.json "$RUNNER_TEMP/pr53-train/report/"
+          cp "$RUNNER_TEMP/pr53-train/unit-tests.log" "$RUNNER_TEMP/pr53-train/report/"
+          cp "$RUNNER_TEMP/pr53-train/train.log" "$RUNNER_TEMP/pr53-train/report/"
+          cp "$RUNNER_TEMP/pr53-train/source-sha.json" "$RUNNER_TEMP/pr53-train/report/"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr53-train/report/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr53-train/report/dependency-lock.sha256"
+          sha256sum "$RUNNER_TEMP/pr53-train/isolated/"*.json > "$RUNNER_TEMP/pr53-train/report/isolated-splits.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr53-train/report/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr53-train/report" && sha256sum *.json *.log *.txt *.sha256 > SHA256SUMS)
+      - name: Retain actual 15-world-model weights optimizer RNG and one-shot independent score report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr53-fifteen-world-model-checkpoints-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr53-train/trained/*.pt
+            ${{ runner.temp }}/pr53-train/report/
+          retention-days: 90
+          if-no-files-found: warn

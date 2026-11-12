@@ -2,7 +2,9 @@ name: PR44 public station recovery survival CPU research
 on:
   push:
     branches: [research/pr44-observable-recovery-dynamics-20261112]
-    paths: [.github/workflows/pr44-observed-recovery-cpu.yml]
+    paths:
+      - .github/workflows/pr44-observed-recovery-cpu.yml
+      - experiments/world_model_integration/health_recovery/**
   workflow_dispatch:
 permissions:
   contents: read

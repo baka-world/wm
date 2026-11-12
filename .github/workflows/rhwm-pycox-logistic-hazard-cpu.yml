@@ -1,0 +1,110 @@
+name: RHWM official pycox LogisticHazard training and group evaluation CPU
+
+on:
+  push:
+    branches:
+      - feature/rhwm-pycox-logistic-hazard-20261112
+    paths:
+      - .github/workflows/rhwm-pycox-logistic-hazard-cpu.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  official-logistic-hazard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONUNBUFFERED: "1"
+      NUMBA_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install existing CPU lock and pinned upstream pycox/torchtuples
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          uv pip install --system --python "$(command -v python)" -r requirements-rhwm-method-transfer.txt
+          python - <<'PY'
+          import torch,pycox,torchtuples,lifelines,sklearn
+          assert torch.version.cuda is None
+          assert pycox.__version__=="0.3.0"
+          assert lifelines.__version__=="0.30.0"
+          torch.set_num_threads(1)
+          print('CPU-only verified:', torch.__version__,pycox.__version__,torchtuples.__version__,lifelines.__version__,sklearn.__version__)
+          PY
+      - name: Restore PR18 frozen V4 checkpoint by checksum
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pycox-transfer"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/pycox-transfer/v4.zip"
+          unzip -p "$RUNNER_TEMP/pycox-transfer/v4.zip" v4-data.pt > "$RUNNER_TEMP/pycox-transfer/v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pycox-transfer/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/pycox-transfer/v4.pt" >> "$GITHUB_ENV"
+      - name: Compile and run published-method transfer unit and previous regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q business_transport/world_model experiments/world_model_integration/method_transfer
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/method_transfer/tests -v 2>&1 | tee "$RUNNER_TEMP/pycox-transfer/tests.log"
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/system_world_model/tests -v 2>&1 | tee "$RUNNER_TEMP/pycox-transfer/previous-tests.log"
+      - name: One-shot official model CPU training, validation and fresh held-out evaluation
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 720s python -m experiments.world_model_integration.method_transfer.pycox_run \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --out "$RUNNER_TEMP/pycox-transfer/results.json" \
+            --trained-output "$RUNNER_TEMP/pycox-transfer/pycox-logistic-hazard.pt" \
+            --cpu-budget 480 \
+            2>&1 | tee "$RUNNER_TEMP/pycox-transfer/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ["RUNNER_TEMP"])/"pycox-transfer"
+          r=json.loads((root/"results.json").read_text())
+          s=r["summary"]
+          assert s["train_groups"]==48 and s["validation_groups"]==12
+          assert s["iid_test_groups"]==24 and s["shift_test_groups"]==12
+          assert s["gpu"]==0 and s["only_upstream_training_algorithm"] is True
+          assert r["data"]["train_sessions"] > 0
+          assert r["training"]["epochs_executed"] > 0
+          assert set(s["grouped_metrics"])=={"independent_iid","synthetic_shift"}
+          assert root.joinpath("pycox-logistic-hazard.pt").stat().st_size>1000
+          for split in s["grouped_metrics"].values():
+            for h in ("1","5","10"):
+              assert set(split["by_horizon"][h])=={"rule","kaplan_meier","v4","pycox_logistic_hazard"}
+          print("PYCOX_LITERATURE_METHOD_TRANSFER_COMPLETED")
+          PY
+          (cd "$RUNNER_TEMP/pycox-transfer" &&
+            sha256sum results.json pycox-logistic-hazard.pt tests.log previous-tests.log run.log > evidence_sha256.txt)
+      - name: Upload exact model, logs, protocol evidence, and independent metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhwm-pycox-logistic-hazard-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pycox-transfer/results.json
+            ${{ runner.temp }}/pycox-transfer/pycox-logistic-hazard.pt
+            ${{ runner.temp }}/pycox-transfer/tests.log
+            ${{ runner.temp }}/pycox-transfer/previous-tests.log
+            ${{ runner.temp }}/pycox-transfer/run.log
+            ${{ runner.temp }}/pycox-transfer/evidence_sha256.txt
+          if-no-files-found: warn
+          retention-days: 90

@@ -1,0 +1,42 @@
+{
+  "protocol": "PR42_RELATION_IDENTIFIABILITY_DEVELOPMENT_V1",
+  "purpose": "Mechanism-level test whether raw assignment relation differences survive V4 Deep Sets numeric encoding and predict H20 state differences",
+  "source_commit": "8598a5838f82b30165e2ce4c53a32d787ab44287",
+  "source_protocol": "RHWM_PR30_INDEPENDENT_H20_ONLINE_20261112_V1",
+  "source_case_ids": [
+    "ON_LIGHT_1",
+    "ON_LIGHT_2",
+    "ON_MEDIUM_1",
+    "ON_MEDIUM_2",
+    "ON_HEAVY_1",
+    "ON_HEAVY_2",
+    "ON_SHIFT_1",
+    "ON_SHIFT_2"
+  ],
+  "source_used_before": "PR30 prior test, diagnostic development only; never call this independent confirmation",
+  "original_first_action": "Existing CP-SAT top two distinct legal plans; common initial state and same future CP-SAT continuation",
+  "model": "Original frozen V4 event network and RHWM H20/P3",
+  "frozen_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "max_ticks": 240,
+  "cpu_process_budget_seconds": 360,
+  "no_training": true,
+  "no_gpu": true,
+  "no_new_model": true,
+  "no_new_fault_predictor": true,
+  "label_usage": "Paired real simulator outcomes are offline diagnostic only, never world-model input or candidate selection",
+  "hypotheses": {
+    "H1": "Distinct public candidate joins can map to identical Deep Sets numeric token multisets",
+    "H2": "Encoding collisions or small pooled deltas may accompany tied predicted H20 completed counts",
+    "H3": "A tied predicted H20 score can co-occur with distinct paired factual completion times; association not causal proof"
+  },
+  "endpoints": [
+    "raw relation pairs",
+    "numeric token equality",
+    "pooled embedding Linf",
+    "shared active service probability change",
+    "H20 stage/queue/resource state",
+    "true H20 state error on available observations",
+    "paired actual makespan/late jobs",
+    "CPU cost"
+  ]
+}

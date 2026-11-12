@@ -1,0 +1,208 @@
+name: PR48 frozen H20 recovery independent stress CPU and wall latency
+on:
+  push:
+    branches: [research/pr48-independent-stress-generalization-20261112]
+    paths:
+      - .github/workflows/pr48-independent-stress-cpu.yml
+      - experiments/world_model_integration/stress_pr48/pr48_protocol.json
+      - experiments/world_model_integration/stress_pr48/pr48_scenarios.py
+      - experiments/world_model_integration/stress_pr48/pr48_online.py
+      - experiments/world_model_integration/stress_pr48/test_pr48.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  stress-scenario-group:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Frozen original CPU dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "PR48 CPU only"
+          torch.set_num_threads(1)
+          print("PR48_CPU_RESEARCH",torch.__version__)
+          PY
+      - name: Restore immutable V4 and PR44 train-only KM with SHA256 provenance
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr48/pr44"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr48/original_v4.zip"
+          unzip -p "$RUNNER_TEMP/pr48/original_v4.zip" v4-data.pt > "$RUNNER_TEMP/pr48/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr48/v4-data.pt" | sha256sum -c
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13915489041/zip \
+            -o "$RUNNER_TEMP/pr48/original_pr44.zip"
+          unzip -q "$RUNNER_TEMP/pr48/original_pr44.zip" -d "$RUNNER_TEMP/pr48/pr44"
+          (cd "$RUNNER_TEMP/pr48/pr44" && sha256sum -c SHA256SUMS)
+          grep -Fx "d3751b6743a4ad8e88448df77a7d9067d268cb39" "$RUNNER_TEMP/pr48/pr44/source_head.txt"
+          echo "PR48_V4=$RUNNER_TEMP/pr48/v4-data.pt" >> "$GITHUB_ENV"
+          echo "PR48_KM=$RUNNER_TEMP/pr48/pr44/result.json" >> "$GITHUB_ENV"
+      - name: Locked 48-scene design and inherited legitimate recovery contract tests
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/stress_pr48
+          python -m unittest \
+            experiments.world_model_integration.recovery_integration.test_pr45 \
+            experiments.world_model_integration.stress_pr48.test_pr48 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr48/tests.log"
+      - name: Actual full online episodes for frozen stress regime
+        env:
+          PR48_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2250s python -m experiments.world_model_integration.stress_pr48.pr48_online \
+            --checkpoint "$PR48_V4" --pr44-result "$PR48_KM" \
+            --regime "$PR48_REGIME" --out "$RUNNER_TEMP/pr48/result.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr48/run.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr48/result.json").read_text())
+          assert x["schema"]=="pr48-full-online-stress-independent-v1"
+          assert x["summary"]["groups"]==16 and x["summary"]["actual_episodes"]==48
+          assert x["new_gpu"]==0 and x["new_training"]==0
+          assert all(len(g["arms"])==3 for g in x["groups"])
+          assert all(a["safety_violations"]==0 for g in x["groups"] for a in g["arms"].values())
+          assert all(a["wall_clock_decision_p95_seconds"] is not None
+                     for g in x["groups"] for a in g["arms"].values())
+          assert x["regime"]==os.environ["PR48_REGIME"]
+          print("PR48_STRESS_REGIME_VALIDATED",x["regime"],
+                json.dumps(x["summary"]["by_regime"][x["regime"]],ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr48/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr48/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr48/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr48" && sha256sum result.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive all public-decision and true-trajectory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr48-stress-${{ github.run_id }}-${{ matrix.regime }}
+          path: |
+            ${{ runner.temp }}/pr48/result.json
+            ${{ runner.temp }}/pr48/run.log
+            ${{ runner.temp }}/pr48/tests.log
+            ${{ runner.temp }}/pr48/source_head.txt
+            ${{ runner.temp }}/pr48/dependency-lock.sha256
+            ${{ runner.temp }}/pr48/pip-freeze.txt
+            ${{ runner.temp }}/pr48/SHA256SUMS
+          retention-days: 90
+          if-no-files-found: warn
+  aggregate-full-cohort:
+    needs: stress-scenario-group
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr48-stress-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr48-source
+          merge-multiple: false
+      - name: Verify all three strata and recompute 48-scene paired outcomes
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr48-aggregate"
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr48-source"
+          output=Path(os.environ["RUNNER_TEMP"])/"pr48-aggregate"
+          paths=sorted(root.glob("*/result.json"))
+          assert len(paths)==3, f"only {len(paths)} of 3 stress groups present"
+          groups=[]
+          by_regime={}
+          hashes={}
+          versions=set()
+          for path in paths:
+              folder=path.parent
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=folder,check=True)
+              data=json.loads(path.read_text())
+              assert data["schema"]=="pr48-full-online-stress-independent-v1"
+              assert len(data["groups"])==16 and data["summary"]["actual_episodes"]==48
+              assert data["new_gpu"]==0 and data["new_training"]==0
+              assert data["regime"] not in by_regime
+              by_regime[data["regime"]]=data["summary"]["by_regime"][data["regime"]]
+              versions.add((data["protocol_sha256"],data["v4_checkpoint_sha256"],
+                            data["pr44_train_only_model_sha256"]))
+              hashes[data["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              groups.extend(data["groups"])
+          assert set(by_regime)=={"congestion","multi_fault","staggered_arrivals"}
+          assert len(versions)==1 and len(groups)==48
+          assert len({g["seed"] for g in groups})==48
+          assert all(len(g["arms"])==3 for g in groups)
+          def paired(selected):
+              diffs=[g["arms"]["v4_recovery_15"]["makespan_ticks"]-
+                     g["arms"]["v4_original_15"]["makespan_ticks"] for g in selected]
+              late=[g["arms"]["v4_recovery_15"]["job_metrics"]["late_jobs"]-
+                    g["arms"]["v4_original_15"]["job_metrics"]["late_jobs"]
+                    for g in selected]
+              return {"groups":len(selected),
+                      "mean_delta_ticks":sum(diffs)/len(diffs),
+                      "wins":sum(d<0 for d in diffs),
+                      "ties":sum(d==0 for d in diffs),
+                      "losses":sum(d>0 for d in diffs),
+                      "mean_late_jobs_delta":sum(late)/len(late),
+                      "censored_original":sum(g["arms"]["v4_original_15"]["job_metrics"]["censored"] for g in selected),
+                      "censored_recovery":sum(g["arms"]["v4_recovery_15"]["job_metrics"]["censored"] for g in selected),
+                      "original_budget_fallbacks":sum(g["arms"]["v4_original_15"]["fallbacks"] for g in selected),
+                      "recovery_budget_fallbacks":sum(g["arms"]["v4_recovery_15"]["fallbacks"] for g in selected),
+                      "total_safety_violations":sum(a["safety_violations"] for g in selected for a in g["arms"].values()),
+                      "all_paired_deltas_ticks":diffs}
+          detail={"schema":"pr48-aggregate-all-48-independent-new-seed-v1",
+                  "cohort_unit":"48 unique real simulator episodes; 144 online trajectories",
+                  "source_json_sha256_by_regime":hashes,
+                  "protocol_checkpoint_pr44_sha256":list(versions)[0],
+                  "all_regimes":by_regime,
+                  "overall_recovery_vs_original":paired(groups),
+                  "by_mechanism":{x:paired([g for g in groups if g["mechanism"]==x])
+                                  for x in ("within_support","extended_outage")},
+                  "by_regime":{r:paired([g for g in groups if g["regime"]==r])
+                               for r in ("congestion","multi_fault","staggered_arrivals")},
+                  "by_regime_mechanism":{
+                      f"{r}/{m}":paired([g for g in groups if g["regime"]==r and g["mechanism"]==m])
+                      for r in ("congestion","multi_fault","staggered_arrivals")
+                      for m in ("within_support","extended_outage")},
+                  "no_new_training":True,"gpu":0}
+          (output/"aggregate.json").write_text(json.dumps(detail,ensure_ascii=False,indent=2)+"\n")
+          print("PR48_ALL_48_AGGREGATED",json.dumps({
+              "overall":detail["overall_recovery_vs_original"],
+              "by_regime":detail["by_regime"],
+              "by_mechanism":detail["by_mechanism"]},ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr48-aggregate/source_head.txt"
+          (cd "$RUNNER_TEMP/pr48-aggregate" && sha256sum aggregate.json source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr48-aggregate-all-48-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr48-aggregate/
+          retention-days: 90

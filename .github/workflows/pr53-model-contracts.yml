@@ -1,0 +1,37 @@
+name: PR53 constrained PyG world model action-difference gradient unit tests
+on:
+  push:
+    branches: [research/pr53-action-contrast-consistent-dynamics-20261112]
+    paths:
+      - .github/workflows/pr53-model-contracts.yml
+      - experiments/world_model_integration/action_pr53/pr53_train.py
+      - experiments/world_model_integration/action_pr53/test_pr53_train.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-PyG-world-model-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Reuse original PyTorch lock and PyG 2.6.1
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - name: Validate public graph node-state calibration, no leakage, gradient to shared transitions
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.action_pr53.test_pr53_train -v
+          python -m compileall -q experiments/world_model_integration/action_pr53
+          echo PR53_ACTION_DELTA_MODEL_CONTRACTS_PASSED

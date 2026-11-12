@@ -30,7 +30,7 @@ class QualityFirstWorldDataContracts(unittest.TestCase):
         self.assertTrue(all(c["split"]=="pilot_development_only"
                             for c in self.cfg["pilot_cases"]))
         self.assertEqual(self.cfg["resource_budget"]["gpu"],0)
-        self.assertFalse(self.cfg["resource_budget"]["not_authorized_full_scale_scenarios"])
+        self.assertTrue(self.cfg["resource_budget"]["not_authorized_full_scale_scenarios"])
         self.assertFalse(self.cfg["quality_gate_frozen_before_pilot"][
             "action_counterfactual_gate"].startswith("PASS"))
 

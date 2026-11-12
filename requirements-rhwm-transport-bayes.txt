@@ -1,0 +1,3 @@
+# External Bayesian estimation and inference, never a custom estimator.
+# MIT, https://github.com/pgmpy/pgmpy
+pgmpy==1.0.0

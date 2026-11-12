@@ -52,8 +52,10 @@ def split_point(a,b):
                 "recovery_candidates_fully_scored":recovery_full,
                 "score_or_budget_class":(
                     "both_completed_scoring" if original_full and recovery_full
-                    else "one_arm_incomplete_scoring"
-                    if original_full != recovery_full
+                    else "original_complete_recovery_incomplete"
+                    if original_full and not recovery_full
+                    else "original_incomplete_recovery_complete"
+                    if recovery_full and not original_full
                     else "both_incomplete_scoring"
                 ),
             }

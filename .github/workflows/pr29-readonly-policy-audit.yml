@@ -1,0 +1,62 @@
+name: PR29 read-only paired utility and horizon coverage audit
+
+on:
+  push:
+    branches: [research/pr29-horizon-scenario-generalization-20261112]
+    paths: [.github/workflows/pr29-readonly-policy-audit.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  archived-evidence-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore checksum-verified original PR29 evidence
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr29-audit/source"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13908108784/zip" \
+            -o "$RUNNER_TEMP/pr29-audit/source.zip"
+          unzip -q "$RUNNER_TEMP/pr29-audit/source.zip" -d "$RUNNER_TEMP/pr29-audit/source"
+          (cd "$RUNNER_TEMP/pr29-audit/source" && sha256sum -c evidence_sha256.txt)
+      - name: Run read-only published-method decision analysis
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.horizon_generalization.pr29_readonly_audit \
+            --source "$RUNNER_TEMP/pr29-audit/source/generalization.json" \
+            --out "$RUNNER_TEMP/pr29-audit/audit.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr29-audit/audit.log"
+          python - <<'PY'
+          import json,os,pathlib
+          x=json.loads((pathlib.Path(os.environ["RUNNER_TEMP"])/"pr29-audit/audit.json").read_text())
+          assert x["groups"]==32 and x["new_simulations"]==0 and x["new_forecasts"]==0
+          assert set(x["by_regime"])=={"light","medium","heavy_new_seed","heavy_service_shift"}
+          for grp in x["by_regime"].values():
+              assert set(grp)=={"rule","v4"}
+              for arm in grp.values():
+                  assert set(arm)=={"5","10","20"}
+                  for value in arm.values():
+                      assert sum(value[k] for k in (
+                          "wins_vs_cpsat","ties_vs_cpsat","losses_vs_cpsat"))==8
+          print("PR29_ARCHIVE_ONLY_INFERENCE_AUDIT_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/pr29-audit" && sha256sum audit.json audit.log > audit_sha256.txt)
+      - name: Upload independently verified read-only analysis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr29-readonly-decision-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr29-audit/audit.json
+            ${{ runner.temp }}/pr29-audit/audit.log
+            ${{ runner.temp }}/pr29-audit/audit_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

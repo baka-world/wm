@@ -98,7 +98,7 @@
       "regime": "multi_fault",
       "profile": "capacity_relief",
       "mechanism": "within_support",
-      "station_id": "C",
+      "station_id": "B0",
       "secondary_station_id": "C",
       "job_count": 12
     },
@@ -131,7 +131,7 @@
       "regime": "multi_fault",
       "profile": "shifted_releases",
       "mechanism": "extended_outage",
-      "station_id": "C",
+      "station_id": "B1",
       "secondary_station_id": "C",
       "job_count": 12
     },

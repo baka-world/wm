@@ -1,0 +1,150 @@
+name: PR52 train actual entity R-GCN prediction decision and gradient-weighted ablations
+on:
+  push:
+    branches: [research/pr52-entity-dynamics-decision-aware-20261112]
+    paths:
+      - .github/workflows/pr52-entity-training.yml
+      - experiments/world_model_integration/entity_pr52/pr52_train.py
+      - experiments/world_model_integration/entity_pr52/test_pr52_train.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  frozen-true-label-pyg-model-training:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Reproducible PyG 2.6.1 / original locked torch 2.5.1 CPU host
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch,torch_geometric
+          assert torch.version.cuda is None
+          assert torch_geometric.__version__=="2.6.1"
+          torch.set_num_threads(1)
+          print("PR52_REPRODUCIBLE_CPU_PROXY",torch.__version__,torch_geometric.__version__)
+          PY
+      - name: Retrieve ORIGINAL unmodified 228 factually paired entity data and SHA256-verify all
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr52learn/source"
+          for entry in "congestion:13925251731" "multi_fault:13925121588" "staggered_arrivals:13924917237"; do
+            REGIME="${entry%%:*}"
+            ID="${entry##*:}"
+            mkdir -p "$RUNNER_TEMP/pr52learn/source/$REGIME"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$ID/zip" \
+              -o "$RUNNER_TEMP/pr52learn/source/$REGIME.zip"
+            unzip -q "$RUNNER_TEMP/pr52learn/source/$REGIME.zip" \
+              -d "$RUNNER_TEMP/pr52learn/source/$REGIME"
+            (cd "$RUNNER_TEMP/pr52learn/source/$REGIME" && sha256sum -c SHA256SUMS)
+            grep -Fx "c72523d0bb296966978e02f852403b6e1d52c713" \
+              "$RUNNER_TEMP/pr52learn/source/$REGIME/source_head.txt"
+          done
+      - name: Physically isolate true public entity train/validation/test BEFORE model import
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr52learn/isolated"
+          python - <<'PY'
+          import os,json,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr52learn"
+          cases={"train":[],"validation":[],"test":[]}
+          refs=set()
+          source={}
+          for regime in ("congestion","multi_fault","staggered_arrivals"):
+              path=root/"source"/regime/"data.json"
+              src=json.loads(path.read_text())
+              assert src["schema"]=="pr52-true-entity-world-state-paired-actions-v1"
+              assert src["regime"]==regime and len(src["cases"])==76
+              refs.add(src["protocol_sha256"])
+              source[regime]=hashlib.sha256(path.read_bytes()).hexdigest()
+              for case in src["cases"]:
+                  assert case["regime"]==regime
+                  assert case["split"] in cases
+                  cases[case["split"]].append(case)
+          assert len(refs)==1
+          assert [len(cases[s]) for s in ("train","validation","test")]==[144,36,48]
+          assert len({c["seed"] for v in cases.values() for c in v})==228
+          for split,records in cases.items():
+              dst=root/"isolated"/(split+".json")
+              doc={"schema":"pr52-physical-isolated-public-entity-split-v1",
+                   "split":split,"source_protocol_sha256":next(iter(refs)),
+                   "cases":records}
+              dst.write_text(json.dumps(doc,ensure_ascii=False,indent=2)+"\n")
+          (root/"source-source-hashes.json").write_text(json.dumps(source,indent=2)+"\n")
+          print("PR52_SEALED_SOURCE_SPLITS",[(k,len(v)) for k,v in cases.items()])
+          PY
+      - name: Verify entity model/decision gradient contract from OFFICIAL PyG
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.entity_pr52.test_pr52_train -v \
+            2>&1 | tee "$RUNNER_TEMP/pr52learn/model-tests.log"
+      - name: Train 8 actual node-level relation/flat models; select from validation; test only after
+        run: |
+          set -euo pipefail
+          timeout 4900s python -m experiments.world_model_integration.entity_pr52.pr52_train \
+            --input "$RUNNER_TEMP/pr52learn/isolated" \
+            --out "$RUNNER_TEMP/pr52learn/trained" \
+            2>&1 | tee "$RUNNER_TEMP/pr52learn/train.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr52learn/trained"
+          x=json.loads((root/"result.json").read_text())
+          selection=json.loads((root/"selection.json").read_text())
+          assert x["schema"]=="pr52-trained-entity-conditional-world-model-independent-test-v1"
+          assert x["models_trained"]==8 and x["splits"]=={"train":144,"validation":36,"test":48}
+          assert selection["independent_test_not_read_during_training_or_selection"]
+          assert not x["gpu_training_used"] and not x["new_full_online_closed_loop_evaluation"]
+          assert len(list(root.glob("*.pt")))==8
+          assert set(x["independent_test"])=={
+              "rel_entity_pred_only","rel_entity_joint025",
+              "rel_entity_gradweighted","flat_entity_joint025_control"}
+          for arm,results in x["independent_test"].items():
+              assert set(results)=={"1810","1811"}
+              for seed,group in results.items():
+                  assert group["metrics"]["groups"]>0
+                  assert group["metrics"]["station_device_count"]>0
+          print("PR52_REAL_MODEL_TRAINING_AND_ISOLATED_TEST_VALIDATED",
+                x["selected_arm_validation_only"])
+          PY
+          mkdir -p "$RUNNER_TEMP/pr52learn/report"
+          cp "$RUNNER_TEMP/pr52learn/trained/result.json" "$RUNNER_TEMP/pr52learn/report/"
+          cp "$RUNNER_TEMP/pr52learn/trained/selection.json" "$RUNNER_TEMP/pr52learn/report/"
+          cp "$RUNNER_TEMP/pr52learn/train.log" "$RUNNER_TEMP/pr52learn/report/"
+          cp "$RUNNER_TEMP/pr52learn/model-tests.log" "$RUNNER_TEMP/pr52learn/report/"
+          cp "$RUNNER_TEMP/pr52learn/source-source-hashes.json" "$RUNNER_TEMP/pr52learn/report/"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr52learn/report/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr52learn/report/dependency-lock.sha256"
+          sha256sum "$RUNNER_TEMP/pr52learn/isolated/"*.json > "$RUNNER_TEMP/pr52learn/report/isolated-splits.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr52learn/report/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr52learn/report" && sha256sum *.json *.log *.txt *.sha256 > SHA256SUMS)
+      - name: Archive eight actual torch weights, Adam optimizer RNG and per-seed test metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr52-eight-entity-world-model-checkpoints-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr52learn/trained/*.pt
+            ${{ runner.temp }}/pr52learn/report/
+          retention-days: 90
+          if-no-files-found: warn

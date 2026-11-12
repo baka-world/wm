@@ -1,0 +1,83 @@
+name: H20 three independently archived strict CPU cohorts read only
+on:
+  push:
+    branches: [research/h20-independent-cohort-replication-20261112]
+    paths: [.github/workflows/h20-three-cohorts-readonly.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  three-cohort-decision-value:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: Verify source artifacts from three separate successful independent online runs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/replication3"
+          for record in "13912451562:pr36" "13911523921:pr37" "13912587157:pr38"; do
+            id="${record%%:*}"; tag="${record#*:}"
+            mkdir -p "$RUNNER_TEMP/replication3/$tag"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/replication3/$tag.zip"
+            unzip -q "$RUNNER_TEMP/replication3/$tag.zip" \
+              -d "$RUNNER_TEMP/replication3/$tag"
+            if [ "$tag" = pr38 ]; then
+              (cd "$RUNNER_TEMP/replication3/$tag" && sha256sum -c SHA256SUMS)
+            else
+              (cd "$RUNNER_TEMP/replication3/$tag" && sha256sum -c evidence_sha256.txt)
+            fi
+          done
+      - name: Verify model and independent-source mapping with fake records
+        run: |
+          set -euo pipefail
+          python -m unittest \
+            experiments.world_model_integration.h20_replication.test_replication \
+            experiments.world_model_integration.h20_replication.test_three -v \
+            2>&1 | tee "$RUNNER_TEMP/replication3/tests.log"
+      - name: Analyze 72 actual grouped scenarios without inference or simulation
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.h20_replication.compare_three \
+            --source36 "$RUNNER_TEMP/replication3/pr36/online-results.json" \
+            --source37 "$RUNNER_TEMP/replication3/pr37/strict-budget-online.json" \
+            --source38 "$RUNNER_TEMP/replication3/pr38/strict-online.json" \
+            --out "$RUNNER_TEMP/replication3/three-cohort-results.json" \
+            2>&1 | tee "$RUNNER_TEMP/replication3/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          p=Path(os.environ["RUNNER_TEMP"])/"replication3"
+          r=json.loads((p/"three-cohort-results.json").read_text())
+          s=r["summary"]
+          assert s["groups"]==72 and s["gpu"]==0 and s["new_training"]==0
+          assert s["new_inference"]==0 and s["new_trajectories"]==0
+          assert s["late_model_reranking_accepted"]==0
+          assert len({g["seed"] for g in r["groups"]})==72
+          assert all(s["by_regime"][regime]["groups"]==18
+                     for regime in ("light","medium","heavy","shift"))
+          print("H20_THREE_INDEPENDENT_SOURCE_COHORTS_PASSED")
+          PY
+          (cd "$RUNNER_TEMP/replication3" &&
+             sha256sum three-cohort-results.json run.log tests.log > evidence_sha256.txt)
+      - name: Archive validated source-analysis and scenario-level uncertainty
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhwm-h20-three-cohort-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/replication3/three-cohort-results.json
+            ${{ runner.temp }}/replication3/run.log
+            ${{ runner.temp }}/replication3/tests.log
+            ${{ runner.temp }}/replication3/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

@@ -602,5 +602,6 @@
     "research_decision_ignore_cpu_speed": true,
     "per_regime_process_seconds_max": 3300
   },
-  "next_training_gate": "Compare independent high-compute full rankings and public observation identifiability; if nontrivial errors remain, migrate adjacent-work event arrival process model and train under isolated new train/validation, selecting on validation only."
+  "next_training_gate": "Compare independent high-compute full rankings and public observation identifiability; if nontrivial errors remain, migrate adjacent-work event arrival process model and train under isolated new train/validation, selecting on validation only.",
+  "fixed_per_decision_cpu_process_budget_seconds": 30
 }

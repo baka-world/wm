@@ -66,8 +66,14 @@ def run(data_root,model_root,out):
     if out.exists():
         raise FileExistsError("PR53 blinded audit cannot overwrite")
     cfg=json.loads(PROTOCOL.read_text())
-    reference=json.loads((model_root/"result.json").read_text())
-    freeze=json.loads((model_root/"selection.json").read_text())
+    result_files=list(model_root.rglob("result.json"))
+    selection_files=list(model_root.rglob("selection.json"))
+    if len(result_files)!=1 or len(selection_files)!=1:
+        raise FileNotFoundError("exactly one archived ORIGINAL result and selection required")
+    if result_files[0].parent!=selection_files[0].parent:
+        raise ValueError("mismatched archived model selection and test report")
+    reference=json.loads(result_files[0].read_text())
+    freeze=json.loads(selection_files[0].read_text())
     if (reference["schema"]!="pr53-consistent-relational-action-contrast-independent-test-v1"
         or freeze["schema"]!="pr53-immutable-validation-only-calibrated-model-selection-v1"
         or not freeze["independent_test_not_loaded"]):

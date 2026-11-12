@@ -1,0 +1,129 @@
+name: PR46 recovery-mechanism-shift and full-online CPU frozen comparison
+on:
+  push:
+    branches: [research/pr46-recovery-mechanism-shift-online-20261112]
+    paths:
+      - .github/workflows/pr46-recovery-shift-online-cpu.yml
+      - experiments/world_model_integration/recovery_shift/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  new-mechanism-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Original frozen CPU dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "GPU training/inference not permitted"
+          torch.set_num_threads(1)
+          print("PR46_CPU",torch.__version__)
+          PY
+      - name: Recover verified immutable original V4 and original PR44 KM source
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr46/pr44"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr46/original_v4.zip"
+          unzip -p "$RUNNER_TEMP/pr46/original_v4.zip" v4-data.pt > "$RUNNER_TEMP/pr46/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr46/v4-data.pt" | sha256sum -c
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13915489041/zip \
+            -o "$RUNNER_TEMP/pr46/original_pr44.zip"
+          unzip -q "$RUNNER_TEMP/pr46/original_pr44.zip" -d "$RUNNER_TEMP/pr46/pr44"
+          (cd "$RUNNER_TEMP/pr46/pr44" && sha256sum -c SHA256SUMS)
+          grep -Fx "d3751b6743a4ad8e88448df77a7d9067d268cb39" "$RUNNER_TEMP/pr46/pr44/source_head.txt"
+          echo "PR46_V4=$RUNNER_TEMP/pr46/v4-data.pt" >> "$GITHUB_ENV"
+          echo "PR46_KM=$RUNNER_TEMP/pr46/pr44/result.json" >> "$GITHUB_ENV"
+      - name: Regress original explicit recovery transition and new protocol tests
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/recovery_shift
+          python -m unittest \
+            experiments.world_model_integration.recovery_integration.test_pr45 \
+            experiments.world_model_integration.recovery_shift.test_pr46 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr46/tests.log"
+      - name: Stage A, unseen synthetic mechanism 24-scene frozen H5 H20 forecast
+        run: |
+          set -euo pipefail
+          timeout 450s python -m experiments.world_model_integration.recovery_shift.pr46_forecast \
+            --checkpoint "$PR46_V4" --pr44-result "$PR46_KM" \
+            --out "$RUNNER_TEMP/pr46/forecast.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr46/forecast.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr46/forecast.json").read_text())
+          assert x["cohort"]=="forecast_only_not_online"
+          assert len(x["groups"])==24 and x["gpu"]==x["new_training"]==0
+          assert all(g["rows"] for g in x["groups"])
+          assert set(x["summary"]["by_mechanism"])=={"within_support","extended_outage"}
+          for mech,v in x["summary"]["by_mechanism"].items():
+              print("PR46_FORECAST_METRICS",mech,json.dumps(v,ensure_ascii=False))
+          print("PR46_FORECAST_VALIDATED")
+          PY
+      - name: Stage B, separate frozen online cohort 24 scenes x 3 arms
+        run: |
+          set -euo pipefail
+          timeout 720s python -m experiments.world_model_integration.recovery_shift.pr46_online \
+            --checkpoint "$PR46_V4" --pr44-result "$PR46_KM" \
+            --out "$RUNNER_TEMP/pr46/online.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr46/online.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr46"
+          x=json.loads((root/"online.json").read_text())
+          f=json.loads((root/"forecast.json").read_text())
+          assert x["cohort"]=="online_only_not_forecast"
+          assert len(x["groups"])==24 and x["gpu"]==x["training"]==0
+          assert set(x["summary"]["by_mechanism"])=={"within_support","extended_outage"}
+          assert not {g["seed"] for g in f["groups"]} & {g["seed"] for g in x["groups"]}
+          assert all(a["safety_violations"]==0 for g in x["groups"] for a in g["arms"].values())
+          assert all(len(g["arms"])==3 for g in x["groups"])
+          for mech,v in x["summary"]["by_mechanism"].items():
+              print("PR46_ONLINE_METRICS",mech,json.dumps(v,ensure_ascii=False))
+          print("PR46_ONLINE_VALIDATED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr46/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr46/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr46/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr46" && sha256sum forecast.json online.json forecast.log online.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive exact forecast + online group evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr46-recovery-shift-online-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr46/forecast.json
+            ${{ runner.temp }}/pr46/online.json
+            ${{ runner.temp }}/pr46/forecast.log
+            ${{ runner.temp }}/pr46/online.log
+            ${{ runner.temp }}/pr46/tests.log
+            ${{ runner.temp }}/pr46/source_head.txt
+            ${{ runner.temp }}/pr46/dependency-lock.sha256
+            ${{ runner.temp }}/pr46/pip-freeze.txt
+            ${{ runner.temp }}/pr46/SHA256SUMS
+          retention-days: 90
+          if-no-files-found: warn

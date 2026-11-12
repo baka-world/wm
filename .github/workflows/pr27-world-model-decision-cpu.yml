@@ -1,0 +1,84 @@
+name: PR27 paired real online world-model dispatch CPU
+
+on:
+  push:
+    branches: [feature/rhwm-worldmodel-dispatch-value-20261112]
+    paths: [.github/workflows/pr27-world-model-decision-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  frozen-paired-decision:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: Install pinned CPU environment and official pgmpy
+        run: |
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          uv pip install --system --python "$(command -v python)" -r requirements-rhwm-method-transfer.txt
+          uv pip install --system --python "$(command -v python)" -r requirements-rhwm-transport-bayes.txt
+          python -c "import torch; assert torch.version.cuda is None"
+      - name: Restore frozen pre-existing V4 and transport probability model
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr27"
+          for row in "13765135588:v4.zip" "13905800894:transport.zip"; do
+            id="${row%%:*}"; dest="${row#*:}"
+            curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/pr27/$dest"
+          done
+          unzip -p "$RUNNER_TEMP/pr27/v4.zip" v4-data.pt > "$RUNNER_TEMP/pr27/v4.pt"
+          unzip -p "$RUNNER_TEMP/pr27/transport.zip" pgmpy-model.json > "$RUNNER_TEMP/pr27/transport.json"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr27/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/pr27/v4.pt" >> "$GITHUB_ENV"
+          echo "RHWM_TRANSPORT_JSON=$RUNNER_TEMP/pr27/transport.json" >> "$GITHUB_ENV"
+      - name: Validate actual online dispatch, existing model contracts
+        run: |
+          timeout 180s python -m unittest discover -s experiments/world_model_integration/decision_value -v 2>&1 | tee "$RUNNER_TEMP/pr27/tests.log"
+      - name: Execute 12 fixed paired scenarios three online strategies
+        run: |
+          timeout 440s python -m experiments.world_model_integration.decision_value.pr27_evaluate \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --transport "$RHWM_TRANSPORT_JSON" \
+            --out "$RUNNER_TEMP/pr27/results.json" 2>&1 | tee "$RUNNER_TEMP/pr27/run.log"
+          python - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ["RUNNER_TEMP"])/"pr27"
+          r=json.loads((root/"results.json").read_text())
+          s=r["summary"]
+          assert s["independent_scene_groups"]==12
+          assert s["gpu"]==0 and s["new_training"]==0
+          assert set(s["arms"])=={"cpsat","v4","v4_plus_risk"}
+          assert all(x["groups"]==12 and x["safety_violations"]==0
+                     for x in s["arms"].values())
+          assert all(x["all_completed"]==12 for x in s["arms"].values())
+          assert sum(x["multiple_options"] for x in s["arms"].values())>0
+          print("PR27_REAL_PAIRED_POLICY_EVALUATION_PASSED")
+          PY
+          (cd "$RUNNER_TEMP/pr27" && sha256sum results.json run.log tests.log > evidence_sha256.txt)
+      - name: Archive whole factual episodes, policy selections, and safety checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr27-world-model-dispatch-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr27/results.json
+            ${{ runner.temp }}/pr27/tests.log
+            ${{ runner.temp }}/pr27/run.log
+            ${{ runner.temp }}/pr27/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

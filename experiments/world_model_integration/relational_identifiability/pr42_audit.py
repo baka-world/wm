@@ -172,6 +172,13 @@ def run_one(spec, cfg, checkpoint, network):
                 "waiting": float(dist.expected_waiting_samples),
                 "in_transit": float(dist.expected_in_transit_samples),
                 "resource_occupancy_mean": dict(dist.resource_occupancy_mean),
+                "sample_status_probabilities": {
+                    k: dict(v) for k, v in dist.sample_status_probabilities.items()
+                },
+                "robot_task_probabilities": {
+                    k: dict(v) for k, v in dist.robot_task_probabilities.items()
+                },
+                "station_service_probability": dict(dist.station_service_probability),
             },
             "h20_state_error_when_truth_observed": error,
             "truth_tick20_available": truth is not None,
@@ -201,6 +208,9 @@ def run_one(spec, cfg, checkpoint, network):
         "factual_makespan_second_minus_first": true_delta,
         "candidate_predictions_tied": (
             abs(pred_delta) <= 1e-9 if pred_delta is not None else None),
+        "h20_full_state_distribution_tied": (
+            rows[0]["predicted_h20"] == rows[1]["predicted_h20"]
+            if len(rows) == 2 else None),
         "true_makespan_different": (
             abs(true_delta) > 1e-9 if true_delta is not None else None),
         "h20_forecast_cpu_seconds": prediction_cpu,
@@ -224,9 +234,13 @@ def summarize(rows):
         "shared_query_coverage": sum(
             r["representation_comparison"]["same_query_count"] for r in eligible),
         "h20_completed_ties": sum(r["candidate_predictions_tied"] for r in eligible),
+        "h20_full_state_ties": sum(
+            r["h20_full_state_distribution_tied"] for r in eligible),
         "factual_sensitive_cases": len(misses),
         "sensitive_but_h20_tied": sum(
             r["candidate_predictions_tied"] for r in misses),
+        "sensitive_but_h20_full_state_tied": sum(
+            r["h20_full_state_distribution_tied"] for r in misses),
         "per_regime": {
             regime: {
                 "cases": sum(r["regime"] == regime for r in rows),

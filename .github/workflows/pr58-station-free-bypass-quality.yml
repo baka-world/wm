@@ -1,0 +1,185 @@
+name: PR58 station-free bypass map paired factual quality gate
+on:
+  push:
+    branches: [research/pr58-station-free-bypass-map-quality-20261112]
+    paths:
+      - .github/workflows/pr58-station-free-bypass-quality.yml
+      - experiments/world_model_integration/bypass_pr58/pr58_run.py
+      - experiments/world_model_integration/bypass_pr58/pr58_gate.py
+      - experiments/world_model_integration/bypass_pr58/protocol.json
+      - experiments/world_model_integration/bypass_pr58/test_pr58.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  exact-map-only-real-business:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Exact business-world CPU and official PyG graph runtime
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          print("PR58_REAL_CP_SAT_BUSINESS_PAIRED_MAP_ONLY_CPU_NO_GPU")
+          PY
+      - name: Frozen 12-to-12 map-only matching and station-free route topology checks
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr58"
+          python -m compileall -q experiments/world_model_integration/bypass_pr58
+          python -m unittest experiments.world_model_integration.bypass_pr58.test_pr58 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr58/tests.log"
+      - name: Reuse ORIGINAL validated PR56 simulator, lawful actions and full public future truth
+        env:
+          PR58_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2400s python -m experiments.world_model_integration.bypass_pr58.pr58_run \
+            --regime "$PR58_REGIME" \
+            --out "$RUNNER_TEMP/pr58/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr58/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          j=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr58/data.json").read_text())
+          assert j["schema"]=="pr58-real-map-only-paired-public-world-source-v1"
+          assert j["regime"]==os.environ["PR58_REGIME"]
+          assert len(j["scenes"])==4
+          assert j["summary"]["gpu"]==j["summary"]["neural_training"]==0
+          assert j["summary"]["full_real_t0_to_terminal_transitions"]==sum(
+              len(x["raw_actual_public_world_transitions"]) for x in j["scenes"])
+          for s in j["scenes"]:
+              assert s["case"]["split"]=="paired_topology_development_only"
+              assert s["original_pr56_map_only_comparison"]["same_true_business_outages_jobs_robots_rules"]
+              assert s["original_pr56_map_only_comparison"]["static_articulation_count"]==0
+              assert s["raw_actual_public_world_transitions"][-1]["target"]["next_public_tick"]==s["real_factual_ticks"]
+              assert all(row["input"]["public_map"]["static_map_digest"]==s["public_map"]["static_map_digest"]
+                         for row in s["raw_actual_public_world_transitions"])
+          print("PR58_ORIGINAL_PHYSICAL_WORLD_MAP_ONLY_SOURCE_VERIFIED",j["summary"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr58/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr58/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr58/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr58" && sha256sum data.json run.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Upload all real complete and right-censored outcomes without deletion
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr58-original-true-bypass-world-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr58/
+          retention-days: 90
+          if-no-files-found: warn
+  original-12-vs-new-12-quality:
+    needs: exact-map-only-real-business
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Same original reproducible BusinessSimulator dependency lock
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43219314493
+          github-token: ${{ github.token }}
+          pattern: pr56-real-topology-public-world-43219314493-*
+          path: ${{ runner.temp }}/pr58-original-pr57
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43219314493
+          github-token: ${{ github.token }}
+          name: pr56-real-public-map-data-admission-43219314493
+          path: ${{ runner.temp }}/pr58-original-pr57-gate
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr58-original-true-bypass-world-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr58-new
+      - name: Verify every original and new SHA and unchanged immutable original failed gate
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr58-audit"
+          python - <<'PY'
+          import os,subprocess,json
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])
+          exact_old="916552fdbf6908e94161d120a1efdd3092fb603d"
+          new_head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          for base,expected in ((root/"pr58-original-pr57",exact_old),
+                                (root/"pr58-new",new_head)):
+              paths=sorted(base.glob("*/data.json"))
+              assert len(paths)==3, f"need 3 source shards at {base}"
+              regimes=set()
+              for p in paths:
+                  subprocess.run(["sha256sum","-c","SHA256SUMS"],
+                                 cwd=p.parent,check=True)
+                  assert (p.parent/"source_head.txt").read_text().strip()==expected
+                  doc=json.loads(p.read_text())
+                  assert doc["regime"] not in regimes
+                  regimes.add(doc["regime"])
+              assert regimes=={"congestion","multi_fault","staggered_arrivals"}
+          gate=root/"pr58-original-pr57-gate"
+          subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=gate,check=True)
+          old=json.loads((gate/"quality.json").read_text())
+          assert old["decision"]=="NO_GO_BULK_CROSS_MAP_DATA_EXPANSION"
+          assert old["full_real_episodes_completed"]==7
+          print("PR58_ALL_ORIGINAL_AND_NEW_SOURCE_SHA_VERIFIED",
+                "original_7_completed_of_12",old["full_real_episodes_completed"])
+          PY
+      - name: Immutable original 12 vs new 12 map-only safety, rescue, H20 and uncensored quality verdict
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.bypass_pr58.pr58_gate \
+            --original-source "$RUNNER_TEMP/pr58-original-pr57" \
+            --new-source "$RUNNER_TEMP/pr58-new" \
+            --out "$RUNNER_TEMP/pr58-audit/paired-quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr58-audit/audit.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          j=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr58-audit/paired-quality.json").read_text())
+          assert j["schema"]=="pr58-immutable-bypass-map-only-actual-data-quality-gate-v1"
+          assert j["original_true_completed"]==7
+          assert j["original_true_right_censored"]==5
+          assert j["new_true_completed"]+j["new_true_right_censored"]==12
+          assert len(j["per_real_paired_scene"])==12
+          assert j["GPU_used"]==j["new_neural_training"]==0
+          assert j["independent_blind_test_ready"] is False
+          assert j["training_dataset_ready"] is False
+          print("PR58_REAL_SCIENTIFIC_QUALITY_GATE_RECORDED",j["decision"],j["failed"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr58-audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr58-audit" && sha256sum paired-quality.json audit.log source_head.txt > SHA256SUMS)
+      - name: Publish exact original true and right-censored matched pairs and verdict
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr58-real-map-only-paired-quality-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr58-audit/
+          retention-days: 90
+          if-no-files-found: warn

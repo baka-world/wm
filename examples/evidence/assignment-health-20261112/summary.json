@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-12",
+  "scope": "Offline/secondary analysis on PR16/PR17 artifacts and a 992-record diverse fault dataset generated with the PR16 BusinessSimulator; no model/training code changes; no deployable claim.",
+  "diverse_dataset": {
+    "base_cases": 8,
+    "variants_per_base": 31,
+    "fault_variants": 240,
+    "normal_variants": 8,
+    "plans_per_variant": 4,
+    "records": 992,
+    "all_completed": true,
+    "safety_violations": 0
+  },
+  "hierarchy": {
+    "Structured-5": {
+      "fault_total_regret": 376.333,
+      "fault_mean_regret": 1.568,
+      "hits": "71/240",
+      "normal_mean_flow": 41.667
+    },
+    "best_fixed_plan_oracle": {
+      "fault_total_regret": 233.0,
+      "fault_mean_regret": 0.971,
+      "hits": "179/240",
+      "normal_mean_flow": 40.917
+    },
+    "station_lookup": {
+      "fault_total_regret": 191.333,
+      "fault_mean_regret": 0.797,
+      "hits": "134/240",
+      "normal_mean_flow": 41.792
+    },
+    "per_station_ridge": {
+      "fault_total_regret": 187.333,
+      "fault_mean_regret": 0.781,
+      "hits": "140/240",
+      "normal_mean_flow": 41.562
+    },
+    "best_station_oracle": {
+      "fault_total_regret": 112.833,
+      "fault_mean_regret": 0.47,
+      "hits": "193/240",
+      "normal_mean_flow": 40.917
+    },
+    "full_oracle": {
+      "fault_total_regret": 0,
+      "fault_mean_regret": 0,
+      "hits": "240/240",
+      "fault_mean_flow": 42.79
+    }
+  },
+  "health_sensor": {
+    "detection_1.0_fp_0": {
+      "fault_total_regret": 187.4,
+      "normal_mean_flow": 0.646
+    },
+    "detection_0.75_fp_0": {
+      "fault_total_regret": 235.9
+    },
+    "detection_0.5_fp_0": {
+      "fault_total_regret": 283.2
+    },
+    "detection_0.0_fp_0": {
+      "fault_total_regret": 376.3
+    },
+    "detection_1.0_fp_0.25": {
+      "fault_total_regret": 187.4,
+      "normal_mean_flow": 0.722
+    }
+  },
+  "health_latency": {
+    "0": {
+      "fault_total_regret": 187.3,
+      "normal_mean_flow": 41.562
+    },
+    "2": {
+      "fault_total_regret": 1291.5,
+      "normal_mean_flow": 45.917
+    },
+    "5": {
+      "fault_total_regret": 2220.2,
+      "normal_mean_flow": 49.792
+    },
+    "10": {
+      "fault_total_regret": 3338.3,
+      "normal_mean_flow": 54.479
+    }
+  },
+  "partial_commitment": {
+    "structured_first_latency_2": {
+      "fault_total_regret": 452.7,
+      "normal_mean_flow": 42.042
+    },
+    "structured_first_latency_5": {
+      "fault_total_regret": 835.2,
+      "normal_mean_flow": 43.479
+    },
+    "robust_first_latency_2": {
+      "fault_total_regret": 919.3,
+      "normal_mean_flow": 43.562
+    },
+    "robust_first_latency_5": {
+      "fault_total_regret": 1360.0,
+      "normal_mean_flow": 46.0
+    }
+  },
+  "prior_policy": {
+    "Structured_weighted_fault_mean_regret": 2.106,
+    "best_fixed_prior_oracle": 1.2,
+    "deployable_prior_lookup": 2.373,
+    "per_station_ridge_exact_health": 0.82,
+    "best_station_oracle": 0.47
+  },
+  "conclusion": "Station-conditioned assignment features can reduce fault regret under immediate/accurate station health, but the gain is not deployable without per-decision health available at dispatch. Historical prior alone is worse than Structured; delayed or partial health is worse than Structured. The online V4 stack should not assume this gain without telemetry.",
+  "not_committed": [
+    "feature_records.json",
+    "diverse_records.json (~2.5 MB)",
+    "analysis scripts",
+    "PR16/PR17 raw artifacts",
+    "checkpoints"
+  ]
+}

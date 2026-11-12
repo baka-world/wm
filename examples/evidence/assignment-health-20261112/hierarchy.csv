@@ -1,0 +1,7 @@
+policy,fault_total_regret,fault_mean_regret,fault_hits,fault_n,fault_mean_flow,normal_mean_flow
+Structured-5,376.333,1.568,71,240,44.358,41.667
+best_fixed_plan_oracle,233.000,0.971,179,240,43.760,40.917
+station_lookup,191.333,0.797,134,240,43.587,41.792
+per_station_ridge,187.333,0.781,140,240,43.570,41.562
+best_station_oracle,112.833,0.470,193,240,43.260,40.917
+full_oracle,0,0,240,240,42.79,

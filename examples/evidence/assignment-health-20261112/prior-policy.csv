@@ -1,0 +1,6 @@
+policy,weighted_fault_mean_regret,note
+Structured-5,2.106,baseline
+best_fixed_plan_prior_oracle,1.2,oracle per base; not deployable
+deployable_prior_lookup,2.373,worse than Structured; global prior plan does not generalize
+per_station_ridge_exact_health,0.82,needs per-station health
+best_station_oracle,0.47,oracle per base/station; not deployable

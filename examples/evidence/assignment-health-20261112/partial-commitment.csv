@@ -1,0 +1,8 @@
+strategy,latency_ticks,fault_mean_regret,fault_total_regret,fault_hits,fault_n,normal_mean_flow
+full_plan_immediate_health,0,0.781,187.3,140,240,41.562
+structured_first_partial,2,1.886,452.7,40,240,42.042
+structured_first_partial,5,3.48,835.2,14,240,43.479
+robust_first_partial,2,3.831,919.3,22,240,43.562
+robust_first_partial,5,5.667,1360.0,7,240,46.0
+Structured,0,1.568,376.3,71,240,41.667
+wait_all,2,5.381,1291.5,1,240,45.917

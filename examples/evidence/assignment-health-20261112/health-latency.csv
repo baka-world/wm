@@ -1,0 +1,5 @@
+latency_ticks,fault_mean_regret,fault_total_regret,fault_hits,fault_n,fault_mean_flow,normal_mean_flow
+0,0.781,187.3,140,240,43.57,41.562
+2,5.381,1291.5,1,240,48.171,45.917
+5,9.251,2220.2,1,240,52.04,49.792
+10,13.91,3338.3,0,240,56.699,54.479

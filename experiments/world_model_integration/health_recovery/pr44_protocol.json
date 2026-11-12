@@ -1,0 +1,369 @@
+{
+  "protocol": "PR44_PUBLIC_CONDITIONED_RECOVERY_SURVIVAL_20261112_V1",
+  "source_commit": "e6988a322d29f6224ead69ff26590236a9927919",
+  "objective": "Estimate observed-downstation recovery dynamics using only timestamped public device_available history; do not predict unobservable onset",
+  "original_prior_work": "PR17 publicly observed health audit: no pre-onset precursor, 8 future faults only tick0, no current-down decision sample",
+  "method_reference": "Kaplan-Meier right-censored time-to-event survival, conditional on elapsed observed downtime; see PMC3932959 and repo prior KM service model",
+  "frozen_simulator": "BusinessSimulator + BusinessObserver + existing nearest BusinessPolicy. Generate synthetic fault schedules only when constructing separate true simulator scenarios, never pass schedule to predictor",
+  "station_ids": [
+    "B0",
+    "B1",
+    "C"
+  ],
+  "cohort": {
+    "train": [
+      {
+        "id": "TRAIN_B0_1",
+        "seed": 5100001,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_2",
+        "seed": 5100138,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_3",
+        "seed": 5100275,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_4",
+        "seed": 5100412,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_5",
+        "seed": 5100549,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_6",
+        "seed": 5100686,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_7",
+        "seed": 5100823,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_8",
+        "seed": 5100960,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_9",
+        "seed": 5101097,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_10",
+        "seed": 5101234,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_11",
+        "seed": 5101371,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B0_12",
+        "seed": 5101508,
+        "station_id": "B0"
+      },
+      {
+        "id": "TRAIN_B1_1",
+        "seed": 5110001,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_2",
+        "seed": 5110138,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_3",
+        "seed": 5110275,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_4",
+        "seed": 5110412,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_5",
+        "seed": 5110549,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_6",
+        "seed": 5110686,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_7",
+        "seed": 5110823,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_8",
+        "seed": 5110960,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_9",
+        "seed": 5111097,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_10",
+        "seed": 5111234,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_11",
+        "seed": 5111371,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_B1_12",
+        "seed": 5111508,
+        "station_id": "B1"
+      },
+      {
+        "id": "TRAIN_C_1",
+        "seed": 5120001,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_2",
+        "seed": 5120138,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_3",
+        "seed": 5120275,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_4",
+        "seed": 5120412,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_5",
+        "seed": 5120549,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_6",
+        "seed": 5120686,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_7",
+        "seed": 5120823,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_8",
+        "seed": 5120960,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_9",
+        "seed": 5121097,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_10",
+        "seed": 5121234,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_11",
+        "seed": 5121371,
+        "station_id": "C"
+      },
+      {
+        "id": "TRAIN_C_12",
+        "seed": 5121508,
+        "station_id": "C"
+      }
+    ],
+    "test": [
+      {
+        "id": "TEST_B0_1",
+        "seed": 6100001,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_2",
+        "seed": 6100140,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_3",
+        "seed": 6100279,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_4",
+        "seed": 6100418,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_5",
+        "seed": 6100557,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_6",
+        "seed": 6100696,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_7",
+        "seed": 6100835,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B0_8",
+        "seed": 6100974,
+        "station_id": "B0"
+      },
+      {
+        "id": "TEST_B1_1",
+        "seed": 6110001,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_2",
+        "seed": 6110140,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_3",
+        "seed": 6110279,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_4",
+        "seed": 6110418,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_5",
+        "seed": 6110557,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_6",
+        "seed": 6110696,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_7",
+        "seed": 6110835,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_B1_8",
+        "seed": 6110974,
+        "station_id": "B1"
+      },
+      {
+        "id": "TEST_C_1",
+        "seed": 6120001,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_2",
+        "seed": 6120140,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_3",
+        "seed": 6120279,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_4",
+        "seed": 6120418,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_5",
+        "seed": 6120557,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_6",
+        "seed": 6120696,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_7",
+        "seed": 6120835,
+        "station_id": "C"
+      },
+      {
+        "id": "TEST_C_8",
+        "seed": 6120974,
+        "station_id": "C"
+      }
+    ]
+  },
+  "synthetic_outage_design": {
+    "start_tick": 7,
+    "group_duration_support": {
+      "B0": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "B1": [
+        8,
+        12,
+        16,
+        20
+      ],
+      "C": [
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    "duration_choice": "Hidden simulator-only seeded SHA256 draw; no input field for true start/end/duration at prediction time",
+    "num_jobs": 10,
+    "max_ticks": 130,
+    "capacity": 1
+  },
+  "evaluation": {
+    "horizons": [
+      1,
+      5,
+      10
+    ],
+    "methods": [
+      "persist_down",
+      "pooled_km",
+      "station_km"
+    ],
+    "metric": "Brier of device becoming available at tick t+h conditional on known device down at t",
+    "grouping": "report episode-level macro means; multiple tick predictions within one outage are correlated; no IID confidence bands",
+    "no_future_labels_in_features": true
+  },
+  "execution": {
+    "gpu": 0,
+    "neural_training": 0,
+    "network_inference": 0,
+    "simulator_code_changes": 0,
+    "cpu_seconds_limit": 300
+  },
+  "claims": "Synthetic feasibility test of publicly observed recovery; not validated general failure prediction, no integration into V4 until recovery evidence and transition invariants pass"
+}

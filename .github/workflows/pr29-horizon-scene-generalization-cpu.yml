@@ -1,0 +1,104 @@
+name: PR29 frozen V4 horizon vs scenario generalization CPU
+
+on:
+  push:
+    branches: [research/pr29-horizon-scenario-generalization-20261112]
+    paths: [.github/workflows/pr29-horizon-scene-generalization-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  frozen-v4-generalization:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMBA_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: Install existing pinned CPU environment only
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR29_V4_CPU_ONLY",torch.__version__)
+          PY
+      - name: Restore frozen V4 without new model inference or fitting
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr29"
+          curl -fsSL --retry 3 \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip" \
+            -o "$RUNNER_TEMP/pr29/model.zip"
+          unzip -p "$RUNNER_TEMP/pr29/model.zip" v4-data.pt > "$RUNNER_TEMP/pr29/v4.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr29/v4.pt" | sha256sum -c
+          echo "RHWM_V4_CHECKPOINT=$RUNNER_TEMP/pr29/v4.pt" >> "$GITHUB_ENV"
+      - name: Run preregistration and real model inference gate
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/horizon_generalization
+          timeout 180s python -m unittest discover \
+            -s experiments/world_model_integration/horizon_generalization \
+            -p 'test_*.py' -v 2>&1 | tee "$RUNNER_TEMP/pr29/tests.log"
+          timeout 120s python -m unittest discover \
+            -s experiments/world_model_integration/dynamic_identifiability \
+            -p 'test_*.py' -v 2>&1 | tee "$RUNNER_TEMP/pr29/pr28-regression.log"
+      - name: One-shot 32 new grouped factual pairs with H5 H10 H20 Rule V4
+        run: |
+          set -euo pipefail
+          timeout 780s python -m experiments.world_model_integration.horizon_generalization.pr29_evaluate \
+            --checkpoint "$RHWM_V4_CHECKPOINT" \
+            --out "$RUNNER_TEMP/pr29/generalization.json" \
+            --cpu-budget 480 \
+            2>&1 | tee "$RUNNER_TEMP/pr29/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ["RUNNER_TEMP"])/"pr29"
+          r=json.loads((root/"generalization.json").read_text())
+          s=r["summary"]
+          assert s["total_independent_groups"]==32 and s["gpu"]==0 and s["new_training"]==0
+          assert set(s["by_regime"])=={"light","medium","heavy_new_seed","heavy_service_shift"}
+          assert all(x["groups"]==8 for x in s["by_regime"].values())
+          assert s["total_factual_runs"]>=32
+          for g in s["by_regime"].values():
+            for arm in ("rule","v4"):
+              assert set(g["arms"][arm])=={"5","10","20"}
+              for h in ("5","10","20"):
+                assert g["arms"][arm][h]["groups"]==8
+                assert g["arms"][arm][h]["mean_cpu_seconds_per_pair"]>=0
+          print("PR29_FROZEN_GENERALIZATION_REPRODUCIBLE",{
+            "groups":s["total_independent_groups"],
+            "factual_runs":s["total_factual_runs"],
+            "distinct_pairs":s["distinct_pair_groups"],
+          })
+          PY
+          (cd "$RUNNER_TEMP/pr29" && sha256sum generalization.json run.log tests.log pr28-regression.log > evidence_sha256.txt)
+      - name: Preserve actual scenario-level results, tests and source hashes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr29-horizon-scene-generalization-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr29/generalization.json
+            ${{ runner.temp }}/pr29/run.log
+            ${{ runner.temp }}/pr29/tests.log
+            ${{ runner.temp }}/pr29/pr28-regression.log
+            ${{ runner.temp }}/pr29/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

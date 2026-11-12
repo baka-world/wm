@@ -33,7 +33,7 @@ class Pr46ReadonlyTests(unittest.TestCase):
         a=episode([choice(8,"P1",True)])
         b=episode([choice(8,"P0",False)])
         d=split_point(a,b)
-        self.assertEqual(d["score_or_budget_class"],"one_arm_incomplete_scoring")
+        self.assertEqual(d["score_or_budget_class"],"original_complete_recovery_incomplete")
 
     def test_candidate_pool_difference_is_not_treated_as_common_state(self):
         a=episode([choice(7,"P0",first="P0")])

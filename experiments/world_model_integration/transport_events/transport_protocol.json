@@ -1,0 +1,710 @@
+{
+  "protocol": "TRANSPORT_PUBLIC_EVENTS_V1",
+  "paper_reference": "Tang and Wang, Scientific Reports 2025, doi 10.1038/s41598-024-82870-1",
+  "data_source": "actual synthetic business simulator event log with no additional event randomness",
+  "clock": "discrete ticks; arrival observed at beginning of first station-handling tick",
+  "max_ticks": 240,
+  "groups": [
+    {
+      "id": "TR01",
+      "seed": 310001,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR02",
+      "seed": 310212,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR03",
+      "seed": 310423,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR04",
+      "seed": 310634,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR05",
+      "seed": 310845,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR06",
+      "seed": 311056,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR07",
+      "seed": 311267,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR08",
+      "seed": 311478,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR09",
+      "seed": 311689,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR10",
+      "seed": 311900,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR11",
+      "seed": 312111,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR12",
+      "seed": 312322,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR13",
+      "seed": 312533,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR14",
+      "seed": 312744,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR15",
+      "seed": 312955,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR16",
+      "seed": 313166,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR17",
+      "seed": 313377,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR18",
+      "seed": 313588,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR19",
+      "seed": 313799,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR20",
+      "seed": 314010,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR21",
+      "seed": 314221,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR22",
+      "seed": 314432,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR23",
+      "seed": 314643,
+      "split": "train",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR24",
+      "seed": 314854,
+      "split": "train",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "VA01",
+      "seed": 410001,
+      "split": "validation",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "VA02",
+      "seed": 410212,
+      "split": "validation",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "VA03",
+      "seed": 410423,
+      "split": "validation",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "VA04",
+      "seed": 410634,
+      "split": "validation",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "VA05",
+      "seed": 410845,
+      "split": "validation",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "VA06",
+      "seed": 411056,
+      "split": "validation",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "VA07",
+      "seed": 411267,
+      "split": "validation",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "VA08",
+      "seed": 411478,
+      "split": "validation",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "HO01",
+      "seed": 510001,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "HO02",
+      "seed": 510212,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "HO03",
+      "seed": 510423,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "HO04",
+      "seed": 510634,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "HO05",
+      "seed": 510845,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "HO06",
+      "seed": 511056,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "HO07",
+      "seed": 511267,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "HO08",
+      "seed": 511478,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "HO09",
+      "seed": 511689,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "HO10",
+      "seed": 511900,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "HO11",
+      "seed": 512111,
+      "split": "holdout",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "HO12",
+      "seed": 512322,
+      "split": "holdout",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "future_decision_groups": [
+    {
+      "id": "DEC01",
+      "seed": 710001,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "DEC02",
+      "seed": 710212,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "DEC03",
+      "seed": 710423,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "DEC04",
+      "seed": 710634,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "DEC05",
+      "seed": 710845,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "DEC06",
+      "seed": 711056,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "DEC07",
+      "seed": 711267,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "DEC08",
+      "seed": 711478,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "DEC09",
+      "seed": 711689,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "DEC10",
+      "seed": 711900,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "DEC11",
+      "seed": 712111,
+      "split": "decision_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "DEC12",
+      "seed": 712322,
+      "split": "decision_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "future_horizon_groups": [
+    {
+      "id": "HOR01",
+      "seed": 610001,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "HOR02",
+      "seed": 610212,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "HOR03",
+      "seed": 610423,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "HOR04",
+      "seed": 610634,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "HOR05",
+      "seed": 610845,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "HOR06",
+      "seed": 611056,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "HOR07",
+      "seed": 611267,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "HOR08",
+      "seed": 611478,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "HOR09",
+      "seed": 611689,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "HOR10",
+      "seed": 611900,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "HOR11",
+      "seed": 612111,
+      "split": "horizon_blind",
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "HOR12",
+      "seed": 612322,
+      "split": "horizon_blind",
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "labels": {
+    "transport_start": "assigned/picked_up",
+    "transport_end": "transport_arrived",
+    "resource_admission": "service_started",
+    "delay": "max(0, elapsed transport - public shortest-path baseline)",
+    "excluded_from_features": [
+      "service_remaining",
+      "future event timestamps",
+      "future random pauses",
+      "future dispatch"
+    ]
+  },
+  "pre_registered_go_rule": "Only fit published transport Bayesian inference when holdout has both delayed and non-delayed realized legs and current public features differ; no posthoc simulator changes",
+  "budget": {
+    "gpu": 0,
+    "cpu_seconds": 240
+  }
+}

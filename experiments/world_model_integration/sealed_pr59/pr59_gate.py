@@ -158,7 +158,7 @@ def source_quality(paths,out):
             "real_eventful_transitions_after_old_56":after56,
             "raw_semantic_input_uniqueness_ratio":len(unique_sig)/max(1,raw_tick),
             "different_public_map_count":len(map_digest),
-            "map_family":next(iter({x["map_family"] for x in cases})),
+            "map_family":next(iter({x["case"]["map_family"] for x in cases})),
             "by_regime":dict(by_regime),
             "all_source_scenes":all_scene
         }

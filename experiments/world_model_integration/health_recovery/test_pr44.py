@@ -79,7 +79,7 @@ class RecoveryPublicContractTests(unittest.TestCase):
         self.assertEqual(len(p["cohort"]["test"]),24)
         self.assertEqual(p["execution"]["gpu"],0)
         self.assertEqual(p["execution"]["neural_training"],0)
-        self.assertTrue(p["no_future_labels_in_features"])
+        self.assertTrue(p["evaluation"]["no_future_labels_in_features"])
 
 
 if __name__=="__main__":

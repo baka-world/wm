@@ -1,0 +1,164 @@
+name: PR59 sealed novel map-family public world data and PyG gradient CPU gate
+on:
+  push:
+    branches: [research/pr59-sealed-topology-data-pyg-preflight-20261112]
+    paths:
+      - .github/workflows/pr59-sealed-world-data-cpu.yml
+      - experiments/world_model_integration/sealed_pr59/protocol.json
+      - experiments/world_model_integration/sealed_pr59/pr59_source.py
+      - experiments/world_model_integration/sealed_pr59/pr59_gate.py
+      - experiments/world_model_integration/sealed_pr59/pr59_dual_model.py
+      - experiments/world_model_integration/sealed_pr59/test_pr59.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  actual-novel-map-public-world:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        split: [train, validation]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Restore exact CPU PyTorch-Geometric and original BusinessSimulator dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "this is CPU-only collection"
+          torch.set_num_threads(1)
+          print("PR59_CPU_PUBLIC_GRAPH_SOURCE_ONLY_0GPU_0TRAIN")
+          PY
+      - name: Verify test seal, map family rules, PyG mixed index batching and map-to-transition gradient
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr59"
+          python -m compileall -q experiments/world_model_integration/sealed_pr59
+          python -m unittest experiments.world_model_integration.sealed_pr59.test_pr59 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr59/tests.log"
+      - name: Generate real full public time histories and original CP-SAT H5/H20 truth on approved split ONLY
+        env:
+          PR59_SPLIT: ${{ matrix.split }}
+        run: |
+          set -euo pipefail
+          test "$PR59_SPLIT" != test
+          timeout 2450s python -m experiments.world_model_integration.sealed_pr59.pr59_source \
+            --split "$PR59_SPLIT" --out "$RUNNER_TEMP/pr59/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr59/world.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          path=Path(os.environ["RUNNER_TEMP"])/"pr59/data.json"
+          q=json.loads(path.read_text())
+          split=os.environ["PR59_SPLIT"]
+          assert q["schema"]=="pr59-sha-sealed-natural-public-world-map-family-split-v1"
+          assert q["split"]==split
+          assert q["BLIND_TEST_RUN"] is False
+          assert len(q["scenes"])=={"train":24,"validation":12}[split]
+          assert q["summary"]["full_raw_factual_transitions"]==sum(len(x["raw_actual_public_world_transitions"]) for x in q["scenes"])
+          assert q["summary"]["gpu_used"]==0
+          assert q["summary"]["trained_network"] is False
+          for scene in q["scenes"]:
+              assert scene["case"]["split"]==split
+              assert scene["raw_actual_public_world_transitions"][-1]["target"]["next_public_tick"]==scene["real_factual_ticks"]
+          print("PR59_ALL_REAL_PUBLIC_SPLIT_FACTS_SAFELY_CAPTURED",split)
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr59/source_head.txt"
+          python -m pip freeze > "$RUNNER_TEMP/pr59/pip-freeze.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr59/dependencies.sha256"
+          (cd "$RUNNER_TEMP/pr59" && sha256sum data.json world.log tests.log source_head.txt pip-freeze.txt dependencies.sha256 > SHA256SUMS)
+      - name: Archive only truthful original data; no test output is permitted
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr59-real-public-world-${{ github.run_id }}-${{ matrix.split }}
+          path: ${{ runner.temp }}/pr59/
+          retention-days: 90
+          if-no-files-found: warn
+  natural-source-admission:
+    needs: actual-novel-map-public-world
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Original business dependency SHA and public graph libraries
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr59-real-public-world-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr59-unfiltered
+      - name: Check exactly two authentic separately sourced train/validation shards and unopened OOD TEST
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr59-audit"
+          python - <<'PY'
+          import os,json,subprocess,hashlib
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr59-unfiltered"
+          files=sorted(root.glob("*/data.json"))
+          assert len(files)==2, "BLIND test artifact must not exist"
+          source_head=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          splits=set()
+          proto=Path("experiments/world_model_integration/sealed_pr59/protocol.json")
+          digest=hashlib.sha256(proto.read_bytes()).hexdigest()
+          for file in files:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=file.parent,check=True)
+              assert (file.parent/"source_head.txt").read_text().strip()==source_head
+              x=json.loads(file.read_text())
+              assert x["source_protocol_sha256"]==digest
+              assert x["split"] in {"train","validation"}
+              assert x["BLIND_TEST_RUN"] is False
+              splits.add(x["split"])
+          assert splits=={"train","validation"}
+          print("PR59_PUBLIC_SOURCE_SHA_TEST_UNOPENED",source_head,splits)
+          PY
+      - name: Immutable quality PASS or explicit NO-GO on natural unfiltered train and validation source
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.sealed_pr59.pr59_gate \
+            --source "$RUNNER_TEMP/pr59-unfiltered" \
+            --out "$RUNNER_TEMP/pr59-audit/quality.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr59-audit/quality.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr59-audit/quality.json").read_text())
+          assert x["schema"]=="pr59-natural-map-family-physically-unopened-test-data-admission-v1"
+          assert x["BLIND_TEST_source_generated"] is False
+          assert x["BLIND_TEST_source_read"] is False
+          assert x["training_run_executed"] is False
+          assert x["GPU_hours"]==0
+          assert sum(v["genuine_scenarios"] for v in x["split_statistics"].values())==36
+          print("PR59_QUALITY_ADMISSION_RECORDED",x["scientific_verdict"],x["failures"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr59-audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr59-audit" && sha256sum quality.json quality.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr59-sealed-public-world-quality-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr59-audit/
+          retention-days: 90
+          if-no-files-found: warn

@@ -1,0 +1,76 @@
+name: PR48 read-only first-decision divergence audit of 48 stressed online runs
+on:
+  push:
+    branches: [research/pr48-independent-stress-generalization-20261112]
+    paths:
+      - .github/workflows/pr48-stress-readonly-attribution.yml
+      - experiments/world_model_integration/stress_pr48/pr48_readonly_stress.py
+      - experiments/world_model_integration/stress_pr48/test_pr48_readonly_stress.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  frozen-pr48-online-common-prefix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Retrieve three IMMUTABLE original PR48 stress artifacts and verify their hashes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr48read/congestion" "$RUNNER_TEMP/pr48read/multi_fault" \
+                   "$RUNNER_TEMP/pr48read/staggered_arrivals" "$RUNNER_TEMP/pr48read/audit"
+          for entry in "congestion:13920191801" "multi_fault:13919612600" "staggered_arrivals:13920495035"; do
+            REGIME="${entry%%:*}"
+            ID="${entry##*:}"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$ID/zip" \
+              -o "$RUNNER_TEMP/pr48read/$REGIME.zip"
+            unzip -q "$RUNNER_TEMP/pr48read/$REGIME.zip" -d "$RUNNER_TEMP/pr48read/$REGIME"
+            (cd "$RUNNER_TEMP/pr48read/$REGIME" && sha256sum -c SHA256SUMS)
+            grep -Fx "004388a075dbda078bd2b219dc04060a28ab8595" \
+              "$RUNNER_TEMP/pr48read/$REGIME/source_head.txt"
+          done
+      - name: Tests only on synthetic in-memory records
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.stress_pr48.test_pr48_readonly_stress -v \
+            2>&1 | tee "$RUNNER_TEMP/pr48read/audit/tests.log"
+      - name: Full common-prefix decision comparison with ZERO new inference or simulator
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.stress_pr48.pr48_readonly_stress \
+            --congestion "$RUNNER_TEMP/pr48read/congestion/result.json" \
+            --multi-fault "$RUNNER_TEMP/pr48read/multi_fault/result.json" \
+            --staggered-arrivals "$RUNNER_TEMP/pr48read/staggered_arrivals/result.json" \
+            --out "$RUNNER_TEMP/pr48read/audit/readonly.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr48read/audit/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          data=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr48read/audit/readonly.json").read_text())
+          assert data["schema"]=="pr48-readonly-first-common-prefix-decision-diagnostics-v1"
+          assert len(data["cases"])==48 and data["zero_new_simulation"] and data["zero_new_model_calls"]
+          assert data["gpu"]==data["training"]==0
+          for r,x in data["summary"]["by_regime"].items():
+              print("PR48_READONLY_REGIME",r,json.dumps(x,ensure_ascii=False))
+          print("PR48_READONLY_48_VALIDATED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr48read/audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr48read/audit" && sha256sum readonly.json tests.log run.log source_head.txt > SHA256SUMS)
+      - name: Archive checked source-based diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr48-stress-readonly-diagnostics-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr48read/audit/
+          retention-days: 90
+          if-no-files-found: warn

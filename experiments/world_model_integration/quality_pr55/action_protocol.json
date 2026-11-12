@@ -1,0 +1,48 @@
+{
+  "protocol": "PR55_ACTION_CONTRAST_INFORMATION_QUALITY_DEV_ONLY_V1",
+  "parent_quality_protocol": "PR55_QUALITY_FIRST_PUBLIC_WORLD_DATA_PILOT_V1_20261112",
+  "evidence_gate": "Original PR55 18 true development quality episode QA must be PASS_NEXT_PHASE_DESIGN; no GPU, no new model training",
+  "ids": [
+    "PR55_PILOT_CONGESTION_BASELINE",
+    "PR55_PILOT_CONGESTION_HIGHER_DEMAND",
+    "PR55_PILOT_CONGESTION_CAPACITY_RELIEF",
+    "PR55_PILOT_CONGESTION_FEWER_ROBOTS",
+    "PR55_PILOT_CONGESTION_SLOW_SERVICE",
+    "PR55_PILOT_CONGESTION_SHIFTED_RELEASES",
+    "PR55_PILOT_MULTI_FAULT_BASELINE",
+    "PR55_PILOT_MULTI_FAULT_HIGHER_DEMAND",
+    "PR55_PILOT_MULTI_FAULT_CAPACITY_RELIEF",
+    "PR55_PILOT_MULTI_FAULT_FEWER_ROBOTS",
+    "PR55_PILOT_MULTI_FAULT_SLOW_SERVICE",
+    "PR55_PILOT_MULTI_FAULT_SHIFTED_RELEASES",
+    "PR55_PILOT_STAGGERED_ARRIVALS_BASELINE",
+    "PR55_PILOT_STAGGERED_ARRIVALS_HIGHER_DEMAND",
+    "PR55_PILOT_STAGGERED_ARRIVALS_CAPACITY_RELIEF",
+    "PR55_PILOT_STAGGERED_ARRIVALS_FEWER_ROBOTS",
+    "PR55_PILOT_STAGGERED_ARRIVALS_SLOW_SERVICE",
+    "PR55_PILOT_STAGGERED_ARRIVALS_SHIFTED_RELEASES"
+  ],
+  "candidate_limit": 4,
+  "anchor_tick_min": 7,
+  "anchor_tick_max": 70,
+  "public_horizons": [
+    5,
+    20
+  ],
+  "comparison": "same pre-action public observation hash, same legal CP-SAT proposals hash, same scenario simulator seed and exogenous schedule; 1 alternate FIRST dispatch action only and then common CP-SAT first continuation; future stochastic draws may diverge with changed execution order, report as limitation",
+  "minimum_labelable_scenes": 18,
+  "minimum_complete_h5h20_scenes": 18,
+  "minimum_scenes_with_true_h20_entity_effect": 12,
+  "minimum_scenes_with_true_final_makespan_effect": 9,
+  "require_identical_preaction_history": true,
+  "require_all_business_safety": true,
+  "no_future_information": "input public graph cannot contain source hidden duration, undisclosed release table, or future states; future state only in labels",
+  "interpretation": "Development-only action intervention information content gate. Not a causal inference claim about all hidden events, not unseen test and not proof of model learned dynamics.",
+  "resource": {
+    "GPU": 0,
+    "neural_training": 0,
+    "pilot_truth_scenarios": 18,
+    "max_branches_each": 4
+  },
+  "new_data_expansion_permission": "If action QA PASS, can freeze a separate larger TRAIN/VALIDATION/TEST protocol with actual new topology variation and natural unbiased validation. Do not generate 240 from this protocol."
+}

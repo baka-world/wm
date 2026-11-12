@@ -1,0 +1,85 @@
+{
+  "protocol": "PR51_RGCN_DECISION_AWARE_TRAINING_PILOT_20261112_V1",
+  "source_original_label_run": 43173980738,
+  "original_label_source_commit": "86d9ab59e609f159a41b9434834a3a60e4f455dd",
+  "source_artifacts": {
+    "congestion": 13923077762,
+    "multi_fault": 13923706267,
+    "staggered_arrivals": 13923401729
+  },
+  "method_sources": [
+    "Schlichtkrull et al R-GCN 2018 PyTorch Geometric RGCNConv",
+    "VaGraM ICLR 2022 decision-aware dynamics optimization motivation",
+    "VAML 2017 decision-aware model learning motivation"
+  ],
+  "torch_geometric_version": "2.6.1",
+  "predeclared_model": "two PyG RGCNConv layers hidden32, pooled predicted H5+H20 5-field system-state summary conditioned by explicit proposed robot-task action edges",
+  "use_fixed_original_pr30_score": "negative predicted H20 completed-stage count, SAME for prediction-only and joint-training models, no new ranker",
+  "train_arms": [
+    {
+      "id": "relation_pred_only",
+      "lambda": 0,
+      "relations": true
+    },
+    {
+      "id": "relation_joint025",
+      "lambda": 0.25,
+      "relations": true
+    },
+    {
+      "id": "relation_joint1",
+      "lambda": 1,
+      "relations": true
+    },
+    {
+      "id": "flat_joint1_control",
+      "lambda": 1,
+      "relations": false
+    }
+  ],
+  "train_splits": [
+    "train"
+  ],
+  "model_select_split": "validation",
+  "test_splits": [
+    "test"
+  ],
+  "checkpoint_selection": "minimum validation true counterfactual regret, tie -> lower validation normalized H5/H20 prediction MSE, and do not use test outcomes",
+  "epochs": 40,
+  "learning_rate": 0.002,
+  "seed": 1810,
+  "hidden_size": 32,
+  "normalized_state_target_scales": [
+    32,
+    32,
+    4,
+    5,
+    5
+  ],
+  "state_future_fields": [
+    "completed_stage_count",
+    "waiting_stage_count",
+    "in_transit_count",
+    "busy_resource_port_count",
+    "station_device_down_count"
+  ],
+  "horizons": [
+    5,
+    20
+  ],
+  "model_quality_endpoints": [
+    "normalized multi-step state MSE",
+    "pairwise candidate ordering accuracy excluding true ties",
+    "true regret vs best candidate after same action prefix",
+    "CP-SAT first candidate regret"
+  ],
+  "training_safety": {
+    "test_read_after_selection_written": true,
+    "gradient_must_reach_RGCNConv_weights": true,
+    "ranking_ties_unlabeled": true,
+    "training_simulator_calls": 0,
+    "model_scoring_changes": 0,
+    "training_GPU_used": false
+  },
+  "limitations": "72 paired scenario groups only (36 train/12 validation/24 independent test), same-map synthetic pilot, not final publication-scale training or GPU serving benchmark"
+}

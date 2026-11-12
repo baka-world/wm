@@ -243,7 +243,7 @@ def evaluate_one(spec,config,checkpoint):
     if len(plans)<2:
         return info
     other=run_factual(spec,config,1)
-    if (other["first_public"]!=first["first_public"]
+    if (other["first_state"]!=first["first_state"]
             or other["first_plans"]!=first["first_plans"]):
         raise AssertionError("initial state or legal candidate set changed between counterfactual runs")
     a,b=first["outcomes"],other["outcomes"]

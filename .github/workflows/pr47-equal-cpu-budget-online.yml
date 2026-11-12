@@ -1,0 +1,109 @@
+name: PR47 equal CPU budget 0.5 vs 1.5 H20 online independent cohort
+on:
+  push:
+    branches: [research/pr47-equal-budget-h20-recovery-20261112]
+    paths:
+      - .github/workflows/pr47-equal-cpu-budget-online.yml
+      - experiments/world_model_integration/recovery_budget/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  fair-1-5-second-world-model-online:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install original pinned CPU research environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None, "PR47 strictly CPU"
+          torch.set_num_threads(1)
+          print("PR47_CPU_TORCH",torch.__version__)
+          PY
+      - name: Restore unchanged V4 and PR44 train-only KM source with SHA256 verification
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr47/pr44"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13765135588/zip \
+            -o "$RUNNER_TEMP/pr47/original_v4.zip"
+          unzip -p "$RUNNER_TEMP/pr47/original_v4.zip" v4-data.pt > "$RUNNER_TEMP/pr47/v4-data.pt"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr47/v4-data.pt" | sha256sum -c
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/lieuyimo/wm/actions/artifacts/13915489041/zip \
+            -o "$RUNNER_TEMP/pr47/original_pr44.zip"
+          unzip -q "$RUNNER_TEMP/pr47/original_pr44.zip" -d "$RUNNER_TEMP/pr47/pr44"
+          (cd "$RUNNER_TEMP/pr47/pr44" && sha256sum -c SHA256SUMS)
+          grep -Fx "d3751b6743a4ad8e88448df77a7d9067d268cb39" "$RUNNER_TEMP/pr47/pr44/source_head.txt"
+          echo "PR47_V4=$RUNNER_TEMP/pr47/v4-data.pt" >> "$GITHUB_ENV"
+          echo "PR47_KM=$RUNNER_TEMP/pr47/pr44/result.json" >> "$GITHUB_ENV"
+      - name: Exact 0.5 vs 1.5 CPU budget, original event contracts, independent cohorts
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/recovery_budget
+          python -m unittest \
+            experiments.world_model_integration.recovery_integration.test_pr45 \
+            experiments.world_model_integration.recovery_shift.test_pr46 \
+            experiments.world_model_integration.recovery_budget.test_pr47 -v \
+            2>&1 | tee "$RUNNER_TEMP/pr47/tests.log"
+      - name: Run all 24 new scenes each 5 CPU-fair policies; never adjust tested weights
+        run: |
+          set -euo pipefail
+          timeout 1680s python -m experiments.world_model_integration.recovery_budget.pr47_online \
+            --checkpoint "$PR47_V4" --pr44-result "$PR47_KM" \
+            --out "$RUNNER_TEMP/pr47/online.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr47/online.log"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"pr47/online.json"
+          d=json.loads(p.read_text())
+          assert d["schema"]=="pr47-equal-budget-closed-loop-new-cohort-v1"
+          assert d["summary"]["scenes"]==24 and d["summary"]["total_episodes"]==120
+          assert d["no_new_training"] and d["gpu"]==0
+          assert len({g["seed"] for g in d["scenes"]})==24
+          assert all(len(g["arms"])==5 for g in d["scenes"])
+          assert all(a["safety_violations"]==0 for g in d["scenes"] for a in g["arms"].values())
+          for m,x in d["summary"]["by_mechanism"].items():
+              assert x["groups"]==12
+              print("PR47_NEW_ONLINE_METRICS",m,json.dumps(x,ensure_ascii=False))
+          print("PR47_EQUAL_CPU_BUDGET_VALIDATED")
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr47/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr47/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr47/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr47" && sha256sum online.json online.log tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Preserve all raw online evidence and replay provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr47-equal-cpu-budget-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr47/online.json
+            ${{ runner.temp }}/pr47/online.log
+            ${{ runner.temp }}/pr47/tests.log
+            ${{ runner.temp }}/pr47/source_head.txt
+            ${{ runner.temp }}/pr47/dependency-lock.sha256
+            ${{ runner.temp }}/pr47/pip-freeze.txt
+            ${{ runner.temp }}/pr47/SHA256SUMS
+          retention-days: 90
+          if-no-files-found: warn

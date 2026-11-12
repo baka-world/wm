@@ -1,0 +1,160 @@
+name: PR52 full public entity futures from paired factual business decisions
+on:
+  push:
+    branches: [research/pr52-entity-dynamics-decision-aware-20261112]
+    paths:
+      - .github/workflows/pr52-entity-labels.yml
+      - experiments/world_model_integration/entity_pr52/pr52_protocol.json
+      - experiments/world_model_integration/entity_pr52/pr52_labels.py
+      - experiments/world_model_integration/entity_pr52/test_pr52_labels.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  true-factual-entity-outcomes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install pinned original BusinessSimulator dependencies on CPU research host
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          torch.set_num_threads(1)
+          print("PR52 CPU-hosted true business simulation, not the eventual GPU serving benchmark")
+          PY
+      - name: Current public entities, H5/H20 identity/mask and test isolation
+        run: |
+          set -euo pipefail
+          python -m compileall -q experiments/world_model_integration/entity_pr52
+          python -m unittest experiments.world_model_integration.entity_pr52.test_pr52_labels -v \
+            2>&1 | tee "$RUNNER_TEMP/pr52-unit-tests.log"
+      - name: Same-true-world counterfactual actions with new node-level state outcomes
+        env:
+          PR52_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr52"
+          timeout 4200s python -m experiments.world_model_integration.entity_pr52.pr52_labels \
+            --regime "$PR52_REGIME" --out "$RUNNER_TEMP/pr52/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr52/run.log"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          root=Path(os.environ["RUNNER_TEMP"])/"pr52"
+          x=json.loads((root/"data.json").read_text())
+          assert x["schema"]=="pr52-true-entity-world-state-paired-actions-v1"
+          assert x["regime"]==os.environ["PR52_REGIME"]
+          assert len(x["cases"])==76
+          assert len({c["seed"] for c in x["cases"]})==76
+          assert x["summary"]["training"]==x["summary"]["gpu"]==0
+          for c in x["cases"]:
+              if not c["labelable"]:continue
+              graph=c["public_graph"]
+              assert len(graph["candidate_actions"])==c["candidate_count"]
+              assert len(c["true_factual_outcomes"])==c["candidate_count"]
+              for branch in c["true_factual_outcomes"]:
+                  for h in ("5","20"):
+                      if h not in branch["future_entity_states"]:continue
+                      future=branch["future_entity_states"][h]
+                      assert len(future["node_target"])==len(graph["nodes"])
+                      assert len(future["node_target_mask"])==len(graph["nodes"])
+                      assert all(len(t)==len(m)==6 for t,m in
+                                 zip(future["node_target"],future["node_target_mask"]))
+          print("PR52_TRUE_ENTITY_LABELS_VALIDATED",json.dumps(x["summary"],ensure_ascii=False))
+          PY
+          cp "$RUNNER_TEMP/pr52-unit-tests.log" "$RUNNER_TEMP/pr52/unit-tests.log"
+          git rev-parse HEAD > "$RUNNER_TEMP/pr52/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr52/dependency-lock.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr52/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr52" && sha256sum data.json run.log unit-tests.log source_head.txt dependency-lock.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Archive all true branch outcomes with public-only graph and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr52-entity-true-labels-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr52/
+          retention-days: 90
+          if-no-files-found: warn
+  consolidated-label-availability:
+    needs: true-factual-entity-outcomes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr52-entity-true-labels-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr52-input
+      - name: Verify source hashes and 228 disjoint samples, preserve all censoring
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr52-audit"
+          python - <<'PY'
+          import json,hashlib,os,subprocess
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"pr52-input"
+          paths=sorted(root.glob("*/data.json"))
+          assert len(paths)==3
+          cases=[]
+          heads=set()
+          refs=set()
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              x=json.loads(path.read_text())
+              assert len(x["cases"])==76
+              heads.add((path.parent/"source_head.txt").read_text().strip())
+              refs.add(x["protocol_sha256"])
+              cases.extend(x["cases"])
+          assert len(heads)==len(refs)==1
+          assert len(cases)==228 and len({x["seed"] for x in cases})==228
+          def aggregate(rows):
+              return {
+                  "groups":len(rows),"labelable":sum(c["labelable"] for c in rows),
+                  "node_horizons_ready":sum(c.get("full_entity_horizon_labels_available",False) for c in rows),
+                  "nontrivial_action_effect":sum(c.get("nontrivial_rank_signal",False) for c in rows),
+                  "true_branches":sum(c.get("candidate_count",0) for c in rows),
+                  "censored":sum(c["labelable"] and not c.get("all_branches_completed",False)
+                                 for c in rows)
+              }
+          result={"schema":"pr52-new-entity-true-state-dataset-integrity-v1",
+                  "source_head":next(iter(heads)),
+                  "protocol_sha256":next(iter(refs)),
+                  "overall":aggregate(cases),
+                  "by_split":{s:aggregate([x for x in cases if x["split"]==s])
+                              for s in ("train","validation","test")},
+                  "by_regime":{r:aggregate([x for x in cases if x["regime"]==r])
+                               for r in ("congestion","multi_fault","staggered_arrivals")},
+                  "gpu":0,"neural_training":False}
+          dst=Path(os.environ["RUNNER_TEMP"])/"pr52-audit"
+          (dst/"summary.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
+          print("PR52_ENTITY_LABELS_ALL228",json.dumps(result,ensure_ascii=False))
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr52-audit/aggregate_head.txt"
+          (cd "$RUNNER_TEMP/pr52-audit" && sha256sum summary.json aggregate_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr52-entity-labels-summary-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr52-audit/
+          retention-days: 90

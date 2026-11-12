@@ -1,0 +1,148 @@
+name: PR54 real temporal RGCN GRU vs snapshot one-step independent evaluation
+on:
+  push:
+    branches: [research/pr54-temporal-relational-transition-20261112]
+    paths:
+      - .github/workflows/pr54-temporal-cpu-train.yml
+      - experiments/world_model_integration/temporal_pr54/pr54_model.py
+      - experiments/world_model_integration/temporal_pr54/pr54_train.py
+      - experiments/world_model_integration/temporal_pr54/test_pr54.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  real-temporal-pyg-transition-pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Actual original business-world PyTorch dependencies and official PyG
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch,torch_geometric
+          assert torch.version.cuda is None
+          assert torch_geometric.__version__=="2.6.1"
+          torch.set_num_threads(1)
+          print("PR54_TRAIN_ON_CPU_FOR_STRUCTURE_GATE_NOT_GPU_DEPLOYMENT")
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43191970049
+          github-token: ${{ github.token }}
+          pattern: pr54-public-true-transitions-43191970049-*
+          path: ${{ runner.temp }}/temporal54/raw
+      - name: SHA verify immutable true source data and physically isolate each test split
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/temporal54/isolated" "$RUNNER_TEMP/temporal54/report"
+          python - <<'PY'
+          from pathlib import Path
+          import os,json,hashlib,subprocess
+          src=Path(os.environ["RUNNER_TEMP"])/"temporal54"
+          paths=sorted((src/"raw").glob("*/data.json"))
+          assert len(paths)==3, f"need three original real artifacts, got {len(paths)}"
+          cfg=json.loads(Path("experiments/world_model_integration/temporal_pr54/protocol.json").read_text())
+          original={x["seed"]:x for x in cfg["cohort"]}
+          seal={"train":[],"validation":[],"test":[]}
+          shas=set()
+          heads=set()
+          seen=set()
+          source={}
+          for path in paths:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=path.parent,check=True)
+              record=json.loads(path.read_text())
+              assert record["schema"]=="pr54-true-public-temporal-world-transitions-v1"
+              assert len(record["episodes"])==20
+              shas.add(record["protocol_sha256"])
+              heads.add((path.parent/"source_head.txt").read_text().strip())
+              source[record["regime"]]=hashlib.sha256(path.read_bytes()).hexdigest()
+              for ep in record["episodes"]:
+                  assert ep["seed"] not in seen
+                  seen.add(ep["seed"])
+                  expected=original[ep["seed"]]
+                  assert all(ep[k]==expected[k] for k in ("id","split","regime"))
+                  assert ep["real_observation_transitions"]==56
+                  assert ep["split"] in seal
+                  seal[ep["split"]].append(ep)
+          assert heads=={"60c951ac1affc60136f4c758a76767137a518e63"}
+          assert len(shas)==1 and len(seen)==60 and seen==set(original)
+          assert [len(seal[x]) for x in ("train","validation","test")]==[36,12,12]
+          for name,eps in seal.items():
+              (src/"isolated"/(name+".json")).write_text(
+                  json.dumps({
+                      "schema":"pr54-physically-isolated-temporal-world-split-v1",
+                      "split":name,"source_protocol_sha256":next(iter(shas)),
+                      "episodes":eps
+                  },ensure_ascii=False)+"\n")
+          (src/"report"/"source-sha.json").write_text(json.dumps(source,indent=2)+"\n")
+          print("PR54_PHYSICALLY_SEALED_TRUE_PUBLIC_SPLITS",
+                [(name,len(eps),sum(len(ep["transitions"]) for ep in eps))
+                 for name,eps in seal.items()])
+          PY
+      - name: Real simulator public history, PyG node graph gradient and test-access gates
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.temporal_pr54.test_pr54 -v \
+            2>&1 | tee "$RUNNER_TEMP/temporal54/report/unit-tests.log"
+      - name: Train two equal-size world models across two frozen seeds, test after validation freeze
+        run: |
+          set -euo pipefail
+          timeout 3000s python -m experiments.world_model_integration.temporal_pr54.pr54_train \
+            --input "$RUNNER_TEMP/temporal54/isolated" \
+            --out "$RUNNER_TEMP/temporal54/trained" \
+            --device cpu \
+            2>&1 | tee "$RUNNER_TEMP/temporal54/report/train.log"
+          python - <<'PY'
+          from pathlib import Path
+          import os,json
+          d=Path(os.environ["RUNNER_TEMP"])/"temporal54/trained"
+          final=json.loads((d/"result.json").read_text())
+          selection=json.loads((d/"selection.json").read_text())
+          assert final["schema"]=="pr54-new-one-step-public-history-independent-test-v1"
+          assert final["splits"]=={"train":36,"validation":12,"test":12}
+          assert final["trained_models"]==4
+          assert selection["test_was_not_read_before_selection"]
+          assert final["selected_before_test"]==selection["selected_arm"]
+          assert not final["real_GPU_training"]
+          assert len(list(d.glob("*_best.pt")))==4
+          assert len(list(d.glob("*_last.pt")))==4
+          for arm in ("snapshot_only","public_history_gru"):
+              assert set(final["test"][arm])=={"1810","1811"}
+              for result in final["test"][arm].values():
+                  assert result["independent_scenarios"]==12
+                  assert result["real_public_transitions"]==672
+                  assert result["scenario_macro_entity_mse"]>=0
+          print("PR54_SEALED_TRUE_TEST_VERIFIED",final["selected_before_test"])
+          PY
+          cp "$RUNNER_TEMP/temporal54/trained/result.json" "$RUNNER_TEMP/temporal54/report/"
+          cp "$RUNNER_TEMP/temporal54/trained/selection.json" "$RUNNER_TEMP/temporal54/report/"
+          git rev-parse HEAD > "$RUNNER_TEMP/temporal54/report/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/temporal54/report/dependency-lock.sha256"
+          sha256sum "$RUNNER_TEMP/temporal54/isolated/"*.json > "$RUNNER_TEMP/temporal54/report/sealed-splits.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/temporal54/report/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/temporal54/report" && sha256sum result.json selection.json train.log unit-tests.log source_head.txt source-sha.json pip-freeze.txt dependency-lock.sha256 sealed-splits.sha256 > SHA256SUMS)
+      - name: Archive four true-model best and last optimizer/RNG checkpoints plus independent test
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr54-trained-temporal-relational-world-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/temporal54/trained/*_best.pt
+            ${{ runner.temp }}/temporal54/trained/*_last.pt
+            ${{ runner.temp }}/temporal54/report/
+          retention-days: 90
+          if-no-files-found: warn

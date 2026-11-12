@@ -56,7 +56,6 @@ class ExplicitRecoveryContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             inject_recovery(raw,["NO_STATION"],business.rules)
         good=inject_recovery(raw,["B0"],business.rules)
-        self.assertIs(good if False else None,None)  # keep constructed state live
         with self.assertRaises(ValueError):
             check_recovery_boundary(raw,replace(good,tick=good.tick+1),
                                     ["B0"],business.rules)

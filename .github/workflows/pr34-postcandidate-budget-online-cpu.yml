@@ -1,0 +1,112 @@
+name: PR34 enforce postcandidate budget and new five arm online CPU
+on:
+  push:
+    branches: [research/pr34-postcandidate-budget-recheck-20261112]
+    paths: [.github/workflows/pr34-postcandidate-budget-online-cpu.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  enforce-late-forecast-safe-fallback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMBA_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Recreate archived CPU model execution runtime
+        run: |
+          set -euo pipefail
+          python -m pip install uv==0.13.5
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -c "import torch; assert torch.version.cuda is None; torch.set_num_threads(1)"
+      - name: Retrieve and SHA-validate source weights from archived PR31
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr34"
+          for row in "13765135588:original.zip" "13911001730:posttrain.zip"; do
+            id="${row%%:*}"; dest="${row#*:}"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/pr34/$dest"
+          done
+          unzip -p "$RUNNER_TEMP/pr34/original.zip" v4-data.pt > "$RUNNER_TEMP/pr34/original.pt"
+          unzip -p "$RUNNER_TEMP/pr34/posttrain.zip" trained/warmstart_v4-best.pt > "$RUNNER_TEMP/pr34/warm.pt"
+          unzip -p "$RUNNER_TEMP/pr34/posttrain.zip" trained/scratch_v4-best.pt > "$RUNNER_TEMP/pr34/scratch.pt"
+          unzip -p "$RUNNER_TEMP/pr34/posttrain.zip" trained/validation-selection.json > "$RUNNER_TEMP/pr34/selection.json"
+          echo "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c  $RUNNER_TEMP/pr34/original.pt" | sha256sum -c
+          python - <<'PY'
+          from pathlib import Path
+          import os,json,hashlib
+          p=Path(os.environ["RUNNER_TEMP"])/"pr34"
+          s=json.loads((p/"selection.json").read_text())
+          assert s["best_by_validation_brier"]=="scratch_v4"
+          for name,file in (("warmstart_v4","warm.pt"),("scratch_v4","scratch.pt")):
+            assert hashlib.sha256((p/file).read_bytes()).hexdigest()==s["arms"][name]["files"]["best"]["sha256"]
+          print("PR34_ORIGINAL_TRAINED_WEIGHT_PROVENANCE_VERIFIED")
+          PY
+          echo "RHWM_V4_ORIGINAL=$RUNNER_TEMP/pr34/original.pt" >> "$GITHUB_ENV"
+          echo "RHWM_V4_WARM=$RUNNER_TEMP/pr34/warm.pt" >> "$GITHUB_ENV"
+          echo "RHWM_V4_SCRATCH=$RUNNER_TEMP/pr34/scratch.pt" >> "$GITHUB_ENV"
+      - name: Regression test LAST-candidate deadline and independent split
+        run: |
+          set -euo pipefail
+          timeout 120s python -m unittest \
+            experiments.world_model_integration.online_horizon.test_pr34_budget_gate \
+            experiments.world_model_integration.posttraining.test_pr34_protocol -v \
+            2>&1 | tee "$RUNNER_TEMP/pr34/tests.log"
+          python -m compileall -q experiments/world_model_integration/posttraining
+      - name: Run 24 new independent business scenes under corrected budget policy
+        run: |
+          set -euo pipefail
+          timeout 780s python -m experiments.world_model_integration.posttraining.pr34_online_run \
+            --original "$RHWM_V4_ORIGINAL" \
+            --warm "$RHWM_V4_WARM" \
+            --scratch "$RHWM_V4_SCRATCH" \
+            --selection "$RUNNER_TEMP/pr34/selection.json" \
+            --out "$RUNNER_TEMP/pr34/strict-budget-online.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr34/run.log"
+          python - <<'PY'
+          import os,pathlib,json
+          p=pathlib.Path(os.environ["RUNNER_TEMP"])/"pr34"
+          r=json.loads((p/"strict-budget-online.json").read_text())
+          s=r["summary"]
+          assert s["total_independent_groups"]==24 and s["gpu"]==0 and s["new_training"]==0
+          assert s["applied_after_budget_nonfirst_actions"]==0
+          assert set(s["by_regime"])=={"light","medium","heavy","shift"}
+          assert all(v["groups"]==6 for v in s["by_regime"].values())
+          for group in r["groups"]:
+            for arm,record in group["arms"].items():
+              assert record["safety_violations"]==0
+              assert record["job_metrics"]["censored"] is False
+              for d in record["decision_records"]:
+                if d.get("process_cpu_seconds",0)>0.5:
+                  assert d.get("selected_index",0)==0
+          print("PR34_NO_OVERBUDGET_REORDER_PASS")
+          PY
+          (cd "$RUNNER_TEMP/pr34" && sha256sum strict-budget-online.json run.log tests.log selection.json > evidence_sha256.txt)
+      - name: Preserve correct and measurable CPU-budget decision evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr34-strict-budget-online-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/pr34/strict-budget-online.json
+            ${{ runner.temp }}/pr34/tests.log
+            ${{ runner.temp }}/pr34/run.log
+            ${{ runner.temp }}/pr34/selection.json
+            ${{ runner.temp }}/pr34/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

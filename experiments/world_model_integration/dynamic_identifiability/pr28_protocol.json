@@ -1,0 +1,292 @@
+{
+  "schema": "RHWM_PR28_DYNAMIC_ACTION_IDENTIFIABILITY_20261112_V1",
+  "stage": "pre-registered action sensitivity + publicly observable model forecasting, not policy promotion",
+  "method_precedents": [
+    {
+      "paper": "Reijnen et al., Job shop scheduling benchmark: environments and instances for learning and non-learning methods",
+      "doi": "10.1007/s10472-026-10007-3",
+      "code": "https://github.com/ai-for-decision-making-tue/Job_Shop_Scheduling_Benchmark_Environments_and_Instances",
+      "license": "MIT",
+      "transferred": "controlled simultaneous load / known scheduled job releases and baseline dispatching comparison",
+      "not_transferred": "their FJSP simulator, actual benchmark instances, or pretrained policies"
+    },
+    {
+      "paper": "Flores-Gómez and Dauzère-Pérès, Makespan service level for the flexible job-shop scheduling problem under machine-related uncertainty",
+      "doi": "10.1007/s10479-026-07197-8",
+      "transferred": "deadline service level and processing-time uncertainty as evaluation dimensions",
+      "not_transferred": "their scenario probability model or tabu-search solver"
+    },
+    {
+      "paper": "Fan et al., Flexible job shop scheduling with stochastic machine breakdowns by an improved tuna swarm optimization algorithm",
+      "doi": "10.1016/j.jmsy.2024.03.002",
+      "transferred": "future equipment breakdowns motivate separate subsequent study",
+      "not_transferred": "no breakdown injected this stage; no claimed failure forecasting"
+    }
+  ],
+  "seed_precommit": "12 new scenario seeds; previous PR21-27 test groups not reused; grouping by scene seed",
+  "static_fixture": "existing 7x5, 5 stations, workflow w0/w1, resource A capacity 1",
+  "exogenous_model": "current simulator keyed service jitter; no new device outage, AGV faults, unknown arrivals, or posthoc random dynamics",
+  "release_observability": "scheduled release times may be visible in scenario metadata: NOT a hidden/unknown online arrival benchmark",
+  "scenarios": [
+    {
+      "id": "BURST01",
+      "seed": 830011,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "BURST02",
+      "seed": 830244,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "BURST03",
+      "seed": 830477,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "BURST04",
+      "seed": 830710,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "BURST05",
+      "seed": 830943,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "BURST06",
+      "seed": 831176,
+      "regime": "simultaneous_load",
+      "robot_count": 2,
+      "job_count": 5,
+      "capacity": 1,
+      "service_add": 1,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "deadline_slack": 48
+    },
+    {
+      "id": "STAG01",
+      "seed": 840031,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    },
+    {
+      "id": "STAG02",
+      "seed": 840288,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    },
+    {
+      "id": "STAG03",
+      "seed": 840545,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    },
+    {
+      "id": "STAG04",
+      "seed": 840802,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    },
+    {
+      "id": "STAG05",
+      "seed": 841059,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    },
+    {
+      "id": "STAG06",
+      "seed": 841316,
+      "regime": "scheduled_release",
+      "robot_count": 3,
+      "job_count": 6,
+      "capacity": 1,
+      "service_add": 2,
+      "jitter": 2,
+      "release_ticks": [
+        0,
+        0,
+        0,
+        6,
+        6,
+        12
+      ],
+      "deadline_slack": 50
+    }
+  ],
+  "bounded_counterfactual": {
+    "anchor_tick": 0,
+    "treatments": [
+      "first CP-SAT proposal",
+      "second distinct CP-SAT proposal"
+    ],
+    "continuation": "same original BusinessCPSAT first proposal online every subsequent tick",
+    "exogenous_noise": "seed/sample/phase/station keyed; common across treatments",
+    "candidates": "original BusinessCPSAT, limit 4, wall budget .08s, deterministic .04",
+    "outcome_primary": "final completion tick (smaller better), with lateness and waiting reported independently",
+    "censoring": "if 240-tick horizon reached before all complete, report censored and do not rank these by unobserved finishing times",
+    "action_identifiable": "difference in factual outcomes under one initial legal decision and identical continuation code; not random-trial causal identification"
+  },
+  "prediction_audit": {
+    "models": [
+      "frozen V4"
+    ],
+    "forecast_horizons": [
+      5,
+      10,
+      20
+    ],
+    "particles": 3,
+    "prediction_continuation": "same CP-SAT first-proposal policy on each particle's own predicted public state (not oracle future action)",
+    "unit": "scenario seed",
+    "compare": "forecast expected completed stages by H5/H10/H20 and realized H5/H10/H20 under corresponding treatment, plus paired horizon errors",
+    "caveat": "predicted stage completion rank may not correspond to final makespan; do not claim proof of decision value from forecast accuracy alone"
+  },
+  "cpu_budget_seconds": 360,
+  "gpu_budget": 0,
+  "new_training": 0,
+  "frozen_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "stopping_rules": [
+    "do not modify releases/deadlines/jobs/seeds or model score after observing results",
+    "if no pair has distinct outcome, close information-value gate as no measured opportunity",
+    "if outcomes differ, test whether model prospectively distinguishes their ordering; no model retraining in this PR",
+    "no new random fault process is justified by this experiment"
+  ]
+}

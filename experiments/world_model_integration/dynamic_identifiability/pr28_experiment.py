@@ -162,6 +162,7 @@ def run_factual(spec,config,choice):
         "business":business,"geometry":geometry,"first_state":policy.first_public,
         "first_plans":policy.first_plans,
         "first_selected":policy.first_plans[choice],
+        "public_observations":policy.observations,  # history-derived facts; not model input
         "result":result,
         "outcomes":{
             "status":result["summary"]["status"],

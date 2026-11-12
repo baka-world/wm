@@ -1,0 +1,946 @@
+{
+  "protocol": "RHWM_PYCOX_LOGISTIC_HAZARD_TRANSFER_20261112_V1",
+  "literature": "Kvamme and Borgan 2019, Continuous and Discrete-Time Survival Prediction with Neural Networks, arXiv:1910.06724",
+  "method": "official pycox.models.LogisticHazard + label_transform + torchtuples.practical.MLPVanilla",
+  "upstream": "https://github.com/havakv/pycox/blob/master/pycox/models/logistic_hazard.py",
+  "upstream_license": "BSD-2-Clause",
+  "requirements": {
+    "pycox": "0.3.0",
+    "torchtuples": "0.2.2"
+  },
+  "baseline_lifelines": "0.30.0",
+  "checkpoint_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "grouping": "scenario_seed",
+  "observed_feature_contract": [
+    "station one-hot (fixed A0,A1,B0,B1,C)",
+    "public expected service ticks / 10",
+    "public resource capacity / 3",
+    "pickup phase boolean",
+    "dropoff phase boolean"
+  ],
+  "forbidden_features": [
+    "private service_remaining",
+    "eventual finished duration",
+    "future device outage",
+    "factual future dispatch",
+    "test-fitted normalization or duration bins"
+  ],
+  "training_features": "frozen at observed service start",
+  "time_origin": "service_started tick",
+  "end_time": "service_finished tick - service_started tick; right censor at episode terminal tick",
+  "time_bins": "integer grid [0..max_training_duration+2] chosen from training ONLY; >grid fallback public rule",
+  "train_groups": [
+    {
+      "id": "TR01",
+      "seed": 2011100,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR02",
+      "seed": 2011298,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR03",
+      "seed": 2011498,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR04",
+      "seed": 2011700,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR05",
+      "seed": 2011904,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR06",
+      "seed": 2012110,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR07",
+      "seed": 2012318,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR08",
+      "seed": 2012528,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR09",
+      "seed": 2012740,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR10",
+      "seed": 2012954,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR11",
+      "seed": 2013170,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR12",
+      "seed": 2013285,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR13",
+      "seed": 2013505,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR14",
+      "seed": 2013727,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR15",
+      "seed": 2013951,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR16",
+      "seed": 2014074,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR17",
+      "seed": 2014302,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR18",
+      "seed": 2014532,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR19",
+      "seed": 2014661,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR20",
+      "seed": 2014895,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR21",
+      "seed": 2015131,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR22",
+      "seed": 2015266,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR23",
+      "seed": 2015506,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR24",
+      "seed": 2015645,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR25",
+      "seed": 2015889,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR26",
+      "seed": 2016032,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR27",
+      "seed": 2016280,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR28",
+      "seed": 2016427,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR29",
+      "seed": 2016679,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR30",
+      "seed": 2016830,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR31",
+      "seed": 2017086,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR32",
+      "seed": 2017241,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR33",
+      "seed": 2017501,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR34",
+      "seed": 2017660,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR35",
+      "seed": 2017821,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR36",
+      "seed": 2018087,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR37",
+      "seed": 2018252,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR38",
+      "seed": 2018419,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR39",
+      "seed": 2018588,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TR40",
+      "seed": 2018862,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TR41",
+      "seed": 2019035,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR42",
+      "seed": 2019210,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR43",
+      "seed": 2019387,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TR44",
+      "seed": 2019669,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TR45",
+      "seed": 2019850,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR46",
+      "seed": 2020033,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TR47",
+      "seed": 2020218,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TR48",
+      "seed": 2020405,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "validation_groups": [
+    {
+      "id": "VA01",
+      "seed": 2112200,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "VA02",
+      "seed": 2112398,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "VA03",
+      "seed": 2112598,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "VA04",
+      "seed": 2112800,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "VA05",
+      "seed": 2113004,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "VA06",
+      "seed": 2113210,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "VA07",
+      "seed": 2113418,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "VA08",
+      "seed": 2113628,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "VA09",
+      "seed": 2113840,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "VA10",
+      "seed": 2114054,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "VA11",
+      "seed": 2114270,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "VA12",
+      "seed": 2114385,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "iid_test_groups": [
+    {
+      "id": "TE01",
+      "seed": 2213300,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TE02",
+      "seed": 2213498,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TE03",
+      "seed": 2213698,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TE04",
+      "seed": 2213900,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TE05",
+      "seed": 2214104,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TE06",
+      "seed": 2214310,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TE07",
+      "seed": 2214518,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TE08",
+      "seed": 2214728,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TE09",
+      "seed": 2214940,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TE10",
+      "seed": 2215154,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TE11",
+      "seed": 2215370,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TE12",
+      "seed": 2215485,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TE13",
+      "seed": 2215705,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TE14",
+      "seed": 2215927,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TE15",
+      "seed": 2216151,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 0
+    },
+    {
+      "id": "TE16",
+      "seed": 2216274,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 0
+    },
+    {
+      "id": "TE17",
+      "seed": 2216502,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TE18",
+      "seed": 2216732,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TE19",
+      "seed": 2216861,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 1
+    },
+    {
+      "id": "TE20",
+      "seed": 2217095,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 1
+    },
+    {
+      "id": "TE21",
+      "seed": 2217331,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TE22",
+      "seed": 2217466,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    },
+    {
+      "id": "TE23",
+      "seed": 2217706,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 1,
+      "service_add": 2
+    },
+    {
+      "id": "TE24",
+      "seed": 2217845,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 2,
+      "service_add": 2
+    }
+  ],
+  "shift_test_groups": [
+    {
+      "id": "SH01",
+      "seed": 2314400,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 3
+    },
+    {
+      "id": "SH02",
+      "seed": 2314598,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 3
+    },
+    {
+      "id": "SH03",
+      "seed": 2314798,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 3
+    },
+    {
+      "id": "SH04",
+      "seed": 2315000,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 4
+    },
+    {
+      "id": "SH05",
+      "seed": 2315204,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 4
+    },
+    {
+      "id": "SH06",
+      "seed": 2315410,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 4
+    },
+    {
+      "id": "SH07",
+      "seed": 2315618,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 3
+    },
+    {
+      "id": "SH08",
+      "seed": 2315828,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 3
+    },
+    {
+      "id": "SH09",
+      "seed": 2316040,
+      "robot_count": 2,
+      "capacity": 1,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 3
+    },
+    {
+      "id": "SH10",
+      "seed": 2316254,
+      "robot_count": 3,
+      "capacity": 1,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 4
+    },
+    {
+      "id": "SH11",
+      "seed": 2316470,
+      "robot_count": 2,
+      "capacity": 2,
+      "jobs": 2,
+      "jitter": 3,
+      "service_add": 4
+    },
+    {
+      "id": "SH12",
+      "seed": 2316585,
+      "robot_count": 3,
+      "capacity": 2,
+      "jobs": 3,
+      "jitter": 4,
+      "service_add": 4
+    }
+  ],
+  "epochs": 40,
+  "batch_size": 128,
+  "learning_rate": 0.01,
+  "hidden_layers": [
+    32,
+    32
+  ],
+  "batch_norm": false,
+  "dropout": 0,
+  "seed": 1810,
+  "horizons": [
+    1,
+    5,
+    10
+  ],
+  "anchors": [
+    0,
+    6,
+    15,
+    30,
+    45
+  ],
+  "particles": 3,
+  "scene_max_ticks": 240,
+  "prediction_policy": "nearest_batch on current observed or predicted state; candidate first action from factual observation only",
+  "model_selection": "select one best epoch by VALIDATION negative log likelihood; never fit on test",
+  "success_metrics": [
+    "event Brier grouped by scene",
+    "H1/H5/H10 sample_status_error, station_busy_brier, resource_occupancy_mae",
+    "runtime CPU"
+  ],
+  "candidate_arms": [
+    "rule",
+    "kaplan_meier",
+    "v4",
+    "pycox_logistic_hazard"
+  ],
+  "compute_budget": {
+    "GPU": 0,
+    "CPU_seconds": 480
+  },
+  "reference_note": "All algorithms taken from published libraries; only data contracts, feature preparation and integration adapters are project code"
+}

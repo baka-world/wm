@@ -1,0 +1,285 @@
+{
+  "protocol": "PR47_EQUAL_CPU_BUDGET_RECOVERY_H20_20261112_V1",
+  "parent_pr46_source_commit": "1fec67af88ee08156c1f041b49e2262a07f612c6",
+  "source_methods": [
+    "PR30 OnlineHorizonPolicy unchanged rank and legal fallback",
+    "PR45 ObservedRecoveryWorld public-only KM recovery transitions",
+    "PR46 only real-world hidden outage scenario generator"
+  ],
+  "reference_pr41": "PR41 event-triggered RHWM variable H5/H20 saved CPU at light load but did not resolve heavy load, so this round tests an equal per-decision CPU budget increase, not new model or scores.",
+  "frozen_v4_sha256": "60c8a6c3d832da3e6519072688ea099f64ae120ba19d3bd2ec705f7f1a11ac0c",
+  "km_artifact_id": 13915489041,
+  "cohort": [
+    {
+      "id": "PR47_WITHIN_SUPPORT_B0_1",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "seed": 10100019
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B0_2",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "seed": 10100420
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B0_3",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "seed": 10100821
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B0_4",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "seed": 10101222
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B1_1",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "seed": 10113019
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B1_2",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "seed": 10113420
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B1_3",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "seed": 10113821
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_B1_4",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "seed": 10114222
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_C_1",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "seed": 10126019
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_C_2",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "seed": 10126420
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_C_3",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "seed": 10126821
+    },
+    {
+      "id": "PR47_WITHIN_SUPPORT_C_4",
+      "track": "online",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "seed": 10127222
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B0_1",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "seed": 10170019
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B0_2",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "seed": 10170420
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B0_3",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "seed": 10170821
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B0_4",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "seed": 10171222
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B1_1",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "seed": 10183019
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B1_2",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "seed": 10183420
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B1_3",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "seed": 10183821
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_B1_4",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "seed": 10184222
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_C_1",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "seed": 10196019
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_C_2",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "seed": 10196420
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_C_3",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "seed": 10196821
+    },
+    {
+      "id": "PR47_EXTENDED_OUTAGE_C_4",
+      "track": "online",
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "seed": 10197222
+    }
+  ],
+  "cpu_budgets_seconds": [
+    0.5,
+    1.5
+  ],
+  "arms": [
+    "cp_sat",
+    "v4_original_05",
+    "v4_recovery_05",
+    "v4_original_15",
+    "v4_recovery_15"
+  ],
+  "arm_semantics": {
+    "cp_sat": "PR30 exact first legal proposal, no world model",
+    "v4_original_05": "frozen V4-H20, 3 particles, PR30 completion count, 0.5 process-CPU seconds",
+    "v4_recovery_05": "same original forecast and completion score plus PR45 known-down recovery, 0.5 process-CPU seconds",
+    "v4_original_15": "same V4 original with 1.5 process-CPU seconds",
+    "v4_recovery_15": "same public recovery enhanced model with 1.5 process-CPU seconds"
+  },
+  "evaluation_primary": "online factual makespan ticks on 24 paired new scenes, lower is better; prespecified within each outage regime",
+  "evaluation_secondary": [
+    "jobs late",
+    "episode completion",
+    "per-decision cpu budget overrun counts",
+    "CP-SAT fallback counts",
+    "evaluated candidate counts",
+    "world model calls",
+    "changed plan counts",
+    "CPU process overhead",
+    "resource capacity wait",
+    "motion/resource safety violations"
+  ],
+  "evaluate_budget_fairness": "At 1.5 seconds BOTH original V4 and recovery V4 receive same 1.5s cap. Compare to both matching 0.5s arms in the SAME heldout cases. Scores, particles, horizon, candidate limit, seeds and simulator are unchanged.",
+  "no_weight_or_threshold_tuning": true,
+  "hidden_environment_only": {
+    "outage_start_tick": 7,
+    "support_by_mechanism": {
+      "within_support": {
+        "B0": [
+          4,
+          6,
+          8,
+          10
+        ],
+        "B1": [
+          8,
+          12,
+          16,
+          20
+        ],
+        "C": [
+          3,
+          5,
+          7,
+          9
+        ]
+      },
+      "extended_outage": {
+        "B0": [
+          9,
+          12,
+          16,
+          22
+        ],
+        "B1": [
+          18,
+          24,
+          30,
+          36
+        ],
+        "C": [
+          8,
+          12,
+          16,
+          24
+        ]
+      }
+    },
+    "support_selector": "SHA256(seed, mechanism, station) in TRUE simulator builder only",
+    "job_count": 10,
+    "capacity": 1,
+    "max_ticks": 170,
+    "deadline_tick": 100
+  },
+  "online": {
+    "arms": [
+      "cp_sat",
+      "v4_original",
+      "v4_public_km_recovery"
+    ],
+    "particles": 3,
+    "horizon": 20,
+    "candidate_limit": 4,
+    "decision_cpu_budget_seconds": 0.5
+  },
+  "resource_limits": {
+    "gpu": 0,
+    "new_training": 0,
+    "new_data_retraining": 0,
+    "allow_cpu_process_seconds": 1350,
+    "workflow_wall_timeout_seconds": 1680
+  },
+  "no_reuse_of_pr46_test_seeds": true,
+  "interpretation": "A larger CPU budget is an engineering tradeoff, not a free score improvement; no promotion unless recovery beats equally budgeted original V4 and respects latency, fallback and safety."
+}

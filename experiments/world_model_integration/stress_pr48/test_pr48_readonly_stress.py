@@ -15,7 +15,7 @@ def instance(seed,regime):
         "budget_overruns":0,"fallbacks":0,"changed_proposals":1}
     changed={"decision_calls":1,"decision_records":[{
         "tick":8,"legal_plans":2,"first_proposal":"P0","selected":"P0",
-        "selected_index":0,"predicted_completed":[2.,1.]
+        "selected_index":0,"predicted_completed":[]
     }],"makespan_ticks":81,"job_metrics":{"late_jobs":0},
         "budget_overruns":1,"fallbacks":1,"changed_proposals":0}
     return {"id":str(seed),"seed":seed,"regime":regime,

@@ -1,0 +1,924 @@
+{
+  "protocol": "PR59_SEALED_TOPOLOGY_FAMILY_WORLD_LEARNING_DATA_PRE_GPA_V1_20261112",
+  "parent_pr58_head": "60b1ea6864744a81ec9dad8149ea8396197f0ae1",
+  "previous_real_quality_run": 43230426878,
+  "previous_quality_verdict": "PASS_TO_DESIGN_NEW_DISJOINT_MAP_DATASET",
+  "original_business": "exact PR48 BusinessSimulator, PR55 factual service/robot/capacity profiles, PR56 public map, PR54 public temporal history, PR52 matched legal CP-SAT action truth",
+  "splits": {
+    "train": {
+      "maps": [
+        "train_v_west_a",
+        "train_v_west_b",
+        "train_v_east_a",
+        "train_v_east_b",
+        "train_v_mixed_a",
+        "train_v_mixed_b"
+      ],
+      "episode_count": 24,
+      "generate_in_this_cpu_stage": true
+    },
+    "validation": {
+      "maps": [
+        "validation_diagonal_a",
+        "validation_diagonal_b"
+      ],
+      "episode_count": 12,
+      "generate_in_this_cpu_stage": true
+    },
+    "test": {
+      "maps": [
+        "blind_horizontal_shelf_a",
+        "blind_horizontal_shelf_b"
+      ],
+      "episode_count": 12,
+      "generate_in_this_cpu_stage": false,
+      "physically_sealed_no_actual_data_access": true
+    }
+  },
+  "layouts": [
+    {
+      "id": "train_v_west_a",
+      "blocked": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "train_v_west_b",
+      "blocked": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "train_v_east_a",
+      "blocked": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "train_v_east_b",
+      "blocked": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "train_v_mixed_a",
+      "blocked": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "train_v_mixed_b",
+      "blocked": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "family": "vertical_blocked_route_training"
+    },
+    {
+      "id": "validation_diagonal_a",
+      "blocked": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "family": "diagonal_staggered_validation"
+    },
+    {
+      "id": "validation_diagonal_b",
+      "blocked": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "family": "diagonal_staggered_validation"
+    },
+    {
+      "id": "blind_horizontal_shelf_a",
+      "blocked": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "family": "horizontal_shelf_blind_topology"
+    },
+    {
+      "id": "blind_horizontal_shelf_b",
+      "blocked": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "family": "horizontal_shelf_blind_topology"
+    }
+  ],
+  "cohort": [
+    {
+      "id": "PR59_TRAIN_0_0",
+      "split": "train",
+      "seed": 59000000,
+      "regime": "congestion",
+      "profile": "baseline",
+      "layout": "train_v_west_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_0_1",
+      "split": "train",
+      "seed": 59001009,
+      "regime": "multi_fault",
+      "profile": "higher_demand",
+      "layout": "train_v_west_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_0_2",
+      "split": "train",
+      "seed": 59002018,
+      "regime": "staggered_arrivals",
+      "profile": "capacity_relief",
+      "layout": "train_v_west_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_0_3",
+      "split": "train",
+      "seed": 59003027,
+      "regime": "congestion",
+      "profile": "fewer_robots",
+      "layout": "train_v_west_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_1_0",
+      "split": "train",
+      "seed": 59101003,
+      "regime": "multi_fault",
+      "profile": "capacity_relief",
+      "layout": "train_v_west_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_1_1",
+      "split": "train",
+      "seed": 59102012,
+      "regime": "staggered_arrivals",
+      "profile": "fewer_robots",
+      "layout": "train_v_west_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_1_2",
+      "split": "train",
+      "seed": 59103021,
+      "regime": "congestion",
+      "profile": "slow_service",
+      "layout": "train_v_west_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_1_3",
+      "split": "train",
+      "seed": 59104030,
+      "regime": "multi_fault",
+      "profile": "shifted_releases",
+      "layout": "train_v_west_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_2_0",
+      "split": "train",
+      "seed": 59202006,
+      "regime": "staggered_arrivals",
+      "profile": "slow_service",
+      "layout": "train_v_east_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_2_1",
+      "split": "train",
+      "seed": 59203015,
+      "regime": "congestion",
+      "profile": "shifted_releases",
+      "layout": "train_v_east_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_2_2",
+      "split": "train",
+      "seed": 59204024,
+      "regime": "multi_fault",
+      "profile": "baseline",
+      "layout": "train_v_east_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_2_3",
+      "split": "train",
+      "seed": 59205033,
+      "regime": "staggered_arrivals",
+      "profile": "higher_demand",
+      "layout": "train_v_east_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_3_0",
+      "split": "train",
+      "seed": 59303009,
+      "regime": "congestion",
+      "profile": "baseline",
+      "layout": "train_v_east_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_3_1",
+      "split": "train",
+      "seed": 59304018,
+      "regime": "multi_fault",
+      "profile": "higher_demand",
+      "layout": "train_v_east_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_3_2",
+      "split": "train",
+      "seed": 59305027,
+      "regime": "staggered_arrivals",
+      "profile": "capacity_relief",
+      "layout": "train_v_east_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_3_3",
+      "split": "train",
+      "seed": 59306036,
+      "regime": "congestion",
+      "profile": "fewer_robots",
+      "layout": "train_v_east_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_4_0",
+      "split": "train",
+      "seed": 59404012,
+      "regime": "multi_fault",
+      "profile": "capacity_relief",
+      "layout": "train_v_mixed_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_4_1",
+      "split": "train",
+      "seed": 59405021,
+      "regime": "staggered_arrivals",
+      "profile": "fewer_robots",
+      "layout": "train_v_mixed_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_4_2",
+      "split": "train",
+      "seed": 59406030,
+      "regime": "congestion",
+      "profile": "slow_service",
+      "layout": "train_v_mixed_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_4_3",
+      "split": "train",
+      "seed": 59407039,
+      "regime": "multi_fault",
+      "profile": "shifted_releases",
+      "layout": "train_v_mixed_a",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_5_0",
+      "split": "train",
+      "seed": 59505015,
+      "regime": "staggered_arrivals",
+      "profile": "slow_service",
+      "layout": "train_v_mixed_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_5_1",
+      "split": "train",
+      "seed": 59506024,
+      "regime": "congestion",
+      "profile": "shifted_releases",
+      "layout": "train_v_mixed_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TRAIN_5_2",
+      "split": "train",
+      "seed": 59507033,
+      "regime": "multi_fault",
+      "profile": "baseline",
+      "layout": "train_v_mixed_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TRAIN_5_3",
+      "split": "train",
+      "seed": 59508042,
+      "regime": "staggered_arrivals",
+      "profile": "higher_demand",
+      "layout": "train_v_mixed_b",
+      "map_family": "vertical_blocked_route_training",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_0_0",
+      "split": "validation",
+      "seed": 60000000,
+      "regime": "congestion",
+      "profile": "baseline",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_0_1",
+      "split": "validation",
+      "seed": 60001009,
+      "regime": "multi_fault",
+      "profile": "higher_demand",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_VALIDATION_0_2",
+      "split": "validation",
+      "seed": 60002018,
+      "regime": "staggered_arrivals",
+      "profile": "capacity_relief",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_0_3",
+      "split": "validation",
+      "seed": 60003027,
+      "regime": "congestion",
+      "profile": "fewer_robots",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_0_4",
+      "split": "validation",
+      "seed": 60004036,
+      "regime": "multi_fault",
+      "profile": "slow_service",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_VALIDATION_0_5",
+      "split": "validation",
+      "seed": 60005045,
+      "regime": "staggered_arrivals",
+      "profile": "shifted_releases",
+      "layout": "validation_diagonal_a",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_1_0",
+      "split": "validation",
+      "seed": 60101003,
+      "regime": "multi_fault",
+      "profile": "capacity_relief",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_VALIDATION_1_1",
+      "split": "validation",
+      "seed": 60102012,
+      "regime": "staggered_arrivals",
+      "profile": "fewer_robots",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_1_2",
+      "split": "validation",
+      "seed": 60103021,
+      "regime": "congestion",
+      "profile": "slow_service",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_1_3",
+      "split": "validation",
+      "seed": 60104030,
+      "regime": "multi_fault",
+      "profile": "shifted_releases",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_VALIDATION_1_4",
+      "split": "validation",
+      "seed": 60105039,
+      "regime": "staggered_arrivals",
+      "profile": "baseline",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_VALIDATION_1_5",
+      "split": "validation",
+      "seed": 60106048,
+      "regime": "congestion",
+      "profile": "higher_demand",
+      "layout": "validation_diagonal_b",
+      "map_family": "diagonal_staggered_validation",
+      "job_count": 18,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_0_0",
+      "split": "test",
+      "seed": 61000000,
+      "regime": "congestion",
+      "profile": "baseline",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_0_1",
+      "split": "test",
+      "seed": 61001009,
+      "regime": "multi_fault",
+      "profile": "higher_demand",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 16,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TEST_0_2",
+      "split": "test",
+      "seed": 61002018,
+      "regime": "staggered_arrivals",
+      "profile": "capacity_relief",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_0_3",
+      "split": "test",
+      "seed": 61003027,
+      "regime": "congestion",
+      "profile": "fewer_robots",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 14,
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_0_4",
+      "split": "test",
+      "seed": 61004036,
+      "regime": "multi_fault",
+      "profile": "slow_service",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TEST_0_5",
+      "split": "test",
+      "seed": 61005045,
+      "regime": "staggered_arrivals",
+      "profile": "shifted_releases",
+      "layout": "blind_horizontal_shelf_a",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_1_0",
+      "split": "test",
+      "seed": 61101003,
+      "regime": "multi_fault",
+      "profile": "capacity_relief",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TEST_1_1",
+      "split": "test",
+      "seed": 61102012,
+      "regime": "staggered_arrivals",
+      "profile": "fewer_robots",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_1_2",
+      "split": "test",
+      "seed": 61103021,
+      "regime": "congestion",
+      "profile": "slow_service",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 14,
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_1_3",
+      "split": "test",
+      "seed": 61104030,
+      "regime": "multi_fault",
+      "profile": "shifted_releases",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": "C"
+    },
+    {
+      "id": "PR59_TEST_1_4",
+      "split": "test",
+      "seed": 61105039,
+      "regime": "staggered_arrivals",
+      "profile": "baseline",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 12,
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": null
+    },
+    {
+      "id": "PR59_TEST_1_5",
+      "split": "test",
+      "seed": 61106048,
+      "regime": "congestion",
+      "profile": "higher_demand",
+      "layout": "blind_horizontal_shelf_b",
+      "map_family": "horizontal_shelf_blind_topology",
+      "job_count": 18,
+      "mechanism": "extended_outage",
+      "station_id": "C",
+      "secondary_station_id": null
+    }
+  ],
+  "map_dimension": [
+    7,
+    5
+  ],
+  "stress_regimes": [
+    "congestion",
+    "multi_fault",
+    "staggered_arrivals"
+  ],
+  "profiles": [
+    "baseline",
+    "higher_demand",
+    "capacity_relief",
+    "fewer_robots",
+    "slow_service",
+    "shifted_releases"
+  ],
+  "seed_policy": "new 59million namespace, distinct from old PR54/55/56/58 and disjoint within train/validation/sealed TEST; map families NEVER shared across splits",
+  "scope": "PR59 initial quality pilot 24 train+12 natural validation, 12 blind future scenario identifiers ONLY; not approved full 60/120/240. PR59 blind TEST must not be generated or read by CPU developer.",
+  "thresholds_pre_registered_before_cpu_acquisition": {
+    "require_no_motion_resource_lifecycle_safety_violation": true,
+    "zero_future_feature_label_leakage": true,
+    "preserve_all_episode_full_raw": true,
+    "each_source_map_two_vertex_connected": true,
+    "each_source_map_has_station_detour": true,
+    "train_scenarios_expected": 24,
+    "validation_scenarios_expected": 12,
+    "allow_train_censor_fraction_at_most": 0.2,
+    "allow_validation_censor_fraction_at_most": 0.2,
+    "at_least_train_station_fault_onsets": 20,
+    "at_least_train_station_recoveries": 20,
+    "at_least_validation_station_fault_onsets": 10,
+    "at_least_validation_station_recoveries": 10,
+    "at_least_train_real_h20_action_effect_scenes": 18,
+    "at_least_validation_real_h20_action_effect_scenes": 8,
+    "at_least_train_complete_legal_branch_groups": 16,
+    "at_least_validation_complete_legal_branch_groups": 7,
+    "at_least_train_rare_late_events_after_tick56": 24,
+    "at_least_validation_rare_late_events_after_tick56": 12,
+    "max_training_static_no_change_tick_fraction": 0.8,
+    "min_train_distinct_raw_semantic_input_ratio": 0.3,
+    "no_model_training_or_gpu": true,
+    "requires_map_family_held_out_test_without_opening": true
+  },
+  "train_data_sampling": "Preserve raw every tick; if needed future GPU Agent may event-balance TRAIN only, with sampling weights and original frequency retained. Do not label-balance validation or test.",
+  "expected_public_input": "PR54 temporal entity graph and current actual CP-SAT action; PR56 public traversability dual graph with public map adjacency and current robot/station locations; t+1 never input.",
+  "output_contract": "CPU source artifact train+validation separate physically, independent sha, train/val QA. TEST protocol contains only metadata until GPU agent freezes model by validation.",
+  "gpu": {
+    "used": 0,
+    "training": false,
+    "final_inference_gpu_target": true
+  },
+  "if_gate_passes": "Still stop at CPU model graph/batching/no-leakage preflight; then commit GPU agent task/prompt with 60 train plan and test seal; GPU work ONLY performed by delegated agent.",
+  "if_gate_fails": "Keep all raw; annotate failure causes, do not tune map/test or false-complete; redesign developer data protocol only after preserving immutable QA."
+}

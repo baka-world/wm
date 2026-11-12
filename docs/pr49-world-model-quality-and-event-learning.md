@@ -62,3 +62,14 @@ GitHub Actions `.github/workflows/pr49-high-compute-world-quality.yml` 并行执
 ## 数据可识别性优先于盲目增加模型大小
 
 PR48的 `staggered_arrivals` 合成机制按确定的发布tick 0/6/12/18生成任务，而原 V4/H20 不知道真实未来发布表。若在同一固定机制上训练事件到达网络，会很容易“背诵固定节拍”，并不证明对未知实验室任务到达的泛化。因此训练数据应当覆盖**多种合成到达机制**（定期、泊松、历史相关突发、负载相关），分离机制/seed/时间段的train、validation和完全独立test，先用可解释历史平均到达率与统计hazard验证信息增量，再使用Neural Hawkes等已有方法迁移。事件预测目标是给未来20tick可验证的概率分布，而不是把未来任务ID、真实发布tick、下游完成时刻伪造成公开输入。需要任务ID与业务属性的世界状态接入时，必须设计**外生到达第二状态转移合同**，完全独立于普通合法业务状态转移checker。
+
+
+## 候选已有实现与模型迁移优先级（2026-11-12 进一步查证）
+
+检索并核实了可直接复用的公开实现，以避免重新发明事件序列网络：
+
+- **优先选型：[EasyTPP / EasyTemporalPointProcess](https://github.com/ant-research/EasyTemporalPointProcess)**，ICLR 2024公开开源框架，当前PyTorch版已包含 `NHP` (Neural Hawkes)、`RMTPP`、`IntensityFree`、`THP` 等已发表模型及标准数据预处理/训练/评估流程。特别适合对离散任务发布**时间+类型mark**建模。可以迁移其训练框架、输入事件序列契约及GPU模型，不从零设计神经架构。
+- **对照原论文实现：[hongyuanmei/neurawkes](https://github.com/hongyuanmei/neurawkes)**，NIPS 2017 Neural Hawkes作者源码，作为方法核对；工程迁移优先采用EasyTPP的现代PyTorch接口而不是复制旧研究项目全部依赖。
+- **长跨度事件时间研究备选：[GavinKerrigan/eventflow](https://github.com/GavinKerrigan/eventflow)**，AISTATS 2026 EventFlow的开源GPU训练/预测代码，直接模拟未来多个时间事件的联合分布；但原论文主要是**无mark事件时间**而我们需要未来任务类别/站点，作为二阶段长跨度对照而非第一实现。不能直接声称其原版能预测工作流标记。
+
+优先做**公开观测历史→事件数据集→Poisson/历史hazard基线→EasyTPP NHP或IntensityFree→冻结独立测试**，训练、测试与模型选择必须在不同生成机制/场景种子上分离。没有看到真实前兆或历史事件结构时，继续追加GPU训练不会凭空创造信息。只有事件模型在独立H5/H20任务到达计数、发生时刻、mark及下游预测上改善时，才沿已验证的PR45显式外生事件合同接入完整世界模型进行闭环决策验证。

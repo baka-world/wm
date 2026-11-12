@@ -113,6 +113,13 @@ class OnlineHorizonPolicy:
                     values.append(value)
                     self.n_model_queries+=1
                     self.n_model_steps+=self.horizon*self.protocol["particles"]
+                    # A single non-preemptive rollout can cross the CPU limit.
+                    # Check AFTER each proposal, including the final one:
+                    # never apply an over-budget candidate ranking.
+                    if time.process_time()-start>=self.protocol["decision_cpu_budget_seconds"]:
+                        self.n_budget_exceeded+=1
+                        values=[]
+                        break
                 except (RuntimeError,ValueError,AssertionError) as exc:
                     self.n_errors+=1
                     values=[]
@@ -126,8 +133,17 @@ class OnlineHorizonPolicy:
                 best_index=next(i for i,v in enumerate(values) if best-v<=1e-9)
                 selected=plans[best_index]
             else:self.n_fallback+=1
-        self.n_flip+=int(selected!=plans[0])
         elapsed=time.process_time()-start
+        # Final gate: formatting/ranking overhead also counts as decision CPU.
+        # The CP-SAT fallback is safe even if the non-preemptive prediction
+        # already consumed > budget; this is NOT a hard wall-clock SLA.
+        if (self.model is not None and len(plans)>1
+                and elapsed>=self.protocol["decision_cpu_budget_seconds"]
+                and selected!=plans[0]):
+            self.n_budget_exceeded+=1
+            self.n_fallback+=1
+            selected=plans[0]
+        self.n_flip+=int(selected!=plans[0])
         self.cpu_decision_seconds+=elapsed
         self.decisions.append({
             "tick":obs.tick,"legal_plans":len(plans),

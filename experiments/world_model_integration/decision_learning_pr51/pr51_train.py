@@ -250,6 +250,11 @@ def train_one(arm,training,valid,config,output,device):
                 if not grad_verified and arm["relations"]:
                     raise AssertionError("decision loss bypasses shared transition model")
                 optimizer.zero_grad(set_to_none=True)
+                predicted=model(g["batch"].to(device))
+                pred_loss=F.mse_loss(predicted,target)
+                decision_loss=pairwise_decision_loss(
+                    predicted_candidate_cost(predicted),observed)
+                loss=pred_loss+arm["lambda"]*decision_loss
                 loss.backward()
             optimizer.step()
             loss_total+=loss.item()

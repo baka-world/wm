@@ -1,0 +1,79 @@
+name: PR38 read only H20 V4 vs Rule two cohort replication
+
+on:
+  push:
+    branches: [research/h20-independent-cohort-replication-20261112]
+    paths: [.github/workflows/h20-independent-cohorts-readonly.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  matched-source-replication:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Validate two independent archived source artifacts, NO inference
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for name in pr36 pr37; do mkdir -p "$RUNNER_TEMP/replication/$name"; done
+          for row in "13912451562:pr36" "13911523921:pr37"; do
+            id="${row%%:*}"; dest="${row#*:}"
+            curl -fsSL --retry 3 \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/lieuyimo/wm/actions/artifacts/$id/zip" \
+              -o "$RUNNER_TEMP/replication/$dest.zip"
+            unzip -q "$RUNNER_TEMP/replication/$dest.zip" \
+              -d "$RUNNER_TEMP/replication/$dest"
+            (cd "$RUNNER_TEMP/replication/$dest" && sha256sum -c evidence_sha256.txt)
+          done
+      - name: Test exact source cohort schema mapping and no duplicated scenes
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/replication"
+          python -m unittest \
+            experiments.world_model_integration.h20_replication.test_replication -v \
+            2>&1 | tee "$RUNNER_TEMP/replication/tests.log"
+      - name: Compare paired scene-level makespan and V4-specific improvement
+        run: |
+          set -euo pipefail
+          python -m experiments.world_model_integration.h20_replication.compare \
+            --source36 "$RUNNER_TEMP/replication/pr36/online-results.json" \
+            --source37 "$RUNNER_TEMP/replication/pr37/strict-budget-online.json" \
+            --out "$RUNNER_TEMP/replication/two-cohort-results.json" \
+            2>&1 | tee "$RUNNER_TEMP/replication/run.log"
+          python - <<'PY'
+          import json,os,pathlib
+          p=pathlib.Path(os.environ["RUNNER_TEMP"])/"replication"
+          z=json.loads((p/"two-cohort-results.json").read_text())
+          assert z["summary"]["groups"]==48
+          assert z["summary"]["gpu"]==0 and z["summary"]["new_model_inference"]==0
+          assert z["summary"]["new_simulation"]==0 and z["summary"]["new_training"]==0
+          assert len({x["seed"] for x in z["groups"]})==48
+          for name in ("light","medium","heavy","shift"):
+            assert z["summary"]["per_regime"][name]["groups"]==12
+          print("TWO_SOURCE_VERIFIED_NO_NEW_DATA_REPLICATION_COMPLETE")
+          PY
+          (cd "$RUNNER_TEMP/replication" &&
+             sha256sum two-cohort-results.json run.log tests.log > evidence_sha256.txt)
+      - name: Archive independent paired-scenario replication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhwm-h20-cohort-replication-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/replication/two-cohort-results.json
+            ${{ runner.temp }}/replication/run.log
+            ${{ runner.temp }}/replication/tests.log
+            ${{ runner.temp }}/replication/evidence_sha256.txt
+          retention-days: 90
+          if-no-files-found: warn

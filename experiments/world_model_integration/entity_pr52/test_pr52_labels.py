@@ -48,8 +48,8 @@ class EntityLabelsContracts(unittest.TestCase):
         # only the four CURRENT entities from that older public state.
         anchor={"node_keys":ids[:-1],"rules":rules}
         future=_future_nodes(public,anchor)
-        self.assertEqual(len(future["node_target"]),3)
-        self.assertEqual(future["global_newly_visible_stage_count"],2)
+        self.assertEqual(len(future["node_target"]),4)
+        self.assertEqual(future["global_newly_visible_stage_count"],1)
         self.assertEqual(future["global_new_stage_completed_count"],1)
         self.assertEqual(future["global_total_completed_stage_count"],1)
         self.assertFalse(any("NEW" in str(x) for x in future.values()))

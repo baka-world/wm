@@ -1,0 +1,372 @@
+{
+  "protocol": "PR58_STATION_FREE_BYPASS_PAIRED_WORLD_DATA_20261112_V1",
+  "parent_pr57_head": "f3dc4605edf0d2afaaab717562c6744f0de64f53",
+  "original_immutable_run": 43219314493,
+  "original_source_head": "916552fdbf6908e94161d120a1efdd3092fb603d",
+  "original_gate_expected": "NO_GO_BULK_CROSS_MAP_DATA_EXPANSION",
+  "original_pr57_cohort_protocol_sha": "use exact original file from PR57 head; verify per original archived source hash",
+  "purpose": "Controlled MAP-ONLY real BusinessSimulator variation against all 12 original PR57 scenes, including all 5 censored cases. Not new independent unseen data. Preserve complete truth, diagnose rescue and time limits, check legal action H5/H20.",
+  "layouts": [
+    {
+      "id": "west_detour",
+      "family": "west_closed_center_bypass_north_south",
+      "blocked": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "paired_old": "north_wall"
+    },
+    {
+      "id": "east_detour",
+      "family": "east_closed_center_bypass_north_south",
+      "blocked": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "paired_old": "south_wall"
+    },
+    {
+      "id": "alternating_islands",
+      "family": "two_avoiding_hall_islands",
+      "blocked": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "paired_old": "central_bottleneck"
+    },
+    {
+      "id": "twin_bypass",
+      "family": "upper_block_lower_dual_route",
+      "blocked": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "paired_old": "offset_barriers"
+    }
+  ],
+  "cohort": [
+    {
+      "id": "PR58_DEV_CONGESTION_WEST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56120013,
+      "regime": "congestion",
+      "layout": "west_detour",
+      "map_family": "west_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 14,
+      "paired_pr56_original_case_id": "PR56_DEV_CONGESTION_NORTH_WALL",
+      "paired_pr56_original_layout": "north_wall"
+    },
+    {
+      "id": "PR58_DEV_CONGESTION_EAST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56120534,
+      "regime": "congestion",
+      "layout": "east_detour",
+      "map_family": "east_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 14,
+      "paired_pr56_original_case_id": "PR56_DEV_CONGESTION_SOUTH_WALL",
+      "paired_pr56_original_layout": "south_wall"
+    },
+    {
+      "id": "PR58_DEV_CONGESTION_ALTERNATING_ISLANDS",
+      "split": "paired_topology_development_only",
+      "seed": 56121055,
+      "regime": "congestion",
+      "layout": "alternating_islands",
+      "map_family": "two_avoiding_hall_islands",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 14,
+      "paired_pr56_original_case_id": "PR56_DEV_CONGESTION_CENTRAL_BOTTLENECK",
+      "paired_pr56_original_layout": "central_bottleneck"
+    },
+    {
+      "id": "PR58_DEV_CONGESTION_TWIN_BYPASS",
+      "split": "paired_topology_development_only",
+      "seed": 56121576,
+      "regime": "congestion",
+      "layout": "twin_bypass",
+      "map_family": "upper_block_lower_dual_route",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 14,
+      "paired_pr56_original_case_id": "PR56_DEV_CONGESTION_OFFSET_BARRIERS",
+      "paired_pr56_original_layout": "offset_barriers"
+    },
+    {
+      "id": "PR58_DEV_MULTI_FAULT_WEST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56130013,
+      "regime": "multi_fault",
+      "layout": "west_detour",
+      "map_family": "west_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_MULTI_FAULT_NORTH_WALL",
+      "paired_pr56_original_layout": "north_wall"
+    },
+    {
+      "id": "PR58_DEV_MULTI_FAULT_EAST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56130534,
+      "regime": "multi_fault",
+      "layout": "east_detour",
+      "map_family": "east_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_MULTI_FAULT_SOUTH_WALL",
+      "paired_pr56_original_layout": "south_wall"
+    },
+    {
+      "id": "PR58_DEV_MULTI_FAULT_ALTERNATING_ISLANDS",
+      "split": "paired_topology_development_only",
+      "seed": 56131055,
+      "regime": "multi_fault",
+      "layout": "alternating_islands",
+      "map_family": "two_avoiding_hall_islands",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": "C",
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_MULTI_FAULT_CENTRAL_BOTTLENECK",
+      "paired_pr56_original_layout": "central_bottleneck"
+    },
+    {
+      "id": "PR58_DEV_MULTI_FAULT_TWIN_BYPASS",
+      "split": "paired_topology_development_only",
+      "seed": 56131576,
+      "regime": "multi_fault",
+      "layout": "twin_bypass",
+      "map_family": "upper_block_lower_dual_route",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B1",
+      "secondary_station_id": "C",
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_MULTI_FAULT_OFFSET_BARRIERS",
+      "paired_pr56_original_layout": "offset_barriers"
+    },
+    {
+      "id": "PR58_DEV_STAGGERED_ARRIVALS_WEST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56140013,
+      "regime": "staggered_arrivals",
+      "layout": "west_detour",
+      "map_family": "west_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_STAGGERED_ARRIVALS_NORTH_WALL",
+      "paired_pr56_original_layout": "north_wall"
+    },
+    {
+      "id": "PR58_DEV_STAGGERED_ARRIVALS_EAST_DETOUR",
+      "split": "paired_topology_development_only",
+      "seed": 56140534,
+      "regime": "staggered_arrivals",
+      "layout": "east_detour",
+      "map_family": "east_closed_center_bypass_north_south",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B1",
+      "secondary_station_id": null,
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_STAGGERED_ARRIVALS_SOUTH_WALL",
+      "paired_pr56_original_layout": "south_wall"
+    },
+    {
+      "id": "PR58_DEV_STAGGERED_ARRIVALS_ALTERNATING_ISLANDS",
+      "split": "paired_topology_development_only",
+      "seed": 56141055,
+      "regime": "staggered_arrivals",
+      "layout": "alternating_islands",
+      "map_family": "two_avoiding_hall_islands",
+      "profile": "baseline",
+      "mechanism": "within_support",
+      "station_id": "C",
+      "secondary_station_id": null,
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_STAGGERED_ARRIVALS_CENTRAL_BOTTLENECK",
+      "paired_pr56_original_layout": "central_bottleneck"
+    },
+    {
+      "id": "PR58_DEV_STAGGERED_ARRIVALS_TWIN_BYPASS",
+      "split": "paired_topology_development_only",
+      "seed": 56141576,
+      "regime": "staggered_arrivals",
+      "layout": "twin_bypass",
+      "map_family": "upper_block_lower_dual_route",
+      "profile": "baseline",
+      "mechanism": "extended_outage",
+      "station_id": "B0",
+      "secondary_station_id": null,
+      "job_count": 12,
+      "paired_pr56_original_case_id": "PR56_DEV_STAGGERED_ARRIVALS_OFFSET_BARRIERS",
+      "paired_pr56_original_layout": "offset_barriers"
+    }
+  ],
+  "policy": "original CP-SAT first legal candidate and exact entity truth branch interventions, unchanged random seeds, private outage schedule and future release times",
+  "public_input": "original PR56 public map traversability dual graph, public robot/task/station/resources histories t-3:t; hidden private future never a feature",
+  "max_ticks": 260,
+  "original_7x5_station_locs": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "original_3_robot_initial_and_home": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      4
+    ]
+  ],
+  "precommitted_geometry_gate": {
+    "all_maps_original_grid_7x5": true,
+    "all_robot_home_and_station_walkable": true,
+    "all_map_cells_connected": true,
+    "zero_station_articulation_nodes": true,
+    "zero_global_articulation_nodes": true,
+    "two_vertex_disjoint_alternative_routes_between_every_pair_of_stations": true,
+    "each_obstacle_layout_changes_some_station_geodesic_distance": true,
+    "map_layouts_unique": 4,
+    "number_of_obstacle_cells": [
+      3,
+      3,
+      4,
+      5
+    ]
+  },
+  "dynamic_quality_gate_precommitted": {
+    "all_original_real_safety_checks_pass": true,
+    "all_12_true_full_observation_traces_preserved": true,
+    "zero_private_future_input_leaks": true,
+    "at_least_n_primary_completed": 10,
+    "at_least_n_pr57_censored_scenarios_rescued": 3,
+    "max_n_regressions_from_pr57_completed": 0,
+    "true_station_down_events_at_least": 12,
+    "true_station_recovery_events_at_least": 12,
+    "late_eventful_states_after_original_56_at_least": 12,
+    "scenes_with_2plus_legal_same_prefix_candidates_at_least": 10,
+    "scenes_with_true_action_affected_H20_states_at_least": 10,
+    "all_complete_action_branch_groups_at_least": 9,
+    "scenes_with_known_true_completed_makespan_action_effect_at_least": 6,
+    "censored_final_ticks_are_not_completed_makespan": true,
+    "all_4_layouts_in_each_regime": true
+  },
+  "status": {
+    "all_12_development_only": true,
+    "original_5_truncated_scenes_preserved": true,
+    "no_new_model_training": true,
+    "gpu_hours": 0,
+    "no_bulk_data_generation": true,
+    "no_independent_heldout_claim": true,
+    "no_global_deadlock_causality_claim": true
+  },
+  "next_step_if_pass": "precommit entirely NEW train/validation/unseen topology-family TEST with actual dual-graph model consumption; stage <=60 new independent training episodes, audit marginal information before more",
+  "next_step_if_fail": "keep NO-GO, diagnose station queue/robot blocking and censored service events on old+new original full trajectories without tuning source/threshold from the same dev cases"
+}

@@ -1,4 +1,5 @@
 name: PR27 paired real online world-model dispatch CPU
+# Preserve the integer safety-violation contract; rerun after first CPU gate found an assertion typo.
 
 on:
   push:

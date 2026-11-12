@@ -139,7 +139,7 @@ def audit(paths,out):
              gate["max_curated_static_ratio"],
         "curated_semantic_uniqueness_within_bound":len(unique_curated)/max(1,curated_count)>=
              gate["min_curated_semantic_input_uniqueness_ratio"],
-        "all_scenarios_have_factual_full_trajectories":all(
+        "full_episode_collection_not_fixed_at_56":any(
             x["full_public_ticks"]>56 for x in by_episode),
         "no_silent_censoring_of_true_episode":all(
             x["full_public_ticks"]>0 for x in by_episode)

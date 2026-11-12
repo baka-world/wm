@@ -57,7 +57,7 @@ class DynamicDecisionIdentifiabilityTests(unittest.TestCase):
                             first["first_selected"]))
         if len(first["first_plans"])>1:
             second=run_factual(scenario,cfg,1)
-            self.assertEqual(first["first_public"],second["first_public"])
+            self.assertEqual(first["first_state"],second["first_state"])
             self.assertEqual(first["first_plans"],second["first_plans"])
             self.assertEqual(second["outcomes"]["safety_violations"],0)
 

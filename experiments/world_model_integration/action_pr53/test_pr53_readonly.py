@@ -24,6 +24,23 @@ class PR53ReadonlyBootstrapTest(unittest.TestCase):
         self.assertEqual(r["stratified_scenario_bootstrap_95pct"],[-1.,-1.])
         self.assertEqual((r["wins"],r["ties"],r["losses"]),(48,0,0))
         self.assertIn("48 independent true-world scenarios",r["inference_unit"])
+    def test_near_tie_envelope_is_diagnostic_not_a_new_policy(self):
+        from experiments.world_model_integration.action_pr53.pr53_readonly import (
+            numerical_ambiguity,ARMS,SEEDS)
+        row={"arm_seed":{
+            arm:{str(seed):{
+                "predicted_score":[0.,1e-6,1.],
+                "true_costs":[20.,10.,30.]
+            } for seed in SEEDS} for arm in ARMS}}
+        outcome=numerical_ambiguity([row])
+        for arm in ARMS:
+            for seed in SEEDS:
+                close=outcome[arm][str(seed)]["1e-05"]
+                self.assertEqual(close["ambiguous_groups"],1)
+                self.assertEqual(close["ambiguous_groups_with_different_true_makespan"],1)
+                self.assertEqual(close["best_possible_regret_within_margin"],0.)
+                self.assertEqual(close["worst_possible_regret_within_margin"],10.)
+
     def test_missing_original_test_case_is_rejected(self):
         with self.assertRaises(ValueError):
             bootstrap(self.fake()[:-1],"consistent_delta_joint","consistent_pred_only",11)

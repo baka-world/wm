@@ -1,0 +1,36 @@
+name: PR52 public entity R-GCN world-state and decision-gradient contract tests
+on:
+  push:
+    branches: [research/pr52-entity-dynamics-decision-aware-20261112]
+    paths:
+      - .github/workflows/pr52-model-contracts.yml
+      - experiments/world_model_integration/entity_pr52/pr52_train.py
+      - experiments/world_model_integration/entity_pr52/test_pr52_train.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-pyg-relational-gradients:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Same original torch and PyG 2.6.1 as previous trained PR50
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - name: Verify public action-conditioned future node labels, scoring and shared-gradient tests
+        run: |
+          set -euo pipefail
+          python -m unittest experiments.world_model_integration.entity_pr52.test_pr52_train -v
+          python -m compileall -q experiments/world_model_integration/entity_pr52
+          echo PR52_PYG_RELATIONAL_GRADIENTS_VALIDATED

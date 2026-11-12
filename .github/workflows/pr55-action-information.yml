@@ -1,0 +1,174 @@
+name: PR55 actual CP-SAT same-state counterfactual information gate
+on:
+  push:
+    branches: [research/pr55-quality-first-world-data-20261112]
+    paths:
+      - .github/workflows/pr55-action-information.yml
+      - experiments/world_model_integration/quality_pr55/action_protocol.json
+      - experiments/world_model_integration/quality_pr55/pr55_action_quality.py
+      - experiments/world_model_integration/quality_pr55/pr55_action_gate.py
+      - experiments/world_model_integration/quality_pr55/test_pr55_actions.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  real-same-prefix-decision-cases:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        regime: [congestion, multi_fault, staggered_arrivals]
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Same CPU BusinessSimulator PyTorch lock and original PyG public graph
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          print("PR55_REAL_ACTION_CPU_NO_TRAINING")
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43199018917
+          github-token: ${{ github.token }}
+          name: pr55-data-quality-audit-43199018917
+          path: ${{ runner.temp }}/pr55-approved
+      - name: Require ORIGINAL immutable event quality PASS before intervention
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/pr55-approved" && sha256sum -c SHA256SUMS)
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          d=json.loads(Path("experiments/world_model_integration/quality_pr55/protocol.json").read_text())
+          x=json.loads((Path(__import__("os").environ["RUNNER_TEMP"])/"pr55-approved/quality.json").read_text())
+          assert x["decision"]=="PASS_NEXT_PHASE_DESIGN"
+          assert x["protocol_sha256"]==hashlib.sha256(
+              Path("experiments/world_model_integration/quality_pr55/protocol.json").read_bytes()).hexdigest()
+          assert x["training_ready"] is False
+          print("PR55_REQUIRES_GENUINE_EARLIER_QA",x["decision"])
+          PY
+      - name: Verify exact-public-state and true-state labels contract
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr55-action"
+          python -m unittest experiments.world_model_integration.quality_pr55.test_pr55_actions -v \
+            2>&1 | tee "$RUNNER_TEMP/pr55-action/tests.log"
+      - name: Replay 6 original profiles under ALL legal same-state alternate actions
+        env:
+          PR55_REGIME: ${{ matrix.regime }}
+        run: |
+          set -euo pipefail
+          timeout 2600s python -m experiments.world_model_integration.quality_pr55.pr55_action_quality \
+            --regime "$PR55_REGIME" \
+            --out "$RUNNER_TEMP/pr55-action/data.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr55-action/run.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr55-action/data.json").read_text())
+          assert x["schema"]=="pr55-actual-public-cp_sat-paired-future-action-quality-v1"
+          assert x["regime"]==os.environ["PR55_REGIME"]
+          assert len(x["cases"])==6
+          assert x["summary"]["GPU"]==x["summary"]["training"]==0
+          for case in x["cases"]:
+              assert case["id"].startswith("PR55_PILOT_")
+              if case["labelable"]:
+                  assert len(case["true_makespan_ticks_by_candidate"])==case["actual_action_branch_count"]
+                  assert len(case["factual_current_public_action_graph"]["candidate_actions"])==case["actual_action_branch_count"]
+          print("PR55_FROZEN_ACTUAL_ACTION_LABELS_VALIDATED",x["summary"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr55-action/source_head.txt"
+          sha256sum requirements-paper-reuse.lock > "$RUNNER_TEMP/pr55-action/dependencies.sha256"
+          python -m pip freeze > "$RUNNER_TEMP/pr55-action/pip-freeze.txt"
+          (cd "$RUNNER_TEMP/pr55-action" && sha256sum data.json tests.log run.log source_head.txt dependencies.sha256 pip-freeze.txt > SHA256SUMS)
+      - name: Retain actual legal action alternatives and real sampled futures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr55-same-state-action-${{ github.run_id }}-${{ matrix.regime }}
+          path: ${{ runner.temp }}/pr55-action/
+          retention-days: 90
+          if-no-files-found: warn
+  information-sufficiency:
+    needs: real-same-prefix-decision-cases
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install fixed public world environment
+        run: |
+          set -euo pipefail
+          python -m pip install 'uv==0.13.5'
+          uv pip install --system --python "$(command -v python)" --index-strategy unsafe-best-match -r requirements-paper-reuse.lock
+          python -m pip install 'torch-geometric==2.6.1'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 43199018917
+          github-token: ${{ github.token }}
+          name: pr55-data-quality-audit-43199018917
+          path: ${{ runner.temp }}/pr55-prev
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pr55-same-state-action-${{ github.run_id }}-*
+          path: ${{ runner.temp }}/pr55-paired
+      - name: Verify all three source action artifacts and the exact earlier quality decision
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/pr55-prev" && sha256sum -c SHA256SUMS)
+          python - <<'PY'
+          from pathlib import Path
+          import os,subprocess
+          src=Path(os.environ["RUNNER_TEMP"])/"pr55-paired"
+          files=sorted(src.glob("*/data.json"))
+          assert len(files)==3
+          here=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+          for f in files:
+              subprocess.run(["sha256sum","-c","SHA256SUMS"],cwd=f.parent,check=True)
+              assert (f.parent/"source_head.txt").read_text().strip()==here
+          print("PR55_18_TRUE_SAME_PREFIX_SOURCE_SHA_VERIFIED",here)
+          PY
+      - name: Record real H20 action-state and full-makespan information PASS or explicit NO-GO
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pr55-action-audit"
+          python -m experiments.world_model_integration.quality_pr55.pr55_action_gate \
+            --source "$RUNNER_TEMP/pr55-paired" \
+            --previous-quality "$RUNNER_TEMP/pr55-prev/quality.json" \
+            --out "$RUNNER_TEMP/pr55-action-audit/action-info.json" \
+            2>&1 | tee "$RUNNER_TEMP/pr55-action-audit/gate.log"
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          x=json.loads((Path(os.environ["RUNNER_TEMP"])/"pr55-action-audit/action-info.json").read_text())
+          assert x["development_scenarios"]==18
+          assert x["training_corpus_status"]=="DEVELOPMENT_ONLY_NOT_RELEASED_FOR_BLIND_TRAINING"
+          assert x["GPU"]==x["new_model_training"]==0
+          assert x["independent_blind_test_executed"] is False
+          print("PR55_ACTION_INFO_FROZEN_DECISION",x["decision"],x["failed"])
+          PY
+          git rev-parse HEAD > "$RUNNER_TEMP/pr55-action-audit/source_head.txt"
+          (cd "$RUNNER_TEMP/pr55-action-audit" && sha256sum action-info.json gate.log source_head.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr55-action-information-quality-gate-${{ github.run_id }}
+          path: ${{ runner.temp }}/pr55-action-audit/
+          retention-days: 90
